@@ -1,0 +1,296 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>منصة المبرمج الذكية</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #6366f1;
+            --bg-body: #f4f7fe;
+            --card-bg: #ffffff;
+            --text-main: #1e293b;
+            --text-dim: #64748b;
+            --border: #e2e8f0;
+            --sidebar-width: 260px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cairo', sans-serif; transition: 0.3s; }
+        body { background: var(--bg-body); color: var(--text-main); }
+
+        /* تسجيل الدخول */
+        #login-page { height: 100vh; display: flex; align-items: center; justify-content: center; background: #6366f1; }
+        .login-card { background: white; padding: 2.5rem; border-radius: 30px; width: 90%; max-width: 400px; text-align: center; }
+
+        /* الهيكل الرئيسي */
+        .wrapper { display: flex; min-height: 100vh; }
+
+        /* Sidebar */
+        .sidebar {
+            width: var(--sidebar-width); background: var(--card-bg); border-left: 1px solid var(--border);
+            position: fixed; height: 100vh; right: 0; padding: 2rem 1rem; display: flex; flex-direction: column;
+        }
+        .sidebar-brand { color: var(--primary); font-weight: 800; font-size: 1.4rem; margin-bottom: 3rem; text-align: center; }
+        .nav-link {
+            display: flex; align-items: center; gap: 12px; padding: 1rem; text-decoration: none;
+            color: var(--text-dim); border-radius: 15px; font-weight: 600; cursor: pointer; margin-bottom: 8px;
+        }
+        .nav-link:hover, .nav-link.active { background: #eef2ff; color: var(--primary); }
+        .nav-link.active { background: var(--primary); color: white; }
+
+        /* المحتوى */
+        .main-content { flex: 1; margin-right: var(--sidebar-width); padding: 2rem; }
+        .app-section { display: none; animation: slideUp 0.4s ease; }
+        .app-section.active { display: block; }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        header { background: white; padding: 1.5rem; border-radius: 20px; margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 12px rgba(0,0,0,0.03); }
+
+        /* قسم مستواي - التقييمات */
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
+        .stat-card { background: white; padding: 2rem; border-radius: 25px; text-align: center; border: 1px solid var(--border); }
+        .stat-value { font-size: 2.5rem; font-weight: 800; color: var(--primary); display: block; }
+
+        /* قسم الدروس */
+        .lessons-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
+        .lesson-card { background: white; border-radius: 20px; overflow: hidden; border: 1px solid var(--border); }
+        .video-box { position: relative; padding-bottom: 56.25%; height: 0; background: #000; }
+        .video-box iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
+        .lesson-body { padding: 1.5rem; }
+
+        /* قسم المجتمع - نظام الشات */
+        .chat-container { 
+            background: white; border-radius: 25px; height: 75vh; 
+            display: flex; flex-direction: column; border: 1px solid var(--border); overflow: hidden;
+        }
+        .chat-header { padding: 1rem 1.5rem; border-bottom: 1px solid var(--border); background: #f8fafc; }
+        #chat-messages { 
+            flex: 1; padding: 1.5rem; overflow-y: auto; 
+            display: flex; flex-direction: column; gap: 15px; 
+        }
+        .msg-item { max-width: 80%; padding: 12px 18px; border-radius: 18px; background: #f1f5f9; position: relative; }
+        .msg-item.mine { align-self: flex-end; background: var(--primary); color: white; border-bottom-left-radius: 2px; }
+        .msg-item.others { align-self: flex-start; background: #f1f5f9; border-bottom-right-radius: 2px; }
+        .msg-user { font-size: 0.75rem; font-weight: 700; margin-bottom: 4px; display: block; }
+        
+        .chat-input-area { padding: 1.5rem; border-top: 1px solid var(--border); display: flex; gap: 10px; background: white; }
+        .chat-input { flex: 1; padding: 12px; border: 2px solid #f1f5f9; border-radius: 15px; outline: none; margin: 0; }
+        .chat-input:focus { border-color: var(--primary); }
+
+        /* أزرار */
+        .btn { padding: 0.8rem 1.5rem; border-radius: 15px; border: none; cursor: pointer; font-weight: 700; background: var(--primary); color: white; }
+        .badge { background: #eef2ff; color: var(--primary); padding: 5px 12px; border-radius: 10px; font-weight: 700; }
+
+        @media (max-width: 768px) {
+            .sidebar { width: 80px; } .sidebar span { display: none; }
+            .main-content { margin-right: 80px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- صفحة الدخول -->
+    <div id="login-page">
+        <div class="login-card">
+            <h2 style="margin-bottom: 1rem;">بوابة المبدعين 🚀</h2>
+            <input type="text" id="student-code-input" placeholder="أدخل كود الطالب" style="text-align: center; width: 100%; padding: 12px; border-radius: 12px; border: 1px solid #ddd; margin-bottom: 1rem;">
+            <button class="btn" style="width: 100%;" onclick="studentLogin()">دخول المنصة</button>
+        </div>
+    </div>
+
+    <!-- المنصة -->
+    <div id="main-platform" style="display: none;">
+        <div class="wrapper">
+            <aside class="sidebar">
+                <div class="sidebar-brand"><i class="fas fa-rocket"></i> <span>بوابة التميز</span></div>
+                <div class="nav-link active" onclick="showSection('stats-sec', this)"><i class="fas fa-star"></i> <span>مستواي</span></div>
+                <div class="nav-link" onclick="showSection('lessons-sec', this)"><i class="fas fa-graduation-cap"></i> <span>الدروس</span></div>
+                <div class="nav-link" onclick="showSection('chat-sec', this)"><i class="fas fa-comments"></i> <span>المجتمع</span></div>
+                
+                <button class="btn" style="margin-top: auto; background: #fee2e2; color: #ef4444;" onclick="location.reload()">
+                    <i class="fas fa-sign-out-alt"></i> <span>خروج</span>
+                </button>
+            </aside>
+
+            <main class="main-content">
+                <header>
+                    <h2 id="welcome-msg">مرحباً بك</h2>
+                    <span class="badge" id="level-badge">المستوى -</span>
+                </header>
+
+                <!-- قسم مستواي -->
+                <section id="stats-sec" class="app-section active">
+                    <h3 style="margin-bottom: 1.5rem;">📊 لوحة الأداء الحالي</h3>
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <span class="stat-value" id="score-work">-</span>
+                            <span style="color: var(--text-dim)">تقييم الواجبات</span>
+                        </div>
+                        <div class="stat-card">
+                            <span class="stat-value" id="score-perf">-</span>
+                            <span style="color: var(--text-dim)">الأداء التقني</span>
+                        </div>
+                        <div class="stat-card">
+                            <span class="stat-value" id="score-beh">-</span>
+                            <span style="color: var(--text-dim)">السلوك العام</span>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- قسم الدروس -->
+                <section id="lessons-sec" class="app-section">
+                    <h3 style="margin-bottom: 1.5rem;">📺 مكتبة الدروس الذكية</h3>
+                    <div id="lessons-list" class="lessons-grid"></div>
+                </section>
+
+                <!-- قسم المجتمع (شات) -->
+                <section id="chat-sec" class="app-section">
+                    <div class="chat-container">
+                        <div class="chat-header">
+                            <strong><i class="fas fa-users"></i> نقاشات مستوى <span id="comm-lvl">-</span></strong>
+                        </div>
+                        <div id="chat-messages">
+                            <!-- الرسائل تظهر هنا -->
+                        </div>
+                        <div class="chat-input-area">
+                            <input type="text" id="post-text" class="chat-input" placeholder="اكتب رسالتك هنا...">
+                            <button class="btn" onclick="sendPost()"><i class="fas fa-paper-plane"></i></button>
+                        </div>
+                    </div>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getDatabase, ref, onValue, push } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDgMV79LTyiQerEOZvtuszH6ONaOAset5c",
+            authDomain: "programming-cc297.firebaseapp.com",
+            projectId: "programming-cc297",
+            storageBucket: "programming-cc297.firebasestorage.app",
+            messagingSenderId: "131761323515",
+            appId: "1:131761323515:web:50641907e66eed129e9f5e"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+        let currentStudent = null;
+
+        // التبديل بين الأقسام
+        window.showSection = function(id, el) {
+            document.querySelectorAll('.app-section').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.nav-link').forEach(n => n.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+            el.classList.add('active');
+            
+            // سكرول لآخر الرسائل إذا فتحنا الشات
+            if(id === 'chat-sec') scrollChat();
+        }
+
+        window.studentLogin = function() {
+            const code = document.getElementById('student-code-input').value;
+            onValue(ref(db, 'students'), (snap) => {
+                const data = snap.val();
+                for(let k in data) {
+                    if(data[k].code === code) {
+                        currentStudent = { ...data[k], key: k };
+                        initApp();
+                        return;
+                    }
+                }
+                alert("الكود غير صحيح");
+            }, { onlyOnce: true });
+        }
+
+        function initApp() {
+            document.getElementById('login-page').style.display = 'none';
+            document.getElementById('main-platform').style.display = 'block';
+            document.getElementById('welcome-msg').innerText = "أهلاً، " + currentStudent.name.split(' ')[0];
+            document.getElementById('level-badge').innerText = "مستوى " + currentStudent.level;
+            document.getElementById('comm-lvl').innerText = currentStudent.level;
+
+            // جلب التقييمات
+            onValue(ref(db, `students/${currentStudent.key}/evaluations`), (snap) => {
+                const evals = snap.val();
+                if(evals) {
+                    const last = Object.values(evals).pop();
+                    document.getElementById('score-work').innerText = last.work + "/10";
+                    document.getElementById('score-perf').innerText = last.perf + "/10";
+                    document.getElementById('score-beh').innerText = last.beh + "/10";
+                }
+            });
+
+            // جلب الدروس
+            onValue(ref(db, 'content'), (snap) => {
+                const lessons = snap.val();
+                const list = document.getElementById('lessons-list');
+                let html = "";
+                if(lessons) {
+                    Object.values(lessons).reverse().forEach(l => {
+                        if(l.level == currentStudent.level) {
+                            let vid = l.video ? (l.video.includes('v=') ? l.video.split('v=')[1].split('&')[0] : l.video.split('/').pop()) : null;
+                            html += `
+                                <div class="lesson-card">
+                                    ${vid ? `<div class="video-box"><iframe src="https://www.youtube.com/embed/${vid}"></iframe></div>` : ''}
+                                    <div class="lesson-body">
+                                        <h4>${l.title}</h4>
+                                        <div style="margin-top:15px; display:flex; gap:10px;">
+                                            ${l.code ? `<a href="${l.code}" target="_blank" class="badge" style="text-decoration:none;"><i class="fas fa-code"></i> كود</a>` : ''}
+                                            ${l.pdf ? `<a href="${l.pdf}" target="_blank" class="badge" style="text-decoration:none; background:#fee2e2; color:#ef4444;"><i class="fas fa-file-pdf"></i> ملخص</a>` : ''}
+                                        </div>
+                                    </div>
+                                </div>`;
+                        }
+                    });
+                }
+                list.innerHTML = html || "<p>لا توجد دروس حالياً</p>";
+            });
+
+            // جلب رسائل المجتمع
+            onValue(ref(db, 'community'), (snap) => {
+                const posts = snap.val();
+                const container = document.getElementById('chat-messages');
+                let html = "";
+                if(posts) {
+                    Object.values(posts).forEach(p => {
+                        if(p.level == currentStudent.level) {
+                            const isMine = p.sender === currentStudent.name;
+                            html += `
+                                <div class="msg-item ${isMine ? 'mine' : 'others'}">
+                                    <span class="msg-user">${isMine ? 'أنت' : p.sender}</span>
+                                    <div>${p.text}</div>
+                                    <div style="font-size:0.6rem; margin-top:5px; opacity:0.7;">${p.time}</div>
+                                </div>`;
+                        }
+                    });
+                }
+                container.innerHTML = html;
+                scrollChat();
+            });
+        }
+
+        window.sendPost = function() {
+            const txt = document.getElementById('post-text').value;
+            if(!txt) return;
+            push(ref(db, 'community'), {
+                sender: currentStudent.name,
+                text: txt,
+                level: currentStudent.level,
+                time: new Date().toLocaleTimeString('ar-EG', {hour:'2-digit', minute:'2-digit'})
+            });
+            document.getElementById('post-text').value = "";
+        }
+
+        function scrollChat() {
+            const chat = document.getElementById('chat-messages');
+            chat.scrollTop = chat.scrollHeight;
+        }
+    </script>
+</body>
+</html>
