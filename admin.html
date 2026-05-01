@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -6,58 +5,152 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>أكاديمية تيتان - الإدارة الشاملة والمحتوى</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         :root {
-            --primary: #4f46e5; --success: #10b981; --danger: #ef4444; --warning: #f59e0b;
+            --primary: #4f46e5; --primary-hover: #4338ca;
+            --success: #10b981; --danger: #ef4444; --warning: #f59e0b;
             --bg-body: #0f172a; --bg-card: #1e293b; --text-main: #f1f5f9;
-            --text-dim: #94a3b8; --border: rgba(255, 255, 255, 0.1);
+            --text-dim: #94a3b8; --border: rgba(255, 255, 255, 0.08);
+            --shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
+            --radius-lg: 20px; --radius-md: 12px;
         }
         [data-theme="light"] {
-            --bg-body: #f1f5f9; --bg-card: #ffffff; --text-main: #1e293b;
-            --text-dim: #64748b; --border: rgba(0, 0, 0, 0.1);
+            --bg-body: #f8fafc; --bg-card: #ffffff; --text-main: #0f172a;
+            --text-dim: #64748b; --border: rgba(0, 0, 0, 0.08);
+            --shadow: 0 10px 25px -5px rgba(0,0,0,0.05), 0 8px 10px -6px rgba(0,0,0,0.01);
         }
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cairo', sans-serif; transition: 0.2s; }
-        body { background: var(--bg-body); color: var(--text-main); display: flex; min-height: 100vh; }
-        .sidebar { width: 260px; background: var(--bg-card); border-left: 1px solid var(--border); padding: 1rem; display: flex; flex-direction: column; height: 100vh; position: fixed; right: 0; overflow-y: auto; z-index: 100; }
-        .main-content { margin-right: 260px; flex: 1; padding: 2rem; width: calc(100% - 260px); }
-        .btn { padding: 0.6rem 1.2rem; border-radius: 10px; border: none; cursor: pointer; font-weight: 600; display: inline-flex; align-items: center; gap: 8px; font-size: 0.9rem; }
-        .btn-primary { background: var(--primary); color: white; }
-        .btn-success { background: var(--success); color: white; }
-        .btn-danger { background: var(--danger); color: white; }
-        .btn-warning { background: var(--warning); color: white; }
-        .btn-outline { background: transparent; border: 1px solid var(--border); color: var(--text-main); margin-bottom: 5px; width: 100%; text-align: right; }
-        .btn-outline:hover { background: var(--primary); color: white; }
-        .card { background: var(--bg-card); padding: 1.5rem; border-radius: 15px; border: 1px solid var(--border); margin-bottom: 1.5rem; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); }
-        input, select, textarea { width: 100%; padding: 0.7rem; margin: 0.5rem 0; background: var(--bg-body); border: 1px solid var(--border); border-radius: 8px; color: var(--text-main); }
-        table { width: 100%; border-collapse: collapse; margin-top: 1rem; background: var(--bg-card); }
-        th { background: rgba(0,0,0,0.2); padding: 12px; text-align: center; color: var(--text-dim); font-size: 0.85rem; border: 1px solid var(--border); }
-        td { padding: 12px; border: 1px solid var(--border); font-size: 0.9rem; text-align: center; }
-        #live-clock { font-weight: bold; color: var(--primary); }
-        .status-h { background: rgba(16, 185, 129, 0.15); color: var(--success) !important; font-weight: bold; }
-        .status-g { background: rgba(239, 68, 68, 0.15); color: var(--danger) !important; font-weight: bold; }
-        .sticky-col { position: sticky; right: 0; background: var(--bg-card) !important; z-index: 5; border-left: 2px solid var(--primary) !important; }
-        #login-screen { position: fixed; inset: 0; background: #0f172a; display: flex; align-items: center; justify-content: center; z-index: 9999; }
-        .login-box { background: var(--bg-card); padding: 2.5rem; border-radius: 20px; width: 350px; text-align: center; border: 1px solid var(--border); }
-        @media print { .no-print { display: none !important; } .main-content { margin: 0; width: 100%; } }
+        
+        /* شريط التمرير (Scrollbar) */
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg-body); }
+        ::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 10px; opacity: 0.8; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--primary-hover); }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cairo', sans-serif; transition: background-color 0.3s, color 0.3s, border-color 0.3s; }
+        body { background: var(--bg-body); color: var(--text-main); display: flex; min-height: 100vh; overflow-x: hidden; }
+        
+        /* القائمة الجانبية */
+        .sidebar { 
+            width: 260px; background: var(--bg-card); border-left: 1px solid var(--border); 
+            padding: 1.5rem 1rem; display: flex; flex-direction: column; height: 100vh; 
+            position: fixed; right: 0; overflow-y: auto; z-index: 100;
+            box-shadow: -5px 0 15px rgba(0,0,0,0.03);
+        }
+        .sidebar h3 { font-weight: 800; letter-spacing: 0.5px; }
+        
+        /* المحتوى الرئيسي */
+        .main-content { margin-right: 260px; flex: 1; padding: 2.5rem; width: calc(100% - 260px); }
+        
+        /* الأزرار والتأثيرات */
+        .btn { 
+            padding: 0.7rem 1.4rem; border-radius: var(--radius-md); border: none; 
+            cursor: pointer; font-weight: 700; display: inline-flex; align-items: center; 
+            gap: 10px; font-size: 0.95rem; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .btn:hover { transform: translateY(-2px); box-shadow: 0 6px 15px rgba(0,0,0,0.15); filter: brightness(1.1); }
+        .btn:active { transform: translateY(0); }
+        .btn-primary { background: linear-gradient(135deg, var(--primary), var(--primary-hover)); color: white; }
+        .btn-success { background: linear-gradient(135deg, #10b981, #059669); color: white; }
+        .btn-danger { background: linear-gradient(135deg, #ef4444, #dc2626); color: white; }
+        .btn-warning { background: linear-gradient(135deg, #f59e0b, #d97706); color: white; }
+        .btn-outline { 
+            background: transparent; border: 1px solid transparent; color: var(--text-dim); 
+            margin-bottom: 8px; width: 100%; text-align: right; padding: 0.8rem 1rem;
+            border-radius: var(--radius-md);
+        }
+        .btn-outline i { width: 20px; text-align: center; }
+        .btn-outline:hover { background: rgba(79, 70, 229, 0.1); border-color: rgba(79, 70, 229, 0.2); color: var(--primary); transform: translateX(-5px); box-shadow: none;}
+        
+        /* البطاقات الكروت */
+        .card { 
+            background: var(--bg-card); padding: 1.8rem; border-radius: var(--radius-lg); 
+            border: 1px solid var(--border); margin-bottom: 1.5rem; 
+            box-shadow: var(--shadow); position: relative; overflow: hidden;
+        }
+        .card::before {
+            content: ''; position: absolute; top: 0; right: 0; width: 4px; height: 100%;
+            background: var(--primary); opacity: 0; transition: 0.3s;
+        }
+        .card:hover::before { opacity: 1; }
+        .card:hover { transform: translateY(-3px); border-color: rgba(79, 70, 229, 0.3); }
+        .card h3 { margin-bottom: 1.2rem; display: flex; align-items: center; gap: 10px; font-weight: 800; color: var(--primary); }
+        
+        /* المدخلات والنماذج */
+        input, select, textarea { 
+            width: 100%; padding: 0.8rem 1rem; margin: 0.5rem 0; 
+            background: var(--bg-body); border: 1px solid var(--border); 
+            border-radius: var(--radius-md); color: var(--text-main); 
+            font-size: 0.95rem; outline: none; transition: all 0.3s;
+        }
+        input:focus, select:focus, textarea:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15); }
+        
+        /* الجداول */
+        table { width: 100%; border-collapse: separate; border-spacing: 0; margin-top: 1rem; background: var(--bg-card); border-radius: var(--radius-md); overflow: hidden; box-shadow: 0 0 0 1px var(--border); }
+        th { background: rgba(79, 70, 229, 0.05); padding: 14px; text-align: center; color: var(--primary); font-size: 0.9rem; font-weight: 700; text-transform: uppercase; }
+        td { padding: 14px; border-bottom: 1px solid var(--border); font-size: 0.95rem; text-align: center; transition: background 0.2s; }
+        tr:last-child td { border-bottom: none; }
+        tr:hover td { background: rgba(79, 70, 229, 0.03); }
+        
+        /* نصوص وألوان أخرى */
+        #live-clock { font-weight: 800; color: var(--primary); font-size: 1.2rem; background: rgba(79, 70, 229, 0.1); padding: 0.4rem 1rem; border-radius: 20px; }
+        #page-title { font-weight: 800; font-size: 1.8rem; position: relative; }
+        .status-h { background: rgba(16, 185, 129, 0.1) !important; color: var(--success) !important; font-weight: 800; }
+        .status-g { background: rgba(239, 68, 68, 0.1) !important; color: var(--danger) !important; font-weight: 800; }
+        .sticky-col { position: sticky; right: 0; background: var(--bg-card) !important; z-index: 5; border-left: 2px solid var(--primary) !important; box-shadow: -2px 0 5px rgba(0,0,0,0.05); }
+        
+        /* الانيميشن الخاص بالتنقل بين الصفحات */
+        section { animation: fadeIn 0.4s ease-out forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* شاشة تسجيل الدخول بتصميم فاتح وعصري (Light Mode Forced) */
+        #login-screen { 
+            position: fixed; inset: 0; 
+            background: linear-gradient(135deg, #f6f8fd 0%, #f1f5f9 100%); 
+            display: flex; align-items: center; justify-content: center; z-index: 9999; 
+        }
+        .login-box { 
+            background: #ffffff; padding: 3rem 2.5rem; border-radius: 24px; 
+            width: 380px; text-align: center; border: 1px solid rgba(255,255,255,0.8); 
+            box-shadow: 0 20px 40px -10px rgba(0,0,0,0.1), 0 10px 15px -5px rgba(0,0,0,0.05);
+            animation: slideDown 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative; overflow: hidden;
+        }
+        .login-box::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 5px;
+            background: linear-gradient(90deg, var(--primary), #a855f7);
+        }
+        .login-box h2 { color: #1e293b; font-weight: 800; margin-bottom: 2rem; font-size: 1.6rem; }
+        .login-box input { 
+            background: #f8fafc; border: 1px solid #e2e8f0; color: #0f172a; 
+            padding: 1rem; margin-bottom: 1rem; border-radius: var(--radius-md);
+        }
+        .login-box input:focus { background: #ffffff; border-color: var(--primary); }
+        .login-box input::placeholder { color: #94a3b8; }
+        
+        @keyframes slideDown { from { opacity: 0; transform: translateY(-30px) scale(0.95); } to { opacity: 1; transform: translateY(0) scale(1); } }
+        
+        @media print { .no-print { display: none !important; } .main-content { margin: 0; width: 100%; padding: 0;} .card { box-shadow: none; border: 1px solid #000;} }
     </style>
 </head>
 <body data-theme="dark">
 
     <div id="login-screen">
         <div class="login-box">
-            <i class="fas fa-user-shield" style="font-size: 3rem; color: var(--primary); margin-bottom: 1rem;"></i>
-            <h2 style="margin-bottom: 1.5rem;">🔐 دخول الإدارة</h2>
+            <i class="fas fa-user-shield" style="font-size: 3.5rem; color: var(--primary); margin-bottom: 1rem; filter: drop-shadow(0 4px 6px rgba(79,70,229,0.3));"></i>
+            <h2>🔐 دخول الإدارة</h2>
             <input type="text" id="u" placeholder="اسم المستخدم">
             <input type="password" id="p" placeholder="كلمة المرور">
-            <button class="btn btn-primary" style="width: 100%; justify-content: center; margin-top: 1rem;" onclick="login()">دخول</button>
+            <button class="btn btn-primary" style="width: 100%; justify-content: center; margin-top: 1rem; padding: 1rem; font-size: 1.1rem; border-radius: 12px;" onclick="login()">تسجيل الدخول</button>
         </div>
     </div>
 
     <aside class="sidebar no-print">
-        <div style="text-align: center; margin-bottom: 1.5rem;">
-            <i class="fas fa-rocket" style="font-size: 2.5rem; color: var(--primary);"></i>
+        <div style="text-align: center; margin-bottom: 2rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--border);">
+            <div style="background: linear-gradient(135deg, var(--primary), #a855f7); width: 70px; height: 70px; border-radius: 20px; display: flex; align-items: center; justify-content: center; margin: 0 auto 15px auto; box-shadow: 0 10px 15px -3px rgba(79, 70, 229, 0.4);">
+                <i class="fas fa-rocket" style="font-size: 2.2rem; color: white;"></i>
+            </div>
             <h3 style="margin-top: 10px;">لوحة Titan الموحدة</h3>
         </div>
         <nav style="display: flex; flex-direction: column;">
@@ -75,39 +168,52 @@
             <button class="btn btn-outline" onclick="showSec('report-att')"><i class="fas fa-table"></i> تقرير الغياب</button>
             <button class="btn btn-outline" onclick="showSec('settings')"><i class="fas fa-database"></i> الإدارة والنسخ</button>
         </nav>
-        <button class="btn btn-danger" style="margin-top: auto;" onclick="location.reload()">خروج</button>
+        <button class="btn btn-danger" style="margin-top: auto; justify-content: center; padding: 0.8rem;" onclick="location.reload()"><i class="fas fa-sign-out-alt"></i> تسجيل الخروج</button>
     </aside>
 
     <main class="main-content" id="app" style="display: none;">
-        <header style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+        <header style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2.5rem; background: var(--bg-card); padding: 1.2rem 2rem; border-radius: var(--radius-lg); box-shadow: var(--shadow); border: 1px solid var(--border);">
             <div>
                 <h1 id="page-title">لوحة التحكم</h1>
-                <div id="live-clock">--:--:--</div>
             </div>
-            <button class="btn btn-outline" style="width:auto" onclick="toggleTheme()"><i class="fas fa-adjust"></i></button>
+            <div style="display: flex; align-items: center; gap: 15px;">
+                <div id="live-clock">--:--:--</div>
+                <button class="btn btn-outline" style="width:auto; margin:0; padding: 0.6rem 1rem; border-radius: 50%;" onclick="toggleTheme()"><i class="fas fa-moon"></i></button>
+            </div>
         </header>
 
         <section id="sec-dash">
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; margin-bottom: 2rem;">
-                <div class="card"><h4>الطلاب</h4><h2 id="st-count">0</h2></div>
-                <div class="card"><h4>الدروس</h4><h2 id="content-count">0</h2></div>
-                <div class="card"><h4>الإيرادات</h4><h2 id="st-money" style="color:var(--success)">0 ج.م</h2></div>
-                <div class="card"><h4>الديون</h4><h2 id="st-debts" style="color:var(--warning)">0 ج.م</h2></div>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; margin-bottom: 2.5rem;">
+                <div class="card" style="border-bottom: 4px solid var(--primary);">
+                    <h4 style="color: var(--text-dim); font-size: 1.1rem; margin-bottom: 10px;">الطلاب المضافين</h4>
+                    <h2 id="st-count" style="font-size: 2.5rem; font-weight: 800;">0</h2>
+                </div>
+                <div class="card" style="border-bottom: 4px solid #8b5cf6;">
+                    <h4 style="color: var(--text-dim); font-size: 1.1rem; margin-bottom: 10px;">إجمالي الدروس</h4>
+                    <h2 id="content-count" style="font-size: 2.5rem; font-weight: 800;">0</h2>
+                </div>
+                <div class="card" style="border-bottom: 4px solid var(--success);">
+                    <h4 style="color: var(--text-dim); font-size: 1.1rem; margin-bottom: 10px;">الإيرادات المحصلة</h4>
+                    <h2 id="st-money" style="font-size: 2.5rem; font-weight: 800; color:var(--success)">0 ج.م</h2>
+                </div>
+                <div class="card" style="border-bottom: 4px solid var(--warning);">
+                    <h4 style="color: var(--text-dim); font-size: 1.1rem; margin-bottom: 10px;">الديون المتبقية</h4>
+                    <h2 id="st-debts" style="font-size: 2.5rem; font-weight: 800; color:var(--warning)">0 ج.م</h2>
+                </div>
             </div>
             <div class="card">
-                <h3><i class="fas fa-chart-bar"></i> التحليل المالي والنمو</h3>
-                <canvas id="mainChart" height="100"></canvas>
+                <h3><i class="fas fa-chart-line"></i> التحليل المالي والنمو</h3>
+                <canvas id="mainChart" height="90"></canvas>
             </div>
         </section>
 
-        <!-- قسم إدارة المجتمع الجديد -->
         <section id="sec-community" style="display: none;">
             <div class="card">
                 <h3><i class="fas fa-bullhorn"></i> نشر إعلان عام للطلاب</h3>
-                <div style="display: grid; grid-template-columns: 2fr 1fr auto; gap: 10px;">
+                <div style="display: grid; grid-template-columns: 2fr 1fr auto; gap: 15px;">
                     <input type="text" id="admin-post-txt" placeholder="اكتب التنبيه هنا...">
                     <select id="admin-post-lvl"><option value="1">مستوى 1</option><option value="2">مستوى 2</option><option value="3">مستوى 3</option></select>
-                    <button class="btn btn-primary" onclick="adminSendPost()">نشر الآن</button>
+                    <button class="btn btn-primary" onclick="adminSendPost()"><i class="fas fa-paper-plane"></i> نشر الآن</button>
                 </div>
             </div>
             <div class="card">
@@ -122,26 +228,26 @@
         <section id="sec-students" style="display: none;">
             <div class="card">
                 <h3><i class="fas fa-user-plus"></i> إضافة طالب جديد</h3>
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px;">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
                     <input type="text" id="std-name" placeholder="الاسم بالكامل">
                     <input type="text" id="std-code" placeholder="كود الطالب">
                     <select id="std-level"><option value="1">مستوى 1</option><option value="2">مستوى 2</option><option value="3">مستوى 3</option></select>
                     <input type="text" id="std-phone" placeholder="رقم واتساب">
-                    <button class="btn btn-success" onclick="addStudent()">حفظ الطالب</button>
+                    <button class="btn btn-success" onclick="addStudent()"><i class="fas fa-save"></i> حفظ الطالب</button>
                 </div>
             </div>
             <div class="card">
                 <h3><i class="fas fa-star" style="color: var(--warning);"></i> تقييم يومي سريع (من الموقع الثاني)</h3>
-                <div style="display: grid; grid-template-columns: 2fr 1fr 1fr 1fr auto; gap: 10px;">
+                <div style="display: grid; grid-template-columns: 2fr 1fr 1fr 1fr auto; gap: 15px;">
                     <select id="eval-student-select"><option value="">اختر الطالب...</option></select>
                     <input type="number" id="eval-work" placeholder="الواجب">
                     <input type="number" id="eval-perf" placeholder="الأداء">
                     <input type="number" id="eval-beh" placeholder="سلوك">
-                    <button class="btn btn-primary" onclick="submitEvaluation()">حفظ التقييم</button>
+                    <button class="btn btn-primary" onclick="submitEvaluation()"><i class="fas fa-check-circle"></i> حفظ التقييم</button>
                 </div>
             </div>
             <div class="card">
-                <input type="text" id="search-std" placeholder="بحث باسم الطالب..." onkeyup="renderStudents()">
+                <input type="text" id="search-std" placeholder="بحث باسم الطالب..." onkeyup="renderStudents()" style="margin-bottom: 1rem;">
                 <table>
                     <thead><tr><th>الاسم</th><th>الكود</th><th>المستوى</th><th>واتساب</th><th>إجراءات</th></tr></thead>
                     <tbody id="students-list"></tbody>
@@ -153,14 +259,14 @@
             <div class="card">
                 <h3><i class="fas fa-edit"></i> إضافة درس جديد</h3>
                 <input type="text" id="lesson-title" placeholder="عنوان الدرس">
-                <textarea id="lesson-desc" placeholder="وصف الدرس..."></textarea>
-                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px;">
+                <textarea id="lesson-desc" placeholder="وصف الدرس..." rows="3"></textarea>
+                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px;">
                     <input type="text" id="lesson-video" placeholder="رابط اليوتيوب">
                     <input type="text" id="lesson-code" placeholder="رابط GitHub">
                     <input type="text" id="lesson-pdf" placeholder="رابط PDF">
                 </div>
                 <select id="lesson-level-select"><option value="1">مستوى 1</option><option value="2">مستوى 2</option><option value="3">مستوى 3</option></select>
-                <button class="btn btn-primary" style="width: 100%;" onclick="uploadLesson()">نشر المحتوى</button>
+                <button class="btn btn-primary" style="width: 100%; margin-top: 15px; justify-content: center;" onclick="uploadLesson()"><i class="fas fa-cloud-upload-alt"></i> نشر المحتوى</button>
             </div>
             <div class="card">
                 <table>
@@ -172,27 +278,27 @@
 
         <section id="sec-daily-att" style="display: none;">
             <div class="card">
-                <h3>تحديد الحضور</h3>
-                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px;">
+                <h3><i class="fas fa-calendar-check"></i> تحديد الحضور</h3>
+                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px;">
                     <input type="date" id="att-date-input">
                     <select id="att-level-select"><option value="1">مستوى 1</option><option value="2">مستوى 2</option><option value="3">مستوى 3</option></select>
-                    <button class="btn btn-primary" onclick="loadDailyAttendanceList()">عرض القائمة</button>
+                    <button class="btn btn-primary" onclick="loadDailyAttendanceList()"><i class="fas fa-list"></i> عرض القائمة</button>
                 </div>
             </div>
             <div class="card">
                 <table><thead><tr><th>الطالب</th><th>الحالة</th><th>تنبيه</th></tr></thead><tbody id="daily-att-list"></tbody></table>
-                <button class="btn btn-success" style="width: 100%; margin-top: 20px;" onclick="saveDailyAttendance()">حفظ الكشف</button>
+                <button class="btn btn-success" style="width: 100%; margin-top: 20px; justify-content: center;" onclick="saveDailyAttendance()"><i class="fas fa-save"></i> حفظ الكشف</button>
             </div>
         </section>
 
         <section id="sec-homework" style="display: none;">
             <div class="card">
-                <h3>تسجيل واجب</h3>
-                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr auto; gap: 10px;">
+                <h3><i class="fas fa-book-open"></i> تسجيل واجب</h3>
+                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr auto; gap: 15px;">
                     <select id="hw-std-select"></select>
                     <input type="text" id="hw-title" placeholder="اسم الواجب">
                     <select id="hw-status"><option value="تم">تم ✅</option><option value="لم يتم">لم يتم ❌</option></select>
-                    <button class="btn btn-primary" onclick="addHomework()">حفظ</button>
+                    <button class="btn btn-primary" onclick="addHomework()"><i class="fas fa-plus"></i> حفظ</button>
                 </div>
             </div>
             <div class="card">
@@ -202,12 +308,12 @@
 
         <section id="sec-billing" style="display: none;">
             <div class="card">
-                <h3>فاتورة جديدة</h3>
-                <div style="display: grid; grid-template-columns: 2fr 1fr 1fr auto; gap: 10px;">
+                <h3><i class="fas fa-file-invoice"></i> فاتورة جديدة</h3>
+                <div style="display: grid; grid-template-columns: 2fr 1fr 1fr auto; gap: 15px;">
                     <select id="inv-select-std"></select>
                     <input type="number" id="inv-amt" placeholder="المبلغ">
                     <input type="number" id="inv-paid" placeholder="المدفوع">
-                    <button class="btn btn-primary" onclick="createInvoice()">إصدار</button>
+                    <button class="btn btn-primary" onclick="createInvoice()"><i class="fas fa-file-signature"></i> إصدار</button>
                 </div>
             </div>
             <div class="card">
@@ -217,42 +323,42 @@
 
         <section id="sec-expenses" style="display: none;">
             <div class="card">
-                <h3>إضافة مصروف</h3>
-                <div style="display: grid; grid-template-columns: 2fr 1fr auto; gap: 10px;">
+                <h3><i class="fas fa-money-bill-wave"></i> إضافة مصروف</h3>
+                <div style="display: grid; grid-template-columns: 2fr 1fr auto; gap: 15px;">
                     <input type="text" id="exp-title" placeholder="البيان">
                     <input type="number" id="exp-amt" placeholder="المبلغ">
-                    <button class="btn btn-danger" onclick="addExpense()">حفظ</button>
+                    <button class="btn btn-danger" onclick="addExpense()"><i class="fas fa-plus-circle"></i> حفظ</button>
                 </div>
             </div>
             <div class="card"><table><thead><tr><th>البيان</th><th>التاريخ</th><th>المبلغ</th></tr></thead><tbody id="exp-list"></tbody></table></div>
         </section>
 
         <section id="sec-exams" style="display: none;">
-            <div class="card"><h3>إضافة درجة</h3><div style="display: grid; grid-template-columns: 1fr 1fr 1fr auto; gap: 10px;"><select id="exam-std-select"></select><input type="text" id="exam-name" placeholder="اسم الاختبار"><input type="number" id="exam-grade" placeholder="الدرجة"><button class="btn btn-warning" onclick="addGrade()">حفظ</button></div></div>
+            <div class="card"><h3><i class="fas fa-marker"></i> إضافة درجة</h3><div style="display: grid; grid-template-columns: 1fr 1fr 1fr auto; gap: 15px;"><select id="exam-std-select"></select><input type="text" id="exam-name" placeholder="اسم الاختبار"><input type="number" id="exam-grade" placeholder="الدرجة"><button class="btn btn-warning" onclick="addGrade()"><i class="fas fa-save"></i> حفظ</button></div></div>
             <div class="card"><table><thead><tr><th>الطالب</th><th>الاختبار</th><th>الدرجة</th></tr></thead><tbody id="grades-list"></tbody></table></div>
         </section>
 
         <section id="sec-staff" style="display: none;">
-            <div class="card"><h3>إضافة موظف</h3><div style="display: grid; grid-template-columns: 1fr 1fr 1fr auto; gap: 10px;"><input type="text" id="staff-name" placeholder="الاسم"><input type="text" id="staff-role" placeholder="الوظيفة"><input type="number" id="staff-salary" placeholder="الراتب"><button class="btn btn-primary" onclick="addStaff()">إضافة</button></div></div>
+            <div class="card"><h3><i class="fas fa-user-tie"></i> إضافة موظف</h3><div style="display: grid; grid-template-columns: 1fr 1fr 1fr auto; gap: 15px;"><input type="text" id="staff-name" placeholder="الاسم"><input type="text" id="staff-role" placeholder="الوظيفة"><input type="number" id="staff-salary" placeholder="الراتب"><button class="btn btn-primary" onclick="addStaff()"><i class="fas fa-plus"></i> إضافة</button></div></div>
             <div class="card"><table><thead><tr><th>الاسم</th><th>الوظيفة</th><th>الراتب</th></tr></thead><tbody id="staff-list"></tbody></table></div>
         </section>
 
         <section id="sec-schedule" style="display: none;">
-            <div class="card"><h3>جدول المواعيد</h3><div style="display: grid; grid-template-columns: 1fr 1fr 1fr auto; gap: 10px;"><input type="text" id="sch-group" placeholder="المجموعة"><select id="sch-day"><option>السبت</option><option>الأحد</option><option>الإثنين</option><option>الثلاثاء</option><option>الأربعاء</option><option>الخميس</option></select><input type="time" id="sch-time"><button class="btn btn-success" onclick="addSchedule()">إضافة</button></div></div>
+            <div class="card"><h3><i class="fas fa-calendar-alt"></i> جدول المواعيد</h3><div style="display: grid; grid-template-columns: 1fr 1fr 1fr auto; gap: 15px;"><input type="text" id="sch-group" placeholder="المجموعة"><select id="sch-day"><option>السبت</option><option>الأحد</option><option>الإثنين</option><option>الثلاثاء</option><option>الأربعاء</option><option>الخميس</option></select><input type="time" id="sch-time"><button class="btn btn-success" onclick="addSchedule()"><i class="fas fa-plus"></i> إضافة</button></div></div>
             <div class="card"><table><thead><tr><th>المجموعة</th><th>اليوم</th><th>الوقت</th></tr></thead><tbody id="sch-list"></tbody></table></div>
         </section>
 
         <section id="sec-report-att" style="display: none;">
             <div class="card">
-                <h3>تقرير غياب الشهر</h3>
-                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr auto; gap: 10px;">
+                <h3><i class="fas fa-table"></i> تقرير غياب الشهر</h3>
+                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr auto; gap: 15px;">
                     <div class="selection-container"> 
                         <select id="monthSelect" class="form-select">
                             <option value="1">يناير</option><option value="2">فبراير</option><option value="3">مارس</option><option value="4">أبريل</option><option value="5">مايو</option><option value="6">يونيو</option><option value="7">يوليو</option><option value="8">أغسطس</option><option value="9">سبتمبر</option><option value="10">أكتوبر</option><option value="11">نوفمبر</option><option value="12">ديسمبر</option>
                         </select>
                     </div>                    
                     <select id="rep-level-select"><option value="1">مستوى 1</option><option value="2">مستوى 2</option><option value="3">مستوى 3</option></select>
-                    <button class="btn btn-primary" onclick="renderExcelReport()">عرض التقرير</button>
+                    <button class="btn btn-primary" onclick="renderExcelReport()"><i class="fas fa-eye"></i> عرض التقرير</button>
                 </div>
             </div>
             <div class="card" style="overflow-x: auto;"><table id="excel-table-main"><thead id="excel-header"></thead><tbody id="excel-body"></tbody></table></div>
@@ -260,9 +366,9 @@
 
         <section id="sec-settings" style="display: none;">
             <div class="card">
-                <h3>إدارة البيانات</h3>
-                <button class="btn btn-primary" onclick="saveBackup()">تصدير نسخة احتياطية</button>
-                <button class="btn btn-danger" onclick="factoryReset()" style="margin-top: 1rem;">فورمات الموقع (حذف شامل)</button>
+                <h3><i class="fas fa-cog"></i> إدارة البيانات</h3>
+                <button class="btn btn-primary" onclick="saveBackup()"><i class="fas fa-download"></i> تصدير نسخة احتياطية</button>
+                <button class="btn btn-danger" onclick="factoryReset()" style="margin-top: 1rem;"><i class="fas fa-trash-alt"></i> فورمات الموقع (حذف شامل)</button>
             </div>
         </section>
     </main>
@@ -322,7 +428,7 @@
         function showSec(id) {
             document.querySelectorAll('section').forEach(s => s.style.display = 'none');
             document.getElementById('sec-'+id).style.display = 'block';
-            document.getElementById('page-title').innerText = document.querySelector(`button[onclick="showSec('${id}')"]`).innerText;
+            document.getElementById('page-title').innerHTML = document.querySelector(`button[onclick="showSec('${id}')"]`).innerHTML;
         }
 
         function syncDropdowns() {
@@ -342,7 +448,7 @@
             document.getElementById('admin-post-txt').value = "";
         }
         function renderAdminCommunity() {
-            document.getElementById('admin-comm-list').innerHTML = (window.db_community || []).reverse().map(p => `<tr><td>${p.sender}</td><td>${p.level}</td><td>${p.text}</td><td>${p.time}</td><td><button class="btn-danger" onclick="fbRemove(fbRef(db, 'community/${p.fbKey}'))">حذف</button></td></tr>`).join('');
+            document.getElementById('admin-comm-list').innerHTML = (window.db_community || []).reverse().map(p => `<tr><td>${p.sender}</td><td>${p.level}</td><td>${p.text}</td><td>${p.time}</td><td><button class="btn btn-danger" onclick="fbRemove(fbRef(db, 'community/${p.fbKey}'))"><i class="fas fa-trash"></i></button></td></tr>`).join('');
         }
 
         function addStudent() {
@@ -354,7 +460,7 @@
         function renderStudents() {
             const term = document.getElementById('search-std').value.toLowerCase();
             document.getElementById('students-list').innerHTML = (window.db_students || []).filter(s => s.name.toLowerCase().includes(term))
-                .map(s => `<tr><td>${s.name}</td><td>${s.code}</td><td>${s.level}</td><td>${s.phone}</td><td><button onclick="fbRemove(fbRef(db, 'students/${s.fbKey}'))">❌</button></td></tr>`).join('');
+                .map(s => `<tr><td>${s.name}</td><td>${s.code}</td><td>${s.level}</td><td>${s.phone}</td><td><button class="btn btn-danger" onclick="fbRemove(fbRef(db, 'students/${s.fbKey}'))"><i class="fas fa-trash"></i></button></td></tr>`).join('');
         }
 
         function uploadLesson() {
@@ -364,7 +470,7 @@
             alert("تم النشر");
         }
         function renderContent() {
-            document.getElementById('content-list').innerHTML = (window.db_content || []).map(c => `<tr><td>${c.title}</td><td>${c.level}</td><td>${c.date}</td><td><button onclick="fbRemove(fbRef(db, 'content/${c.fbKey}'))">حذف</button></td></tr>`).join('');
+            document.getElementById('content-list').innerHTML = (window.db_content || []).map(c => `<tr><td>${c.title}</td><td>${c.level}</td><td>${c.date}</td><td><button class="btn btn-danger" onclick="fbRemove(fbRef(db, 'content/${c.fbKey}'))"><i class="fas fa-trash"></i></button></td></tr>`).join('');
         }
 
         function submitEvaluation() {
@@ -376,7 +482,7 @@
 
         function loadDailyAttendanceList() {
             const level = document.getElementById('att-level-select').value;
-            document.getElementById('daily-att-list').innerHTML = (window.db_students || []).filter(s => s.level == level).map(s => `<tr><td>${s.name}</td><td><select class="daily-status-select" data-code="${s.code}"><option value="ح">حضور</option><option value="غ">غياب</option></select></td><td><button onclick="window.open('https://wa.me/${s.phone}')">🔔</button></td></tr>`).join('');
+            document.getElementById('daily-att-list').innerHTML = (window.db_students || []).filter(s => s.level == level).map(s => `<tr><td>${s.name}</td><td><select class="daily-status-select" data-code="${s.code}"><option value="ح">حضور</option><option value="غ">غياب</option></select></td><td><button class="btn btn-success" onclick="window.open('https://wa.me/${s.phone}')"><i class="fab fa-whatsapp"></i></button></td></tr>`).join('');
         }
         function saveDailyAttendance() {
             const date = document.getElementById('att-date-input').value;
@@ -389,7 +495,7 @@
             fbPush(fbRef(db, 'invoices'), { date: new Date().toLocaleDateString('ar-EG'), name: window.db_students[sIdx].name, phone: window.db_students[sIdx].phone, amt, paid, remaining: amt - paid });
         }
         function renderInvoices() {
-            document.getElementById('inv-list').innerHTML = (window.db_invoices || []).map((iv, i) => `<tr><td>${iv.name}</td><td>${iv.amt}</td><td>${iv.paid}</td><td>${iv.remaining}</td><td><button onclick="fbUpdate(fbRef(db, 'invoices/${iv.fbKey}'), {paid: ${iv.paid + 10}, remaining: ${iv.remaining - 10}})">+10ج</button></td></tr>`).join('');
+            document.getElementById('inv-list').innerHTML = (window.db_invoices || []).map((iv, i) => `<tr><td>${iv.name}</td><td>${iv.amt}</td><td>${iv.paid}</td><td>${iv.remaining}</td><td><button class="btn btn-success" onclick="fbUpdate(fbRef(db, 'invoices/${iv.fbKey}'), {paid: ${iv.paid + 10}, remaining: ${iv.remaining - 10}})">+10ج</button></td></tr>`).join('');
         }
 
         function updateStats() {
