@@ -22,7 +22,6 @@
             --shadow: 0 10px 25px -5px rgba(0,0,0,0.05), 0 8px 10px -6px rgba(0,0,0,0.01);
         }
         
-        /* شريط التمرير (Scrollbar) */
         ::-webkit-scrollbar { width: 8px; height: 8px; }
         ::-webkit-scrollbar-track { background: var(--bg-body); }
         ::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 10px; opacity: 0.8; }
@@ -31,7 +30,6 @@
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cairo', sans-serif; transition: background-color 0.3s, color 0.3s, border-color 0.3s; }
         body { background: var(--bg-body); color: var(--text-main); display: flex; min-height: 100vh; overflow-x: hidden; }
         
-        /* القائمة الجانبية */
         .sidebar { 
             width: 260px; background: var(--bg-card); border-left: 1px solid var(--border); 
             padding: 1.5rem 1rem; display: flex; flex-direction: column; height: 100vh; 
@@ -40,10 +38,8 @@
         }
         .sidebar h3 { font-weight: 800; letter-spacing: 0.5px; }
         
-        /* المحتوى الرئيسي */
         .main-content { margin-right: 260px; flex: 1; padding: 2.5rem; width: calc(100% - 260px); }
         
-        /* الأزرار والتأثيرات */
         .btn { 
             padding: 0.7rem 1.4rem; border-radius: var(--radius-md); border: none; 
             cursor: pointer; font-weight: 700; display: inline-flex; align-items: center; 
@@ -55,6 +51,7 @@
         .btn-success { background: linear-gradient(135deg, #10b981, #059669); color: white; }
         .btn-danger { background: linear-gradient(135deg, #ef4444, #dc2626); color: white; }
         .btn-warning { background: linear-gradient(135deg, #f59e0b, #d97706); color: white; }
+        .btn-info { background: linear-gradient(135deg, #0ea5e9, #0284c7); color: white; }
         .btn-outline { 
             background: transparent; border: 1px solid transparent; color: var(--text-dim); 
             margin-bottom: 8px; width: 100%; text-align: right; padding: 0.8rem 1rem;
@@ -63,7 +60,6 @@
         .btn-outline i { width: 20px; text-align: center; }
         .btn-outline:hover { background: rgba(79, 70, 229, 0.1); border-color: rgba(79, 70, 229, 0.2); color: var(--primary); transform: translateX(-5px); box-shadow: none;}
         
-        /* البطاقات الكروت */
         .card { 
             background: var(--bg-card); padding: 1.8rem; border-radius: var(--radius-lg); 
             border: 1px solid var(--border); margin-bottom: 1.5rem; 
@@ -77,7 +73,6 @@
         .card:hover { transform: translateY(-3px); border-color: rgba(79, 70, 229, 0.3); }
         .card h3 { margin-bottom: 1.2rem; display: flex; align-items: center; gap: 10px; font-weight: 800; color: var(--primary); }
         
-        /* المدخلات والنماذج */
         input, select, textarea { 
             width: 100%; padding: 0.8rem 1rem; margin: 0.5rem 0; 
             background: var(--bg-body); border: 1px solid var(--border); 
@@ -86,25 +81,21 @@
         }
         input:focus, select:focus, textarea:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15); }
         
-        /* الجداول */
         table { width: 100%; border-collapse: separate; border-spacing: 0; margin-top: 1rem; background: var(--bg-card); border-radius: var(--radius-md); overflow: hidden; box-shadow: 0 0 0 1px var(--border); }
         th { background: rgba(79, 70, 229, 0.05); padding: 14px; text-align: center; color: var(--primary); font-size: 0.9rem; font-weight: 700; text-transform: uppercase; }
         td { padding: 14px; border-bottom: 1px solid var(--border); font-size: 0.95rem; text-align: center; transition: background 0.2s; }
         tr:last-child td { border-bottom: none; }
         tr:hover td { background: rgba(79, 70, 229, 0.03); }
         
-        /* نصوص وألوان أخرى */
         #live-clock { font-weight: 800; color: var(--primary); font-size: 1.2rem; background: rgba(79, 70, 229, 0.1); padding: 0.4rem 1rem; border-radius: 20px; }
         #page-title { font-weight: 800; font-size: 1.8rem; position: relative; }
         .status-h { background: rgba(16, 185, 129, 0.1) !important; color: var(--success) !important; font-weight: 800; }
         .status-g { background: rgba(239, 68, 68, 0.1) !important; color: var(--danger) !important; font-weight: 800; }
         .sticky-col { position: sticky; right: 0; background: var(--bg-card) !important; z-index: 5; border-left: 2px solid var(--primary) !important; box-shadow: -2px 0 5px rgba(0,0,0,0.05); }
         
-        /* الانيميشن الخاص بالتنقل بين الصفحات */
         section { animation: fadeIn 0.4s ease-out forwards; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* شاشة تسجيل الدخول بتصميم فاتح وعصري (Light Mode Forced) */
         #login-screen { 
             position: fixed; inset: 0; 
             background: linear-gradient(135deg, #f6f8fd 0%, #f1f5f9 100%); 
@@ -129,6 +120,9 @@
         .login-box input:focus { background: #ffffff; border-color: var(--primary); }
         .login-box input::placeholder { color: #94a3b8; }
         
+        .exam-question-box { background: rgba(0,0,0,0.02); border: 1px solid var(--border); padding: 1.5rem; border-radius: var(--radius-md); margin-bottom: 1rem; position: relative; }
+        [data-theme="dark"] .exam-question-box { background: rgba(255,255,255,0.02); }
+
         @keyframes slideDown { from { opacity: 0; transform: translateY(-30px) scale(0.95); } to { opacity: 1; transform: translateY(0) scale(1); } }
         
         @media print { .no-print { display: none !important; } .main-content { margin: 0; width: 100%; padding: 0;} .card { box-shadow: none; border: 1px solid #000;} }
@@ -140,8 +134,9 @@
         <div class="login-box">
             <i class="fas fa-user-shield" style="font-size: 3.5rem; color: var(--primary); margin-bottom: 1rem; filter: drop-shadow(0 4px 6px rgba(79,70,229,0.3));"></i>
             <h2>🔐 دخول الإدارة</h2>
-            <input type="text" id="u" placeholder="اسم المستخدم">
-            <input type="password" id="p" placeholder="كلمة المرور">
+            <!-- تم إضافة onkeypress للضغط على زر Enter للسهولة -->
+            <input type="text" id="u" placeholder="اسم المستخدم" onkeypress="if(event.key === 'Enter') login()">
+            <input type="password" id="p" placeholder="كلمة المرور" onkeypress="if(event.key === 'Enter') login()">
             <button class="btn btn-primary" style="width: 100%; justify-content: center; margin-top: 1rem; padding: 1rem; font-size: 1.1rem; border-radius: 12px;" onclick="login()">تسجيل الدخول</button>
         </div>
     </div>
@@ -158,6 +153,9 @@
             <button class="btn btn-outline" onclick="showSec('students')"><i class="fas fa-user-graduate"></i> الطلاب والتقييم</button>
             <button class="btn btn-outline" onclick="showSec('community')"><i class="fas fa-comments"></i> إدارة المجتمع</button>
             <button class="btn btn-outline" onclick="showSec('content')"><i class="fas fa-upload"></i> رفع المحتوى والدروس</button>
+            <!-- القسم الجديد للامتحانات الإلكترونية -->
+            <button class="btn btn-outline" onclick="showSec('online-exams')"><i class="fas fa-laptop-code"></i> الامتحانات الإلكترونية</button>
+            
             <button class="btn btn-outline" onclick="showSec('daily-att')"><i class="fas fa-calendar-check"></i> التحضير اليومي</button>
             <button class="btn btn-outline" onclick="showSec('homework')"><i class="fas fa-book"></i> سجل الواجبات</button>
             <button class="btn btn-outline" onclick="showSec('exams')"><i class="fas fa-marker"></i> سجل الدرجات</button>
@@ -204,6 +202,38 @@
             <div class="card">
                 <h3><i class="fas fa-chart-line"></i> التحليل المالي والنمو</h3>
                 <canvas id="mainChart" height="90"></canvas>
+            </div>
+        </section>
+
+        <!-- القسم الجديد للامتحانات الإلكترونية -->
+        <section id="sec-online-exams" style="display: none;">
+            <div class="card">
+                <h3><i class="fas fa-plus-circle"></i> صانع الامتحانات التفاعلي</h3>
+                <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 15px; margin-bottom: 1rem;">
+                    <input type="text" id="new-exam-title" placeholder="عنوان الامتحان (مثال: اختبار الشهر الأول HTML)">
+                    <select id="new-exam-level">
+                        <option value="1">مستوى 1</option>
+                        <option value="2">مستوى 2</option>
+                        <option value="3">مستوى 3</option>
+                    </select>
+                </div>
+                
+                <div id="questions-container">
+                    <!-- سيتم إضافة الأسئلة هنا ديناميكياً -->
+                </div>
+                
+                <div style="display: flex; gap: 15px; margin-top: 15px;">
+                    <button class="btn btn-info" onclick="addQuestionUI()"><i class="fas fa-plus"></i> إضافة سؤال جديد</button>
+                    <button class="btn btn-success" onclick="publishOnlineExam()"><i class="fas fa-upload"></i> نشر الامتحان للطلاب</button>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3><i class="fas fa-list-alt"></i> الامتحانات المنشورة حالياً</h3>
+                <table>
+                    <thead><tr><th>عنوان الامتحان</th><th>المستوى</th><th>عدد الأسئلة</th><th>تاريخ النشر</th><th>إجراء</th></tr></thead>
+                    <tbody id="online-exams-list"></tbody>
+                </table>
             </div>
         </section>
 
@@ -334,8 +364,11 @@
         </section>
 
         <section id="sec-exams" style="display: none;">
-            <div class="card"><h3><i class="fas fa-marker"></i> إضافة درجة</h3><div style="display: grid; grid-template-columns: 1fr 1fr 1fr auto; gap: 15px;"><select id="exam-std-select"></select><input type="text" id="exam-name" placeholder="اسم الاختبار"><input type="number" id="exam-grade" placeholder="الدرجة"><button class="btn btn-warning" onclick="addGrade()"><i class="fas fa-save"></i> حفظ</button></div></div>
-            <div class="card"><table><thead><tr><th>الطالب</th><th>الاختبار</th><th>الدرجة</th></tr></thead><tbody id="grades-list"></tbody></table></div>
+            <div class="card"><h3><i class="fas fa-marker"></i> إضافة درجة (يدوي)</h3><div style="display: grid; grid-template-columns: 1fr 1fr 1fr auto; gap: 15px;"><select id="exam-std-select"></select><input type="text" id="exam-name" placeholder="اسم الاختبار"><input type="text" id="exam-grade" placeholder="الدرجة (مثال 9/10)"><button class="btn btn-warning" onclick="addGrade()"><i class="fas fa-save"></i> حفظ</button></div></div>
+            <div class="card">
+                <h3><i class="fas fa-clipboard-list"></i> سجل درجات الامتحانات (تتضمن الامتحانات الإلكترونية)</h3>
+                <table><thead><tr><th>الطالب</th><th>الاختبار</th><th>الدرجة</th></tr></thead><tbody id="grades-list"></tbody></table>
+            </div>
         </section>
 
         <section id="sec-staff" style="display: none;">
@@ -407,6 +440,13 @@
             window.db_invoices = snap.val() ? Object.entries(snap.val()).map(([k, v]) => ({...v, fbKey: k})) : [];
             renderInvoices(); updateStats();
         });
+        
+        // مزامنة الامتحانات الإلكترونية
+        fbOnValue(fbRef(db, 'online_exams'), (snap) => {
+            window.db_online_exams = snap.val() ? Object.entries(snap.val()).map(([k, v]) => ({...v, fbKey: k})) : [];
+            renderOnlineExams();
+        });
+
         fbOnValue(fbRef(db, 'expenses'), (snap) => { window.db_expenses = snap.val() ? Object.values(snap.val()) : []; renderExpenses(); updateStats(); });
         fbOnValue(fbRef(db, 'attendance'), (snap) => { window.db_attendance = snap.val() ? Object.values(snap.val()) : []; });
         fbOnValue(fbRef(db, 'homework'), (snap) => { window.db_homework = snap.val() ? Object.values(snap.val()) : []; renderHomework(); });
@@ -422,7 +462,7 @@
                 document.getElementById('login-screen').style.display = 'none';
                 document.getElementById('app').style.display = 'block';
                 initChart();
-            } else { alert('خطأ!'); }
+            } else { alert('❌ خطأ في اسم المستخدم أو كلمة المرور!'); }
         }
 
         function showSec(id) {
@@ -439,6 +479,91 @@
             if(document.getElementById('eval-student-select')) document.getElementById('eval-student-select').innerHTML = '<option value="">اختر...</option>' + keyOptions;
             if(document.getElementById('inv-select-std')) document.getElementById('inv-select-std').innerHTML = (window.db_students || []).map((s,i) => `<option value="${i}">${s.name}</option>`).join('');
         }
+
+        /* --- نظام الامتحانات الإلكترونية --- */
+        function addQuestionUI() {
+            const container = document.getElementById('questions-container');
+            const qIndex = container.children.length + 1;
+            const div = document.createElement('div');
+            div.className = "exam-question-box";
+            div.innerHTML = `
+                <div style="font-weight: bold; margin-bottom: 10px; color: var(--primary);">السؤال ${qIndex}</div>
+                <input type="text" placeholder="اكتب نص السؤال هنا..." id="q-text-${qIndex}">
+                <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px; margin-top:10px;">
+                    <input type="text" placeholder="الخيار الأول" id="q-opt1-${qIndex}">
+                    <input type="text" placeholder="الخيار الثاني" id="q-opt2-${qIndex}">
+                    <input type="text" placeholder="الخيار الثالث" id="q-opt3-${qIndex}">
+                    <input type="text" placeholder="الخيار الرابع" id="q-opt4-${qIndex}">
+                </div>
+                <select id="q-ans-${qIndex}" style="margin-top:10px; border-color: var(--success); color: var(--success); font-weight: bold;">
+                    <option value="1">الإجابة الصحيحة هي: الخيار الأول</option>
+                    <option value="2">الإجابة الصحيحة هي: الخيار الثاني</option>
+                    <option value="3">الإجابة الصحيحة هي: الخيار الثالث</option>
+                    <option value="4">الإجابة الصحيحة هي: الخيار الرابع</option>
+                </select>
+                <button class="btn btn-danger" style="margin-top:10px;" onclick="this.parentElement.remove()"><i class="fas fa-trash"></i> حذف السؤال</button>
+            `;
+            container.appendChild(div);
+        }
+
+        function publishOnlineExam() {
+            const title = document.getElementById('new-exam-title').value;
+            const level = document.getElementById('new-exam-level').value;
+            const container = document.getElementById('questions-container');
+            const questions = [];
+
+            // نمر على كل عناصر الأسئلة
+            Array.from(container.children).forEach((child, index) => {
+                // استخراج الـ ID الحقيقي من عناصر الإدخال بدلاً من الاعتماد على الفهرس فقط
+                const textInput = child.querySelector('input[id^="q-text-"]');
+                if(!textInput) return;
+                
+                const qId = textInput.id.split('-')[2]; // استخراج الرقم
+                const text = document.getElementById(`q-text-${qId}`).value;
+                const opt1 = document.getElementById(`q-opt1-${qId}`).value;
+                const opt2 = document.getElementById(`q-opt2-${qId}`).value;
+                const opt3 = document.getElementById(`q-opt3-${qId}`).value;
+                const opt4 = document.getElementById(`q-opt4-${qId}`).value;
+                const answer = document.getElementById(`q-ans-${qId}`).value;
+
+                if(text && opt1 && opt2) { // تأكيد وجود سؤال وخيارين على الأقل
+                    questions.push({
+                        text: text,
+                        options: [opt1, opt2, opt3, opt4].filter(o => o.trim() !== ""), // فلترة الخيارات الفارغة
+                        answer: parseInt(answer) - 1 // نطرح 1 لتبدأ من صفر برمجياً
+                    });
+                }
+            });
+
+            if(!title) return alert("❌ يرجى كتابة عنوان للامتحان");
+            if(questions.length === 0) return alert("❌ يرجى إضافة سؤال واحد على الأقل وإكمال بياناته");
+
+            fbPush(fbRef(db, 'online_exams'), { 
+                title, 
+                level, 
+                questions, 
+                date: new Date().toLocaleDateString('ar-EG') 
+            });
+            
+            alert("✅ تم نشر الامتحان للطلاب بنجاح!");
+            document.getElementById('new-exam-title').value = "";
+            container.innerHTML = "";
+        }
+
+        function renderOnlineExams() {
+            const list = document.getElementById('online-exams-list');
+            if(!list) return;
+            list.innerHTML = (window.db_online_exams || []).map(e => `
+                <tr>
+                    <td style="font-weight: bold; color: var(--primary);">${e.title}</td>
+                    <td>مستوى ${e.level}</td>
+                    <td>${e.questions ? e.questions.length : 0} أسئلة</td>
+                    <td>${e.date}</td>
+                    <td><button class="btn btn-danger" onclick="if(confirm('هل أنت متأكد من حذف الامتحان؟')) fbRemove(fbRef(db, 'online_exams/${e.fbKey}'))"><i class="fas fa-trash"></i> حذف</button></td>
+                </tr>
+            `).reverse().join('');
+        }
+        /* --- نهاية قسم الامتحانات --- */
 
         // المجتمع للإدارة
         function adminSendPost() {
@@ -509,8 +634,10 @@
 
         function addExpense() { fbPush(fbRef(db, 'expenses'), { title: document.getElementById('exp-title').value, amt: parseFloat(document.getElementById('exp-amt').value), date: new Date().toLocaleDateString() }); }
         function renderExpenses() { document.getElementById('exp-list').innerHTML = (window.db_expenses || []).map(ex => `<tr><td>${ex.title}</td><td>${ex.date}</td><td>${ex.amt}</td></tr>`).join(''); }
+        
         function addGrade() { fbPush(fbRef(db, 'grades'), { std: document.getElementById('exam-std-select').value, name: document.getElementById('exam-name').value, grade: document.getElementById('exam-grade').value }); }
-        function renderGrades() { document.getElementById('grades-list').innerHTML = (window.db_grades || []).map(g => `<tr><td>${g.std}</td><td>${g.name}</td><td>${g.grade}</td></tr>`).join(''); }
+        function renderGrades() { document.getElementById('grades-list').innerHTML = (window.db_grades || []).map(g => `<tr><td>${g.std}</td><td style="color:var(--primary); font-weight:bold;">${g.name}</td><td>${g.grade}</td></tr>`).reverse().join(''); }
+        
         function addStaff() { fbPush(fbRef(db, 'staff'), { name: document.getElementById('staff-name').value, role: document.getElementById('staff-role').value, salary: document.getElementById('staff-salary').value }); }
         function renderStaff() { document.getElementById('staff-list').innerHTML = (window.db_staff || []).map(s => `<tr><td>${s.name}</td><td>${s.role}</td><td>${s.salary}</td></tr>`).join(''); }
         function addSchedule() { fbPush(fbRef(db, 'schedule'), { group: document.getElementById('sch-group').value, day: document.getElementById('sch-day').value, time: document.getElementById('sch-time').value }); }
@@ -539,7 +666,7 @@
 
         function toggleTheme() { document.body.setAttribute('data-theme', document.body.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'); }
         function initChart() { const ctx = document.getElementById('mainChart').getContext('2d'); mainChart = new Chart(ctx, { type: 'line', data: { labels: ['يناير', 'فبراير', 'مارس', 'أبريل'], datasets: [{ label: 'الإيرادات', data: [500, 1200, 800, 1500], borderColor: '#4f46e5', tension: 0.4 }] } }); }
-        function factoryReset() { if(confirm("حذف كل شيء؟")) { ['students', 'content', 'invoices', 'expenses', 'attendance', 'homework', 'grades', 'staff', 'schedule', 'community'].forEach(p => fbRemove(fbRef(db, p))); location.reload(); } }
+        function factoryReset() { if(confirm("حذف كل شيء؟")) { ['students', 'content', 'invoices', 'expenses', 'attendance', 'homework', 'grades', 'staff', 'schedule', 'community', 'online_exams'].forEach(p => fbRemove(fbRef(db, p))); location.reload(); } }
         setInterval(() => { document.getElementById('live-clock').innerText = new Date().toLocaleString('ar-EG'); }, 1000);
     </script>
 </body>

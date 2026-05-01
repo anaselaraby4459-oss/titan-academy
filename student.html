@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -31,7 +30,7 @@
         /* Sidebar */
         .sidebar {
             width: var(--sidebar-width); background: var(--card-bg); border-left: 1px solid var(--border);
-            position: fixed; height: 100vh; right: 0; padding: 2rem 1rem; display: flex; flex-direction: column;
+            position: fixed; height: 100vh; right: 0; padding: 2rem 1rem; display: flex; flex-direction: column; z-index: 100;
         }
         .sidebar-brand { color: var(--primary); font-weight: 800; font-size: 1.4rem; margin-bottom: 3rem; text-align: center; }
         .nav-link {
@@ -51,15 +50,24 @@
 
         /* قسم مستواي - التقييمات */
         .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
-        .stat-card { background: white; padding: 2rem; border-radius: 25px; text-align: center; border: 1px solid var(--border); }
+        .stat-card { background: white; padding: 2rem; border-radius: 25px; text-align: center; border: 1px solid var(--border); box-shadow: 0 4px 6px rgba(0,0,0,0.02); }
+        .stat-card:hover { transform: translateY(-5px); box-shadow: 0 10px 15px rgba(0,0,0,0.05); }
         .stat-value { font-size: 2.5rem; font-weight: 800; color: var(--primary); display: block; }
 
-        /* قسم الدروس */
+        /* قسم الدروس والامتحانات */
         .lessons-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
         .lesson-card { background: white; border-radius: 20px; overflow: hidden; border: 1px solid var(--border); }
         .video-box { position: relative; padding-bottom: 56.25%; height: 0; background: #000; }
         .video-box iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
         .lesson-body { padding: 1.5rem; }
+
+        /* ستايل ورقة الامتحان */
+        .exam-paper { background: white; padding: 2rem; border-radius: 20px; border: 1px solid var(--border); }
+        .q-box { margin-bottom: 20px; padding: 20px; border: 1px solid #e2e8f0; border-radius: 15px; background: #f8fafc; }
+        .q-title { margin-bottom: 15px; font-size: 1.1rem; color: #1e293b; font-weight: 700;}
+        .opt-label { display: flex; align-items: center; gap: 10px; cursor: pointer; padding: 12px; background: white; border-radius: 10px; border: 1px solid #cbd5e1; margin-bottom: 8px; transition: 0.2s;}
+        .opt-label:hover { border-color: var(--primary); background: #eef2ff;}
+        input[type="radio"] { width: 18px; height: 18px; accent-color: var(--primary); }
 
         /* قسم المجتمع - نظام الشات */
         .chat-container { 
@@ -81,7 +89,10 @@
         .chat-input:focus { border-color: var(--primary); }
 
         /* أزرار */
-        .btn { padding: 0.8rem 1.5rem; border-radius: 15px; border: none; cursor: pointer; font-weight: 700; background: var(--primary); color: white; }
+        .btn { padding: 0.8rem 1.5rem; border-radius: 15px; border: none; cursor: pointer; font-weight: 700; background: var(--primary); color: white; display: inline-flex; align-items: center; gap: 8px; justify-content: center;}
+        .btn:hover { filter: brightness(1.1); transform: translateY(-2px); }
+        .btn-success { background: #10b981; }
+        .btn-secondary { background: #64748b; }
         .badge { background: #eef2ff; color: var(--primary); padding: 5px 12px; border-radius: 10px; font-weight: 700; }
 
         @media (max-width: 768px) {
@@ -96,8 +107,9 @@
     <div id="login-page">
         <div class="login-card">
             <h2 style="margin-bottom: 1rem;">بوابة المبدعين 🚀</h2>
-            <input type="text" id="student-code-input" placeholder="أدخل كود الطالب" style="text-align: center; width: 100%; padding: 12px; border-radius: 12px; border: 1px solid #ddd; margin-bottom: 1rem;">
-            <button class="btn" style="width: 100%;" onclick="studentLogin()">دخول المنصة</button>
+            <!-- إضافة دعم لزر Enter -->
+            <input type="text" id="student-code-input" placeholder="أدخل كود الطالب" onkeypress="if(event.key === 'Enter') studentLogin()" style="text-align: center; width: 100%; padding: 12px; border-radius: 12px; border: 1px solid #ddd; margin-bottom: 1rem; outline:none;">
+            <button class="btn" style="width: 100%;" onclick="studentLogin()"><i class="fas fa-sign-in-alt"></i> دخول المنصة</button>
         </div>
     </div>
 
@@ -108,6 +120,9 @@
                 <div class="sidebar-brand"><i class="fas fa-rocket"></i> <span>بوابة التميز</span></div>
                 <div class="nav-link active" onclick="showSection('stats-sec', this)"><i class="fas fa-star"></i> <span>مستواي</span></div>
                 <div class="nav-link" onclick="showSection('lessons-sec', this)"><i class="fas fa-graduation-cap"></i> <span>الدروس</span></div>
+                <!-- إضافة زر الامتحانات -->
+                <div class="nav-link" onclick="showSection('exams-sec', this)"><i class="fas fa-laptop-code"></i> <span>الامتحانات</span></div>
+                
                 <div class="nav-link" onclick="showSection('chat-sec', this)"><i class="fas fa-comments"></i> <span>المجتمع</span></div>
                 
                 <button class="btn" style="margin-top: auto; background: #fee2e2; color: #ef4444;" onclick="location.reload()">
@@ -146,6 +161,28 @@
                     <div id="lessons-list" class="lessons-grid"></div>
                 </section>
 
+                <!-- قسم الامتحانات الإلكترونية الجديد -->
+                <section id="exams-sec" class="app-section">
+                    <div id="exams-view-list">
+                        <h3 style="margin-bottom: 1.5rem;">📝 الامتحانات المتاحة</h3>
+                        <div id="exams-list" class="lessons-grid">
+                            <!-- الامتحانات تظهر هنا -->
+                        </div>
+                    </div>
+
+                    <!-- مساحة أداء الامتحان (تظهر عند الدخول لامتحان) -->
+                    <div id="exam-take-area" class="exam-paper" style="display: none;">
+                        <button class="btn btn-secondary" style="margin-bottom: 1.5rem;" onclick="closeExam()"><i class="fas fa-arrow-right"></i> رجوع للقائمة</button>
+                        <h2 id="current-exam-title" style="margin-bottom: 1.5rem; color: var(--primary); text-align: center; font-weight: 800; font-size: 1.8rem;"></h2>
+                        
+                        <div id="exam-questions-area">
+                            <!-- الأسئلة تظهر هنا -->
+                        </div>
+                        
+                        <button class="btn btn-success" style="width: 100%; font-size: 1.2rem; padding: 15px; margin-top: 2rem;" onclick="submitExam()"><i class="fas fa-check-double"></i> إنهاء وتسليم الامتحان</button>
+                    </div>
+                </section>
+
                 <!-- قسم المجتمع (شات) -->
                 <section id="chat-sec" class="app-section">
                     <div class="chat-container">
@@ -156,7 +193,7 @@
                             <!-- الرسائل تظهر هنا -->
                         </div>
                         <div class="chat-input-area">
-                            <input type="text" id="post-text" class="chat-input" placeholder="اكتب رسالتك هنا...">
+                            <input type="text" id="post-text" class="chat-input" placeholder="اكتب رسالتك هنا..." onkeypress="if(event.key === 'Enter') sendPost()">
                             <button class="btn" onclick="sendPost()"><i class="fas fa-paper-plane"></i></button>
                         </div>
                     </div>
@@ -181,6 +218,7 @@
         const app = initializeApp(firebaseConfig);
         const db = getDatabase(app);
         let currentStudent = null;
+        let currentExamData = null; // تخزين الامتحان المفتوح حالياً
 
         // التبديل بين الأقسام
         window.showSection = function(id, el) {
@@ -191,20 +229,26 @@
             
             // سكرول لآخر الرسائل إذا فتحنا الشات
             if(id === 'chat-sec') scrollChat();
+            
+            // إغلاق أي امتحان مفتوح إذا بدلنا القسم
+            if(id !== 'exams-sec') closeExam();
         }
 
         window.studentLogin = function() {
             const code = document.getElementById('student-code-input').value;
+            if(!code) return alert("يرجى إدخال كود الطالب");
             onValue(ref(db, 'students'), (snap) => {
                 const data = snap.val();
+                let found = false;
                 for(let k in data) {
                     if(data[k].code === code) {
                         currentStudent = { ...data[k], key: k };
                         initApp();
+                        found = true;
                         return;
                     }
                 }
-                alert("الكود غير صحيح");
+                if(!found) alert("❌ الكود غير صحيح، تأكد من الإدارة.");
             }, { onlyOnce: true });
         }
 
@@ -249,7 +293,33 @@
                         }
                     });
                 }
-                list.innerHTML = html || "<p>لا توجد دروس حالياً</p>";
+                list.innerHTML = html || "<p style='grid-column: 1/-1; text-align:center;'>لا توجد دروس حالياً</p>";
+            });
+
+            /* --- جلب الامتحانات الإلكترونية المتاحة --- */
+            onValue(ref(db, 'online_exams'), (snap) => {
+                const exams = snap.val();
+                const list = document.getElementById('exams-list');
+                window.allExams = exams; // حفظها بالنافذة لسهولة الوصول
+                let html = "";
+                if(exams) {
+                    Object.entries(exams).forEach(([key, e]) => {
+                        // نعرض الامتحانات المخصصة لمستوى الطالب فقط
+                        if(e.level == currentStudent.level) {
+                            html += `
+                                <div class="stat-card" style="cursor:pointer;" onclick="openExam('${key}')">
+                                    <div style="background: rgba(99, 102, 241, 0.1); width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem auto;">
+                                        <i class="fas fa-file-alt" style="font-size: 1.8rem; color: var(--primary);"></i>
+                                    </div>
+                                    <h3 style="color:var(--text-main); margin-bottom:10px;">${e.title}</h3>
+                                    <p style="color:var(--text-dim); margin-bottom:20px;">عدد الأسئلة: ${e.questions ? e.questions.length : 0}</p>
+                                    <button class="btn" style="width: 100%;"><i class="fas fa-play"></i> ابدأ الامتحان</button>
+                                </div>
+                            `;
+                        }
+                    });
+                }
+                list.innerHTML = html || "<p style='grid-column: 1/-1; text-align:center;'>لا توجد امتحانات متاحة حالياً</p>";
             });
 
             // جلب رسائل المجتمع
@@ -275,6 +345,80 @@
             });
         }
 
+        /* --- نظام فتح وتسليم الامتحانات للطالب --- */
+        window.openExam = function(examKey) {
+            const exam = window.allExams[examKey];
+            if(!exam) return;
+            currentExamData = { ...exam, key: examKey };
+            
+            // إخفاء القائمة وإظهار الامتحان
+            document.getElementById('exams-view-list').style.display = 'none';
+            document.getElementById('exam-take-area').style.display = 'block';
+            document.getElementById('current-exam-title').innerText = exam.title;
+
+            // بناء واجهة الأسئلة
+            let qHtml = "";
+            (exam.questions || []).forEach((q, i) => {
+                qHtml += `
+                    <div class="q-box">
+                        <h4 class="q-title">${i + 1}. ${q.text}</h4>
+                        <div style="display:flex; flex-direction:column;">
+                            ${(q.options || []).map((opt, optIdx) => `
+                                <label class="opt-label">
+                                    <input type="radio" name="question-${i}" value="${optIdx}">
+                                    <span>${opt}</span>
+                                </label>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            });
+            document.getElementById('exam-questions-area').innerHTML = qHtml;
+            window.scrollTo(0, 0); // التمرير لأعلى الصفحة
+        }
+
+        window.closeExam = function() {
+            document.getElementById('exams-view-list').style.display = 'block';
+            document.getElementById('exam-take-area').style.display = 'none';
+            currentExamData = null;
+        }
+
+        window.submitExam = function() {
+            if(!currentExamData) return;
+            
+            let score = 0;
+            let totalQuestions = currentExamData.questions.length;
+            let allAnswered = true;
+
+            // حساب الدرجة
+            currentExamData.questions.forEach((q, i) => {
+                const selected = document.querySelector(`input[name="question-${i}"]:checked`);
+                if(!selected) {
+                    allAnswered = false;
+                } else if(parseInt(selected.value) === q.answer) {
+                    score++;
+                }
+            });
+
+            if(!allAnswered) {
+                const confirmSubmit = confirm("⚠️ لم تقم بالإجابة على جميع الأسئلة! هل أنت متأكد من تسليم الامتحان الآن؟");
+                if(!confirmSubmit) return; // تراجع عن التسليم
+            }
+
+            // إظهار النتيجة للطالب
+            alert(`🎉 تم تسليم الامتحان بنجاح!\n\nنتيجتك هي: ${score} من ${totalQuestions}`);
+
+            // إرسال النتيجة للإدارة (تخزن في سجل الدرجات)
+            push(ref(db, 'grades'), {
+                std: currentStudent.name,
+                name: "امتحان: " + currentExamData.title,
+                grade: `${score} / ${totalQuestions}`
+            });
+
+            closeExam(); // الرجوع للقائمة
+        }
+
+        /* --- المجتمع --- */
         window.sendPost = function() {
             const txt = document.getElementById('post-text').value;
             if(!txt) return;
@@ -289,7 +433,7 @@
 
         function scrollChat() {
             const chat = document.getElementById('chat-messages');
-            chat.scrollTop = chat.scrollHeight;
+            if(chat) chat.scrollTop = chat.scrollHeight;
         }
     </script>
 </body>
