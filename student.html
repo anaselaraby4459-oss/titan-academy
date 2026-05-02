@@ -8,21 +8,50 @@
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #6366f1;
-            --bg-body: #f4f7fe;
+            --primary: #4f46e5;
+            --primary-gradient: linear-gradient(135deg, #4f46e5, #0ea5e9);
+            --bg-body: #f1f5f9;
             --card-bg: #ffffff;
-            --text-main: #1e293b;
+            --text-main: #0f172a;
             --text-dim: #64748b;
             --border: #e2e8f0;
-            --sidebar-width: 260px;
+            --sidebar-width: 280px;
+            --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 10px 25px -3px rgba(0, 0, 0, 0.05);
+            --radius: 24px;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cairo', sans-serif; transition: 0.3s; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cairo', sans-serif; transition: all 0.3s ease; }
         body { background: var(--bg-body); color: var(--text-main); }
 
-        /* تسجيل الدخول */
-        #login-page { height: 100vh; display: flex; align-items: center; justify-content: center; background: #6366f1; }
-        .login-card { background: white; padding: 2.5rem; border-radius: 30px; width: 90%; max-width: 400px; text-align: center; }
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+        /* تسجيل الدخول - Glassmorphism Effect */
+        #login-page { 
+            height: 100vh; display: flex; align-items: center; justify-content: center; 
+            background: var(--primary-gradient); 
+        }
+        .login-card { 
+            background: rgba(255, 255, 255, 0.95); 
+            padding: 3rem 2.5rem; 
+            border-radius: var(--radius); 
+            width: 90%; max-width: 420px; 
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            backdrop-filter: blur(10px);
+        }
+        #student-code-input {
+            background: #f8fafc;
+            transition: border 0.3s, box-shadow 0.3s;
+        }
+        #student-code-input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1);
+        }
 
         /* الهيكل الرئيسي */
         .wrapper { display: flex; min-height: 100vh; }
@@ -30,86 +59,119 @@
         /* Sidebar */
         .sidebar {
             width: var(--sidebar-width); background: var(--card-bg); border-left: 1px solid var(--border);
-            position: fixed; height: 100vh; right: 0; padding: 2rem 1rem; display: flex; flex-direction: column; z-index: 100;
+            position: fixed; height: 100vh; right: 0; padding: 2.5rem 1.5rem; display: flex; flex-direction: column; z-index: 100;
+            box-shadow: var(--shadow-sm);
         }
-        .sidebar-brand { color: var(--primary); font-weight: 800; font-size: 1.4rem; margin-bottom: 3rem; text-align: center; }
+        .sidebar-brand { color: var(--primary); font-weight: 800; font-size: 1.6rem; margin-bottom: 3.5rem; text-align: center; display: flex; align-items: center; justify-content: center; gap: 10px;}
         .nav-link {
-            display: flex; align-items: center; gap: 12px; padding: 1rem; text-decoration: none;
-            color: var(--text-dim); border-radius: 15px; font-weight: 600; cursor: pointer; margin-bottom: 8px;
+            display: flex; align-items: center; gap: 14px; padding: 1.1rem; text-decoration: none;
+            color: var(--text-dim); border-radius: 16px; font-weight: 700; cursor: pointer; margin-bottom: 10px;
+            position: relative; overflow: hidden;
         }
-        .nav-link:hover, .nav-link.active { background: #eef2ff; color: var(--primary); }
-        .nav-link.active { background: var(--primary); color: white; }
+        .nav-link i { font-size: 1.2rem; }
+        .nav-link:hover { background: #f8fafc; color: var(--primary); transform: translateX(-5px); }
+        .nav-link.active { background: var(--primary-gradient); color: white; box-shadow: 0 4px 15px rgba(79, 70, 229, 0.3); }
 
         /* المحتوى */
-        .main-content { flex: 1; margin-right: var(--sidebar-width); padding: 2rem; }
-        .app-section { display: none; animation: slideUp 0.4s ease; }
+        .main-content { flex: 1; margin-right: var(--sidebar-width); padding: 2.5rem; }
+        .app-section { display: none; animation: slideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
         .app-section.active { display: block; }
-        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
 
-        header { background: white; padding: 1.5rem; border-radius: 20px; margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 12px rgba(0,0,0,0.03); }
+        header { 
+            background: var(--card-bg); padding: 1.5rem 2.5rem; border-radius: var(--radius); 
+            margin-bottom: 2.5rem; display: flex; justify-content: space-between; align-items: center; 
+            box-shadow: var(--shadow-sm); 
+        }
 
         /* قسم مستواي - التقييمات */
-        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
-        .stat-card { background: white; padding: 2rem; border-radius: 25px; text-align: center; border: 1px solid var(--border); box-shadow: 0 4px 6px rgba(0,0,0,0.02); }
-        .stat-card:hover { transform: translateY(-5px); box-shadow: 0 10px 15px rgba(0,0,0,0.05); }
-        .stat-value { font-size: 2.5rem; font-weight: 800; color: var(--primary); display: block; }
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 24px; }
+        .stat-card { 
+            background: var(--card-bg); padding: 2.5rem 2rem; border-radius: var(--radius); 
+            text-align: center; border: 1px solid var(--border); box-shadow: var(--shadow-sm); 
+        }
+        .stat-card:hover { transform: translateY(-8px); box-shadow: var(--shadow-md); border-color: #cbd5e1; }
+        .stat-value { font-size: 3rem; font-weight: 800; background: var(--primary-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; display: block; margin-bottom: 10px;}
 
         /* قسم الدروس والامتحانات */
-        .lessons-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
-        .lesson-card { background: white; border-radius: 20px; overflow: hidden; border: 1px solid var(--border); }
-        .video-box { position: relative; padding-bottom: 56.25%; height: 0; background: #000; }
+        .lessons-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 24px; }
+        .lesson-card { 
+            background: var(--card-bg); border-radius: var(--radius); overflow: hidden; 
+            border: 1px solid var(--border); box-shadow: var(--shadow-sm);
+        }
+        .lesson-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-md); }
+        .video-box { position: relative; padding-bottom: 56.25%; height: 0; background: #0f172a; }
         .video-box iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
-        .lesson-body { padding: 1.5rem; }
+        .lesson-body { padding: 1.8rem; }
+        .lesson-body h4 { font-size: 1.2rem; color: #1e293b; margin-bottom: 15px;}
 
         /* ستايل ورقة الامتحان */
-        .exam-paper { background: white; padding: 2rem; border-radius: 20px; border: 1px solid var(--border); }
-        .q-box { margin-bottom: 20px; padding: 20px; border: 1px solid #e2e8f0; border-radius: 15px; background: #f8fafc; }
-        .q-title { margin-bottom: 15px; font-size: 1.1rem; color: #1e293b; font-weight: 700;}
-        .opt-label { display: flex; align-items: center; gap: 10px; cursor: pointer; padding: 12px; background: white; border-radius: 10px; border: 1px solid #cbd5e1; margin-bottom: 8px; transition: 0.2s;}
-        .opt-label:hover { border-color: var(--primary); background: #eef2ff;}
-        input[type="radio"] { width: 18px; height: 18px; accent-color: var(--primary); }
+        .exam-paper { background: var(--card-bg); padding: 3rem; border-radius: var(--radius); box-shadow: var(--shadow-md); border: none;}
+        .q-box { margin-bottom: 25px; padding: 25px; border: 1px solid #e2e8f0; border-radius: 20px; background: #f8fafc; }
+        .q-title { margin-bottom: 18px; font-size: 1.2rem; color: #0f172a; font-weight: 800;}
+        .opt-label { display: flex; align-items: center; gap: 12px; cursor: pointer; padding: 15px; background: white; border-radius: 14px; border: 2px solid transparent; box-shadow: 0 2px 4px rgba(0,0,0,0.02); margin-bottom: 10px;}
+        .opt-label:hover { border-color: #cbd5e1; transform: translateX(-3px);}
+        .opt-label:has(input:checked) { border-color: var(--primary); background: #eef2ff; }
+        input[type="radio"] { width: 20px; height: 20px; accent-color: var(--primary); cursor: pointer;}
 
         /* قسم المجتمع - نظام الشات */
         .chat-container { 
-            background: white; border-radius: 25px; height: 75vh; 
-            display: flex; flex-direction: column; border: 1px solid var(--border); overflow: hidden;
+            background: var(--card-bg); border-radius: var(--radius); height: 75vh; 
+            display: flex; flex-direction: column; box-shadow: var(--shadow-sm); border: none; overflow: hidden;
         }
-        .chat-header { padding: 1rem 1.5rem; border-bottom: 1px solid var(--border); background: #f8fafc; }
+        .chat-header { padding: 1.5rem; border-bottom: 1px solid var(--border); background: #f8fafc; display:flex; align-items:center; gap:10px; font-size: 1.1rem; color: #0f172a;}
         #chat-messages { 
-            flex: 1; padding: 1.5rem; overflow-y: auto; 
-            display: flex; flex-direction: column; gap: 15px; 
+            flex: 1; padding: 2rem; overflow-y: auto; 
+            display: flex; flex-direction: column; gap: 20px; background: #fdfdfd;
         }
-        .msg-item { max-width: 80%; padding: 12px 18px; border-radius: 18px; background: #f1f5f9; position: relative; }
-        .msg-item.mine { align-self: flex-end; background: var(--primary); color: white; border-bottom-left-radius: 2px; }
-        .msg-item.others { align-self: flex-start; background: #f1f5f9; border-bottom-right-radius: 2px; }
-        .msg-user { font-size: 0.75rem; font-weight: 700; margin-bottom: 4px; display: block; }
-        
-        .chat-input-area { padding: 1.5rem; border-top: 1px solid var(--border); display: flex; gap: 10px; background: white; }
-        .chat-input { flex: 1; padding: 12px; border: 2px solid #f1f5f9; border-radius: 15px; outline: none; margin: 0; }
-        .chat-input:focus { border-color: var(--primary); }
+        .msg-item { max-width: 75%; padding: 14px 20px; position: relative; box-shadow: 0 2px 5px rgba(0,0,0,0.04); line-height: 1.6;}
+        .msg-item.mine { 
+            align-self: flex-end; background: var(--primary-gradient); color: white; 
+            border-radius: 20px 20px 0 20px;
+        }
+        .msg-item.others { 
+            align-self: flex-start; background: white; border: 1px solid var(--border); color: #0f172a;
+            border-radius: 20px 20px 20px 0; 
+        }
+        .msg-user { font-size: 0.8rem; font-weight: 800; margin-bottom: 6px; display: block; opacity: 0.9;}
+        .msg-item.mine .msg-user { color: #e0e7ff; }
+        .msg-item.others .msg-user { color: var(--primary); }
+                
+        .chat-input-area { padding: 1.5rem; border-top: 1px solid var(--border); display: flex; gap: 12px; background: white; }
+        .chat-input { flex: 1; padding: 15px 20px; border: 2px solid #e2e8f0; border-radius: 20px; outline: none; background: #f8fafc; font-size: 1rem;}
+        .chat-input:focus { border-color: var(--primary); background: white; box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1);}
+        .chat-input-area .btn { border-radius: 20px; padding: 0 25px; font-size: 1.2rem;}
 
-        /* أزرار */
-        .btn { padding: 0.8rem 1.5rem; border-radius: 15px; border: none; cursor: pointer; font-weight: 700; background: var(--primary); color: white; display: inline-flex; align-items: center; gap: 8px; justify-content: center;}
-        .btn:hover { filter: brightness(1.1); transform: translateY(-2px); }
-        .btn-success { background: #10b981; }
+        /* أزرار وعلامات */
+        .btn { padding: 0.9rem 1.8rem; border-radius: 16px; border: none; cursor: pointer; font-weight: 800; background: var(--primary); color: white; display: inline-flex; align-items: center; gap: 10px; justify-content: center; letter-spacing: 0.5px;}
+        .btn:hover { background: #4338ca; transform: translateY(-2px); box-shadow: 0 6px 12px rgba(79, 70, 229, 0.2); }
+        .btn:active { transform: translateY(0); }
+        .btn-success { background: linear-gradient(135deg, #10b981, #059669); }
+        .btn-success:hover { background: #059669; box-shadow: 0 6px 12px rgba(16, 185, 129, 0.2); }
         .btn-secondary { background: #64748b; }
-        .badge { background: #eef2ff; color: var(--primary); padding: 5px 12px; border-radius: 10px; font-weight: 700; }
+        .btn-secondary:hover { background: #475569; box-shadow: 0 6px 12px rgba(100, 116, 139, 0.2); }
+        
+        .badge { background: #eef2ff; color: var(--primary); padding: 8px 16px; border-radius: 12px; font-weight: 800; font-size: 0.9rem;}
 
         @media (max-width: 768px) {
-            .sidebar { width: 80px; } .sidebar span { display: none; }
-            .main-content { margin-right: 80px; }
+            :root { --sidebar-width: 80px; }
+            .sidebar { padding: 2rem 1rem; align-items: center;}
+            .sidebar span, .sidebar-brand span { display: none; }
+            .nav-link { justify-content: center; padding: 1rem; border-radius: 12px;}
+            .nav-link i { font-size: 1.4rem; margin: 0; }
+            .main-content { padding: 1.5rem; }
+            .stat-card { padding: 1.5rem; }
+            header { flex-direction: column; gap: 15px; text-align: center; }
         }
     </style>
 </head>
 <body>
-
     <!-- صفحة الدخول -->
     <div id="login-page">
         <div class="login-card">
-            <h2 style="margin-bottom: 1rem;">بوابة المبدعين 🚀</h2>
-            <!-- إضافة دعم لزر Enter -->
-            <input type="text" id="student-code-input" placeholder="أدخل كود الطالب" onkeypress="if(event.key === 'Enter') studentLogin()" style="text-align: center; width: 100%; padding: 12px; border-radius: 12px; border: 1px solid #ddd; margin-bottom: 1rem; outline:none;">
-            <button class="btn" style="width: 100%;" onclick="studentLogin()"><i class="fas fa-sign-in-alt"></i> دخول المنصة</button>
+            <h2 style="margin-bottom: 1.5rem; color: var(--text-main);">بوابة المبدعين 🚀</h2>
+            <input type="text" id="student-code-input" placeholder="أدخل كود الطالب" onkeypress="if(event.key === 'Enter') studentLogin()" style="text-align: center; width: 100%; padding: 15px; border-radius: 16px; border: 2px solid #e2e8f0; margin-bottom: 1.5rem; outline:none; font-size: 1rem;">
+            <button class="btn" style="width: 100%; font-size: 1.1rem; padding: 15px;" onclick="studentLogin()"><i class="fas fa-sign-in-alt"></i> دخول المنصة</button>
         </div>
     </div>
 
@@ -120,11 +182,8 @@
                 <div class="sidebar-brand"><i class="fas fa-rocket"></i> <span>بوابة التميز</span></div>
                 <div class="nav-link active" onclick="showSection('stats-sec', this)"><i class="fas fa-star"></i> <span>مستواي</span></div>
                 <div class="nav-link" onclick="showSection('lessons-sec', this)"><i class="fas fa-graduation-cap"></i> <span>الدروس</span></div>
-                <!-- إضافة زر الامتحانات -->
                 <div class="nav-link" onclick="showSection('exams-sec', this)"><i class="fas fa-laptop-code"></i> <span>الامتحانات</span></div>
-                
                 <div class="nav-link" onclick="showSection('chat-sec', this)"><i class="fas fa-comments"></i> <span>المجتمع</span></div>
-                
                 <button class="btn" style="margin-top: auto; background: #fee2e2; color: #ef4444;" onclick="location.reload()">
                     <i class="fas fa-sign-out-alt"></i> <span>خروج</span>
                 </button>
@@ -132,7 +191,7 @@
 
             <main class="main-content">
                 <header>
-                    <h2 id="welcome-msg">مرحباً بك</h2>
+                    <h2 id="welcome-msg" style="color: var(--primary);">مرحباً بك</h2>
                     <span class="badge" id="level-badge">المستوى -</span>
                 </header>
 
@@ -142,15 +201,15 @@
                     <div class="stats-grid">
                         <div class="stat-card">
                             <span class="stat-value" id="score-work">-</span>
-                            <span style="color: var(--text-dim)">تقييم الواجبات</span>
+                            <span style="color: var(--text-dim); font-weight: 600;">تقييم الواجبات</span>
                         </div>
                         <div class="stat-card">
                             <span class="stat-value" id="score-perf">-</span>
-                            <span style="color: var(--text-dim)">الأداء التقني</span>
+                            <span style="color: var(--text-dim); font-weight: 600;">الأداء التقني</span>
                         </div>
                         <div class="stat-card">
                             <span class="stat-value" id="score-beh">-</span>
-                            <span style="color: var(--text-dim)">السلوك العام</span>
+                            <span style="color: var(--text-dim); font-weight: 600;">السلوك العام</span>
                         </div>
                     </div>
                 </section>
@@ -161,7 +220,7 @@
                     <div id="lessons-list" class="lessons-grid"></div>
                 </section>
 
-                <!-- قسم الامتحانات الإلكترونية الجديد -->
+                <!-- قسم الامتحانات الإلكترونية -->
                 <section id="exams-sec" class="app-section">
                     <div id="exams-view-list">
                         <h3 style="margin-bottom: 1.5rem;">📝 الامتحانات المتاحة</h3>
@@ -170,16 +229,16 @@
                         </div>
                     </div>
 
-                    <!-- مساحة أداء الامتحان (تظهر عند الدخول لامتحان) -->
+                    <!-- مساحة أداء الامتحان -->
                     <div id="exam-take-area" class="exam-paper" style="display: none;">
-                        <button class="btn btn-secondary" style="margin-bottom: 1.5rem;" onclick="closeExam()"><i class="fas fa-arrow-right"></i> رجوع للقائمة</button>
-                        <h2 id="current-exam-title" style="margin-bottom: 1.5rem; color: var(--primary); text-align: center; font-weight: 800; font-size: 1.8rem;"></h2>
+                        <button class="btn btn-secondary" style="margin-bottom: 2rem;" onclick="closeExam()"><i class="fas fa-arrow-right"></i> رجوع للقائمة</button>
+                        <h2 id="current-exam-title" style="margin-bottom: 2.5rem; color: var(--primary); text-align: center; font-weight: 800; font-size: 2rem;"></h2>
                         
                         <div id="exam-questions-area">
                             <!-- الأسئلة تظهر هنا -->
                         </div>
                         
-                        <button class="btn btn-success" style="width: 100%; font-size: 1.2rem; padding: 15px; margin-top: 2rem;" onclick="submitExam()"><i class="fas fa-check-double"></i> إنهاء وتسليم الامتحان</button>
+                        <button class="btn btn-success" style="width: 100%; font-size: 1.2rem; padding: 18px; margin-top: 2rem;" onclick="submitExam()"><i class="fas fa-check-double"></i> إنهاء وتسليم الامتحان</button>
                     </div>
                 </section>
 
@@ -218,7 +277,7 @@
         const app = initializeApp(firebaseConfig);
         const db = getDatabase(app);
         let currentStudent = null;
-        let currentExamData = null; // تخزين الامتحان المفتوح حالياً
+        let currentExamData = null; 
 
         // التبديل بين الأقسام
         window.showSection = function(id, el) {
@@ -227,10 +286,7 @@
             document.getElementById(id).classList.add('active');
             el.classList.add('active');
             
-            // سكرول لآخر الرسائل إذا فتحنا الشات
             if(id === 'chat-sec') scrollChat();
-            
-            // إغلاق أي امتحان مفتوح إذا بدلنا القسم
             if(id !== 'exams-sec') closeExam();
         }
 
@@ -296,23 +352,22 @@
                 list.innerHTML = html || "<p style='grid-column: 1/-1; text-align:center;'>لا توجد دروس حالياً</p>";
             });
 
-            /* --- جلب الامتحانات الإلكترونية المتاحة --- */
+            // جلب الامتحانات الإلكترونية المتاحة
             onValue(ref(db, 'online_exams'), (snap) => {
                 const exams = snap.val();
                 const list = document.getElementById('exams-list');
-                window.allExams = exams; // حفظها بالنافذة لسهولة الوصول
+                window.allExams = exams; 
                 let html = "";
                 if(exams) {
                     Object.entries(exams).forEach(([key, e]) => {
-                        // نعرض الامتحانات المخصصة لمستوى الطالب فقط
                         if(e.level == currentStudent.level) {
                             html += `
                                 <div class="stat-card" style="cursor:pointer;" onclick="openExam('${key}')">
-                                    <div style="background: rgba(99, 102, 241, 0.1); width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem auto;">
-                                        <i class="fas fa-file-alt" style="font-size: 1.8rem; color: var(--primary);"></i>
+                                    <div style="background: rgba(79, 70, 229, 0.1); width: 70px; height: 70px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem auto;">
+                                        <i class="fas fa-file-signature" style="font-size: 2rem; color: var(--primary);"></i>
                                     </div>
-                                    <h3 style="color:var(--text-main); margin-bottom:10px;">${e.title}</h3>
-                                    <p style="color:var(--text-dim); margin-bottom:20px;">عدد الأسئلة: ${e.questions ? e.questions.length : 0}</p>
+                                    <h3 style="color:var(--text-main); margin-bottom:10px; font-weight:800;">${e.title}</h3>
+                                    <p style="color:var(--text-dim); margin-bottom:20px; font-weight:600;">عدد الأسئلة: ${e.questions ? e.questions.length : 0}</p>
                                     <button class="btn" style="width: 100%;"><i class="fas fa-play"></i> ابدأ الامتحان</button>
                                 </div>
                             `;
@@ -335,7 +390,7 @@
                                 <div class="msg-item ${isMine ? 'mine' : 'others'}">
                                     <span class="msg-user">${isMine ? 'أنت' : p.sender}</span>
                                     <div>${p.text}</div>
-                                    <div style="font-size:0.6rem; margin-top:5px; opacity:0.7;">${p.time}</div>
+                                    <div style="font-size:0.7rem; margin-top:8px; opacity:0.8;">${p.time}</div>
                                 </div>`;
                         }
                     });
@@ -345,18 +400,16 @@
             });
         }
 
-        /* --- نظام فتح وتسليم الامتحانات للطالب --- */
+        // نظام فتح وتسليم الامتحانات للطالب
         window.openExam = function(examKey) {
             const exam = window.allExams[examKey];
             if(!exam) return;
             currentExamData = { ...exam, key: examKey };
             
-            // إخفاء القائمة وإظهار الامتحان
             document.getElementById('exams-view-list').style.display = 'none';
             document.getElementById('exam-take-area').style.display = 'block';
             document.getElementById('current-exam-title').innerText = exam.title;
 
-            // بناء واجهة الأسئلة
             let qHtml = "";
             (exam.questions || []).forEach((q, i) => {
                 qHtml += `
@@ -366,7 +419,7 @@
                             ${(q.options || []).map((opt, optIdx) => `
                                 <label class="opt-label">
                                     <input type="radio" name="question-${i}" value="${optIdx}">
-                                    <span>${opt}</span>
+                                    <span style="font-weight:600; color:#1e293b;">${opt}</span>
                                 </label>
                             `).join('')}
                         </div>
@@ -374,7 +427,7 @@
                 `;
             });
             document.getElementById('exam-questions-area').innerHTML = qHtml;
-            window.scrollTo(0, 0); // التمرير لأعلى الصفحة
+            window.scrollTo(0, 0);
         }
 
         window.closeExam = function() {
@@ -390,7 +443,6 @@
             let totalQuestions = currentExamData.questions.length;
             let allAnswered = true;
 
-            // حساب الدرجة
             currentExamData.questions.forEach((q, i) => {
                 const selected = document.querySelector(`input[name="question-${i}"]:checked`);
                 if(!selected) {
@@ -402,23 +454,21 @@
 
             if(!allAnswered) {
                 const confirmSubmit = confirm("⚠️ لم تقم بالإجابة على جميع الأسئلة! هل أنت متأكد من تسليم الامتحان الآن؟");
-                if(!confirmSubmit) return; // تراجع عن التسليم
+                if(!confirmSubmit) return; 
             }
 
-            // إظهار النتيجة للطالب
             alert(`🎉 تم تسليم الامتحان بنجاح!\n\nنتيجتك هي: ${score} من ${totalQuestions}`);
 
-            // إرسال النتيجة للإدارة (تخزن في سجل الدرجات)
             push(ref(db, 'grades'), {
                 std: currentStudent.name,
                 name: "امتحان: " + currentExamData.title,
                 grade: `${score} / ${totalQuestions}`
             });
 
-            closeExam(); // الرجوع للقائمة
+            closeExam(); 
         }
 
-        /* --- المجتمع --- */
+        // المجتمع
         window.sendPost = function() {
             const txt = document.getElementById('post-text').value;
             if(!txt) return;
