@@ -55,11 +55,12 @@
             background: var(--card-bg); padding: 3rem 2.5rem; border-radius: var(--radius); 
             width: 90%; max-width: 420px; text-align: center; box-shadow: 0 20px 40px rgba(0,0,0,0.1);
         }
-        #student-code-input {
+        #student-code-input, #student-phone-input {
             background: var(--bg-body); color: var(--text-main);
             transition: border 0.3s, box-shadow 0.3s;
+            width: 100%; padding: 15px; border-radius: 16px; border: 2px solid var(--border); margin-bottom: 1rem; outline:none; font-size: 1rem; text-align: center;
         }
-        #student-code-input:focus { border-color: var(--primary); box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1); }
+        #student-code-input:focus, #student-phone-input:focus { border-color: var(--primary); box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1); }
 
         /* الهيكل الرئيسي */
         .wrapper { display: flex; min-height: 100vh; }
@@ -183,7 +184,8 @@
     <div id="login-page">
         <div class="login-card">
             <h2 style="margin-bottom: 1.5rem; color: var(--text-main);">بوابة المبدعين 🚀</h2>
-            <input type="text" id="student-code-input" placeholder="أدخل كود الطالب" onkeypress="if(event.key === 'Enter') studentLogin()" style="text-align: center; width: 100%; padding: 15px; border-radius: 16px; border: 2px solid var(--border); margin-bottom: 1.5rem; outline:none; font-size: 1rem;">
+            <input type="text" id="student-code-input" placeholder="أدخل كود الطالب" onkeypress="if(event.key === 'Enter') studentLogin()">
+            <input type="tel" id="student-phone-input" placeholder="رقم الهاتف (مسجل لدى الإدارة)" onkeypress="if(event.key === 'Enter') studentLogin()">
             <button class="btn" style="width: 100%; font-size: 1.1rem; padding: 15px;" onclick="studentLogin()"><i class="fas fa-sign-in-alt"></i> دخول المنصة</button>
         </div>
     </div>
@@ -212,10 +214,10 @@
                     </div>
                     
                     <div class="header-actions">
-                        <!-- 1. النقاط (XP) -->
+                        <!-- النقاط (XP) -->
                         <span class="badge" id="xp-badge" style="background: #fef3c7; color: #d97706;"><i class="fas fa-bolt"></i> 0 XP</span>
                         
-                        <!-- إضافة جديدة: مؤقت التركيز (Pomodoro) -->
+                        <!-- مؤقت التركيز (Pomodoro) -->
                         <div style="position: relative;">
                             <button class="icon-btn" onclick="toggleTimer()" title="مؤقت التركيز">
                                 <i class="fas fa-stopwatch"></i>
@@ -232,10 +234,10 @@
                             </div>
                         </div>
 
-                        <!-- 4. الوضع الليلي -->
+                        <!-- الوضع الليلي -->
                         <button class="icon-btn" onclick="toggleTheme()" id="theme-btn"><i class="fas fa-moon"></i></button>
                         
-                        <!-- 5. الإشعارات -->
+                        <!-- الإشعارات -->
                         <div style="position: relative;">
                             <button class="icon-btn" onclick="toggleNotifications()">
                                 <i class="fas fa-bell"></i>
@@ -270,30 +272,28 @@
                     </div>
 
                     <div class="tasks-leaderboard-grid">
-                        <!-- 3. المهام اليومية -->
+                        <!-- المهام اليومية -->
                         <div class="panel">
                             <h3 style="margin-bottom: 15px; color: var(--primary);"><i class="fas fa-calendar-check"></i> المهام اليومية</h3>
                             <div id="daily-tasks">
                                 <div class="task-item" id="task-login"><input type="checkbox" disabled checked> تسجيل الدخول للمنصة (+10 XP)</div>
                                 <div class="task-item" id="task-chat"><input type="checkbox" disabled> إرسال رسالة في المجتمع (+20 XP)</div>
                                 <div class="task-item" id="task-exam"><input type="checkbox" disabled> إكمال امتحان (+50 XP)</div>
-                                <!-- تمت إضافة مهمة التركيز الجديدة -->
                                 <div class="task-item" id="task-pomodoro"><input type="checkbox" disabled> إكمال جلسة تركيز (+30 XP)</div>
                             </div>
                         </div>
 
-                        <!-- 1. لوحة الشرف -->
+                        <!-- لوحة الشرف -->
                         <div class="panel">
                             <h3 style="margin-bottom: 15px; color: #d97706;"><i class="fas fa-trophy"></i> أبطال المستوى</h3>
                             <div id="leaderboard-list">
-                                <!-- سيتم جلب الترتيب من قاعدة البيانات -->
                                 <p style="color: var(--text-dim);">جاري التحميل...</p>
                             </div>
                         </div>
                     </div>
                 </section>
 
-                <!-- 2. قسم محرر الأكواد المباشر -->
+                <!-- قسم محرر الأكواد المباشر -->
                 <section id="editor-sec" class="app-section">
                     <h3 style="margin-bottom: 1.5rem;"><i class="fas fa-code"></i> ساحة التجارب (Live Editor)</h3>
                     <div class="editor-layout">
@@ -349,7 +349,7 @@
                     </div>
                 </section>
 
-                <!-- 6. قسم ملف الإنجاز (Portfolio) -->
+                <!-- قسم ملف الإنجاز (Portfolio) -->
                 <section id="portfolio-sec" class="app-section">
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
                         <h3><i class="fas fa-id-card"></i> ملف الإنجاز الخاص بي</h3>
@@ -366,7 +366,6 @@
 
                         <h3 style="margin-top: 2rem; border-top: 1px solid var(--border); padding-top: 1rem;">الأوسمة المكتسبة</h3>
                         <div class="badges-container" id="port-badges">
-                            <!-- تضاف الأوسمة هنا برمجياً -->
                             <div title="وسام البداية"><i class="fas fa-medal badge-icon" style="color: #94a3b8;"></i></div>
                         </div>
                     </div>
@@ -393,7 +392,7 @@
         let currentStudent = null;
         let currentExamData = null; 
         
-        // 4. دالة الوضع الليلي
+        // دالة الوضع الليلي
         window.toggleTheme = function() {
             const html = document.documentElement;
             const current = html.getAttribute('data-theme');
@@ -402,10 +401,9 @@
             document.getElementById('theme-btn').innerHTML = newTheme === 'dark' ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
             localStorage.setItem('theme', newTheme);
         }
-        // استرجاع الثيم المفضل
         if(localStorage.getItem('theme') === 'dark') toggleTheme();
 
-        // 5. دالة عرض الإشعارات
+        // دالة عرض الإشعارات
         window.toggleNotifications = function() {
             document.getElementById('notif-dropdown').classList.toggle('active');
             document.getElementById('notif-dot').style.display = 'none'; 
@@ -416,9 +414,9 @@
             document.getElementById('notif-dot').style.display = 'block';
         }
 
-        // ================= الإضافة الجديدة: مؤقت البومودورو =================
+        // مؤقت البومودورو
         let timerInterval;
-        let timeLeft = 25 * 60; // 25 دقيقة
+        let timeLeft = 25 * 60;
         let isTimerRunning = false;
 
         window.toggleTimer = function() {
@@ -437,7 +435,6 @@
                     isTimerRunning = false;
                     addNotification("⏰ انتهت جلسة التركيز! أحسنت العمل.");
                     
-                    // منح الطالب النقاط وتحديث المهام
                     if(!document.getElementById('task-pomodoro').classList.contains('done')){
                         document.getElementById('task-pomodoro').classList.add('done');
                         document.querySelector('#task-pomodoro input').checked = true;
@@ -466,9 +463,8 @@
             document.getElementById('timer-display').innerText = 
                 `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
         }
-        // ===================================================================
 
-        // 2. دالة تشغيل محرر الكود
+        // تشغيل محرر الكود
         window.runCode = function() {
             const html = document.getElementById('html-code').value;
             const css = `<style>${document.getElementById('css-code').value}</style>`;
@@ -483,7 +479,7 @@
             }
         }
 
-        // 6. دالة تحميل ملف الإنجاز PDF
+        // تحميل ملف الإنجاز PDF
         window.downloadPortfolio = function() {
             const element = document.getElementById('portfolio-content');
             const opt = {
@@ -508,7 +504,7 @@
             if(id !== 'exams-sec') closeExam();
         }
 
-        // 1. نظام النقاط XP
+        // نظام النقاط XP
         function awardXP(amount, reason) {
             let newXP = (currentStudent.xp || 0) + amount;
             currentStudent.xp = newXP;
@@ -530,21 +526,26 @@
             document.getElementById('port-badges').innerHTML = badgesHtml;
         }
 
+        // دالة تسجيل الدخول المعدلة للتحقق من الكود + رقم الهاتف
         window.studentLogin = function() {
-            const code = document.getElementById('student-code-input').value;
+            const code = document.getElementById('student-code-input').value.trim();
+            const phone = document.getElementById('student-phone-input').value.trim();
             if(!code) return alert("يرجى إدخال كود الطالب");
+            if(!phone) return alert("يرجى إدخال رقم الهاتف (كما هو مسجل لدى الإدارة)");
+            
             onValue(ref(db, 'students'), (snap) => {
                 const data = snap.val();
                 let found = false;
                 for(let k in data) {
-                    if(data[k].code === code) {
+                    // التحقق من تطابق الكود ورقم الهاتف تماماً
+                    if(data[k].code === code && data[k].phone === phone) {
                         currentStudent = { ...data[k], key: k };
                         initApp();
                         found = true;
                         return;
                     }
                 }
-                if(!found) alert("❌ الكود غير صحيح، تأكد من الإدارة.");
+                if(!found) alert("❌ الكود أو رقم الهاتف غير صحيح. تأكد من بياناتك لدى الإدارة.");
             }, { onlyOnce: true });
         }
 
@@ -555,14 +556,13 @@
             document.getElementById('level-badge').innerText = "مستوى " + currentStudent.level;
             document.getElementById('comm-lvl').innerText = currentStudent.level;
             
-            // تهيئة بيانات ملف الإنجاز
             document.getElementById('port-name').innerText = currentStudent.name;
             document.getElementById('port-level').innerText = "طالب بمستوى " + currentStudent.level;
             document.getElementById('xp-badge').innerHTML = `<i class="fas fa-bolt"></i> ${currentStudent.xp || 0} XP`;
             document.getElementById('port-xp').innerText = currentStudent.xp || 0;
             checkBadges();
 
-            // منح نقطة دخول
+            // منح نقطة دخول (تسجيل الدخول اليومي)
             awardXP(10, "تسجيل الدخول اليومي");
 
             // جلب التقييمات
@@ -730,7 +730,6 @@
             alert(`🎉 تم تسليم الامتحان بنجاح!\n\nنتيجتك هي: ${score} من ${totalQuestions}`);
             push(ref(db, 'grades'), { std: currentStudent.name, name: "امتحان: " + currentExamData.title, grade: `${score} / ${totalQuestions}` });
             
-            // 3. تحديث المهام وإضافة النقاط
             document.getElementById('task-exam').classList.add('done');
             document.querySelector('#task-exam input').checked = true;
             awardXP(50, "إكمال امتحان");
@@ -747,7 +746,6 @@
             });
             document.getElementById('post-text').value = "";
             
-            // 3. تحديث المهام وإضافة النقاط
             if(!document.getElementById('task-chat').classList.contains('done')){
                 document.getElementById('task-chat').classList.add('done');
                 document.querySelector('#task-chat input').checked = true;
