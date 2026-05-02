@@ -108,6 +108,20 @@
         .notif-dropdown.active { display: block; }
         .notif-item { padding: 10px; border-bottom: 1px solid var(--border); font-size: 0.9rem; color: var(--text-dim); }
 
+        /* مؤقت التركيز (الإضافة الجديدة) */
+        .timer-dropdown {
+            position: absolute; top: 70px; left: 80px; background: var(--card-bg); border: 1px solid var(--border);
+            border-radius: 16px; width: 250px; box-shadow: var(--shadow-md); display: none; z-index: 1000;
+            padding: 1.5rem; text-align: center;
+        }
+        .timer-dropdown.active { display: block; }
+        .timer-display { font-size: 2.5rem; font-weight: 800; color: var(--primary); margin: 10px 0; font-family: monospace;}
+        .timer-controls { display: flex; gap: 10px; justify-content: center; margin-top: 15px; }
+        .timer-btn { background: var(--bg-body); border: none; padding: 10px; border-radius: 10px; cursor: pointer; color: var(--text-main); font-size: 1.2rem; flex: 1; transition: 0.3s;}
+        .timer-btn:hover { background: var(--border); }
+        .timer-btn.play { background: var(--primary); color: white; }
+        .timer-btn.play:hover { background: #3730a3; }
+
         /* بطاقات الإحصائيات */
         .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 24px; margin-bottom: 2rem;}
         .stat-card { background: var(--card-bg); padding: 2.5rem 2rem; border-radius: var(--radius); text-align: center; border: 1px solid var(--border); }
@@ -133,7 +147,7 @@
         .badges-container { display: flex; gap: 15px; justify-content: center; margin-top: 2rem; }
         .badge-icon { font-size: 3rem; color: #fbbf24; }
 
-        /* باقي الأقسام (الدروس، الامتحانات، الشات) - كما كانت */
+        /* باقي الأقسام (الدروس، الامتحانات، الشات) */
         .lessons-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 24px; }
         .lesson-card { background: var(--card-bg); border-radius: var(--radius); overflow: hidden; border: 1px solid var(--border); }
         .video-box { position: relative; padding-bottom: 56.25%; height: 0; background: #0f172a; }
@@ -201,6 +215,23 @@
                         <!-- 1. النقاط (XP) -->
                         <span class="badge" id="xp-badge" style="background: #fef3c7; color: #d97706;"><i class="fas fa-bolt"></i> 0 XP</span>
                         
+                        <!-- إضافة جديدة: مؤقت التركيز (Pomodoro) -->
+                        <div style="position: relative;">
+                            <button class="icon-btn" onclick="toggleTimer()" title="مؤقت التركيز">
+                                <i class="fas fa-stopwatch"></i>
+                            </button>
+                            <div class="timer-dropdown" id="timer-dropdown">
+                                <h4 style="color: var(--primary); margin-bottom: 5px;">🍅 مؤقت بومودورو</h4>
+                                <p style="font-size: 0.8rem; color: var(--text-dim);">ركز 25 دقيقة واكسب 30 XP!</p>
+                                <div class="timer-display" id="timer-display">25:00</div>
+                                <div class="timer-controls">
+                                    <button class="timer-btn play" onclick="startTimer()"><i class="fas fa-play"></i></button>
+                                    <button class="timer-btn" onclick="pauseTimer()"><i class="fas fa-pause"></i></button>
+                                    <button class="timer-btn" onclick="resetTimer()"><i class="fas fa-redo"></i></button>
+                                </div>
+                            </div>
+                        </div>
+
                         <!-- 4. الوضع الليلي -->
                         <button class="icon-btn" onclick="toggleTheme()" id="theme-btn"><i class="fas fa-moon"></i></button>
                         
@@ -246,6 +277,8 @@
                                 <div class="task-item" id="task-login"><input type="checkbox" disabled checked> تسجيل الدخول للمنصة (+10 XP)</div>
                                 <div class="task-item" id="task-chat"><input type="checkbox" disabled> إرسال رسالة في المجتمع (+20 XP)</div>
                                 <div class="task-item" id="task-exam"><input type="checkbox" disabled> إكمال امتحان (+50 XP)</div>
+                                <!-- تمت إضافة مهمة التركيز الجديدة -->
+                                <div class="task-item" id="task-pomodoro"><input type="checkbox" disabled> إكمال جلسة تركيز (+30 XP)</div>
                             </div>
                         </div>
 
@@ -375,13 +408,65 @@
         // 5. دالة عرض الإشعارات
         window.toggleNotifications = function() {
             document.getElementById('notif-dropdown').classList.toggle('active');
-            document.getElementById('notif-dot').style.display = 'none'; // إخفاء النقطة الحمراء عند القراءة
+            document.getElementById('notif-dot').style.display = 'none'; 
         }
         function addNotification(msg) {
             const list = document.getElementById('notif-list');
             list.innerHTML = `<div class="notif-item">${msg}</div>` + list.innerHTML;
             document.getElementById('notif-dot').style.display = 'block';
         }
+
+        // ================= الإضافة الجديدة: مؤقت البومودورو =================
+        let timerInterval;
+        let timeLeft = 25 * 60; // 25 دقيقة
+        let isTimerRunning = false;
+
+        window.toggleTimer = function() {
+            document.getElementById('timer-dropdown').classList.toggle('active');
+        }
+
+        window.startTimer = function() {
+            if (isTimerRunning) return;
+            isTimerRunning = true;
+            timerInterval = setInterval(() => {
+                if (timeLeft > 0) {
+                    timeLeft--;
+                    updateTimerDisplay();
+                } else {
+                    clearInterval(timerInterval);
+                    isTimerRunning = false;
+                    addNotification("⏰ انتهت جلسة التركيز! أحسنت العمل.");
+                    
+                    // منح الطالب النقاط وتحديث المهام
+                    if(!document.getElementById('task-pomodoro').classList.contains('done')){
+                        document.getElementById('task-pomodoro').classList.add('done');
+                        document.querySelector('#task-pomodoro input').checked = true;
+                        awardXP(30, "إكمال جلسة تركيز (Pomodoro)");
+                    }
+                    resetTimer();
+                }
+            }, 1000);
+        }
+
+        window.pauseTimer = function() {
+            clearInterval(timerInterval);
+            isTimerRunning = false;
+        }
+
+        window.resetTimer = function() {
+            clearInterval(timerInterval);
+            isTimerRunning = false;
+            timeLeft = 25 * 60;
+            updateTimerDisplay();
+        }
+
+        function updateTimerDisplay() {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            document.getElementById('timer-display').innerText = 
+                `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
+        // ===================================================================
 
         // 2. دالة تشغيل محرر الكود
         window.runCode = function() {
@@ -393,7 +478,6 @@
             doc.open();
             doc.write(html + css + js);
             doc.close();
-            // دعم الوضع الليلي داخل iframe
             if(document.documentElement.getAttribute('data-theme') === 'dark') {
                 doc.body.style.color = 'white';
             }
@@ -420,7 +504,7 @@
             el.classList.add('active');
             
             if(id === 'chat-sec') scrollChat();
-            if(id === 'editor-sec') runCode(); // تشغيل الكود الافتراضي
+            if(id === 'editor-sec') runCode(); 
             if(id !== 'exams-sec') closeExam();
         }
 
@@ -431,7 +515,6 @@
             document.getElementById('xp-badge').innerHTML = `<i class="fas fa-bolt"></i> ${newXP} XP`;
             document.getElementById('port-xp').innerText = newXP;
             
-            // تحديث في قاعدة البيانات
             update(ref(db, `students/${currentStudent.key}`), { xp: newXP });
             addNotification(`🎉 حصلت على ${amount} XP بسبب: ${reason}`);
             
@@ -479,7 +562,7 @@
             document.getElementById('port-xp').innerText = currentStudent.xp || 0;
             checkBadges();
 
-            // منح نقطة دخول (المهمة 1)
+            // منح نقطة دخول
             awardXP(10, "تسجيل الدخول اليومي");
 
             // جلب التقييمات
@@ -493,7 +576,7 @@
                 }
             });
 
-            // لوحة الشرف (Leaderboard)
+            // لوحة الشرف
             onValue(ref(db, 'students'), (snap) => {
                 const allStudents = snap.val();
                 if(allStudents) {
@@ -511,7 +594,7 @@
                 }
             });
 
-            // جلب الدروس مع نظام إشعارات
+            // جلب الدروس
             let firstLoadLessons = true;
             onValue(ref(db, 'content'), (snap) => {
                 const lessons = snap.val();
