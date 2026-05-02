@@ -11,7 +11,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     
     <style>
-        /* 4. الوضع الليلي - متغيرات الألوان */
+        /* الوضع الليلي - متغيرات الألوان */
         :root {
             --primary: #4f46e5;
             --primary-gradient: linear-gradient(135deg, #4f46e5, #0ea5e9);
@@ -109,7 +109,7 @@
         .notif-dropdown.active { display: block; }
         .notif-item { padding: 10px; border-bottom: 1px solid var(--border); font-size: 0.9rem; color: var(--text-dim); }
 
-        /* مؤقت التركيز (الإضافة الجديدة) */
+        /* مؤقت التركيز */
         .timer-dropdown {
             position: absolute; top: 70px; left: 80px; background: var(--card-bg); border: 1px solid var(--border);
             border-radius: 16px; width: 250px; box-shadow: var(--shadow-md); display: none; z-index: 1000;
@@ -135,7 +135,7 @@
         .task-item.done { opacity: 0.6; text-decoration: line-through; }
         .leaderboard-item { display: flex; justify-content: space-between; padding: 12px; border-bottom: 1px solid var(--border); }
 
-        /* محرر الأكواد (Live Editor) */
+        /* محرر الأكواد */
         .editor-layout { display: flex; flex-direction: column; gap: 15px; height: 75vh; }
         .editor-inputs { display: flex; gap: 15px; flex: 1; }
         .code-box { flex: 1; display: flex; flex-direction: column; background: var(--card-bg); border-radius: 16px; border: 1px solid var(--border); overflow: hidden;}
@@ -143,12 +143,12 @@
         .code-box textarea { flex: 1; border: none; padding: 15px; font-family: monospace; font-size: 1rem; resize: none; background: transparent; color: var(--text-main); outline: none;}
         .editor-output { flex: 1; background: white; border-radius: 16px; border: 1px solid var(--border); width: 100%; }
 
-        /* ملف الإنجاز (Portfolio) */
+        /* ملف الإنجاز */
         #portfolio-content { background: var(--card-bg); padding: 3rem; border-radius: var(--radius); text-align: center; border: 1px solid var(--border); }
         .badges-container { display: flex; gap: 15px; justify-content: center; margin-top: 2rem; }
         .badge-icon { font-size: 3rem; color: #fbbf24; }
 
-        /* باقي الأقسام (الدروس، الامتحانات، الشات) */
+        /* باقي الأقسام */
         .lessons-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 24px; }
         .lesson-card { background: var(--card-bg); border-radius: var(--radius); overflow: hidden; border: 1px solid var(--border); }
         .video-box { position: relative; padding-bottom: 56.25%; height: 0; background: #0f172a; }
@@ -201,6 +201,9 @@
                 <div class="nav-link" onclick="showSection('exams-sec', this)"><i class="fas fa-laptop-code"></i> <span>الامتحانات</span></div>
                 <div class="nav-link" onclick="showSection('chat-sec', this)"><i class="fas fa-comments"></i> <span>المجتمع</span></div>
                 <div class="nav-link" onclick="showSection('portfolio-sec', this)"><i class="fas fa-id-card"></i> <span>ملف الإنجاز</span></div>
+                <!-- زر الدعم الفني -->
+                <div class="nav-link" onclick="showSection('support-sec', this)"><i class="fas fa-headset"></i> <span>الدعم الفني</span></div>
+                
                 <button class="btn" style="margin-top: auto; background: #fee2e2; color: #ef4444;" onclick="location.reload()">
                     <i class="fas fa-sign-out-alt"></i> <span>خروج</span>
                 </button>
@@ -217,7 +220,7 @@
                         <!-- النقاط (XP) -->
                         <span class="badge" id="xp-badge" style="background: #fef3c7; color: #d97706;"><i class="fas fa-bolt"></i> 0 XP</span>
                         
-                        <!-- مؤقت التركيز (Pomodoro) -->
+                        <!-- مؤقت التركيز -->
                         <div style="position: relative;">
                             <button class="icon-btn" onclick="toggleTimer()" title="مؤقت التركيز">
                                 <i class="fas fa-stopwatch"></i>
@@ -272,7 +275,6 @@
                     </div>
 
                     <div class="tasks-leaderboard-grid">
-                        <!-- المهام اليومية -->
                         <div class="panel">
                             <h3 style="margin-bottom: 15px; color: var(--primary);"><i class="fas fa-calendar-check"></i> المهام اليومية</h3>
                             <div id="daily-tasks">
@@ -283,7 +285,6 @@
                             </div>
                         </div>
 
-                        <!-- لوحة الشرف -->
                         <div class="panel">
                             <h3 style="margin-bottom: 15px; color: #d97706;"><i class="fas fa-trophy"></i> أبطال المستوى</h3>
                             <div id="leaderboard-list">
@@ -335,7 +336,7 @@
                     </div>
                 </section>
 
-                <!-- قسم المجتمع (شات) -->
+                <!-- قسم المجتمع -->
                 <section id="chat-sec" class="app-section">
                     <div class="chat-container">
                         <div class="chat-header">
@@ -349,7 +350,7 @@
                     </div>
                 </section>
 
-                <!-- قسم ملف الإنجاز (Portfolio) -->
+                <!-- قسم ملف الإنجاز -->
                 <section id="portfolio-sec" class="app-section">
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
                         <h3><i class="fas fa-id-card"></i> ملف الإنجاز الخاص بي</h3>
@@ -370,6 +371,21 @@
                         </div>
                     </div>
                 </section>
+
+                <!-- قسم الدعم الفني -->
+                <section id="support-sec" class="app-section">
+                    <h3 style="margin-bottom: 1.5rem;"><i class="fas fa-headset"></i> مركز الدعم والشكاوى</h3>
+                    <div class="panel" style="margin-bottom: 2rem;">
+                        <textarea id="complaint-text" placeholder="اكتب شكواك أو مشكلتك هنا بوضوح..." style="width: 100%; height: 120px; padding: 15px; border-radius: 16px; border: 2px solid var(--border); background: var(--bg-body); color: var(--text-main); font-family: inherit; resize: none; outline: none; margin-bottom: 15px;"></textarea>
+                        <button class="btn btn-primary" onclick="sendComplaint()"><i class="fas fa-paper-plane"></i> إرسال الشكوى للإدارة</button>
+                    </div>
+                    
+                    <h3 style="margin-bottom: 1rem;"><i class="fas fa-history"></i> سجل شكاوي السابقة</h3>
+                    <div id="my-complaints-list">
+                        <!-- ستظهر الشكاوى هنا -->
+                    </div>
+                </section>
+                
             </main>
         </div>
     </div>
@@ -392,7 +408,6 @@
         let currentStudent = null;
         let currentExamData = null; 
         
-        // دالة الوضع الليلي
         window.toggleTheme = function() {
             const html = document.documentElement;
             const current = html.getAttribute('data-theme');
@@ -403,7 +418,6 @@
         }
         if(localStorage.getItem('theme') === 'dark') toggleTheme();
 
-        // دالة عرض الإشعارات
         window.toggleNotifications = function() {
             document.getElementById('notif-dropdown').classList.toggle('active');
             document.getElementById('notif-dot').style.display = 'none'; 
@@ -414,7 +428,6 @@
             document.getElementById('notif-dot').style.display = 'block';
         }
 
-        // مؤقت البومودورو
         let timerInterval;
         let timeLeft = 25 * 60;
         let isTimerRunning = false;
@@ -464,7 +477,6 @@
                 `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
         }
 
-        // تشغيل محرر الكود
         window.runCode = function() {
             const html = document.getElementById('html-code').value;
             const css = `<style>${document.getElementById('css-code').value}</style>`;
@@ -479,7 +491,6 @@
             }
         }
 
-        // تحميل ملف الإنجاز PDF
         window.downloadPortfolio = function() {
             const element = document.getElementById('portfolio-content');
             const opt = {
@@ -492,7 +503,6 @@
             html2pdf().set(opt).from(element).save();
         }
 
-        // التنقل بين الأقسام
         window.showSection = function(id, el) {
             document.querySelectorAll('.app-section').forEach(s => s.classList.remove('active'));
             document.querySelectorAll('.nav-link').forEach(n => n.classList.remove('active'));
@@ -504,7 +514,6 @@
             if(id !== 'exams-sec') closeExam();
         }
 
-        // نظام النقاط XP
         function awardXP(amount, reason) {
             let newXP = (currentStudent.xp || 0) + amount;
             currentStudent.xp = newXP;
@@ -526,7 +535,6 @@
             document.getElementById('port-badges').innerHTML = badgesHtml;
         }
 
-        // دالة تسجيل الدخول المعدلة للتحقق من الكود + رقم الهاتف
         window.studentLogin = function() {
             const code = document.getElementById('student-code-input').value.trim();
             const phone = document.getElementById('student-phone-input').value.trim();
@@ -537,7 +545,6 @@
                 const data = snap.val();
                 let found = false;
                 for(let k in data) {
-                    // التحقق من تطابق الكود ورقم الهاتف تماماً
                     if(data[k].code === code && data[k].phone === phone) {
                         currentStudent = { ...data[k], key: k };
                         initApp();
@@ -562,10 +569,8 @@
             document.getElementById('port-xp').innerText = currentStudent.xp || 0;
             checkBadges();
 
-            // منح نقطة دخول (تسجيل الدخول اليومي)
             awardXP(10, "تسجيل الدخول اليومي");
 
-            // جلب التقييمات
             onValue(ref(db, `students/${currentStudent.key}/evaluations`), (snap) => {
                 const evals = snap.val();
                 if(evals) {
@@ -576,7 +581,6 @@
                 }
             });
 
-            // لوحة الشرف
             onValue(ref(db, 'students'), (snap) => {
                 const allStudents = snap.val();
                 if(allStudents) {
@@ -594,7 +598,6 @@
                 }
             });
 
-            // جلب الدروس
             let firstLoadLessons = true;
             onValue(ref(db, 'content'), (snap) => {
                 const lessons = snap.val();
@@ -623,7 +626,6 @@
                 firstLoadLessons = false;
             });
 
-            // الامتحانات
             let firstLoadExams = true;
             onValue(ref(db, 'online_exams'), (snap) => {
                 const exams = snap.val();
@@ -650,7 +652,6 @@
                 firstLoadExams = false;
             });
 
-            // جلب رسائل المجتمع
             let firstLoadChat = true;
             onValue(ref(db, 'community'), (snap) => {
                 const posts = snap.val();
@@ -678,6 +679,34 @@
                 container.innerHTML = html;
                 scrollChat();
                 firstLoadChat = false;
+            });
+
+            // جلب الشكاوى الخاصة بالطالب (الإضافة الجديدة)
+            onValue(ref(db, 'support'), (snap) => {
+                const complaints = snap.val();
+                const list = document.getElementById('my-complaints-list');
+                let html = "";
+                
+                if(complaints) {
+                    Object.entries(complaints).reverse().forEach(([key, c]) => {
+                        if(c.studentName === currentStudent.name) {
+                            html += `
+                            <div style="background: var(--bg-body); padding: 1.5rem; border-radius: 16px; margin-bottom: 15px; border: 1px solid var(--border);">
+                                <p style="font-weight: bold; margin-bottom: 10px;">${c.text}</p>
+                                <span style="font-size: 0.8rem; color: var(--text-dim); display: block; margin-bottom: 15px;"><i class="far fa-clock"></i> ${c.date}</span>
+                                
+                                ${c.reply ? 
+                                `<div style="background: rgba(16, 185, 129, 0.1); border-right: 4px solid #10b981; padding: 15px; border-radius: 12px; color: #059669;">
+                                    <strong><i class="fas fa-user-shield"></i> رد الإدارة:</strong> ${c.reply}
+                                </div>` : 
+                                `<div style="background: rgba(245, 158, 11, 0.1); border-right: 4px solid #f59e0b; padding: 10px; border-radius: 12px; color: #d97706;">
+                                    <i class="fas fa-hourglass-half"></i> قيد المراجعة من قِبل الإدارة...
+                                </div>`}
+                            </div>`;
+                        }
+                    });
+                }
+                list.innerHTML = html || "<p style='color: var(--text-dim);'>لا توجد شكاوى أو استفسارات سابقة.</p>";
             });
         }
 
@@ -751,6 +780,24 @@
                 document.querySelector('#task-chat input').checked = true;
                 awardXP(20, "المشاركة في المجتمع");
             }
+        }
+
+        // دالة إرسال الشكوى (الإضافة الجديدة)
+        window.sendComplaint = function() {
+            const text = document.getElementById('complaint-text').value.trim();
+            if(!text) return alert("يرجى كتابة الشكوى أولاً");
+            
+            push(ref(db, 'support'), {
+                studentName: currentStudent.name,
+                level: currentStudent.level,
+                phone: currentStudent.phone, // أضفنا رقم الهاتف لسهولة التواصل
+                text: text,
+                reply: "", // فارغ حتى يرد الأدمن
+                date: new Date().toLocaleString('ar-EG')
+            });
+            
+            document.getElementById('complaint-text').value = "";
+            addNotification("✅ تم إرسال الشكوى للإدارة بنجاح!");
         }
 
         function scrollChat() {

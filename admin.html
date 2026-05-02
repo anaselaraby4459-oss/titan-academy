@@ -123,12 +123,10 @@
         .exam-question-box { background: rgba(0,0,0,0.02); border: 1px solid var(--border); padding: 1.5rem; border-radius: var(--radius-md); margin-bottom: 1rem; position: relative; }
         [data-theme="dark"] .exam-question-box { background: rgba(255,255,255,0.02); }
 
-        /* ستايل قائمة المهام الجديدة */
         .task-item { display: flex; justify-content: space-between; align-items: center; background: rgba(79, 70, 229, 0.05); padding: 12px 15px; border-radius: var(--radius-md); margin-bottom: 8px; border: 1px solid rgba(79, 70, 229, 0.1); transition: all 0.3s; }
         .task-item:hover { background: rgba(79, 70, 229, 0.1); transform: translateX(-5px); }
         .task-item.done span { text-decoration: line-through; opacity: 0.6; }
 
-        /* ستايل الاشعارات الذكية (Toasts) */
         #toast-container { position: fixed; bottom: 20px; left: 20px; z-index: 10000; display: flex; flex-direction: column; gap: 10px; }
         .custom-toast { background: var(--bg-card); color: var(--text-main); padding: 12px 20px; border-radius: var(--radius-md); box-shadow: 0 5px 15px rgba(0,0,0,0.2); display: flex; align-items: center; gap: 10px; font-weight: 600; animation: slideInUp 0.3s forwards; border-right: 4px solid var(--primary); transition: opacity 0.4s; }
         .custom-toast.success { border-right-color: var(--success); }
@@ -148,14 +146,12 @@
 </head>
 <body data-theme="dark">
 
-    <!-- حاوية الاشعارات الذكية -->
     <div id="toast-container"></div>
 
     <div id="login-screen">
         <div class="login-box">
             <i class="fas fa-user-shield" style="font-size: 3.5rem; color: var(--primary); margin-bottom: 1rem; filter: drop-shadow(0 4px 6px rgba(79,70,229,0.3));"></i>
             <h2>🔐 دخول الإدارة</h2>
-            <!-- تم ترك الأمان الخاص بتسجيل الدخول كما هو بناء على طلبك -->
             <input type="text" id="u" placeholder="اسم المستخدم" onkeypress="if(event.key === 'Enter') login()">
             <input type="password" id="p" placeholder="كلمة المرور" onkeypress="if(event.key === 'Enter') login()">
             <button class="btn btn-primary" style="width: 100%; justify-content: center; margin-top: 1rem; padding: 1rem; font-size: 1.1rem; border-radius: 12px;" onclick="login()">تسجيل الدخول</button>
@@ -183,6 +179,7 @@
             <button class="btn btn-outline" onclick="showSec('staff')"><i class="fas fa-user-tie"></i> الموظفين</button>
             <button class="btn btn-outline" onclick="showSec('schedule')"><i class="fas fa-clock"></i> المواعيد</button>
             <button class="btn btn-outline" onclick="showSec('report-att')"><i class="fas fa-table"></i> تقرير الغياب</button>
+            <button class="btn btn-outline" onclick="showSec('support')"><i class="fas fa-headset"></i> الشكاوى والدعم الفني</button> <!-- تمت إضافة الزر هنا -->
             <button class="btn btn-outline" onclick="showSec('settings')"><i class="fas fa-database"></i> الإدارة والنسخ</button>
         </nav>
         <button class="btn btn-danger" style="margin-top: auto; justify-content: center; padding: 0.8rem;" onclick="location.reload()"><i class="fas fa-sign-out-alt"></i> تسجيل الخروج</button>
@@ -224,22 +221,41 @@
                     <h3><i class="fas fa-chart-line"></i> التحليل المالي والنمو</h3>
                     <canvas id="mainChart" height="90"></canvas>
                 </div>
-                <!-- الإضافة الجديدة: قائمة المهام السريعة -->
                 <div class="card">
                     <h3><i class="fas fa-tasks"></i> مهام الإدارة السريعة</h3>
                     <div style="display: flex; gap: 10px; margin-bottom: 15px;">
                         <input type="text" id="new-task-input" placeholder="اكتب مهمة جديدة..." onkeypress="if(event.key === 'Enter') addNewTask()">
                         <button class="btn btn-primary" onclick="addNewTask()"><i class="fas fa-plus"></i></button>
                     </div>
-                    <div id="todo-list">
-                        <!-- المهام ستضاف هنا -->
-                    </div>
+                    <div id="todo-list"></div>
                 </div>
             </div>
         </section>
 
-        <!-- القسم الجديد للامتحانات الإلكترونية -->
+        <!-- باقي الأقسام هنا كما في المصدر الأصلي ... -->
+        
+        <!-- قسم الشكاوى والدعم الفني الجديد للإدارة -->
+        <section id="sec-support" style="display: none;">
+            <div class="card">
+                <h3><i class="fas fa-headset"></i> مركز الشكاوى والدعم الفني</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>الطالب</th>
+                            <th>المستوى</th>
+                            <th>الشكوى</th>
+                            <th>التاريخ</th>
+                            <th>حالة الرد</th>
+                            <th>إجراء</th>
+                        </tr>
+                    </thead>
+                    <tbody id="support-list-admin"></tbody>
+                </table>
+            </div>
+        </section>
+
         <section id="sec-online-exams" style="display: none;">
+            <!-- كود صانع الامتحانات ... -->
             <div class="card">
                 <h3><i class="fas fa-plus-circle"></i> صانع الامتحانات التفاعلي</h3>
                 <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 15px; margin-bottom: 1rem;">
@@ -250,17 +266,12 @@
                         <option value="3">مستوى 3</option>
                     </select>
                 </div>
-                
-                <div id="questions-container">
-                    <!-- سيتم إضافة الأسئلة هنا ديناميكياً -->
-                </div>
-                
+                <div id="questions-container"></div>
                 <div style="display: flex; gap: 15px; margin-top: 15px;">
                     <button class="btn btn-info" onclick="addQuestionUI()"><i class="fas fa-plus"></i> إضافة سؤال جديد</button>
                     <button class="btn btn-success" onclick="publishOnlineExam()"><i class="fas fa-upload"></i> نشر الامتحان للطلاب</button>
                 </div>
             </div>
-
             <div class="card">
                 <h3><i class="fas fa-list-alt"></i> الامتحانات المنشورة حالياً</h3>
                 <table>
@@ -289,6 +300,7 @@
         </section>
 
         <section id="sec-students" style="display: none;">
+            <!-- قسم إضافة الطلاب والتقييم كما كان -->
             <div class="card">
                 <h3><i class="fas fa-user-plus"></i> إضافة طالب جديد</h3>
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
@@ -418,7 +430,6 @@
             <div class="card no-print">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
                     <h3><i class="fas fa-table"></i> تقرير غياب الشهر</h3>
-                    <!-- الإضافة الجديدة: زر الطباعة -->
                     <button class="btn btn-info" onclick="window.print()"><i class="fas fa-print"></i> طباعة التقرير</button>
                 </div>
                 <div style="display: grid; grid-template-columns: 1fr 1fr 1fr auto; gap: 15px;">
@@ -460,7 +471,7 @@
         const db = getDatabase(app);
         window.db = db; window.fbRef = ref; window.fbPush = push; window.fbUpdate = update; window.fbRemove = remove; window.fbOnValue = onValue;
 
-        // مزامنة البيانات
+        // مزامنة البيانات الأصلية
         fbOnValue(fbRef(db, 'students'), (snap) => {
             window.db_students = snap.val() ? Object.entries(snap.val()).map(([k, v]) => ({...v, fbKey: k})) : [];
             renderStudents(); updateStats(); syncDropdowns();
@@ -483,6 +494,12 @@
             renderOnlineExams();
         });
 
+        // المستمع الجديد الخاص بالدعم الفني والشكاوى
+        fbOnValue(fbRef(db, 'support'), (snap) => {
+            window.db_support = snap.val() ? Object.entries(snap.val()).map(([k, v]) => ({...v, fbKey: k})) : [];
+            if(window.renderSupportAdmin) window.renderSupportAdmin();
+        });
+
         fbOnValue(fbRef(db, 'expenses'), (snap) => { window.db_expenses = snap.val() ? Object.values(snap.val()) : []; renderExpenses(); updateStats(); });
         fbOnValue(fbRef(db, 'attendance'), (snap) => { window.db_attendance = snap.val() ? Object.values(snap.val()) : []; });
         fbOnValue(fbRef(db, 'homework'), (snap) => { window.db_homework = snap.val() ? Object.values(snap.val()) : []; renderHomework(); });
@@ -494,7 +511,6 @@
     <script>
         let mainChart;
 
-        // دالة الإشعارات الجديدة
         function showToast(message, type = 'success') {
             const container = document.getElementById('toast-container');
             const toast = document.createElement('div');
@@ -513,7 +529,48 @@
             }, 3000);
         }
 
-        // مهام الإدارة السريعة
+        // دوال نظام الشكاوى والدعم الفني الجديدة
+        window.renderSupportAdmin = function() {
+            const list = document.getElementById('support-list-admin');
+            if(!list) return;
+            
+            list.innerHTML = (window.db_support || []).reverse().map(c => `
+                <tr>
+                    <td style="font-weight:bold;">${c.studentName}<br><span style="font-size:0.8rem; color:var(--text-dim);">${c.phone || ''}</span></td>
+                    <td>مستوى ${c.level}</td>
+                    <td style="max-width: 250px; text-align: right; padding-right: 15px;">${c.text}</td>
+                    <td style="font-size:0.85rem;">${c.date}</td>
+                    <td>
+                        ${c.reply ? 
+                          `<span style="color:var(--success); font-weight:bold;"><i class="fas fa-check-circle"></i> تم الرد</span>
+                           <div style="font-size:0.8rem; margin-top:5px; color:var(--text-dim); text-align:right;">${c.reply}</div>` : 
+                          `<input type="text" id="reply-input-${c.fbKey}" placeholder="اكتب ردك هنا..." style="padding:8px; border-radius:8px; border:1px solid var(--border); width:100%;">`
+                        }
+                    </td>
+                    <td>
+                        ${!c.reply ? `<button class="btn btn-success" onclick="replyComplaint('${c.fbKey}')" style="padding:8px; margin-bottom:5px; width:100%; justify-content:center;"><i class="fas fa-reply"></i> إرسال</button>` : ''}
+                        <button class="btn btn-danger" onclick="deleteComplaint('${c.fbKey}')" style="padding:8px; width:100%; justify-content:center;"><i class="fas fa-trash"></i> حذف</button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        window.replyComplaint = function(key) {
+            const replyText = document.getElementById(`reply-input-${key}`).value.trim();
+            if(!replyText) return showToast("الرجاء كتابة الرد أولاً!", "error");
+            
+            window.fbUpdate(window.fbRef(window.db, `support/${key}`), { reply: replyText });
+            showToast("تم إرسال الرد للطالب بنجاح", "success");
+        }
+
+        window.deleteComplaint = function(key) {
+            if(confirm('هل أنت متأكد من مسح هذه الشكوى نهائياً؟')) {
+                window.fbRemove(window.fbRef(window.db, `support/${key}`));
+                showToast("تم حذف الشكوى", "warning");
+            }
+        }
+
+        // باقي دوال الموقع ...
         function addNewTask() {
             const input = document.getElementById('new-task-input');
             const text = input.value.trim();
@@ -534,7 +591,6 @@
             showToast('تمت إضافة المهمة', 'success');
         }
 
-        /* --- لم يتم تغيير الأمان بناءً على طلبك --- */
         function login() {
             if(document.getElementById('u').value === 'admin' && document.getElementById('p').value === '147963') {
                 document.getElementById('login-screen').style.display = 'none';
@@ -542,7 +598,6 @@
                 initChart();
             } else { alert('❌ خطأ في اسم المستخدم أو كلمة المرور!'); }
         }
-        /* ------------------------------------------- */
 
         function showSec(id) {
             document.querySelectorAll('section').forEach(s => s.style.display = 'none');
@@ -559,7 +614,6 @@
             if(document.getElementById('inv-select-std')) document.getElementById('inv-select-std').innerHTML = (window.db_students || []).map((s,i) => `<option value="${i}">${s.name}</option>`).join('');
         }
 
-        /* --- نظام الامتحانات الإلكترونية --- */
         function addQuestionUI() {
             const container = document.getElementById('questions-container');
             const qIndex = container.children.length + 1;
@@ -640,7 +694,6 @@
                 </tr>
             `).reverse().join('');
         }
-        /* --- نهاية قسم الامتحانات --- */
 
         function adminSendPost() {
             const txt = document.getElementById('admin-post-txt').value, lvl = document.getElementById('admin-post-lvl').value;
@@ -768,7 +821,7 @@
 
         function toggleTheme() { document.body.setAttribute('data-theme', document.body.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'); }
         function initChart() { const ctx = document.getElementById('mainChart').getContext('2d'); mainChart = new Chart(ctx, { type: 'line', data: { labels: ['يناير', 'فبراير', 'مارس', 'أبريل'], datasets: [{ label: 'الإيرادات', data: [500, 1200, 800, 1500], borderColor: '#4f46e5', tension: 0.4 }] } }); }
-        function factoryReset() { if(confirm("حذف كل شيء؟")) { ['students', 'content', 'invoices', 'expenses', 'attendance', 'homework', 'grades', 'staff', 'schedule', 'community', 'online_exams'].forEach(p => fbRemove(fbRef(db, p))); location.reload(); } }
+        function factoryReset() { if(confirm("حذف كل شيء؟")) { ['students', 'content', 'invoices', 'expenses', 'attendance', 'homework', 'grades', 'staff', 'schedule', 'community', 'online_exams', 'support'].forEach(p => fbRemove(fbRef(db, p))); location.reload(); } }
         setInterval(() => { document.getElementById('live-clock').innerText = new Date().toLocaleString('ar-EG'); }, 1000);
     </script>
 </body>
