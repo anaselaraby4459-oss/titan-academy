@@ -1,12 +1,17 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar" dir="rtl" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>منصة المبرمج الذكية</title>
+    <!-- مكتبات الأيقونات والخطوط -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <!-- مكتبة تحويل HTML إلى PDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    
     <style>
+        /* 4. الوضع الليلي - متغيرات الألوان */
         :root {
             --primary: #4f46e5;
             --primary-gradient: linear-gradient(135deg, #4f46e5, #0ea5e9);
@@ -21,147 +26,141 @@
             --radius: 24px;
         }
 
+        [data-theme="dark"] {
+            --primary: #6366f1;
+            --primary-gradient: linear-gradient(135deg, #6366f1, #38bdf8);
+            --bg-body: #0f172a;
+            --card-bg: #1e293b;
+            --text-main: #f8fafc;
+            --text-dim: #94a3b8;
+            --border: #334155;
+            --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.5);
+            --shadow-md: 0 10px 25px -3px rgba(0, 0, 0, 0.5);
+        }
+
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cairo', sans-serif; transition: all 0.3s ease; }
         body { background: var(--bg-body); color: var(--text-main); }
 
-        /* Custom Scrollbar */
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
         ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
 
-        /* تسجيل الدخول - Glassmorphism Effect */
+        /* تسجيل الدخول */
         #login-page { 
             height: 100vh; display: flex; align-items: center; justify-content: center; 
             background: var(--primary-gradient); 
         }
         .login-card { 
-            background: rgba(255, 255, 255, 0.95); 
-            padding: 3rem 2.5rem; 
-            border-radius: var(--radius); 
-            width: 90%; max-width: 420px; 
-            text-align: center;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-            backdrop-filter: blur(10px);
+            background: var(--card-bg); padding: 3rem 2.5rem; border-radius: var(--radius); 
+            width: 90%; max-width: 420px; text-align: center; box-shadow: 0 20px 40px rgba(0,0,0,0.1);
         }
         #student-code-input {
-            background: #f8fafc;
+            background: var(--bg-body); color: var(--text-main);
             transition: border 0.3s, box-shadow 0.3s;
         }
-        #student-code-input:focus {
-            border-color: var(--primary);
-            box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1);
-        }
+        #student-code-input:focus { border-color: var(--primary); box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1); }
 
         /* الهيكل الرئيسي */
         .wrapper { display: flex; min-height: 100vh; }
-
-        /* Sidebar */
         .sidebar {
             width: var(--sidebar-width); background: var(--card-bg); border-left: 1px solid var(--border);
             position: fixed; height: 100vh; right: 0; padding: 2.5rem 1.5rem; display: flex; flex-direction: column; z-index: 100;
-            box-shadow: var(--shadow-sm);
         }
         .sidebar-brand { color: var(--primary); font-weight: 800; font-size: 1.6rem; margin-bottom: 3.5rem; text-align: center; display: flex; align-items: center; justify-content: center; gap: 10px;}
         .nav-link {
             display: flex; align-items: center; gap: 14px; padding: 1.1rem; text-decoration: none;
             color: var(--text-dim); border-radius: 16px; font-weight: 700; cursor: pointer; margin-bottom: 10px;
-            position: relative; overflow: hidden;
         }
         .nav-link i { font-size: 1.2rem; }
-        .nav-link:hover { background: #f8fafc; color: var(--primary); transform: translateX(-5px); }
-        .nav-link.active { background: var(--primary-gradient); color: white; box-shadow: 0 4px 15px rgba(79, 70, 229, 0.3); }
+        .nav-link:hover { background: var(--bg-body); color: var(--primary); transform: translateX(-5px); }
+        .nav-link.active { background: var(--primary-gradient); color: white; }
 
-        /* المحتوى */
         .main-content { flex: 1; margin-right: var(--sidebar-width); padding: 2.5rem; }
         .app-section { display: none; animation: slideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
         .app-section.active { display: block; }
         @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
 
+        /* الترويسة العلوية */
         header { 
             background: var(--card-bg); padding: 1.5rem 2.5rem; border-radius: var(--radius); 
             margin-bottom: 2.5rem; display: flex; justify-content: space-between; align-items: center; 
             box-shadow: var(--shadow-sm); 
         }
-
-        /* قسم مستواي - التقييمات */
-        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 24px; }
-        .stat-card { 
-            background: var(--card-bg); padding: 2.5rem 2rem; border-radius: var(--radius); 
-            text-align: center; border: 1px solid var(--border); box-shadow: var(--shadow-sm); 
+        .header-actions { display: flex; align-items: center; gap: 15px; }
+        .icon-btn {
+            background: var(--bg-body); color: var(--text-main); border: none; border-radius: 50%;
+            width: 45px; height: 45px; display: flex; align-items: center; justify-content: center;
+            font-size: 1.2rem; cursor: pointer; position: relative;
         }
-        .stat-card:hover { transform: translateY(-8px); box-shadow: var(--shadow-md); border-color: #cbd5e1; }
+        .icon-btn:hover { background: var(--border); }
+        .notif-dot {
+            position: absolute; top: 10px; right: 10px; width: 10px; height: 10px;
+            background: #ef4444; border-radius: 50%; display: none;
+        }
+
+        /* الإشعارات المنسدلة */
+        .notif-dropdown {
+            position: absolute; top: 70px; left: 30px; background: var(--card-bg); border: 1px solid var(--border);
+            border-radius: 16px; width: 300px; box-shadow: var(--shadow-md); display: none; z-index: 1000;
+            padding: 1rem;
+        }
+        .notif-dropdown.active { display: block; }
+        .notif-item { padding: 10px; border-bottom: 1px solid var(--border); font-size: 0.9rem; color: var(--text-dim); }
+
+        /* بطاقات الإحصائيات */
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 24px; margin-bottom: 2rem;}
+        .stat-card { background: var(--card-bg); padding: 2.5rem 2rem; border-radius: var(--radius); text-align: center; border: 1px solid var(--border); }
         .stat-value { font-size: 3rem; font-weight: 800; background: var(--primary-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; display: block; margin-bottom: 10px;}
 
-        /* قسم الدروس والامتحانات */
+        /* المهام اليومية واللوحة الشرفية */
+        .tasks-leaderboard-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+        .panel { background: var(--card-bg); padding: 2rem; border-radius: var(--radius); border: 1px solid var(--border); }
+        .task-item { display: flex; align-items: center; gap: 10px; padding: 12px; background: var(--bg-body); margin-bottom: 10px; border-radius: 12px; }
+        .task-item.done { opacity: 0.6; text-decoration: line-through; }
+        .leaderboard-item { display: flex; justify-content: space-between; padding: 12px; border-bottom: 1px solid var(--border); }
+
+        /* محرر الأكواد (Live Editor) */
+        .editor-layout { display: flex; flex-direction: column; gap: 15px; height: 75vh; }
+        .editor-inputs { display: flex; gap: 15px; flex: 1; }
+        .code-box { flex: 1; display: flex; flex-direction: column; background: var(--card-bg); border-radius: 16px; border: 1px solid var(--border); overflow: hidden;}
+        .code-box label { background: var(--bg-body); padding: 10px; font-weight: bold; text-align: center; border-bottom: 1px solid var(--border);}
+        .code-box textarea { flex: 1; border: none; padding: 15px; font-family: monospace; font-size: 1rem; resize: none; background: transparent; color: var(--text-main); outline: none;}
+        .editor-output { flex: 1; background: white; border-radius: 16px; border: 1px solid var(--border); width: 100%; }
+
+        /* ملف الإنجاز (Portfolio) */
+        #portfolio-content { background: var(--card-bg); padding: 3rem; border-radius: var(--radius); text-align: center; border: 1px solid var(--border); }
+        .badges-container { display: flex; gap: 15px; justify-content: center; margin-top: 2rem; }
+        .badge-icon { font-size: 3rem; color: #fbbf24; }
+
+        /* باقي الأقسام (الدروس، الامتحانات، الشات) - كما كانت */
         .lessons-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 24px; }
-        .lesson-card { 
-            background: var(--card-bg); border-radius: var(--radius); overflow: hidden; 
-            border: 1px solid var(--border); box-shadow: var(--shadow-sm);
-        }
-        .lesson-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-md); }
+        .lesson-card { background: var(--card-bg); border-radius: var(--radius); overflow: hidden; border: 1px solid var(--border); }
         .video-box { position: relative; padding-bottom: 56.25%; height: 0; background: #0f172a; }
         .video-box iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
         .lesson-body { padding: 1.8rem; }
-        .lesson-body h4 { font-size: 1.2rem; color: #1e293b; margin-bottom: 15px;}
-
-        /* ستايل ورقة الامتحان */
-        .exam-paper { background: var(--card-bg); padding: 3rem; border-radius: var(--radius); box-shadow: var(--shadow-md); border: none;}
-        .q-box { margin-bottom: 25px; padding: 25px; border: 1px solid #e2e8f0; border-radius: 20px; background: #f8fafc; }
-        .q-title { margin-bottom: 18px; font-size: 1.2rem; color: #0f172a; font-weight: 800;}
-        .opt-label { display: flex; align-items: center; gap: 12px; cursor: pointer; padding: 15px; background: white; border-radius: 14px; border: 2px solid transparent; box-shadow: 0 2px 4px rgba(0,0,0,0.02); margin-bottom: 10px;}
-        .opt-label:hover { border-color: #cbd5e1; transform: translateX(-3px);}
-        .opt-label:has(input:checked) { border-color: var(--primary); background: #eef2ff; }
-        input[type="radio"] { width: 20px; height: 20px; accent-color: var(--primary); cursor: pointer;}
-
-        /* قسم المجتمع - نظام الشات */
-        .chat-container { 
-            background: var(--card-bg); border-radius: var(--radius); height: 75vh; 
-            display: flex; flex-direction: column; box-shadow: var(--shadow-sm); border: none; overflow: hidden;
-        }
-        .chat-header { padding: 1.5rem; border-bottom: 1px solid var(--border); background: #f8fafc; display:flex; align-items:center; gap:10px; font-size: 1.1rem; color: #0f172a;}
-        #chat-messages { 
-            flex: 1; padding: 2rem; overflow-y: auto; 
-            display: flex; flex-direction: column; gap: 20px; background: #fdfdfd;
-        }
-        .msg-item { max-width: 75%; padding: 14px 20px; position: relative; box-shadow: 0 2px 5px rgba(0,0,0,0.04); line-height: 1.6;}
-        .msg-item.mine { 
-            align-self: flex-end; background: var(--primary-gradient); color: white; 
-            border-radius: 20px 20px 0 20px;
-        }
-        .msg-item.others { 
-            align-self: flex-start; background: white; border: 1px solid var(--border); color: #0f172a;
-            border-radius: 20px 20px 20px 0; 
-        }
-        .msg-user { font-size: 0.8rem; font-weight: 800; margin-bottom: 6px; display: block; opacity: 0.9;}
-        .msg-item.mine .msg-user { color: #e0e7ff; }
-        .msg-item.others .msg-user { color: var(--primary); }
-                
-        .chat-input-area { padding: 1.5rem; border-top: 1px solid var(--border); display: flex; gap: 12px; background: white; }
-        .chat-input { flex: 1; padding: 15px 20px; border: 2px solid #e2e8f0; border-radius: 20px; outline: none; background: #f8fafc; font-size: 1rem;}
-        .chat-input:focus { border-color: var(--primary); background: white; box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1);}
-        .chat-input-area .btn { border-radius: 20px; padding: 0 25px; font-size: 1.2rem;}
-
-        /* أزرار وعلامات */
-        .btn { padding: 0.9rem 1.8rem; border-radius: 16px; border: none; cursor: pointer; font-weight: 800; background: var(--primary); color: white; display: inline-flex; align-items: center; gap: 10px; justify-content: center; letter-spacing: 0.5px;}
-        .btn:hover { background: #4338ca; transform: translateY(-2px); box-shadow: 0 6px 12px rgba(79, 70, 229, 0.2); }
-        .btn:active { transform: translateY(0); }
-        .btn-success { background: linear-gradient(135deg, #10b981, #059669); }
-        .btn-success:hover { background: #059669; box-shadow: 0 6px 12px rgba(16, 185, 129, 0.2); }
-        .btn-secondary { background: #64748b; }
-        .btn-secondary:hover { background: #475569; box-shadow: 0 6px 12px rgba(100, 116, 139, 0.2); }
+        .exam-paper { background: var(--card-bg); padding: 3rem; border-radius: var(--radius); }
+        .q-box { margin-bottom: 25px; padding: 25px; border: 1px solid var(--border); border-radius: 20px; background: var(--bg-body); }
+        .opt-label { display: flex; align-items: center; gap: 12px; cursor: pointer; padding: 15px; background: var(--card-bg); border-radius: 14px; margin-bottom: 10px;}
+        .chat-container { background: var(--card-bg); border-radius: var(--radius); height: 75vh; display: flex; flex-direction: column; border: 1px solid var(--border);}
+        .chat-header { padding: 1.5rem; border-bottom: 1px solid var(--border); }
+        #chat-messages { flex: 1; padding: 2rem; overflow-y: auto; display: flex; flex-direction: column; gap: 20px; }
+        .msg-item { max-width: 75%; padding: 14px 20px; position: relative; line-height: 1.6;}
+        .msg-item.mine { align-self: flex-end; background: var(--primary-gradient); color: white; border-radius: 20px 20px 0 20px; }
+        .msg-item.others { align-self: flex-start; background: var(--bg-body); border: 1px solid var(--border); color: var(--text-main); border-radius: 20px 20px 20px 0; }
+        .chat-input-area { padding: 1.5rem; border-top: 1px solid var(--border); display: flex; gap: 12px; }
+        .chat-input { flex: 1; padding: 15px 20px; border: 2px solid var(--border); border-radius: 20px; outline: none; background: var(--bg-body); color: var(--text-main);}
         
-        .badge { background: #eef2ff; color: var(--primary); padding: 8px 16px; border-radius: 12px; font-weight: 800; font-size: 0.9rem;}
-
+        .btn { padding: 0.9rem 1.8rem; border-radius: 16px; border: none; cursor: pointer; font-weight: 800; background: var(--primary); color: white; display: inline-flex; align-items: center; gap: 10px; justify-content: center; }
+        .btn-success { background: #10b981; }
+        .badge { background: rgba(79, 70, 229, 0.1); color: var(--primary); padding: 8px 16px; border-radius: 12px; font-weight: 800; font-size: 0.9rem;}
+        
         @media (max-width: 768px) {
             :root { --sidebar-width: 80px; }
-            .sidebar { padding: 2rem 1rem; align-items: center;}
             .sidebar span, .sidebar-brand span { display: none; }
-            .nav-link { justify-content: center; padding: 1rem; border-radius: 12px;}
-            .nav-link i { font-size: 1.4rem; margin: 0; }
             .main-content { padding: 1.5rem; }
-            .stat-card { padding: 1.5rem; }
-            header { flex-direction: column; gap: 15px; text-align: center; }
+            .tasks-leaderboard-grid { grid-template-columns: 1fr; }
+            .editor-inputs { flex-direction: column; }
         }
     </style>
 </head>
@@ -170,7 +169,7 @@
     <div id="login-page">
         <div class="login-card">
             <h2 style="margin-bottom: 1.5rem; color: var(--text-main);">بوابة المبدعين 🚀</h2>
-            <input type="text" id="student-code-input" placeholder="أدخل كود الطالب" onkeypress="if(event.key === 'Enter') studentLogin()" style="text-align: center; width: 100%; padding: 15px; border-radius: 16px; border: 2px solid #e2e8f0; margin-bottom: 1.5rem; outline:none; font-size: 1rem;">
+            <input type="text" id="student-code-input" placeholder="أدخل كود الطالب" onkeypress="if(event.key === 'Enter') studentLogin()" style="text-align: center; width: 100%; padding: 15px; border-radius: 16px; border: 2px solid var(--border); margin-bottom: 1.5rem; outline:none; font-size: 1rem;">
             <button class="btn" style="width: 100%; font-size: 1.1rem; padding: 15px;" onclick="studentLogin()"><i class="fas fa-sign-in-alt"></i> دخول المنصة</button>
         </div>
     </div>
@@ -182,8 +181,10 @@
                 <div class="sidebar-brand"><i class="fas fa-rocket"></i> <span>بوابة التميز</span></div>
                 <div class="nav-link active" onclick="showSection('stats-sec', this)"><i class="fas fa-star"></i> <span>مستواي</span></div>
                 <div class="nav-link" onclick="showSection('lessons-sec', this)"><i class="fas fa-graduation-cap"></i> <span>الدروس</span></div>
+                <div class="nav-link" onclick="showSection('editor-sec', this)"><i class="fas fa-code"></i> <span>محرر الكود</span></div>
                 <div class="nav-link" onclick="showSection('exams-sec', this)"><i class="fas fa-laptop-code"></i> <span>الامتحانات</span></div>
                 <div class="nav-link" onclick="showSection('chat-sec', this)"><i class="fas fa-comments"></i> <span>المجتمع</span></div>
+                <div class="nav-link" onclick="showSection('portfolio-sec', this)"><i class="fas fa-id-card"></i> <span>ملف الإنجاز</span></div>
                 <button class="btn" style="margin-top: auto; background: #fee2e2; color: #ef4444;" onclick="location.reload()">
                     <i class="fas fa-sign-out-alt"></i> <span>خروج</span>
                 </button>
@@ -191,8 +192,32 @@
 
             <main class="main-content">
                 <header>
-                    <h2 id="welcome-msg" style="color: var(--primary);">مرحباً بك</h2>
-                    <span class="badge" id="level-badge">المستوى -</span>
+                    <div>
+                        <h2 id="welcome-msg" style="color: var(--primary);">مرحباً بك</h2>
+                        <span class="badge" id="level-badge">المستوى -</span>
+                    </div>
+                    
+                    <div class="header-actions">
+                        <!-- 1. النقاط (XP) -->
+                        <span class="badge" id="xp-badge" style="background: #fef3c7; color: #d97706;"><i class="fas fa-bolt"></i> 0 XP</span>
+                        
+                        <!-- 4. الوضع الليلي -->
+                        <button class="icon-btn" onclick="toggleTheme()" id="theme-btn"><i class="fas fa-moon"></i></button>
+                        
+                        <!-- 5. الإشعارات -->
+                        <div style="position: relative;">
+                            <button class="icon-btn" onclick="toggleNotifications()">
+                                <i class="fas fa-bell"></i>
+                                <span class="notif-dot" id="notif-dot"></span>
+                            </button>
+                            <div class="notif-dropdown" id="notif-dropdown">
+                                <h4 style="margin-bottom: 10px; color: var(--primary);">الإشعارات</h4>
+                                <div id="notif-list">
+                                    <div class="notif-item">مرحباً بك في منصتك الجديدة! 🚀</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </header>
 
                 <!-- قسم مستواي -->
@@ -212,6 +237,49 @@
                             <span style="color: var(--text-dim); font-weight: 600;">السلوك العام</span>
                         </div>
                     </div>
+
+                    <div class="tasks-leaderboard-grid">
+                        <!-- 3. المهام اليومية -->
+                        <div class="panel">
+                            <h3 style="margin-bottom: 15px; color: var(--primary);"><i class="fas fa-calendar-check"></i> المهام اليومية</h3>
+                            <div id="daily-tasks">
+                                <div class="task-item" id="task-login"><input type="checkbox" disabled checked> تسجيل الدخول للمنصة (+10 XP)</div>
+                                <div class="task-item" id="task-chat"><input type="checkbox" disabled> إرسال رسالة في المجتمع (+20 XP)</div>
+                                <div class="task-item" id="task-exam"><input type="checkbox" disabled> إكمال امتحان (+50 XP)</div>
+                            </div>
+                        </div>
+
+                        <!-- 1. لوحة الشرف -->
+                        <div class="panel">
+                            <h3 style="margin-bottom: 15px; color: #d97706;"><i class="fas fa-trophy"></i> أبطال المستوى</h3>
+                            <div id="leaderboard-list">
+                                <!-- سيتم جلب الترتيب من قاعدة البيانات -->
+                                <p style="color: var(--text-dim);">جاري التحميل...</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 2. قسم محرر الأكواد المباشر -->
+                <section id="editor-sec" class="app-section">
+                    <h3 style="margin-bottom: 1.5rem;"><i class="fas fa-code"></i> ساحة التجارب (Live Editor)</h3>
+                    <div class="editor-layout">
+                        <div class="editor-inputs">
+                            <div class="code-box">
+                                <label>HTML</label>
+                                <textarea id="html-code" onkeyup="runCode()"><h1>أهلاً بك يا مبرمج!</h1></textarea>
+                            </div>
+                            <div class="code-box">
+                                <label>CSS</label>
+                                <textarea id="css-code" onkeyup="runCode()">h1 { color: blue; text-align: center; }</textarea>
+                            </div>
+                            <div class="code-box">
+                                <label>JavaScript</label>
+                                <textarea id="js-code" onkeyup="runCode()">console.log('يعمل بنجاح');</textarea>
+                            </div>
+                        </div>
+                        <iframe id="live-output" class="editor-output"></iframe>
+                    </div>
                 </section>
 
                 <!-- قسم الدروس -->
@@ -224,20 +292,12 @@
                 <section id="exams-sec" class="app-section">
                     <div id="exams-view-list">
                         <h3 style="margin-bottom: 1.5rem;">📝 الامتحانات المتاحة</h3>
-                        <div id="exams-list" class="lessons-grid">
-                            <!-- الامتحانات تظهر هنا -->
-                        </div>
+                        <div id="exams-list" class="lessons-grid"></div>
                     </div>
-
-                    <!-- مساحة أداء الامتحان -->
                     <div id="exam-take-area" class="exam-paper" style="display: none;">
                         <button class="btn btn-secondary" style="margin-bottom: 2rem;" onclick="closeExam()"><i class="fas fa-arrow-right"></i> رجوع للقائمة</button>
-                        <h2 id="current-exam-title" style="margin-bottom: 2.5rem; color: var(--primary); text-align: center; font-weight: 800; font-size: 2rem;"></h2>
-                        
-                        <div id="exam-questions-area">
-                            <!-- الأسئلة تظهر هنا -->
-                        </div>
-                        
+                        <h2 id="current-exam-title" style="margin-bottom: 2.5rem; color: var(--primary); text-align: center;"></h2>
+                        <div id="exam-questions-area"></div>
                         <button class="btn btn-success" style="width: 100%; font-size: 1.2rem; padding: 18px; margin-top: 2rem;" onclick="submitExam()"><i class="fas fa-check-double"></i> إنهاء وتسليم الامتحان</button>
                     </div>
                 </section>
@@ -248,12 +308,33 @@
                         <div class="chat-header">
                             <strong><i class="fas fa-users"></i> نقاشات مستوى <span id="comm-lvl">-</span></strong>
                         </div>
-                        <div id="chat-messages">
-                            <!-- الرسائل تظهر هنا -->
-                        </div>
+                        <div id="chat-messages"></div>
                         <div class="chat-input-area">
                             <input type="text" id="post-text" class="chat-input" placeholder="اكتب رسالتك هنا..." onkeypress="if(event.key === 'Enter') sendPost()">
                             <button class="btn" onclick="sendPost()"><i class="fas fa-paper-plane"></i></button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 6. قسم ملف الإنجاز (Portfolio) -->
+                <section id="portfolio-sec" class="app-section">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                        <h3><i class="fas fa-id-card"></i> ملف الإنجاز الخاص بي</h3>
+                        <button class="btn" onclick="downloadPortfolio()"><i class="fas fa-download"></i> تحميل PDF</button>
+                    </div>
+                    <div id="portfolio-content">
+                        <i class="fas fa-user-graduate" style="font-size: 4rem; color: var(--primary); margin-bottom: 15px;"></i>
+                        <h2 id="port-name" style="font-size: 2rem; margin-bottom: 5px;">-</h2>
+                        <p id="port-level" style="color: var(--text-dim); font-size: 1.2rem; margin-bottom: 20px;">-</p>
+                        
+                        <div style="display: inline-block; background: var(--bg-body); padding: 15px 30px; border-radius: 20px; font-weight: bold; font-size: 1.5rem; color: #d97706;">
+                            مجموع النقاط: <span id="port-xp">0</span> XP
+                        </div>
+
+                        <h3 style="margin-top: 2rem; border-top: 1px solid var(--border); padding-top: 1rem;">الأوسمة المكتسبة</h3>
+                        <div class="badges-container" id="port-badges">
+                            <!-- تضاف الأوسمة هنا برمجياً -->
+                            <div title="وسام البداية"><i class="fas fa-medal badge-icon" style="color: #94a3b8;"></i></div>
                         </div>
                     </div>
                 </section>
@@ -263,7 +344,7 @@
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { getDatabase, ref, onValue, push } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+        import { getDatabase, ref, onValue, push, update } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyDgMV79LTyiQerEOZvtuszH6ONaOAset5c",
@@ -278,8 +359,60 @@
         const db = getDatabase(app);
         let currentStudent = null;
         let currentExamData = null; 
+        
+        // 4. دالة الوضع الليلي
+        window.toggleTheme = function() {
+            const html = document.documentElement;
+            const current = html.getAttribute('data-theme');
+            const newTheme = current === 'light' ? 'dark' : 'light';
+            html.setAttribute('data-theme', newTheme);
+            document.getElementById('theme-btn').innerHTML = newTheme === 'dark' ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+            localStorage.setItem('theme', newTheme);
+        }
+        // استرجاع الثيم المفضل
+        if(localStorage.getItem('theme') === 'dark') toggleTheme();
 
-        // التبديل بين الأقسام
+        // 5. دالة عرض الإشعارات
+        window.toggleNotifications = function() {
+            document.getElementById('notif-dropdown').classList.toggle('active');
+            document.getElementById('notif-dot').style.display = 'none'; // إخفاء النقطة الحمراء عند القراءة
+        }
+        function addNotification(msg) {
+            const list = document.getElementById('notif-list');
+            list.innerHTML = `<div class="notif-item">${msg}</div>` + list.innerHTML;
+            document.getElementById('notif-dot').style.display = 'block';
+        }
+
+        // 2. دالة تشغيل محرر الكود
+        window.runCode = function() {
+            const html = document.getElementById('html-code').value;
+            const css = `<style>${document.getElementById('css-code').value}</style>`;
+            const js = `<script>${document.getElementById('js-code').value}<\/script>`;
+            const iframe = document.getElementById('live-output');
+            const doc = iframe.contentDocument || iframe.contentWindow.document;
+            doc.open();
+            doc.write(html + css + js);
+            doc.close();
+            // دعم الوضع الليلي داخل iframe
+            if(document.documentElement.getAttribute('data-theme') === 'dark') {
+                doc.body.style.color = 'white';
+            }
+        }
+
+        // 6. دالة تحميل ملف الإنجاز PDF
+        window.downloadPortfolio = function() {
+            const element = document.getElementById('portfolio-content');
+            const opt = {
+                margin: 1,
+                filename: `ملف_إنجاز_${currentStudent.name}.pdf`,
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2 },
+                jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+            };
+            html2pdf().set(opt).from(element).save();
+        }
+
+        // التنقل بين الأقسام
         window.showSection = function(id, el) {
             document.querySelectorAll('.app-section').forEach(s => s.classList.remove('active'));
             document.querySelectorAll('.nav-link').forEach(n => n.classList.remove('active'));
@@ -287,7 +420,31 @@
             el.classList.add('active');
             
             if(id === 'chat-sec') scrollChat();
+            if(id === 'editor-sec') runCode(); // تشغيل الكود الافتراضي
             if(id !== 'exams-sec') closeExam();
+        }
+
+        // 1. نظام النقاط XP
+        function awardXP(amount, reason) {
+            let newXP = (currentStudent.xp || 0) + amount;
+            currentStudent.xp = newXP;
+            document.getElementById('xp-badge').innerHTML = `<i class="fas fa-bolt"></i> ${newXP} XP`;
+            document.getElementById('port-xp').innerText = newXP;
+            
+            // تحديث في قاعدة البيانات
+            update(ref(db, `students/${currentStudent.key}`), { xp: newXP });
+            addNotification(`🎉 حصلت على ${amount} XP بسبب: ${reason}`);
+            
+            checkBadges();
+        }
+
+        function checkBadges() {
+            let badgesHtml = '';
+            if(currentStudent.xp >= 50) badgesHtml += `<div title="مبتدئ نشيط"><i class="fas fa-medal badge-icon" style="color: #cd7f32;"></i></div>`;
+            if(currentStudent.xp >= 200) badgesHtml += `<div title="مبرمج متقدم"><i class="fas fa-medal badge-icon" style="color: #c0c0c0;"></i></div>`;
+            if(currentStudent.xp >= 500) badgesHtml += `<div title="أسطورة الكود"><i class="fas fa-medal badge-icon" style="color: #ffd700;"></i></div>`;
+            if(badgesHtml === '') badgesHtml = `<p style="color:gray;">استمر في التعلم لجمع الأوسمة!</p>`;
+            document.getElementById('port-badges').innerHTML = badgesHtml;
         }
 
         window.studentLogin = function() {
@@ -314,6 +471,16 @@
             document.getElementById('welcome-msg').innerText = "أهلاً، " + currentStudent.name.split(' ')[0];
             document.getElementById('level-badge').innerText = "مستوى " + currentStudent.level;
             document.getElementById('comm-lvl').innerText = currentStudent.level;
+            
+            // تهيئة بيانات ملف الإنجاز
+            document.getElementById('port-name').innerText = currentStudent.name;
+            document.getElementById('port-level').innerText = "طالب بمستوى " + currentStudent.level;
+            document.getElementById('xp-badge').innerHTML = `<i class="fas fa-bolt"></i> ${currentStudent.xp || 0} XP`;
+            document.getElementById('port-xp').innerText = currentStudent.xp || 0;
+            checkBadges();
+
+            // منح نقطة دخول (المهمة 1)
+            awardXP(10, "تسجيل الدخول اليومي");
 
             // جلب التقييمات
             onValue(ref(db, `students/${currentStudent.key}/evaluations`), (snap) => {
@@ -326,12 +493,32 @@
                 }
             });
 
-            // جلب الدروس
+            // لوحة الشرف (Leaderboard)
+            onValue(ref(db, 'students'), (snap) => {
+                const allStudents = snap.val();
+                if(allStudents) {
+                    let sorted = Object.values(allStudents).sort((a, b) => (b.xp || 0) - (a.xp || 0)).slice(0, 5);
+                    let lbHtml = '';
+                    sorted.forEach((s, i) => {
+                        let rankIcon = i === 0 ? '🥇' : (i === 1 ? '🥈' : (i === 2 ? '🥉' : `🔹`));
+                        lbHtml += `
+                        <div class="leaderboard-item">
+                            <span>${rankIcon} ${s.name.split(' ')[0]}</span>
+                            <span style="font-weight:bold; color:var(--primary);">${s.xp || 0} XP</span>
+                        </div>`;
+                    });
+                    document.getElementById('leaderboard-list').innerHTML = lbHtml;
+                }
+            });
+
+            // جلب الدروس مع نظام إشعارات
+            let firstLoadLessons = true;
             onValue(ref(db, 'content'), (snap) => {
                 const lessons = snap.val();
                 const list = document.getElementById('lessons-list');
                 let html = "";
                 if(lessons) {
+                    if(!firstLoadLessons) addNotification("📚 تم إضافة درس جديد لمستواك!");
                     Object.values(lessons).reverse().forEach(l => {
                         if(l.level == currentStudent.level) {
                             let vid = l.video ? (l.video.includes('v=') ? l.video.split('v=')[1].split('&')[0] : l.video.split('/').pop()) : null;
@@ -339,8 +526,8 @@
                                 <div class="lesson-card">
                                     ${vid ? `<div class="video-box"><iframe src="https://www.youtube.com/embed/${vid}"></iframe></div>` : ''}
                                     <div class="lesson-body">
-                                        <h4>${l.title}</h4>
-                                        <div style="margin-top:15px; display:flex; gap:10px;">
+                                        <h4 style="margin-bottom: 10px;">${l.title}</h4>
+                                        <div style="display:flex; gap:10px;">
                                             ${l.code ? `<a href="${l.code}" target="_blank" class="badge" style="text-decoration:none;"><i class="fas fa-code"></i> كود</a>` : ''}
                                             ${l.pdf ? `<a href="${l.pdf}" target="_blank" class="badge" style="text-decoration:none; background:#fee2e2; color:#ef4444;"><i class="fas fa-file-pdf"></i> ملخص</a>` : ''}
                                         </div>
@@ -350,15 +537,18 @@
                     });
                 }
                 list.innerHTML = html || "<p style='grid-column: 1/-1; text-align:center;'>لا توجد دروس حالياً</p>";
+                firstLoadLessons = false;
             });
 
-            // جلب الامتحانات الإلكترونية المتاحة
+            // الامتحانات
+            let firstLoadExams = true;
             onValue(ref(db, 'online_exams'), (snap) => {
                 const exams = snap.val();
                 const list = document.getElementById('exams-list');
                 window.allExams = exams; 
                 let html = "";
                 if(exams) {
+                    if(!firstLoadExams) addNotification("📝 امتحان جديد متاح الآن!");
                     Object.entries(exams).forEach(([key, e]) => {
                         if(e.level == currentStudent.level) {
                             html += `
@@ -366,8 +556,7 @@
                                     <div style="background: rgba(79, 70, 229, 0.1); width: 70px; height: 70px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem auto;">
                                         <i class="fas fa-file-signature" style="font-size: 2rem; color: var(--primary);"></i>
                                     </div>
-                                    <h3 style="color:var(--text-main); margin-bottom:10px; font-weight:800;">${e.title}</h3>
-                                    <p style="color:var(--text-dim); margin-bottom:20px; font-weight:600;">عدد الأسئلة: ${e.questions ? e.questions.length : 0}</p>
+                                    <h3 style="color:var(--text-main); margin-bottom:10px;">${e.title}</h3>
                                     <button class="btn" style="width: 100%;"><i class="fas fa-play"></i> ابدأ الامتحان</button>
                                 </div>
                             `;
@@ -375,20 +564,28 @@
                     });
                 }
                 list.innerHTML = html || "<p style='grid-column: 1/-1; text-align:center;'>لا توجد امتحانات متاحة حالياً</p>";
+                firstLoadExams = false;
             });
 
             // جلب رسائل المجتمع
+            let firstLoadChat = true;
             onValue(ref(db, 'community'), (snap) => {
                 const posts = snap.val();
                 const container = document.getElementById('chat-messages');
                 let html = "";
                 if(posts) {
-                    Object.values(posts).forEach(p => {
+                    const postVals = Object.values(posts);
+                    const lastPost = postVals[postVals.length - 1];
+                    if(!firstLoadChat && lastPost.sender !== currentStudent.name && lastPost.level == currentStudent.level) {
+                        addNotification(`💬 رسالة جديدة من ${lastPost.sender} في المجتمع`);
+                    }
+
+                    postVals.forEach(p => {
                         if(p.level == currentStudent.level) {
                             const isMine = p.sender === currentStudent.name;
                             html += `
                                 <div class="msg-item ${isMine ? 'mine' : 'others'}">
-                                    <span class="msg-user">${isMine ? 'أنت' : p.sender}</span>
+                                    <span style="font-size: 0.8rem; font-weight: bold; margin-bottom: 5px; display: block;">${isMine ? 'أنت' : p.sender}</span>
                                     <div>${p.text}</div>
                                     <div style="font-size:0.7rem; margin-top:8px; opacity:0.8;">${p.time}</div>
                                 </div>`;
@@ -397,10 +594,10 @@
                 }
                 container.innerHTML = html;
                 scrollChat();
+                firstLoadChat = false;
             });
         }
 
-        // نظام فتح وتسليم الامتحانات للطالب
         window.openExam = function(examKey) {
             const exam = window.allExams[examKey];
             if(!exam) return;
@@ -414,12 +611,12 @@
             (exam.questions || []).forEach((q, i) => {
                 qHtml += `
                     <div class="q-box">
-                        <h4 class="q-title">${i + 1}. ${q.text}</h4>
+                        <h4 style="margin-bottom: 15px;">${i + 1}. ${q.text}</h4>
                         <div style="display:flex; flex-direction:column;">
                             ${(q.options || []).map((opt, optIdx) => `
                                 <label class="opt-label">
                                     <input type="radio" name="question-${i}" value="${optIdx}">
-                                    <span style="font-weight:600; color:#1e293b;">${opt}</span>
+                                    <span>${opt}</span>
                                 </label>
                             `).join('')}
                         </div>
@@ -438,47 +635,41 @@
 
         window.submitExam = function() {
             if(!currentExamData) return;
-            
-            let score = 0;
-            let totalQuestions = currentExamData.questions.length;
-            let allAnswered = true;
-
+            let score = 0; let totalQuestions = currentExamData.questions.length; let allAnswered = true;
             currentExamData.questions.forEach((q, i) => {
                 const selected = document.querySelector(`input[name="question-${i}"]:checked`);
-                if(!selected) {
-                    allAnswered = false;
-                } else if(parseInt(selected.value) === q.answer) {
-                    score++;
-                }
+                if(!selected) allAnswered = false;
+                else if(parseInt(selected.value) === q.answer) score++;
             });
 
-            if(!allAnswered) {
-                const confirmSubmit = confirm("⚠️ لم تقم بالإجابة على جميع الأسئلة! هل أنت متأكد من تسليم الامتحان الآن؟");
-                if(!confirmSubmit) return; 
-            }
+            if(!allAnswered && !confirm("⚠️ لم تقم بالإجابة على جميع الأسئلة! متأكد من التسليم؟")) return; 
 
             alert(`🎉 تم تسليم الامتحان بنجاح!\n\nنتيجتك هي: ${score} من ${totalQuestions}`);
-
-            push(ref(db, 'grades'), {
-                std: currentStudent.name,
-                name: "امتحان: " + currentExamData.title,
-                grade: `${score} / ${totalQuestions}`
-            });
+            push(ref(db, 'grades'), { std: currentStudent.name, name: "امتحان: " + currentExamData.title, grade: `${score} / ${totalQuestions}` });
+            
+            // 3. تحديث المهام وإضافة النقاط
+            document.getElementById('task-exam').classList.add('done');
+            document.querySelector('#task-exam input').checked = true;
+            awardXP(50, "إكمال امتحان");
 
             closeExam(); 
         }
 
-        // المجتمع
         window.sendPost = function() {
             const txt = document.getElementById('post-text').value;
             if(!txt) return;
             push(ref(db, 'community'), {
-                sender: currentStudent.name,
-                text: txt,
-                level: currentStudent.level,
+                sender: currentStudent.name, text: txt, level: currentStudent.level,
                 time: new Date().toLocaleTimeString('ar-EG', {hour:'2-digit', minute:'2-digit'})
             });
             document.getElementById('post-text').value = "";
+            
+            // 3. تحديث المهام وإضافة النقاط
+            if(!document.getElementById('task-chat').classList.contains('done')){
+                document.getElementById('task-chat').classList.add('done');
+                document.querySelector('#task-chat input').checked = true;
+                awardXP(20, "المشاركة في المجتمع");
+            }
         }
 
         function scrollChat() {
