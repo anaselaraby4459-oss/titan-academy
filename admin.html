@@ -136,13 +136,251 @@
 
         @keyframes slideDown { from { opacity: 0; transform: translateY(-30px) scale(0.95); } to { opacity: 1; transform: translateY(0) scale(1); } }
         
+        @media (max-width: 900px) {
+            body { display: block; }
+            .sidebar { position: relative; width: 100%; height: auto; max-height: none; border-left: 0; border-bottom: 1px solid var(--border); }
+            .sidebar nav { display: grid !important; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+            .btn-outline { margin-bottom: 0; justify-content: flex-start; }
+            .main-content { margin-right: 0; width: 100%; padding: 1rem; }
+            header.no-print { flex-direction: column; align-items: stretch !important; gap: 12px; }
+            .card { padding: 1rem; overflow-x: auto; }
+            table { min-width: 720px; }
+        }
+        @media (max-width: 560px) {
+            .sidebar nav { grid-template-columns: 1fr; }
+            .main-content { padding: 0.75rem; }
+            #page-title { font-size: 1.3rem; }
+        }
+
+
+
+        .pro-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px; }
+        .pro-grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 15px; }
+        .upload-zone { border: 2px dashed rgba(79,70,229,.45); border-radius: var(--radius-md); padding: 1rem; background: rgba(79,70,229,.06); }
+        .upload-zone label { display:block; font-weight:800; color: var(--primary); margin-bottom: 8px; }
+        .muted-help { color: var(--text-dim); font-size:.86rem; line-height:1.7; }
+        .mini-badge { display:inline-flex; align-items:center; gap:6px; padding:5px 10px; border-radius:999px; background:rgba(79,70,229,.1); color:var(--primary); font-size:.82rem; font-weight:800; margin:2px; }
+        .progress-wrap { width:100%; height:12px; background:var(--bg-body); border-radius:999px; overflow:hidden; border:1px solid var(--border); margin-top:12px; display:none; }
+        .progress-bar { width:0%; height:100%; background:linear-gradient(135deg, var(--primary), #0ea5e9); color:#fff; font-size:10px; line-height:12px; text-align:center; transition:width .25s ease; }
+        .teacher-note { background: rgba(16,185,129,.08); border:1px solid rgba(16,185,129,.22); border-radius: var(--radius-md); padding:12px; color:var(--text-main); line-height:1.8; }
+        .danger-note { background: rgba(239,68,68,.08); border:1px solid rgba(239,68,68,.22); border-radius: var(--radius-md); padding:12px; color:var(--text-main); line-height:1.8; }
+        video.lesson-preview { width:100%; max-height:260px; background:#000; border-radius: var(--radius-md); margin-top:10px; }
+
         @media print { 
             .no-print { display: none !important; } 
             .main-content { margin: 0; width: 100%; padding: 0;} 
             .card { box-shadow: none; border: 1px solid #000; break-inside: avoid; } 
             body { background: white; color: black; }
         }
+    
+
+        /* ===== Titan Live Classroom ===== */
+        .vc-shell { display:grid; grid-template-columns: 1.7fr .9fr; gap:18px; align-items:start; }
+        .vc-toolbar { display:flex; flex-wrap:wrap; gap:10px; align-items:center; margin:12px 0; }
+        .vc-room-badge { display:inline-flex; align-items:center; gap:8px; padding:8px 12px; border-radius:999px; background:rgba(16,185,129,.12); color:#10b981; font-weight:800; }
+        .vc-video-grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap:12px; min-height:280px; }
+        .vc-tile { position:relative; background:#020617; border:1px solid var(--border); border-radius:18px; overflow:hidden; min-height:170px; box-shadow: var(--shadow); }
+        .vc-tile video { width:100%; height:100%; min-height:170px; object-fit:cover; background:#020617; display:block; }
+        .vc-tile .vc-name { position:absolute; bottom:8px; right:8px; background:rgba(15,23,42,.76); color:#fff; border-radius:999px; padding:5px 10px; font-size:.82rem; font-weight:800; }
+        .vc-tile .vc-status { position:absolute; top:8px; left:8px; display:flex; gap:6px; }
+        .vc-pill { background:rgba(15,23,42,.76); color:#fff; border-radius:999px; padding:5px 8px; font-size:.78rem; font-weight:800; }
+        .vc-side { display:flex; flex-direction:column; gap:14px; }
+        .vc-chat-box { height:310px; overflow:auto; background:var(--bg-body); border:1px solid var(--border); border-radius:16px; padding:12px; }
+        .vc-chat-msg { margin-bottom:10px; padding:10px 12px; border-radius:14px; background:var(--bg-card); border:1px solid var(--border); line-height:1.7; }
+        .vc-chat-msg strong { color:var(--primary); }
+        .vc-participant { display:grid; grid-template-columns: 1fr auto; gap:10px; align-items:center; padding:10px; border-radius:14px; border:1px solid var(--border); background:var(--bg-body); margin-bottom:8px; }
+        .vc-mini-actions { display:flex; gap:6px; flex-wrap:wrap; justify-content:flex-end; }
+        .vc-warning { background:rgba(245,158,11,.12); color:#f59e0b; padding:12px; border-radius:14px; line-height:1.8; border:1px solid rgba(245,158,11,.25); }
+        .vc-ok { background:rgba(16,185,129,.12); color:#10b981; padding:12px; border-radius:14px; line-height:1.8; border:1px solid rgba(16,185,129,.25); }
+        .vc-danger-note { background:rgba(239,68,68,.10); color:#ef4444; padding:12px; border-radius:14px; line-height:1.8; border:1px solid rgba(239,68,68,.25); }
+        @media (max-width: 980px) { .vc-shell { grid-template-columns:1fr; } .vc-chat-box { height:240px; } }
+
     </style>
+
+<style id="titan-admin-ui-v4">
+/* ===== TITAN ADMIN UI V4: cleaner + faster ===== */
+:root {
+  --primary:#2563eb;
+  --primary-hover:#1d4ed8;
+  --success:#10b981;
+  --danger:#ef4444;
+  --warning:#f59e0b;
+  --bg-body:#f4f7fb;
+  --bg-card:#ffffff;
+  --text-main:#0f172a;
+  --text-dim:#64748b;
+  --border:rgba(15,23,42,.10);
+  --shadow:0 12px 30px rgba(15,23,42,.08);
+  --radius-lg:22px;
+  --radius-md:14px;
+}
+[data-theme="dark"] {
+  --bg-body:#0b1220;
+  --bg-card:#121c2f;
+  --text-main:#f8fafc;
+  --text-dim:#94a3b8;
+  --border:rgba(148,163,184,.18);
+  --shadow:0 12px 35px rgba(0,0,0,.35);
+}
+* {
+  transition-property: background-color,color,border-color,box-shadow,transform,opacity !important;
+  transition-duration:.16s !important;
+  transition-timing-function:ease !important;
+}
+html, body { scroll-behavior:auto !important; }
+body { background:var(--bg-body) !important; overflow-x:hidden; }
+.sidebar {
+  background:rgba(255,255,255,.96) !important;
+  backdrop-filter:blur(14px);
+  box-shadow:-10px 0 30px rgba(15,23,42,.06);
+  overflow-y:auto !important;
+  overflow-x:hidden !important;
+  -webkit-overflow-scrolling:touch !important;
+  overscroll-behavior:contain;
+  scrollbar-width:thin;
+  scrollbar-color:#94a3b8 transparent;
+}
+[data-theme="dark"] .sidebar { background:rgba(18,28,47,.96) !important; }
+.sidebar::-webkit-scrollbar{ width:8px; }
+.sidebar::-webkit-scrollbar-thumb{ background:#94a3b8; border-radius:999px; }
+.sidebar > div:first-child {
+  position:sticky;
+  top:0;
+  z-index:4;
+  background:inherit;
+}
+.btn-outline {
+  color:#52627a !important;
+  border:1px solid transparent !important;
+}
+[data-theme="dark"] .btn-outline { color:#b7c4d6 !important; }
+.btn-outline:hover {
+  background:rgba(37,99,235,.08) !important;
+  color:var(--primary) !important;
+  transform:translateX(-4px) !important;
+}
+.card {
+  border:1px solid var(--border) !important;
+  box-shadow:var(--shadow) !important;
+}
+.card:hover { transform:none !important; }
+.main-content {
+  background:var(--bg-body);
+}
+header.no-print {
+  position:sticky;
+  top:14px;
+  z-index:80;
+}
+input, select, textarea {
+  border:1px solid var(--border) !important;
+  box-shadow:none !important;
+}
+input:focus, select:focus, textarea:focus {
+  border-color:var(--primary) !important;
+  box-shadow:0 0 0 4px rgba(37,99,235,.12) !important;
+}
+table {
+  border:1px solid var(--border) !important;
+  box-shadow:none !important;
+}
+th { background:rgba(37,99,235,.07) !important; color:#1d4ed8 !important; }
+.vc-shell { display:grid; grid-template-columns:minmax(0,1.7fr) minmax(320px,.9fr); gap:18px; align-items:start; }
+.vc-video-grid {
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  gap:14px;
+  min-height:360px;
+  contain:layout paint;
+}
+.vc-tile {
+  min-height:220px !important;
+  border-radius:20px !important;
+  background:#020617 !important;
+  box-shadow:0 12px 28px rgba(15,23,42,.18) !important;
+}
+.vc-tile video { min-height:220px !important; object-fit:contain !important; background:#020617 !important; }
+.vc-chat-box { max-height:340px; }
+
+@media (min-width:901px) {
+  .sidebar {
+    width:270px !important;
+    height:100vh !important;
+    max-height:100vh !important;
+    padding:1.15rem .85rem 1rem !important;
+  }
+  .main-content {
+    margin-right:270px !important;
+    width:calc(100% - 270px) !important;
+    padding:1.5rem !important;
+  }
+}
+@media (max-width:900px) {
+  body { display:block !important; }
+  .sidebar {
+    position:relative !important;
+    width:100% !important;
+    height:auto !important;
+    max-height:45vh !important;
+    border-left:0 !important;
+    border-bottom:1px solid var(--border) !important;
+  }
+  .main-content {
+    margin-right:0 !important;
+    width:100% !important;
+    padding:.9rem !important;
+  }
+  header.no-print {
+    top:0 !important;
+    margin-bottom:1rem !important;
+    padding:1rem !important;
+  }
+  .vc-shell { grid-template-columns:1fr !important; }
+  .vc-video-grid { grid-template-columns:1fr !important; min-height:260px; }
+  .vc-tile, .vc-tile video { min-height:260px !important; }
+}
+</style>
+
+
+<style id="titan-share-fix-v5">
+/* ===== TITAN SHARE FIX V5 ===== */
+.vc-share-button-fix {
+  background: linear-gradient(135deg,#0ea5e9,#2563eb) !important;
+  color:#fff !important;
+  border:0 !important;
+  font-weight:900 !important;
+  box-shadow:0 14px 34px rgba(14,165,233,.28) !important;
+}
+.vc-share-button-fix.is-sharing {
+  background: linear-gradient(135deg,#f97316,#ef4444) !important;
+  box-shadow:0 14px 34px rgba(239,68,68,.28) !important;
+}
+.vc-share-banner {
+  display:none;
+  margin:12px 0 0;
+  padding:12px 14px;
+  border-radius:16px;
+  border:1px solid rgba(14,165,233,.28);
+  background:rgba(14,165,233,.12);
+  color:var(--text-main);
+  font-weight:900;
+  line-height:1.7;
+}
+.vc-share-banner.active { display:block; }
+.vc-screen-tile {
+  grid-column: 1 / -1 !important;
+  min-height:420px !important;
+  outline:3px solid rgba(14,165,233,.38);
+}
+.vc-screen-tile video {
+  min-height:420px !important;
+  object-fit:contain !important;
+}
+@media (max-width:900px){
+  .vc-screen-tile, .vc-screen-tile video { min-height:300px !important; }
+}
+</style>
+
 </head>
 <body data-theme="dark">
 
@@ -152,8 +390,8 @@
         <div class="login-box">
             <i class="fas fa-user-shield" style="font-size: 3.5rem; color: var(--primary); margin-bottom: 1rem; filter: drop-shadow(0 4px 6px rgba(79,70,229,0.3));"></i>
             <h2>🔐 دخول الإدارة</h2>
-            <input type="text" id="u" placeholder="اسم المستخدم" onkeypress="if(event.key === 'Enter') login()">
-            <input type="password" id="p" placeholder="كلمة المرور" onkeypress="if(event.key === 'Enter') login()">
+            <input type="email" id="u" placeholder="البريد الإلكتروني للإدارة" autocomplete="username" onkeypress="if(event.key === 'Enter') login()">
+            <input type="password" id="p" placeholder="كلمة المرور" autocomplete="current-password" onkeypress="if(event.key === 'Enter') login()">
             <button class="btn btn-primary" style="width: 100%; justify-content: center; margin-top: 1rem; padding: 1rem; font-size: 1.1rem; border-radius: 12px;" onclick="login()">تسجيل الدخول</button>
         </div>
     </div>
@@ -168,9 +406,12 @@
         <nav style="display: flex; flex-direction: column;">
             <button class="btn btn-outline" onclick="showSec('dash')"><i class="fas fa-chart-line"></i> الإحصائيات والمهام</button>
             <button class="btn btn-outline" onclick="showSec('students')"><i class="fas fa-user-graduate"></i> الطلاب والتقييم</button>
+            <button class="btn btn-outline" onclick="showSec('account-requests')"><i class="fas fa-user-plus"></i> طلبات إنشاء الحساب</button>
             <button class="btn btn-outline" onclick="showSec('community')"><i class="fas fa-comments"></i> إدارة المجتمع</button>
             <button class="btn btn-outline" onclick="showSec('content')"><i class="fas fa-upload"></i> رفع المحتوى والدروس</button>
+            <button class="btn btn-outline" onclick="showSec('assignments')"><i class="fas fa-folder-open"></i> المشاريع والتسليمات</button>
             <button class="btn btn-outline" onclick="showSec('online-exams')"><i class="fas fa-laptop-code"></i> الامتحانات الإلكترونية</button>
+            <button class="btn btn-outline" onclick="showSec('live-class')"><i class="fas fa-video"></i> الحصص المباشرة</button>
             <button class="btn btn-outline" onclick="showSec('daily-att')"><i class="fas fa-calendar-check"></i> التحضير اليومي</button>
             <button class="btn btn-outline" onclick="showSec('homework')"><i class="fas fa-book"></i> سجل الواجبات</button>
             <button class="btn btn-outline" onclick="showSec('exams')"><i class="fas fa-marker"></i> سجل الدرجات</button>
@@ -182,7 +423,7 @@
             <button class="btn btn-outline" onclick="showSec('support')"><i class="fas fa-headset"></i> الشكاوى والدعم الفني</button> <!-- تمت إضافة الزر هنا -->
             <button class="btn btn-outline" onclick="showSec('settings')"><i class="fas fa-database"></i> الإدارة والنسخ</button>
         </nav>
-        <button class="btn btn-danger" style="margin-top: auto; justify-content: center; padding: 0.8rem;" onclick="location.reload()"><i class="fas fa-sign-out-alt"></i> تسجيل الخروج</button>
+        <button class="btn btn-danger" style="margin-top: auto; justify-content: center; padding: 0.8rem;" onclick="adminLogout()"><i class="fas fa-sign-out-alt"></i> تسجيل الخروج</button>
     </aside>
 
     <main class="main-content" id="app" style="display: none;">
@@ -213,6 +454,18 @@
                 <div class="card" style="border-bottom: 4px solid var(--warning);">
                     <h4 style="color: var(--text-dim); font-size: 1.1rem; margin-bottom: 10px;">الديون المتبقية</h4>
                     <h2 id="st-debts" style="font-size: 2.5rem; font-weight: 800; color:var(--warning)">0 ج.م</h2>
+                </div>
+                <div class="card" style="border-bottom: 4px solid #0ea5e9;">
+                    <h4 style="color: var(--text-dim); font-size: 1.1rem; margin-bottom: 10px;">فيديوهات مرفوعة</h4>
+                    <h2 id="st-uploaded-videos" style="font-size: 2.5rem; font-weight: 800; color:#0ea5e9">0</h2>
+                </div>
+                <div class="card" style="border-bottom: 4px solid #a855f7;">
+                    <h4 style="color: var(--text-dim); font-size: 1.1rem; margin-bottom: 10px;">مهام منشورة</h4>
+                    <h2 id="st-assignments" style="font-size: 2.5rem; font-weight: 800; color:#a855f7">0</h2>
+                </div>
+                <div class="card" style="border-bottom: 4px solid #0ea5e9;">
+                    <h4 style="color: var(--text-dim); font-size: 1.1rem; margin-bottom: 10px;">طلبات الحساب الجديدة</h4>
+                    <h2 id="request-count" style="font-size: 2.5rem; font-weight: 800; color:#0ea5e9">0</h2>
                 </div>
             </div>
             
@@ -299,6 +552,23 @@
             </div>
         </section>
 
+
+        <section id="sec-account-requests" style="display: none;">
+            <div class="card">
+                <h3><i class="fas fa-user-check"></i> طلبات إنشاء حساب الطلاب</h3>
+                <p style="color: var(--text-dim); line-height: 1.9; margin-bottom: 1rem;">
+                    أي طالب يطلب حساب من صفحة الدخول سيظهر هنا. عند الموافقة سيتم إنشاء حساب Firebase Authentication تلقائياً،
+                    وكلمة المرور ستكون رقم الهاتف المسجل، ثم يتم إنشاء ملف الطالب داخل قاعدة البيانات.
+                </p>
+                <table>
+                    <thead>
+                        <tr><th>الاسم</th><th>الكود</th><th>المستوى</th><th>الهاتف</th><th>الحالة</th><th>التاريخ</th><th>إجراء</th></tr>
+                    </thead>
+                    <tbody id="account-requests-list"></tbody>
+                </table>
+            </div>
+        </section>
+
         <section id="sec-students" style="display: none;">
             <!-- قسم إضافة الطلاب والتقييم كما كان -->
             <div class="card">
@@ -307,9 +577,12 @@
                     <input type="text" id="std-name" placeholder="الاسم بالكامل">
                     <input type="text" id="std-code" placeholder="كود الطالب">
                     <select id="std-level"><option value="1">مستوى 1</option><option value="2">مستوى 2</option><option value="3">مستوى 3</option></select>
-                    <input type="text" id="std-phone" placeholder="رقم واتساب">
-                    <button class="btn btn-success" onclick="addStudent()"><i class="fas fa-save"></i> حفظ الطالب</button>
+                    <input type="text" id="std-phone" placeholder="رقم واتساب / كلمة مرور الطالب">
+                    <button class="btn btn-success" onclick="addStudent()"><i class="fas fa-save"></i> إنشاء الحساب وحفظ الطالب</button>
                 </div>
+                <p style="color: var(--text-dim); margin-top: 10px; line-height: 1.8;">
+                    ملاحظة: يتم إنشاء بريد داخلي تلقائياً بالشكل <b>code@students.titan-academy.app</b>، ويستخدم الطالب الكود + رقم الهاتف للدخول.
+                </p>
             </div>
             <div class="card">
                 <h3><i class="fas fa-star" style="color: var(--warning);"></i> تقييم يومي سريع (من الموقع الثاني)</h3>
@@ -330,22 +603,57 @@
             </div>
         </section>
 
+
         <section id="sec-content" style="display: none;">
             <div class="card">
-                <h3><i class="fas fa-edit"></i> إضافة درس جديد</h3>
-                <input type="text" id="lesson-title" placeholder="عنوان الدرس">
-                <textarea id="lesson-desc" placeholder="وصف الدرس..." rows="3"></textarea>
-                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px;">
-                    <input type="text" id="lesson-video" placeholder="رابط اليوتيوب">
-                    <input type="text" id="lesson-code" placeholder="رابط GitHub">
-                    <input type="text" id="lesson-pdf" placeholder="رابط PDF">
+                <h3><i class="fas fa-cloud-upload-alt"></i> إضافة درس احترافي</h3>
+                <p class="teacher-note"><i class="fas fa-info-circle"></i> تقدر ترفع فيديو مباشر من جهازك عبر Firebase Storage، أو تضع رابط YouTube. لو رفعت فيديو ورابط YouTube معاً، الفيديو المرفوع سيظهر أولاً للطالب.</p>
+                <div class="pro-grid">
+                    <input type="text" id="lesson-title" placeholder="عنوان الدرس">
+                    <select id="lesson-level-select"><option value="1">مستوى 1</option><option value="2">مستوى 2</option><option value="3">مستوى 3</option></select>
+                    <input type="text" id="lesson-category" placeholder="القسم/المسار: HTML, CSS, JavaScript">
+                    <select id="lesson-difficulty"><option value="مبتدئ">مبتدئ</option><option value="متوسط">متوسط</option><option value="متقدم">متقدم</option></select>
+                    <input type="number" id="lesson-duration" placeholder="مدة الدرس بالدقائق">
+                    <select id="lesson-featured"><option value="false">درس عادي</option><option value="true">درس مميز ⭐</option></select>
                 </div>
-                <select id="lesson-level-select"><option value="1">مستوى 1</option><option value="2">مستوى 2</option><option value="3">مستوى 3</option></select>
-                <button class="btn btn-primary" style="width: 100%; margin-top: 15px; justify-content: center;" onclick="uploadLesson()"><i class="fas fa-cloud-upload-alt"></i> نشر المحتوى</button>
+                <textarea id="lesson-desc" placeholder="وصف الدرس، أهدافه، وما المطلوب من الطالب بعد المشاهدة..." rows="4"></textarea>
+                <div class="pro-grid">
+                    <input type="text" id="lesson-video" placeholder="رابط YouTube اختياري">
+                    <input type="text" id="lesson-code" placeholder="رابط خارجي للكود GitHub / CodePen اختياري">
+                    <input type="text" id="lesson-pdf" placeholder="رابط PDF خارجي اختياري">
+                </div>
+                <div class="pro-grid-2" style="margin-top:12px;">
+                    <div class="upload-zone">
+                        <label><i class="fas fa-video"></i> رفع فيديو من الجهاز</label>
+                        <input type="file" id="lesson-video-file" accept="video/*">
+                        <div class="muted-help">يدعم MP4/WebM حسب المتصفح. للأداء الأفضل اضغط الفيديو قبل الرفع.</div>
+                    </div>
+                    <div class="upload-zone">
+                        <label><i class="fas fa-file-pdf"></i> رفع PDF / ملزمة</label>
+                        <input type="file" id="lesson-pdf-file" accept="application/pdf,.pdf">
+                        <div class="muted-help">سيظهر زر تحميل الملزمة داخل كارت الدرس.</div>
+                    </div>
+                    <div class="upload-zone">
+                        <label><i class="fas fa-image"></i> صورة غلاف الدرس</label>
+                        <input type="file" id="lesson-thumbnail-file" accept="image/*">
+                        <div class="muted-help">اختياري، يظهر كغلاف للفيديو أو الكارت.</div>
+                    </div>
+                    <div class="upload-zone">
+                        <label><i class="fas fa-file-code"></i> ملف كود / ZIP</label>
+                        <input type="file" id="lesson-code-file" accept=".zip,.rar,.html,.css,.js,.pdf,.txt">
+                        <div class="muted-help">اختياري لملفات التدريب أو مشروع الدرس.</div>
+                    </div>
+                </div>
+                <div class="progress-wrap" id="lesson-upload-progress-wrap"><div class="progress-bar" id="lesson-upload-progress">0%</div></div>
+                <button class="btn btn-primary" id="publish-lesson-btn" style="width: 100%; margin-top: 15px; justify-content: center;" onclick="uploadLesson()"><i class="fas fa-cloud-upload-alt"></i> رفع ونشر الدرس</button>
             </div>
             <div class="card">
+                <div style="display:flex; justify-content:space-between; gap:12px; align-items:center; flex-wrap:wrap;">
+                    <h3><i class="fas fa-layer-group"></i> مكتبة الدروس المنشورة</h3>
+                    <input type="text" id="content-search" placeholder="بحث في الدروس..." onkeyup="renderContent()" style="max-width:320px;">
+                </div>
                 <table>
-                    <thead><tr><th>الدرس</th><th>المستوى</th><th>التاريخ</th><th>إجراء</th></tr></thead>
+                    <thead><tr><th>الدرس</th><th>المستوى</th><th>النوع</th><th>الملفات</th><th>التاريخ</th><th>إجراء</th></tr></thead>
                     <tbody id="content-list"></tbody>
                 </table>
             </div>
@@ -363,6 +671,44 @@
             <div class="card">
                 <table><thead><tr><th>الطالب</th><th>الحالة</th><th>تنبيه</th></tr></thead><tbody id="daily-att-list"></tbody></table>
                 <button class="btn btn-success" style="width: 100%; margin-top: 20px; justify-content: center;" onclick="saveDailyAttendance()"><i class="fas fa-save"></i> حفظ الكشف</button>
+            </div>
+        </section>
+
+
+
+        <section id="sec-assignments" style="display: none;">
+            <div class="card">
+                <h3><i class="fas fa-folder-open"></i> إنشاء مشروع / واجب للتسليم</h3>
+                <div class="pro-grid">
+                    <input type="text" id="assignment-title" placeholder="عنوان المشروع أو الواجب">
+                    <select id="assignment-level"><option value="1">مستوى 1</option><option value="2">مستوى 2</option><option value="3">مستوى 3</option></select>
+                    <input type="date" id="assignment-due">
+                    <input type="number" id="assignment-points" placeholder="النقاط XP" value="40">
+                </div>
+                <textarea id="assignment-desc" rows="4" placeholder="وصف المطلوب، معايير التقييم، وملاحظات التسليم..."></textarea>
+                <div class="pro-grid">
+                    <input type="text" id="assignment-link" placeholder="رابط خارجي اختياري">
+                    <div class="upload-zone">
+                        <label><i class="fas fa-paperclip"></i> ملف مرفق للواجب</label>
+                        <input type="file" id="assignment-file" accept=".pdf,.zip,.rar,.png,.jpg,.jpeg,.html,.css,.js,.txt">
+                    </div>
+                </div>
+                <div class="progress-wrap" id="assignment-upload-progress-wrap"><div class="progress-bar" id="assignment-upload-progress">0%</div></div>
+                <button class="btn btn-success" id="assignment-save-btn" style="width:100%; margin-top:15px; justify-content:center;" onclick="createAssignment()"><i class="fas fa-plus-circle"></i> نشر المهمة للطلاب</button>
+            </div>
+            <div class="card">
+                <h3><i class="fas fa-list-check"></i> المهام المنشورة</h3>
+                <table>
+                    <thead><tr><th>العنوان</th><th>المستوى</th><th>آخر موعد</th><th>XP</th><th>مرفق</th><th>إجراء</th></tr></thead>
+                    <tbody id="assignments-list-admin"></tbody>
+                </table>
+            </div>
+            <div class="card">
+                <h3><i class="fas fa-inbox"></i> تسليمات الطلاب</h3>
+                <table>
+                    <thead><tr><th>الطالب</th><th>المهمة</th><th>الملاحظة</th><th>الملف</th><th>التاريخ</th><th>حالة</th></tr></thead>
+                    <tbody id="submissions-list-admin"></tbody>
+                </table>
             </div>
         </section>
 
@@ -438,11 +784,64 @@
                             <option value="1">يناير</option><option value="2">فبراير</option><option value="3">مارس</option><option value="4">أبريل</option><option value="5">مايو</option><option value="6">يونيو</option><option value="7">يوليو</option><option value="8">أغسطس</option><option value="9">سبتمبر</option><option value="10">أكتوبر</option><option value="11">نوفمبر</option><option value="12">ديسمبر</option>
                         </select>
                     </div>                    
+                    <input type="number" id="yearSelect" min="2020" max="2100" placeholder="السنة" style="margin:0;">
                     <select id="rep-level-select"><option value="1">مستوى 1</option><option value="2">مستوى 2</option><option value="3">مستوى 3</option></select>
                     <button class="btn btn-primary" onclick="renderExcelReport()"><i class="fas fa-eye"></i> عرض التقرير</button>
                 </div>
             </div>
             <div class="card" style="overflow-x: auto;"><table id="excel-table-main"><thead id="excel-header"></thead><tbody id="excel-body"></tbody></table></div>
+        </section>
+
+
+
+        <section id="sec-live-class" style="display: none;">
+            <div class="card">
+                <h3><i class="fas fa-video"></i> الحصص المباشرة داخل الموقع</h3>
+                <div class="vc-warning">
+                    النظام يعمل داخل موقعك باستخدام WebRTC و Firebase للإشارات والشات والتسجيل. مشاركة الشاشة للمعلم فقط، والطلاب لا يقدرون يفتحوا المايك أو الكاميرا إلا بعد إذن المعلم.
+                </div>
+                <div style="display:grid; grid-template-columns:2fr 1fr 1fr auto; gap:12px; margin-top:14px;">
+                    <input id="vc-admin-title" placeholder="عنوان الحصة - مثال: مراجعة JavaScript">
+                    <select id="vc-admin-level"><option value="1">مستوى 1</option><option value="2">مستوى 2</option><option value="3">مستوى 3</option></select>
+                    <input id="vc-admin-code" placeholder="كود اختياري أو اتركه تلقائي">
+                    <button class="btn btn-success" onclick="VCAdmin.startClass()"><i class="fas fa-play"></i> بدء حصة</button>
+                </div>
+                <div class="vc-toolbar">
+                    <span class="vc-room-badge"><i class="fas fa-signal"></i> كود الحصة: <b id="vc-admin-session-code">لا توجد حصة</b></span>
+                    <button class="btn btn-primary" onclick="VCAdmin.copyCode()"><i class="fas fa-copy"></i> نسخ الكود</button>
+                    <button class="btn btn-warning" onclick="VCAdmin.toggleMic()"><i class="fas fa-microphone"></i> مايك المعلم</button>
+                    <button class="btn btn-warning" onclick="VCAdmin.toggleCamera()"><i class="fas fa-video"></i> كاميرا المعلم</button>
+                    <button class="btn btn-info vc-share-button-fix" id="vc-admin-share-btn" onclick="VCAdmin.shareScreen()"><i class="fas fa-desktop"></i> مشاركة الشاشة</button>
+                    <button class="btn btn-success" id="vc-admin-record-btn" onclick="VCAdmin.toggleRecording()"><i class="fas fa-record-vinyl"></i> بدء التسجيل</button>
+                    <button class="btn btn-danger" onclick="VCAdmin.endClass()"><i class="fas fa-phone-slash"></i> إنهاء الحصة</button>
+                </div>
+                <div id="vc-admin-share-banner" class="vc-share-banner"></div>
+            </div>
+            <div class="vc-shell">
+                <div class="card">
+                    <h3><i class="fas fa-th-large"></i> شاشة الحصة</h3>
+                    <div id="vc-admin-grid" class="vc-video-grid"></div>
+                </div>
+                <div class="vc-side">
+                    <div class="card">
+                        <h3><i class="fas fa-users-cog"></i> تحكم الطلاب</h3>
+                        <div class="vc-ok">افتح/اقفل المايك والكاميرا لكل طالب من هنا. الطالب لن يستطيع تشغيلهم بدون السماح.</div>
+                        <div id="vc-admin-participants" style="margin-top:12px;"></div>
+                    </div>
+                    <div class="card">
+                        <h3><i class="fas fa-comments"></i> شات الحصة</h3>
+                        <div id="vc-admin-chat" class="vc-chat-box"></div>
+                        <div style="display:flex; gap:8px; margin-top:10px;">
+                            <input id="vc-admin-chat-input" placeholder="اكتب رسالة..." onkeypress="if(event.key==='Enter') VCAdmin.sendChat()">
+                            <button class="btn btn-primary" onclick="VCAdmin.sendChat()"><i class="fas fa-paper-plane"></i></button>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <h3><i class="fas fa-film"></i> تسجيلات الحصص</h3>
+                        <div id="vc-admin-recordings"><span class="muted-help">التسجيلات تظهر هنا بعد حفظها.</span></div>
+                    </div>
+                </div>
+            </div>
         </section>
 
         <section id="sec-settings" style="display: none;">
@@ -454,62 +853,196 @@
         </section>
     </main>
 
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { getDatabase, ref, set, onValue, push, remove, update } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js" onerror="window.firebaseLoadError='فشل تحميل firebase-app-compat من gstatic';"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js" onerror="window.firebaseLoadError='فشل تحميل firebase-auth-compat من gstatic';"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js" onerror="window.firebaseLoadError='فشل تحميل firebase-database-compat من gstatic';"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-storage-compat.js" onerror="window.firebaseLoadError='فشل تحميل firebase-storage-compat من gstatic';"></script>
+    <script>
+        (function initFirebaseCompat(){
+            function markError(message){
+                window.firebaseLoadError = message;
+                console.error(message);
+            }
+            try {
+                if (!window.firebase || !firebase.initializeApp) {
+                    markError('مكتبات Firebase لم تتحمل. تأكد أن الإنترنت يعمل وأن gstatic غير محجوب ثم أعد تحميل الصفحة.');
+                    return;
+                }
+                const firebaseConfig = {
+                    apiKey: "AIzaSyDgMV79LTyiQerEOZvtuszH6ONaOAset5c",
+                    authDomain: "programming-cc297.firebaseapp.com",
+                    projectId: "programming-cc297",
+                    storageBucket: "programming-cc297.firebasestorage.app",
+                    messagingSenderId: "131761323515",
+                    appId: "1:131761323515:web:50641907e66eed129e9f5e"
+                };
+                if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+                const db = firebase.database();
+                const auth = firebase.auth();
+                const storage = firebase.storage ? firebase.storage() : null;
+                const helperApp = firebase.apps.find(a => a.name === 'student-auth-helper') || firebase.initializeApp(firebaseConfig, 'student-auth-helper');
+                const studentAuth = helperApp.auth();
 
-        const firebaseConfig = {
-            apiKey: "AIzaSyDgMV79LTyiQerEOZvtuszH6ONaOAset5c",
-            authDomain: "programming-cc297.firebaseapp.com",
-            projectId: "programming-cc297",
-            storageBucket: "programming-cc297.firebasestorage.app",
-            messagingSenderId: "131761323515",
-            appId: "1:131761323515:web:50641907e66eed129e9f5e"
-        };
+                window.db = db; window.auth = auth; window.storage = storage;
+                window.fbRef = function(database, path){ return database.ref(path); };
+                window.fbPush = function(refObj, data){ return refObj.push(data); };
+                window.fbSet = function(refObj, data){ return refObj.set(data); };
+                window.fbUpdate = function(refObj, data){ return refObj.update(data); };
+                window.fbRemove = function(refObj){ return refObj.remove(); };
+                window.fbOnValue = function(refObj, callback){ return refObj.on('value', callback); };
+                window.fbGet = function(refObj){ return refObj.once('value'); };
 
-        const app = initializeApp(firebaseConfig);
-        const db = getDatabase(app);
-        window.db = db; window.fbRef = ref; window.fbPush = push; window.fbUpdate = update; window.fbRemove = remove; window.fbOnValue = onValue;
+                function makeStudentEmail(code) {
+                    const safeCode = String(code || '').trim().toLowerCase().replace(/[^a-z0-9._-]/g, '');
+                    return `${safeCode}@students.titan-academy.app`;
+                }
+                window.makeStudentEmail = makeStudentEmail;
+                window.createStudentAuthAccount = async function(code, phone) {
+                    const email = makeStudentEmail(code);
+                    const password = String(phone || '').trim();
+                    if (email.startsWith('@') || password.length < 6) {
+                        throw new Error('كود الطالب غير صالح أو رقم الهاتف أقل من 6 أرقام.');
+                    }
+                    try {
+                        const cred = await studentAuth.createUserWithEmailAndPassword(email, password);
+                        await studentAuth.signOut();
+                        return { uid: cred.user.uid, email, existed: false };
+                    } catch (err) {
+                        // لو الحساب موجود بنفس كلمة المرور، نستخدمه بدلاً من تعطيل الموافقة.
+                        if (err && err.code === 'auth/email-already-in-use') {
+                            const cred = await studentAuth.signInWithEmailAndPassword(email, password);
+                            await studentAuth.signOut();
+                            return { uid: cred.user.uid, email, existed: true };
+                        }
+                        throw err;
+                    }
+                };
 
-        // مزامنة البيانات الأصلية
-        fbOnValue(fbRef(db, 'students'), (snap) => {
-            window.db_students = snap.val() ? Object.entries(snap.val()).map(([k, v]) => ({...v, fbKey: k})) : [];
-            renderStudents(); updateStats(); syncDropdowns();
-        });
-        fbOnValue(fbRef(db, 'content'), (snap) => {
-            window.db_content = snap.val() ? Object.entries(snap.val()).map(([k, v]) => ({...v, fbKey: k})) : [];
-            renderContent(); updateStats();
-        });
-        fbOnValue(fbRef(db, 'community'), (snap) => {
-            window.db_community = snap.val() ? Object.entries(snap.val()).map(([k, v]) => ({...v, fbKey: k})) : [];
-            renderAdminCommunity();
-        });
-        fbOnValue(fbRef(db, 'invoices'), (snap) => {
-            window.db_invoices = snap.val() ? Object.entries(snap.val()).map(([k, v]) => ({...v, fbKey: k})) : [];
-            renderInvoices(); updateStats();
-        });
-        
-        fbOnValue(fbRef(db, 'online_exams'), (snap) => {
-            window.db_online_exams = snap.val() ? Object.entries(snap.val()).map(([k, v]) => ({...v, fbKey: k})) : [];
-            renderOnlineExams();
-        });
+                let adminSyncStarted = false;
+                function startAdminDataSync() {
+                    if (adminSyncStarted) return;
+                    adminSyncStarted = true;
+                    fbOnValue(fbRef(db, 'students'), (snap) => {
+                        window.db_students = snap.val() ? Object.entries(snap.val()).map(([k, v]) => ({...v, fbKey: k})) : [];
+                        renderStudents(); updateStats(); syncDropdowns();
+                    });
+                    fbOnValue(fbRef(db, 'content'), (snap) => {
+                        window.db_content = snap.val() ? Object.entries(snap.val()).map(([k, v]) => ({...v, fbKey: k})) : [];
+                        renderContent(); updateStats();
+                    });
+                    fbOnValue(fbRef(db, 'community'), (snap) => {
+                        window.db_community = snap.val() ? Object.entries(snap.val()).map(([k, v]) => ({...v, fbKey: k})) : [];
+                        renderAdminCommunity();
+                    });
+                    fbOnValue(fbRef(db, 'invoices'), (snap) => {
+                        window.db_invoices = snap.val() ? Object.entries(snap.val()).map(([k, v]) => ({...v, fbKey: k})) : [];
+                        renderInvoices(); updateStats();
+                    });
+                    fbOnValue(fbRef(db, 'online_exams'), (snap) => {
+                        window.db_online_exams = snap.val() ? Object.entries(snap.val()).map(([k, v]) => ({...v, fbKey: k})) : [];
+                        renderOnlineExams();
+                    });
+                    fbOnValue(fbRef(db, 'support'), (snap) => {
+                        window.db_support = snap.val() ? Object.entries(snap.val()).map(([k, v]) => ({...v, fbKey: k})) : [];
+                        if(window.renderSupportAdmin) window.renderSupportAdmin();
+                    });
+                    fbOnValue(fbRef(db, 'assignments'), (snap) => {
+                        window.db_assignments = snap.val() ? Object.entries(snap.val()).map(([k, v]) => ({...v, fbKey: k})) : [];
+                        if(window.renderAssignmentsAdmin) window.renderAssignmentsAdmin(); updateStats();
+                    });
+                    fbOnValue(fbRef(db, 'submissions'), (snap) => {
+                        window.db_submissions = snap.val() ? Object.entries(snap.val()).map(([k, v]) => ({...v, fbKey: k})) : [];
+                        if(window.renderSubmissionsAdmin) window.renderSubmissionsAdmin();
+                    });
+                    fbOnValue(fbRef(db, 'registration_requests'), (snap) => {
+                        window.db_registration_requests = snap.val() ? Object.entries(snap.val()).map(([k, v]) => ({...v, fbKey: k})) : [];
+                        if(window.renderAccountRequests) window.renderAccountRequests();
+                        updateStats();
+                    });
+                    fbOnValue(fbRef(db, 'expenses'), (snap) => { window.db_expenses = snap.val() ? Object.values(snap.val()) : []; renderExpenses(); updateStats(); });
+                    fbOnValue(fbRef(db, 'attendance'), (snap) => { window.db_attendance = snap.val() ? Object.values(snap.val()) : []; });
+                    fbOnValue(fbRef(db, 'homework'), (snap) => { window.db_homework = snap.val() ? Object.values(snap.val()) : []; renderHomework(); });
+                    fbOnValue(fbRef(db, 'grades'), (snap) => { window.db_grades = snap.val() ? Object.values(snap.val()) : []; renderGrades(); });
+                    fbOnValue(fbRef(db, 'staff'), (snap) => { window.db_staff = snap.val() ? Object.values(snap.val()) : []; renderStaff(); });
+                    fbOnValue(fbRef(db, 'schedule'), (snap) => { window.db_schedule = snap.val() ? Object.values(snap.val()) : []; renderSchedule(); });
+                }
 
-        // المستمع الجديد الخاص بالدعم الفني والشكاوى
-        fbOnValue(fbRef(db, 'support'), (snap) => {
-            window.db_support = snap.val() ? Object.entries(snap.val()).map(([k, v]) => ({...v, fbKey: k})) : [];
-            if(window.renderSupportAdmin) window.renderSupportAdmin();
-        });
-
-        fbOnValue(fbRef(db, 'expenses'), (snap) => { window.db_expenses = snap.val() ? Object.values(snap.val()) : []; renderExpenses(); updateStats(); });
-        fbOnValue(fbRef(db, 'attendance'), (snap) => { window.db_attendance = snap.val() ? Object.values(snap.val()) : []; });
-        fbOnValue(fbRef(db, 'homework'), (snap) => { window.db_homework = snap.val() ? Object.values(snap.val()) : []; renderHomework(); });
-        fbOnValue(fbRef(db, 'grades'), (snap) => { window.db_grades = snap.val() ? Object.values(snap.val()) : []; renderGrades(); });
-        fbOnValue(fbRef(db, 'staff'), (snap) => { window.db_staff = snap.val() ? Object.values(snap.val()) : []; renderStaff(); });
-        fbOnValue(fbRef(db, 'schedule'), (snap) => { window.db_schedule = snap.val() ? Object.values(snap.val()) : []; renderSchedule(); });
+                async function userIsAdmin(user) {
+                    if (!user) return false;
+                    const snap = await db.ref(`admins/${user.uid}`).once('value');
+                    return snap.exists() && snap.val() === true;
+                }
+                async function openAdminApp(user) {
+                    document.getElementById('login-screen').style.display = 'none';
+                    document.getElementById('app').style.display = 'block';
+                    startAdminDataSync();
+                    if (!window.mainChart) initChart();
+                }
+                window.adminLoginFromFirebase = async function(email, password) {
+                    const cleanEmail = (email || '').trim();
+                    if (!cleanEmail || !password) {
+                        alert('من فضلك أدخل البريد الإلكتروني وكلمة المرور.');
+                        return;
+                    }
+                    try {
+                        const cred = await auth.signInWithEmailAndPassword(cleanEmail, password);
+                        if (!(await userIsAdmin(cred.user))) {
+                            await auth.signOut();
+                            alert('هذا الحساب ليس له صلاحية إدارة. أضف UID داخل admins في Realtime Database.');
+                        }
+                    } catch (err) {
+                        console.error(err);
+                        alert('تعذر تسجيل الدخول. الكود التقني: ' + (err.code || err.message || err));
+                    }
+                };
+                window.adminLogout = async function() {
+                    try { await auth.signOut(); } finally { location.reload(); }
+                };
+                auth.onAuthStateChanged(async (user) => {
+                    if (!user) return;
+                    try {
+                        if (await userIsAdmin(user)) {
+                            openAdminApp(user);
+                        } else {
+                            await auth.signOut();
+                            alert('هذا الحساب ليس له صلاحية إدارة. أضف UID داخل admins في Realtime Database.');
+                        }
+                    } catch (err) {
+                        console.error(err);
+                        markError('تعذر قراءة صلاحية الإدارة من Realtime Database: ' + (err.code || err.message || err));
+                        alert('تم تسجيل الدخول لكن تعذر قراءة صلاحية الإدارة. تأكد من قواعد Realtime Database ومن وجود admins/UID = true.');
+                    }
+                });
+                window.firebaseReady = true;
+                console.log('Firebase compat ready');
+            } catch (err) {
+                markError('فشل تهيئة Firebase: ' + (err.code || err.message || err));
+            }
+        })();
     </script>
 
-    <script>
+<script>
         let mainChart;
+        window.mainChart = null;
+
+        function escapeHTML(value) {
+            return String(value ?? '').replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+        }
+        function jsString(value) {
+            return String(value ?? '').replace(/\\/g, '\\\\').replace(/'/g, "\\'").replace(/\n/g, '\\n').replace(/\r/g, '');
+        }
+        function safeUrl(value) {
+            const raw = String(value ?? '').trim();
+            if (!raw) return '';
+            try {
+                const parsed = new URL(raw, location.href);
+                if (['http:', 'https:'].includes(parsed.protocol)) return escapeHTML(raw);
+            } catch (e) {}
+            return '';
+        }
+        function normalizePhone(value) {
+            return String(value ?? '').replace(/[^0-9+]/g, '');
+        }
 
         function showToast(message, type = 'success') {
             const container = document.getElementById('toast-container');
@@ -591,12 +1124,9 @@
             showToast('تمت إضافة المهمة', 'success');
         }
 
-        function login() {
-            if(document.getElementById('u').value === 'admin' && document.getElementById('p').value === '147963') {
-                document.getElementById('login-screen').style.display = 'none';
-                document.getElementById('app').style.display = 'block';
-                initChart();
-            } else { alert('❌ خطأ في اسم المستخدم أو كلمة المرور!'); }
+        async function login() {
+            if (!window.adminLoginFromFirebase) return alert('Firebase لم يتحمل بعد أو فشل تحميله. التفاصيل: ' + (window.firebaseLoadError || 'انتظر 5 ثواني ثم اضغط Ctrl+F5. تأكد أن gstatic.com غير محجوب.'));
+            await window.adminLoginFromFirebase(document.getElementById('u').value, document.getElementById('p').value);
         }
 
         function showSec(id) {
@@ -764,6 +1294,8 @@
             const invoices = window.db_invoices || [];
             document.getElementById('st-money').innerText = invoices.reduce((a,b)=> a + (Number(b.paid) || 0), 0) + " ج.م";
             document.getElementById('st-debts').innerText = invoices.reduce((a,b)=> a + (Number(b.remaining) || 0), 0) + " ج.م";
+            const requestEl = document.getElementById('request-count');
+            if (requestEl) requestEl.innerText = (window.db_registration_requests || []).filter(r => (r.status || 'pending') === 'pending').length;
         }
 
         function addExpense() { 
@@ -819,10 +1351,959 @@
             document.getElementById('excel-body').innerHTML = b;
         }
 
+        // نسخ عرض آمنة تقلل XSS عند عرض مدخلات الطلاب أو الإدارة
+        addNewTask = function() {
+            const input = document.getElementById('new-task-input');
+            const text = input.value.trim();
+            if (!text) return;
+            const list = document.getElementById('todo-list');
+            const taskDiv = document.createElement('div');
+            taskDiv.className = 'task-item';
+            taskDiv.innerHTML = `
+                <span>${escapeHTML(text)}</span>
+                <div style="display:flex; gap:5px;">
+                    <button class="btn btn-success" style="padding: 5px 10px;" onclick="this.parentElement.parentElement.classList.toggle('done')"><i class="fas fa-check"></i></button>
+                    <button class="btn btn-danger" style="padding: 5px 10px;" onclick="this.parentElement.parentElement.remove()"><i class="fas fa-trash"></i></button>
+                </div>`;
+            list.appendChild(taskDiv);
+            input.value = '';
+            showToast('تمت إضافة المهمة', 'success');
+        };
+
+        syncDropdowns = function() {
+            const students = window.db_students || [];
+            const options = students.map(s => `<option value="${escapeHTML(s.name)}">${escapeHTML(s.name)}</option>`).join('');
+            const keyOptions = students.map(s => `<option value="${escapeHTML(s.fbKey)}">${escapeHTML(s.name)}</option>`).join('');
+            if(document.getElementById('hw-std-select')) document.getElementById('hw-std-select').innerHTML = options;
+            if(document.getElementById('exam-std-select')) document.getElementById('exam-std-select').innerHTML = options;
+            if(document.getElementById('eval-student-select')) document.getElementById('eval-student-select').innerHTML = '<option value="">اختر...</option>' + keyOptions;
+            if(document.getElementById('inv-select-std')) document.getElementById('inv-select-std').innerHTML = students.map((s,i) => `<option value="${i}">${escapeHTML(s.name)}</option>`).join('');
+        };
+
+        window.renderSupportAdmin = function() {
+            const list = document.getElementById('support-list-admin');
+            if(!list) return;
+            list.innerHTML = (window.db_support || []).slice().reverse().map(c => {
+                const key = escapeHTML(c.fbKey);
+                const jsKey = jsString(c.fbKey);
+                return `<tr>
+                    <td style="font-weight:bold;">${escapeHTML(c.studentName)}<br><span style="font-size:0.8rem; color:var(--text-dim);">${escapeHTML(c.phone || '')}</span></td>
+                    <td>مستوى ${escapeHTML(c.level)}</td>
+                    <td style="max-width: 250px; text-align: right; padding-right: 15px;">${escapeHTML(c.text)}</td>
+                    <td style="font-size:0.85rem;">${escapeHTML(c.date)}</td>
+                    <td>${c.reply ? `<span style="color:var(--success); font-weight:bold;"><i class="fas fa-check-circle"></i> تم الرد</span><div style="font-size:0.8rem; margin-top:5px; color:var(--text-dim); text-align:right;">${escapeHTML(c.reply)}</div>` : `<input type="text" id="reply-input-${key}" placeholder="اكتب ردك هنا..." style="padding:8px; border-radius:8px; border:1px solid var(--border); width:100%;">`}</td>
+                    <td>${!c.reply ? `<button class="btn btn-success" onclick="replyComplaint('${jsKey}')" style="padding:8px; margin-bottom:5px; width:100%; justify-content:center;"><i class="fas fa-reply"></i> إرسال</button>` : ''}<button class="btn btn-danger" onclick="deleteComplaint('${jsKey}')" style="padding:8px; width:100%; justify-content:center;"><i class="fas fa-trash"></i> حذف</button></td>
+                </tr>`;
+            }).join('');
+        };
+
+        renderOnlineExams = function() {
+            const list = document.getElementById('online-exams-list');
+            if(!list) return;
+            list.innerHTML = (window.db_online_exams || []).map(e => `<tr>
+                <td style="font-weight: bold; color: var(--primary);">${escapeHTML(e.title)}</td>
+                <td>مستوى ${escapeHTML(e.level)}</td>
+                <td>${e.questions ? e.questions.length : 0} أسئلة</td>
+                <td>${escapeHTML(e.date)}</td>
+                <td><button class="btn btn-danger" onclick="if(confirm('هل أنت متأكد من حذف الامتحان؟')) { fbRemove(fbRef(db, 'online_exams/${jsString(e.fbKey)}')); showToast('تم الحذف', 'warning'); }"><i class="fas fa-trash"></i> حذف</button></td>
+            </tr>`).reverse().join('');
+        };
+
+        renderAdminCommunity = function() {
+            const el = document.getElementById('admin-comm-list');
+            if(!el) return;
+            el.innerHTML = (window.db_community || []).slice().reverse().map(p => `<tr><td>${escapeHTML(p.sender)}</td><td>${escapeHTML(p.level)}</td><td>${escapeHTML(p.text)}</td><td>${escapeHTML(p.time)}</td><td><button class="btn btn-danger" onclick="fbRemove(fbRef(db, 'community/${jsString(p.fbKey)}')); showToast('تم مسح المنشور', 'warning');"><i class="fas fa-trash"></i></button></td></tr>`).join('');
+        };
+
+        renderStudents = function() {
+            const term = (document.getElementById('search-std')?.value || '').toLowerCase();
+            document.getElementById('students-list').innerHTML = (window.db_students || [])
+                .filter(s => [s.name, s.code, s.phone].some(v => String(v || '').toLowerCase().includes(term)))
+                .map(s => {
+                    const phone = normalizePhone(s.phone);
+                    return `<tr>
+                        <td>${escapeHTML(s.name)}<br><span style="font-size:.78rem;color:var(--text-dim);direction:ltr;display:inline-block;">${escapeHTML(s.authEmail || makeStudentEmail(s.code))}</span></td>
+                        <td>${escapeHTML(s.code)}</td><td>${escapeHTML(s.level)}</td><td>${escapeHTML(s.phone)}</td>
+                        <td>
+                            ${phone ? `<button class="btn btn-success" onclick="window.open('https://wa.me/${escapeHTML(phone)}')" style="padding:8px;margin:3px;"><i class="fab fa-whatsapp"></i></button>` : ''}
+                            <button class="btn btn-danger" onclick="if(confirm('حذف الطالب من قاعدة البيانات؟ لن يحذف حساب Authentication تلقائياً.')) { fbRemove(fbRef(db, 'students/${jsString(s.fbKey)}')); fbRemove(fbRef(db, 'leaderboard/${jsString(s.fbKey)}')); showToast('تم حذف الطالب', 'warning'); }" style="padding:8px;margin:3px;"><i class="fas fa-trash"></i></button>
+                        </td>
+                    </tr>`;
+                }).join('');
+        };
+
+        renderContent = function() {
+            document.getElementById('content-list').innerHTML = (window.db_content || []).map(c => `<tr><td>${escapeHTML(c.title)}</td><td>${escapeHTML(c.level)}</td><td>${escapeHTML(c.date)}</td><td><button class="btn btn-danger" onclick="fbRemove(fbRef(db, 'content/${jsString(c.fbKey)}')); showToast('تم حذف الدرس', 'warning');"><i class="fas fa-trash"></i></button></td></tr>`).join('');
+        };
+
+        loadDailyAttendanceList = function() {
+            const level = document.getElementById('att-level-select').value;
+            document.getElementById('daily-att-list').innerHTML = (window.db_students || []).filter(s => s.level == level).map(s => {
+                const phone = normalizePhone(s.phone);
+                return `<tr><td>${escapeHTML(s.name)}</td><td><select class="daily-status-select" data-code="${escapeHTML(s.code)}"><option value="ح">حضور</option><option value="غ">غياب</option></select></td><td><button class="btn btn-success" onclick="window.open('https://wa.me/${escapeHTML(phone)}')"><i class="fab fa-whatsapp"></i></button></td></tr>`;
+            }).join('');
+        };
+
+        renderInvoices = function() {
+            document.getElementById('inv-list').innerHTML = (window.db_invoices || []).map(iv => `<tr><td>${escapeHTML(iv.name)}</td><td>${Number(iv.amt) || 0}</td><td>${Number(iv.paid) || 0}</td><td>${Number(iv.remaining) || 0}</td><td><button class="btn btn-success" onclick="fbUpdate(fbRef(db, 'invoices/${jsString(iv.fbKey)}'), {paid: ${(Number(iv.paid) || 0) + 10}, remaining: ${(Number(iv.remaining) || 0) - 10}}); showToast('تم تحديث الفاتورة', 'success');">+10ج</button></td></tr>`).join('');
+        };
+
+        renderExpenses = function() { document.getElementById('exp-list').innerHTML = (window.db_expenses || []).map(ex => `<tr><td>${escapeHTML(ex.title)}</td><td>${escapeHTML(ex.date)}</td><td>${Number(ex.amt) || 0}</td></tr>`).join(''); };
+        renderGrades = function() { document.getElementById('grades-list').innerHTML = (window.db_grades || []).map(g => `<tr><td>${escapeHTML(g.std)}</td><td style="color:var(--primary); font-weight:bold;">${escapeHTML(g.name)}</td><td>${escapeHTML(g.grade)}</td></tr>`).reverse().join(''); };
+        renderStaff = function() { document.getElementById('staff-list').innerHTML = (window.db_staff || []).map(s => `<tr><td>${escapeHTML(s.name)}</td><td>${escapeHTML(s.role)}</td><td>${escapeHTML(s.salary)}</td></tr>`).join(''); };
+        renderSchedule = function() { document.getElementById('sch-list').innerHTML = (window.db_schedule || []).map(s => `<tr><td>${escapeHTML(s.group)}</td><td>${escapeHTML(s.day)}</td><td>${escapeHTML(s.time)}</td></tr>`).join(''); };
+        renderHomework = function() { document.getElementById('hw-list').innerHTML = (window.db_homework || []).map(h => `<tr><td>${escapeHTML(h.date)}</td><td>${escapeHTML(h.std)}</td><td>${escapeHTML(h.title)}</td><td>${escapeHTML(h.status)}</td></tr>`).reverse().join(''); };
+
+
+        async function studentCodeExists(code, exceptKey = '') {
+            const snap = await fbGet(fbRef(db, 'students'));
+            const students = snap.exists() ? snap.val() : {};
+            return Object.entries(students).some(([key, s]) => key !== exceptKey && String(s.code || '').trim().toLowerCase() === String(code || '').trim().toLowerCase());
+        }
+
+        window.renderAccountRequests = function() {
+            const el = document.getElementById('account-requests-list');
+            if (!el) return;
+            const rows = (window.db_registration_requests || []).slice().reverse();
+            el.innerHTML = rows.length ? rows.map(r => {
+                const key = jsString(r.fbKey);
+                const status = r.status || 'pending';
+                const statusText = status === 'approved' ? 'تمت الموافقة' : (status === 'rejected' ? 'مرفوض' : 'قيد الانتظار');
+                const statusColor = status === 'approved' ? 'var(--success)' : (status === 'rejected' ? 'var(--danger)' : 'var(--warning)');
+                return `<tr>
+                    <td style="font-weight:800;">${escapeHTML(r.name)}</td>
+                    <td>${escapeHTML(r.code)}</td>
+                    <td>مستوى ${escapeHTML(r.level)}</td>
+                    <td>${escapeHTML(r.phone)}</td>
+                    <td style="font-weight:800; color:${statusColor};">${statusText}</td>
+                    <td style="font-size:.85rem;">${escapeHTML(r.date || r.createdAt || '')}</td>
+                    <td style="min-width:220px;">
+                        ${status === 'pending' ? `<button class="btn btn-success" onclick="approveAccountRequest('${key}')" style="padding:8px; margin:3px;"><i class="fas fa-check"></i> موافقة</button><button class="btn btn-warning" onclick="rejectAccountRequest('${key}')" style="padding:8px; margin:3px;"><i class="fas fa-ban"></i> رفض</button>` : ''}
+                        <button class="btn btn-danger" onclick="deleteAccountRequest('${key}')" style="padding:8px; margin:3px;"><i class="fas fa-trash"></i></button>
+                    </td>
+                </tr>`;
+            }).join('') : '<tr><td colspan="7" style="color:var(--text-dim);">لا توجد طلبات إنشاء حساب حالياً.</td></tr>';
+        };
+
+        window.approveAccountRequest = async function(key) {
+            const req = (window.db_registration_requests || []).find(r => r.fbKey === key);
+            if (!req) return showToast('الطلب غير موجود', 'error');
+            if (!req.name || !req.code || !req.phone) return showToast('بيانات الطلب ناقصة', 'error');
+            if (String(req.phone).trim().length < 6) return showToast('رقم الهاتف أقل من 6 أرقام، لا يصلح ككلمة مرور', 'error');
+            try {
+                if (await studentCodeExists(req.code)) {
+                    await fbUpdate(fbRef(db, `registration_requests/${key}`), { status: 'rejected', rejectReason: 'كود الطالب مستخدم بالفعل', reviewedAt: new Date().toISOString() });
+                    return showToast('تم رفض الطلب لأن كود الطالب مستخدم بالفعل', 'warning');
+                }
+                const authAccount = await window.createStudentAuthAccount(req.code, req.phone);
+                await fbSet(fbRef(db, `students/${authAccount.uid}`), {
+                    name: req.name,
+                    code: req.code,
+                    level: req.level || '1',
+                    phone: req.phone,
+                    authEmail: authAccount.email,
+                    xp: 0,
+                    createdAt: new Date().toISOString(),
+                    createdFromRequest: key
+                });
+                await fbSet(fbRef(db, `leaderboard/${authAccount.uid}`), {
+                    name: String(req.name || '').split(' ')[0],
+                    level: req.level || '1',
+                    xp: 0
+                });
+                await fbUpdate(fbRef(db, `registration_requests/${key}`), {
+                    status: 'approved',
+                    approvedAt: new Date().toISOString(),
+                    approvedUid: authAccount.uid,
+                    authEmail: authAccount.email
+                });
+                showToast('تم إنشاء حساب الطالب والموافقة على الطلب', 'success');
+            } catch (err) {
+                console.error(err);
+                showToast('تعذر الموافقة على الطلب. راجع الكود أو كلمة المرور أو إعدادات Firebase.', 'error');
+            }
+        };
+
+        window.rejectAccountRequest = async function(key) {
+            if (!confirm('هل تريد رفض هذا الطلب؟')) return;
+            await fbUpdate(fbRef(db, `registration_requests/${key}`), { status: 'rejected', reviewedAt: new Date().toISOString() });
+            showToast('تم رفض الطلب', 'warning');
+        };
+
+        window.deleteAccountRequest = async function(key) {
+            if (!confirm('حذف الطلب نهائياً؟')) return;
+            await fbRemove(fbRef(db, `registration_requests/${key}`));
+            showToast('تم حذف الطلب', 'warning');
+        };
+
+        addStudent = async function() {
+            const name = document.getElementById('std-name').value.trim();
+            const code = document.getElementById('std-code').value.trim();
+            const level = document.getElementById('std-level').value;
+            const phone = document.getElementById('std-phone').value.trim();
+            if(!name || !code || !phone) return showToast('يرجى إكمال بيانات الطالب والكود ورقم الهاتف', 'error');
+            if(phone.length < 6) return showToast('رقم الهاتف سيُستخدم ككلمة مرور، ويجب ألا يقل عن 6 أرقام', 'error');
+            try {
+                if (await studentCodeExists(code)) return showToast('كود الطالب مستخدم بالفعل', 'error');
+                const authAccount = await window.createStudentAuthAccount(code, phone);
+                await fbSet(fbRef(db, `students/${authAccount.uid}`), {
+                    name, code, level, phone,
+                    authEmail: authAccount.email,
+                    xp: 0,
+                    createdAt: new Date().toISOString(),
+                    createdByAdmin: true
+                });
+                await fbSet(fbRef(db, `leaderboard/${authAccount.uid}`), {
+                    name: name.split(' ')[0],
+                    level,
+                    xp: 0
+                });
+                document.getElementById('std-name').value = '';
+                document.getElementById('std-code').value = '';
+                document.getElementById('std-phone').value = '';
+                showToast(`تم إنشاء الحساب: ${authAccount.email}`, 'success');
+            } catch (err) {
+                console.error(err);
+                showToast('تعذر إنشاء حساب الطالب. تأكد أن Email/Password مفعل وأن الكود/الهاتف صحيحان.', 'error');
+            }
+        };
+
+        renderExcelReport = function() {
+            const month = document.getElementById('monthSelect').value;
+            const level = document.getElementById('rep-level-select').value;
+            const yearInput = document.getElementById('yearSelect');
+            const year = Number(yearInput?.value) || new Date().getFullYear();
+            if (yearInput && !yearInput.value) yearInput.value = year;
+            const days = new Date(year, Number(month), 0).getDate();
+            const students = (window.db_students || []).filter(s => s.level == level);
+            let h = `<tr><th class="sticky-col">الطالب</th>`;
+            for(let i=1; i<=days; i++) h += `<th>${i}</th>`;
+            document.getElementById('excel-header').innerHTML = h + `</tr>`;
+            let b = '';
+            students.forEach(s => {
+                b += `<tr><td class="sticky-col">${escapeHTML(s.name)}</td>`;
+                for(let d=1; d<=days; d++) {
+                    const ds = `${year}-${String(month).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
+                    const r = (window.db_attendance || []).find(a => a.date === ds && a.code === s.code);
+                    b += `<td class="${r ? (r.status === 'ح' ? 'status-h' : 'status-g') : ''}">${r ? escapeHTML(r.status) : '-'}</td>`;
+                }
+                b += `</tr>`;
+            });
+            document.getElementById('excel-body').innerHTML = b;
+        };
+
+        async function saveBackup() {
+            const paths = ['students', 'content', 'invoices', 'expenses', 'attendance', 'homework', 'grades', 'staff', 'schedule', 'community', 'online_exams', 'support', 'registration_requests', 'assignments', 'submissions', 'live_classes', 'live_recordings'];
+            const backup = { exportedAt: new Date().toISOString(), version: 'secure-admin-1.0', data: {} };
+            try {
+                for (const path of paths) {
+                    const snap = await fbGet(fbRef(db, path));
+                    backup.data[path] = snap.exists() ? snap.val() : null;
+                }
+                const blob = new Blob([JSON.stringify(backup, null, 2)], {type: 'application/json'});
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `titan-backup-${new Date().toISOString().slice(0,10)}.json`;
+                document.body.appendChild(a);
+                a.click();
+                a.remove();
+                URL.revokeObjectURL(url);
+                showToast('تم تصدير النسخة الاحتياطية', 'success');
+            } catch (err) {
+                console.error(err);
+                showToast('تعذر تصدير النسخة الاحتياطية', 'error');
+            }
+        }
+
+
+        // ===== Titan Pro: Storage uploads, richer lessons, assignments =====
+        function setUploadProgress(prefix, value, label) {
+            const wrap = document.getElementById(`${prefix}-upload-progress-wrap`);
+            const bar = document.getElementById(`${prefix}-upload-progress`);
+            if (!wrap || !bar) return;
+            wrap.style.display = 'block';
+            const pct = Math.max(0, Math.min(100, Math.round(value || 0)));
+            bar.style.width = pct + '%';
+            bar.textContent = label || (pct + '%');
+            if (pct >= 100) setTimeout(() => { wrap.style.display = 'none'; bar.style.width = '0%'; bar.textContent = '0%'; }, 1500);
+        }
+
+        async function uploadFileToStorage(file, folder, progressPrefix) {
+            if (!file) return null;
+            if (!window.storage) throw new Error('Firebase Storage غير محمل. تأكد من تفعيل Storage ومن اتصال الإنترنت.');
+            const maxVideo = 500 * 1024 * 1024;
+            const maxOther = 80 * 1024 * 1024;
+            if (file.type.startsWith('video/') && file.size > maxVideo) throw new Error('حجم الفيديو أكبر من 500MB. اضغط الفيديو أو ارفع نسخة أصغر.');
+            if (!file.type.startsWith('video/') && file.size > maxOther) throw new Error('حجم الملف أكبر من 80MB.');
+            const owner = (window.auth && window.auth.currentUser && window.auth.currentUser.uid) ? window.auth.currentUser.uid : 'admin';
+            const safeName = String(file.name || 'file').replace(/[^a-zA-Z0-9._-]+/g, '_');
+            let path;
+            if (String(folder).startsWith('lesson_assets/')) {
+                path = `lesson_assets/${owner}/${String(folder).replace('lesson_assets/', '')}/${Date.now()}_${Math.random().toString(36).slice(2)}_${safeName}`;
+            } else {
+                path = `${folder}/${owner}/${Date.now()}_${Math.random().toString(36).slice(2)}_${safeName}`;
+            }
+            const ref = window.storage.ref(path);
+            const task = ref.put(file, { contentType: file.type || undefined, customMetadata: { originalName: file.name || safeName } });
+            return await new Promise((resolve, reject) => {
+                task.on('state_changed', snap => {
+                    const pct = snap.totalBytes ? (snap.bytesTransferred / snap.totalBytes) * 100 : 0;
+                    if (progressPrefix) setUploadProgress(progressPrefix, pct, `${Math.round(pct)}%`);
+                }, reject, async () => {
+                    const url = await task.snapshot.ref.getDownloadURL();
+                    resolve({ url, path, name: file.name, size: file.size, type: file.type || '' });
+                });
+            });
+        }
+
+        function getFileInput(id) { const el = document.getElementById(id); return el && el.files && el.files[0] ? el.files[0] : null; }
+        function fileBadge(label, url, icon = 'fa-link') { return url ? `<a class="mini-badge" href="${safeUrl(url)}" target="_blank" rel="noopener noreferrer"><i class="fas ${icon}"></i> ${escapeHTML(label)}</a>` : ''; }
+        function isYoutubeUrl(url) { return /youtube\.com|youtu\.be/.test(String(url || '')); }
+
+        uploadLesson = async function() {
+            const btn = document.getElementById('publish-lesson-btn');
+            const title = document.getElementById('lesson-title').value.trim();
+            const level = document.getElementById('lesson-level-select').value;
+            if (!title) return showToast('يرجى إدخال عنوان الدرس', 'error');
+            try {
+                btn.disabled = true; btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري الرفع...';
+                setUploadProgress('lesson', 3, 'تجهيز الملفات');
+                const videoFile = getFileInput('lesson-video-file');
+                const pdfFile = getFileInput('lesson-pdf-file');
+                const thumbnailFile = getFileInput('lesson-thumbnail-file');
+                const codeFile = getFileInput('lesson-code-file');
+                const videoUpload = await uploadFileToStorage(videoFile, 'lesson_assets/videos', 'lesson');
+                const pdfUpload = await uploadFileToStorage(pdfFile, 'lesson_assets/pdfs', 'lesson');
+                const thumbnailUpload = await uploadFileToStorage(thumbnailFile, 'lesson_assets/covers', 'lesson');
+                const codeUpload = await uploadFileToStorage(codeFile, 'lesson_assets/code', 'lesson');
+                const payload = {
+                    title,
+                    desc: document.getElementById('lesson-desc').value.trim(),
+                    level,
+                    category: document.getElementById('lesson-category').value.trim() || 'عام',
+                    difficulty: document.getElementById('lesson-difficulty').value,
+                    duration: Number(document.getElementById('lesson-duration').value) || 0,
+                    featured: document.getElementById('lesson-featured').value === 'true',
+                    video: document.getElementById('lesson-video').value.trim(),
+                    videoUrl: videoUpload ? videoUpload.url : '',
+                    videoPath: videoUpload ? videoUpload.path : '',
+                    videoName: videoUpload ? videoUpload.name : '',
+                    videoSource: videoUpload ? 'upload' : (isYoutubeUrl(document.getElementById('lesson-video').value) ? 'youtube' : 'none'),
+                    code: document.getElementById('lesson-code').value.trim(),
+                    codeFileUrl: codeUpload ? codeUpload.url : '',
+                    codeFilePath: codeUpload ? codeUpload.path : '',
+                    pdf: document.getElementById('lesson-pdf').value.trim(),
+                    pdfUrl: pdfUpload ? pdfUpload.url : '',
+                    pdfPath: pdfUpload ? pdfUpload.path : '',
+                    thumbnailUrl: thumbnailUpload ? thumbnailUpload.url : '',
+                    thumbnailPath: thumbnailUpload ? thumbnailUpload.path : '',
+                    date: new Date().toLocaleDateString('ar-EG'),
+                    createdAt: new Date().toISOString()
+                };
+                await fbPush(fbRef(db, 'content'), payload);
+                setUploadProgress('lesson', 100, 'تم');
+                ['lesson-title','lesson-desc','lesson-category','lesson-duration','lesson-video','lesson-code','lesson-pdf'].forEach(id => { const el = document.getElementById(id); if(el) el.value=''; });
+                ['lesson-video-file','lesson-pdf-file','lesson-thumbnail-file','lesson-code-file'].forEach(id => { const el = document.getElementById(id); if(el) el.value=''; });
+                showToast('تم رفع ونشر الدرس بنجاح', 'success');
+            } catch (err) {
+                console.error(err);
+                showToast(err.message || 'فشل رفع الدرس', 'error');
+            } finally {
+                btn.disabled = false; btn.innerHTML = '<i class="fas fa-cloud-upload-alt"></i> رفع ونشر الدرس';
+            }
+        };
+
+        renderContent = function() {
+            const list = document.getElementById('content-list');
+            if (!list) return;
+            const term = (document.getElementById('content-search')?.value || '').toLowerCase();
+            list.innerHTML = (window.db_content || []).filter(c => [c.title, c.category, c.desc].some(v => String(v || '').toLowerCase().includes(term))).slice().reverse().map(c => {
+                const type = c.videoUrl ? 'فيديو مرفوع' : (c.video ? 'YouTube' : 'محتوى نصي');
+                const files = [
+                    fileBadge('فيديو', c.videoUrl, 'fa-video'),
+                    fileBadge('YouTube', c.video, 'fa-youtube'),
+                    fileBadge('PDF', c.pdfUrl || c.pdf, 'fa-file-pdf'),
+                    fileBadge('كود', c.codeFileUrl || c.code, 'fa-file-code')
+                ].join('');
+                return `<tr>
+                    <td style="text-align:right;"><strong>${escapeHTML(c.title)}</strong><br><span class="muted-help">${escapeHTML(c.category || 'عام')} ${c.duration ? ' • ' + escapeHTML(c.duration) + ' دقيقة' : ''} ${c.featured ? ' • ⭐ مميز' : ''}</span></td>
+                    <td>مستوى ${escapeHTML(c.level)}</td>
+                    <td>${escapeHTML(type)}</td>
+                    <td>${files || '<span class="muted-help">لا توجد ملفات</span>'}</td>
+                    <td>${escapeHTML(c.date || '')}</td>
+                    <td><button class="btn btn-danger" onclick="if(confirm('حذف الدرس من قاعدة البيانات؟ الملفات المرفوعة ستظل في Storage حتى تحذفها من Firebase Console.')) { fbRemove(fbRef(db, 'content/${jsString(c.fbKey)}')); showToast('تم حذف الدرس', 'warning'); }"><i class="fas fa-trash"></i></button></td>
+                </tr>`;
+            }).join('');
+        };
+
+        createAssignment = async function() {
+            const btn = document.getElementById('assignment-save-btn');
+            const title = document.getElementById('assignment-title').value.trim();
+            if (!title) return showToast('اكتب عنوان المهمة أولاً', 'error');
+            try {
+                btn.disabled = true; btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري النشر...';
+                const file = getFileInput('assignment-file');
+                const upload = await uploadFileToStorage(file, 'assignment_assets', 'assignment');
+                await fbPush(fbRef(db, 'assignments'), {
+                    title,
+                    level: document.getElementById('assignment-level').value,
+                    dueDate: document.getElementById('assignment-due').value,
+                    points: Number(document.getElementById('assignment-points').value) || 40,
+                    desc: document.getElementById('assignment-desc').value.trim(),
+                    link: document.getElementById('assignment-link').value.trim(),
+                    fileUrl: upload ? upload.url : '',
+                    filePath: upload ? upload.path : '',
+                    fileName: upload ? upload.name : '',
+                    createdAt: new Date().toISOString(),
+                    date: new Date().toLocaleDateString('ar-EG')
+                });
+                setUploadProgress('assignment', 100, 'تم');
+                ['assignment-title','assignment-due','assignment-points','assignment-desc','assignment-link','assignment-file'].forEach(id => { const el = document.getElementById(id); if(el) el.value = id === 'assignment-points' ? '40' : ''; });
+                showToast('تم نشر المهمة للطلاب', 'success');
+            } catch (err) {
+                console.error(err);
+                showToast(err.message || 'فشل نشر المهمة', 'error');
+            } finally {
+                btn.disabled = false; btn.innerHTML = '<i class="fas fa-plus-circle"></i> نشر المهمة للطلاب';
+            }
+        };
+
+        renderAssignmentsAdmin = function() {
+            const el = document.getElementById('assignments-list-admin');
+            if (!el) return;
+            el.innerHTML = (window.db_assignments || []).slice().reverse().map(a => `<tr>
+                <td style="text-align:right;"><strong>${escapeHTML(a.title)}</strong><br><span class="muted-help">${escapeHTML(a.desc || '').slice(0, 100)}</span></td>
+                <td>مستوى ${escapeHTML(a.level)}</td>
+                <td>${escapeHTML(a.dueDate || '-')}</td>
+                <td>${Number(a.points) || 0} XP</td>
+                <td>${fileBadge('فتح', a.fileUrl || a.link, 'fa-paperclip') || '-'}</td>
+                <td><button class="btn btn-danger" onclick="if(confirm('حذف المهمة؟')) { fbRemove(fbRef(db, 'assignments/${jsString(a.fbKey)}')); showToast('تم حذف المهمة', 'warning'); }"><i class="fas fa-trash"></i></button></td>
+            </tr>`).join('');
+        };
+
+        renderSubmissionsAdmin = function() {
+            const el = document.getElementById('submissions-list-admin');
+            if (!el) return;
+            const assignmentMap = Object.fromEntries((window.db_assignments || []).map(a => [a.fbKey, a.title]));
+            el.innerHTML = (window.db_submissions || []).slice().reverse().map(s => `<tr>
+                <td>${escapeHTML(s.studentName || s.studentCode || '-')}</td>
+                <td>${escapeHTML(assignmentMap[s.assignmentKey] || s.assignmentTitle || '-')}</td>
+                <td style="text-align:right; max-width:260px;">${escapeHTML(s.note || '')}</td>
+                <td>${fileBadge(s.fileName || 'تحميل', s.fileUrl, 'fa-download') || '-'}</td>
+                <td>${escapeHTML(s.date || '')}</td>
+                <td><span class="mini-badge"><i class="fas fa-check"></i> مستلم</span></td>
+            </tr>`).join('') || '<tr><td colspan="6">لا توجد تسليمات بعد.</td></tr>';
+        };
+
+        const titanProOldUpdateStats = updateStats;
+        updateStats = function() {
+            titanProOldUpdateStats();
+            const uploaded = (window.db_content || []).filter(c => !!c.videoUrl).length;
+            const assignments = (window.db_assignments || []).length;
+            if (document.getElementById('st-uploaded-videos')) document.getElementById('st-uploaded-videos').innerText = uploaded;
+            if (document.getElementById('st-assignments')) document.getElementById('st-assignments').innerText = assignments;
+        };
+
+
         function toggleTheme() { document.body.setAttribute('data-theme', document.body.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'); }
-        function initChart() { const ctx = document.getElementById('mainChart').getContext('2d'); mainChart = new Chart(ctx, { type: 'line', data: { labels: ['يناير', 'فبراير', 'مارس', 'أبريل'], datasets: [{ label: 'الإيرادات', data: [500, 1200, 800, 1500], borderColor: '#4f46e5', tension: 0.4 }] } }); }
-        function factoryReset() { if(confirm("حذف كل شيء؟")) { ['students', 'content', 'invoices', 'expenses', 'attendance', 'homework', 'grades', 'staff', 'schedule', 'community', 'online_exams', 'support'].forEach(p => fbRemove(fbRef(db, p))); location.reload(); } }
+        function initChart() { const ctx = document.getElementById('mainChart').getContext('2d'); if (mainChart) mainChart.destroy(); mainChart = new Chart(ctx, { type: 'line', data: { labels: ['يناير', 'فبراير', 'مارس', 'أبريل'], datasets: [{ label: 'الإيرادات', data: [500, 1200, 800, 1500], borderColor: '#4f46e5', tension: 0.4 }] } }); window.mainChart = mainChart; }
+        function factoryReset() { if(confirm("حذف كل شيء؟")) { ['students', 'content', 'invoices', 'expenses', 'attendance', 'homework', 'grades', 'staff', 'schedule', 'community', 'online_exams', 'support', 'registration_requests', 'assignments', 'submissions', 'live_classes', 'live_recordings'].forEach(p => fbRemove(fbRef(db, p))); location.reload(); } }
         setInterval(() => { document.getElementById('live-clock').innerText = new Date().toLocaleString('ar-EG'); }, 1000);
-    </script>
+    
+
+        // ===== Titan Live Classroom: upload stability hotfix =====
+        function titanHumanBytes(bytes) {
+            const n = Number(bytes) || 0;
+            if (n < 1024) return n + ' B';
+            if (n < 1024*1024) return (n/1024).toFixed(1) + ' KB';
+            if (n < 1024*1024*1024) return (n/1024/1024).toFixed(1) + ' MB';
+            return (n/1024/1024/1024).toFixed(1) + ' GB';
+        }
+        uploadFileToStorage = async function(file, folder, progressPrefix) {
+            if (!file) return null;
+            if (!window.storage) throw new Error('Firebase Storage غير محمل. فعّل Storage من Firebase Console وتأكد من تحميل firebase-storage-compat.');
+            if (!window.auth || !window.auth.currentUser) throw new Error('لازم تكون مسجل دخول كإدارة قبل الرفع.');
+            const maxVideo = 500 * 1024 * 1024;
+            const maxOther = 80 * 1024 * 1024;
+            if (file.type.startsWith('video/') && file.size > maxVideo) throw new Error('حجم الفيديو أكبر من 500MB.');
+            if (!file.type.startsWith('video/') && file.size > maxOther) throw new Error('حجم الملف أكبر من 80MB.');
+            const owner = window.auth.currentUser.uid;
+            const safeName = String(file.name || 'file').replace(/[^a-zA-Z0-9._-]+/g, '_');
+            const cleanFolder = String(folder || 'uploads').replace(/^\/+|\/+$/g, '');
+            let path;
+            if (cleanFolder.startsWith('lesson_assets/')) {
+                path = `lesson_assets/${owner}/${cleanFolder.replace('lesson_assets/', '')}/${Date.now()}_${Math.random().toString(36).slice(2)}_${safeName}`;
+            } else if (cleanFolder === 'assignment_assets') {
+                path = `assignment_assets/${owner}/${Date.now()}_${Math.random().toString(36).slice(2)}_${safeName}`;
+            } else {
+                path = `${cleanFolder}/${owner}/${Date.now()}_${Math.random().toString(36).slice(2)}_${safeName}`;
+            }
+            const ref = window.storage.ref(path);
+            setUploadProgress(progressPrefix, 1, `بدء رفع ${safeName}`);
+            const task = ref.put(file, { contentType: file.type || undefined, customMetadata: { originalName: file.name || safeName, uploadedBy: owner } });
+            return await new Promise((resolve, reject) => {
+                let lastMove = Date.now();
+                const watchdog = setInterval(() => {
+                    if (Date.now() - lastMove > 45000) {
+                        clearInterval(watchdog);
+                        try { task.cancel(); } catch(e) {}
+                        reject(new Error('الرفع متوقف منذ 45 ثانية. راجع Storage Rules والإنترنت وحجم الملف ثم جرّب مرة أخرى.'));
+                    }
+                }, 5000);
+                task.on('state_changed', snap => {
+                    lastMove = Date.now();
+                    const pct = snap.totalBytes ? (snap.bytesTransferred / snap.totalBytes) * 100 : 0;
+                    if (progressPrefix) setUploadProgress(progressPrefix, pct, `${Math.round(pct)}% - ${titanHumanBytes(snap.bytesTransferred)} / ${titanHumanBytes(snap.totalBytes)}`);
+                }, err => {
+                    clearInterval(watchdog);
+                    const code = err && err.code ? err.code : '';
+                    let msg = err && err.message ? err.message : 'فشل الرفع.';
+                    if (code.includes('unauthorized')) msg = 'مرفوض من Firebase Storage Rules. انسخ قواعد Storage الجديدة ثم جرّب.';
+                    if (code.includes('canceled')) msg = 'تم إلغاء الرفع أو توقف الاتصال.';
+                    reject(new Error(msg));
+                }, async () => {
+                    clearInterval(watchdog);
+                    const url = await task.snapshot.ref.getDownloadURL();
+                    if (progressPrefix) setUploadProgress(progressPrefix, 100, 'تم الرفع');
+                    resolve({ url, path, name: file.name, size: file.size, type: file.type || '' });
+                });
+            });
+        };
+
+
+        // ===== Titan Live Classroom: Admin / Teacher - FIX V3 =====
+        const VCAdmin = (() => {
+            const state = {
+                sessionId:null, localStream:null, screenStream:null, peers:{}, remoteStreams:{}, participants:{},
+                chatUnsub:null, partUnsub:null, sigUnsub:null, recUnsub:null,
+                mediaRecorder:null, recordedChunks:[], recordingCanvas:null, recordingTimer:null,
+                micOn:true, camOn:true, isScreenSharing:false, lastOffers:{}
+            };
+            const rtcConfig = { iceServers: [{urls:'stun:stun.l.google.com:19302'}, {urls:'stun:stun1.l.google.com:19302'}] };
+            const $ = id => document.getElementById(id);
+            const me = () => (window.auth && window.auth.currentUser) ? window.auth.currentUser.uid : 'teacher';
+            const name = () => 'المعلم';
+            const ref = path => (window.db || firebase.database()).ref(path);
+            const now = () => new Date().toISOString();
+            function uidSafe(v){ return String(v || '').replace(/[^a-zA-Z0-9_-]/g,'_'); }
+            function roomPath(p=''){ return `live_classes/${state.sessionId}${p?'/'+p:''}`; }
+
+            function ensureVideo(id, label, muted=false){
+                const grid = $('vc-admin-grid'); if(!grid) return null;
+                let tile = document.getElementById('vc-tile-admin-' + uidSafe(id));
+                if(!tile){
+                    tile = document.createElement('div'); tile.className='vc-tile'; tile.id='vc-tile-admin-' + uidSafe(id);
+                    tile.innerHTML = `<video playsinline autoplay ${muted?'muted':''}></video><div class="vc-status"><span class="vc-pill"><i class="fas fa-microphone"></i></span><span class="vc-pill"><i class="fas fa-video"></i></span></div><div class="vc-name"></div>`;
+                    grid.appendChild(tile);
+                }
+                tile.querySelector('.vc-name').textContent = label || id;
+                return tile.querySelector('video');
+            }
+
+            function setLocalPreview(label){
+                const v = ensureVideo(me(), label || (state.isScreenSharing ? 'مشاركة شاشة المعلم' : 'أنت - المعلم'), true);
+                if(v && state.localStream) v.srcObject = state.localStream;
+            }
+
+            async function ensureLocalStream(){
+                if(state.localStream) {
+                    state.localStream.getAudioTracks().forEach(t=>t.enabled=state.micOn);
+                    state.localStream.getVideoTracks().forEach(t=>t.enabled=state.camOn || state.isScreenSharing);
+                    setLocalPreview();
+                    return state.localStream;
+                }
+                try {
+                    state.localStream = await navigator.mediaDevices.getUserMedia({video:true, audio:true});
+                } catch(e) {
+                    console.error(e);
+                    state.localStream = new MediaStream();
+                    showToast('لم يتم فتح الكاميرا/المايك. افتح الصلاحيات من المتصفح ثم حاول مرة أخرى.', 'warning');
+                }
+                state.localStream.getAudioTracks().forEach(t=>t.enabled=state.micOn);
+                state.localStream.getVideoTracks().forEach(t=>t.enabled=state.camOn);
+                setLocalPreview('أنت - المعلم');
+                return state.localStream;
+            }
+
+            async function syncTracks(pc){
+                if(!state.localStream) return;
+                const liveTracks = state.localStream.getTracks().filter(t => t.readyState !== 'ended');
+                for(const track of liveTracks){
+                    const sender = pc.getSenders().find(s => s.track && s.track.kind === track.kind);
+                    if(sender && sender.track !== track){
+                        try { await sender.replaceTrack(track); } catch(e) { console.warn(e); }
+                    } else if(!sender) {
+                        try { pc.addTrack(track, state.localStream); } catch(e) { console.warn(e); }
+                    }
+                }
+                pc.getSenders().forEach(sender => {
+                    if(sender.track && !liveTracks.some(t => t.kind === sender.track.kind)) {
+                        try { pc.removeTrack(sender); } catch(e) {}
+                    }
+                });
+            }
+
+            async function makeOffer(peerUid, opts={}){
+                const nowMs = Date.now();
+                if(!opts.force && !opts.iceRestart && state.lastOffers[peerUid] && nowMs - state.lastOffers[peerUid] < 2500) return;
+                state.lastOffers[peerUid] = nowMs;
+                const pc = await getPeer(peerUid);
+                await syncTracks(pc);
+                if(pc.signalingState !== 'stable' && !opts.iceRestart) return;
+                const offer = await pc.createOffer(opts);
+                await pc.setLocalDescription(offer);
+                await sendSignal(peerUid, {type:'offer', sdp:pc.localDescription, shareVersion: Date.now()});
+            }
+
+            async function getPeer(peerUid){
+                if(state.peers[peerUid]) return state.peers[peerUid];
+                const pc = new RTCPeerConnection(rtcConfig);
+                state.peers[peerUid]=pc;
+                pc.onicecandidate = e => { if(e.candidate) sendSignal(peerUid, {type:'candidate', candidate:e.candidate.toJSON ? e.candidate.toJSON() : e.candidate}); };
+                pc.ontrack = e => {
+                    const stream = e.streams[0]; if(!stream) return;
+                    state.remoteStreams[peerUid]=stream;
+                    const p = state.participants[peerUid] || {};
+                    const v = ensureVideo(peerUid, p.name || 'طالب');
+                    if(v) v.srcObject = stream;
+                };
+                pc.onconnectionstatechange = () => {
+                    if(['failed','closed','disconnected'].includes(pc.connectionState)) removePeer(peerUid, false);
+                };
+                if(state.localStream) syncTracks(pc).catch(console.warn);
+                return pc;
+            }
+
+            function removePeer(peerUid, removeTile=true){
+                if(state.peers[peerUid]) { try{state.peers[peerUid].close();}catch(e){} delete state.peers[peerUid]; }
+                delete state.remoteStreams[peerUid];
+                if(removeTile) document.getElementById('vc-tile-admin-'+uidSafe(peerUid))?.remove();
+            }
+
+            async function sendSignal(to, payload){
+                if(!state.sessionId) return;
+                await ref(`${roomPath('signals')}/${uidSafe(to)}`).push({...payload, from:me(), to, at:Date.now()});
+            }
+
+            async function handleSignal(sigKey, sig){
+                if(!sig || sig.to !== me() || !sig.from) return;
+                const pc = await getPeer(sig.from);
+                try {
+                    if(sig.type === 'offer'){
+                        if(pc.signalingState !== 'stable') {
+                            try { await pc.setLocalDescription({type:'rollback'}); } catch(e) {}
+                        }
+                        await pc.setRemoteDescription(new RTCSessionDescription(sig.sdp));
+                        await syncTracks(pc);
+                        const answer = await pc.createAnswer();
+                        await pc.setLocalDescription(answer);
+                        await sendSignal(sig.from, {type:'answer', sdp:pc.localDescription});
+                    } else if(sig.type === 'answer'){
+                        if(pc.signalingState === 'have-local-offer') await pc.setRemoteDescription(new RTCSessionDescription(sig.sdp));
+                    } else if(sig.type === 'candidate'){
+                        try { await pc.addIceCandidate(new RTCIceCandidate(sig.candidate)); } catch(e) { console.warn(e); }
+                    }
+                    ref(`${roomPath('signals')}/${uidSafe(me())}/${sigKey}`).remove();
+                } catch(err) {
+                    console.error(err);
+                    showToast('حدث خطأ في اتصال الحصة. جرّب إعادة دخول الطالب أو تحديث الصفحة.', 'error');
+                }
+            }
+
+            function listenRoom(){
+                state.partUnsub && state.partUnsub.off && state.partUnsub.off();
+                const partRef = ref(roomPath('participants'));
+                partRef.on('value', snap => {
+                    state.participants = snap.val() || {};
+                    renderParticipants();
+                    Object.entries(state.participants).forEach(([uid,p]) => {
+                        if(uid !== me() && p.online !== false && p.role !== 'teacher') {
+                            const hadPeer = !!state.peers[uid];
+                            getPeer(uid).then(pc => {
+                                if(!hadPeer || pc.connectionState === 'new' || pc.connectionState === 'failed' || pc.connectionState === 'closed') {
+                                    makeOffer(uid).catch(console.warn);
+                                }
+                            });
+                        }
+                    });
+                    Object.keys(state.peers).forEach(uid=>{
+                        if(!state.participants[uid] || state.participants[uid].online===false) removePeer(uid);
+                    });
+                });
+                state.partUnsub = partRef;
+
+                const chatRef = ref(roomPath('chat')).limitToLast(80);
+                chatRef.on('value', snap => renderChat(snap.val() || {}));
+                state.chatUnsub = chatRef;
+
+                const sigRef = ref(`${roomPath('signals')}/${uidSafe(me())}`);
+                sigRef.on('child_added', snap => handleSignal(snap.key, snap.val()).catch(console.error));
+                state.sigUnsub = sigRef;
+
+                const recRef = ref('live_recordings').orderByChild('sessionId').equalTo(state.sessionId).limitToLast(20);
+                recRef.on('value', snap => renderRecordings(snap.val() || {}));
+                state.recUnsub = recRef;
+            }
+
+            function renderParticipants(){
+                const el = $('vc-admin-participants'); if(!el) return;
+                const rows = Object.entries(state.participants).filter(([uid]) => uid !== me()).map(([uid,p]) => `<div class="vc-participant"><div><strong>${escapeHTML(p.name || 'طالب')}</strong><br><span class="muted-help">${escapeHTML(p.code || uid)} • ${p.online===false?'غير متصل':'متصل'}</span></div><div class="vc-mini-actions"><button title="السماح/منع المايك" class="btn ${p.micAllowed?'btn-success':'btn-danger'}" onclick="VCAdmin.setPermission('${jsString(uid)}','micAllowed',${!p.micAllowed})"><i class="fas fa-microphone"></i></button><button title="السماح/منع الكاميرا" class="btn ${p.camAllowed?'btn-success':'btn-danger'}" onclick="VCAdmin.setPermission('${jsString(uid)}','camAllowed',${!p.camAllowed})"><i class="fas fa-video"></i></button><button title="قفل مايك وكاميرا الطالب" class="btn btn-warning" onclick="VCAdmin.forceOff('${jsString(uid)}')"><i class="fas fa-ban"></i></button><button title="طرد الطالب" class="btn btn-danger" onclick="VCAdmin.kick('${jsString(uid)}')"><i class="fas fa-user-slash"></i></button></div></div>`).join('');
+                el.innerHTML = rows || '<span class="muted-help">لا يوجد طلاب داخل الحصة الآن.</span>';
+            }
+
+            function renderChat(items){
+                const el=$('vc-admin-chat'); if(!el) return;
+                el.innerHTML = Object.values(items).sort((a,b)=>(a.time||0)-(b.time||0)).map(m=>`<div class="vc-chat-msg"><strong>${escapeHTML(m.name||'مشارك')}</strong><div>${escapeHTML(m.text||'')}</div><small>${escapeHTML(m.when||'')}</small></div>`).join('');
+                el.scrollTop = el.scrollHeight;
+            }
+
+            function renderRecordings(items){
+                const el=$('vc-admin-recordings'); if(!el) return;
+                const arr=Object.values(items).sort((a,b)=>String(b.createdAt||'').localeCompare(String(a.createdAt||'')));
+                el.innerHTML = arr.length ? arr.map(r=>`<div class="vc-chat-msg"><strong>${escapeHTML(r.title||'تسجيل حصة')}</strong><br>${r.url ? `<a href="${safeUrl(r.url)}" target="_blank" rel="noopener noreferrer" class="mini-badge"><i class="fas fa-download"></i> فتح التسجيل</a>` : `<span class="mini-badge"><i class="fas fa-download"></i> تم تنزيله محلياً</span>`}<br><small>${escapeHTML(r.when||'')}</small></div>`).join('') : '<span class="muted-help">لا توجد تسجيلات محفوظة بعد.</span>';
+            }
+
+            function onlineStudentIds(){
+                return Object.entries(state.participants || {})
+                    .filter(([uid,p]) => uid !== me() && p && p.online !== false && p.role !== 'teacher')
+                    .map(([uid]) => uid);
+            }
+
+            function setShareUi(isSharing){
+                const btn = $('vc-admin-share-btn');
+                const banner = $('vc-admin-share-banner');
+                if(btn) {
+                    btn.classList.toggle('is-sharing', !!isSharing);
+                    btn.innerHTML = isSharing
+                        ? '<i class="fas fa-stop-circle"></i> إيقاف مشاركة الشاشة'
+                        : '<i class="fas fa-desktop"></i> مشاركة الشاشة';
+                }
+                if(banner) {
+                    banner.classList.toggle('active', !!isSharing);
+                    banner.innerHTML = isSharing
+                        ? '<i class="fas fa-desktop"></i> مشاركة الشاشة تعمل الآن. الطلاب سيشاهدون شاشة المعلم في بطاقة كبيرة.'
+                        : '';
+                }
+            }
+
+            async function hardReconnectStudents(reason){
+                const ids = onlineStudentIds();
+                for(const uid of ids){
+                    try { await sendSignal(uid, {type:'restart', reason, shareVersion:Date.now()}); } catch(e) { console.warn(e); }
+                    removePeer(uid, false);
+                }
+                await new Promise(resolve => setTimeout(resolve, 450));
+                await Promise.all(ids.map(uid => makeOffer(uid, {iceRestart:true, force:true}).catch(console.warn)));
+            }
+
+            async function renegotiateAll(opts={}){
+                await Promise.all(Object.keys(state.peers).map(uid=>makeOffer(uid, {...opts, force:true}).catch(console.warn)));
+            }
+
+            async function replaceLocalVideoTrack(newTrack, label){
+                await ensureLocalStream();
+                state.localStream.getVideoTracks().forEach(t => {
+                    if(t !== newTrack) {
+                        try { t.stop(); } catch(e) {}
+                        try { state.localStream.removeTrack(t); } catch(e) {}
+                    }
+                });
+                if(newTrack && !state.localStream.getTracks().includes(newTrack)) state.localStream.addTrack(newTrack);
+                setLocalPreview(label);
+                await Promise.all(Object.values(state.peers).map(async pc => {
+                    const sender = pc.getSenders().find(s => s.track && s.track.kind === 'video');
+                    if(sender) {
+                        try { await sender.replaceTrack(newTrack); } catch(e) { console.warn(e); }
+                    } else if(newTrack) {
+                        try { pc.addTrack(newTrack, state.localStream); } catch(e) { console.warn(e); }
+                    }
+                }));
+            }
+
+            async function stopScreenShare(){
+                if(!state.isScreenSharing) return;
+                state.isScreenSharing = false;
+                try {
+                    if(state.screenStream) state.screenStream.getTracks().forEach(t => { try{t.stop();}catch(e){} });
+                    const fresh = await navigator.mediaDevices.getUserMedia({video:true, audio:false});
+                    const camTrack = fresh.getVideoTracks()[0];
+                    camTrack.enabled = state.camOn;
+                    await replaceLocalVideoTrack(camTrack, 'أنت - المعلم');
+                    await ref(roomPath()).update({screenSharing:false, shareVersion:Date.now(), screenOwner:null});
+                    setShareUi(false);
+                    await hardReconnectStudents('screen_off');
+                    showToast('تم إيقاف مشاركة الشاشة والعودة لكاميرا المعلم', 'warning');
+                } catch(e) {
+                    console.error(e);
+                    await ref(roomPath()).update({screenSharing:false, shareVersion:Date.now(), screenOwner:null}).catch(()=>{});
+                    setShareUi(false);
+                    await hardReconnectStudents('screen_off').catch(()=>{});
+                    showToast('تم إيقاف مشاركة الشاشة. افتح الكاميرا مرة أخرى من المتصفح إذا لزم.', 'warning');
+                }
+            }
+
+            async function shareScreen(){
+                if(!state.sessionId) return showToast('ابدأ الحصة أولاً', 'error');
+                if(state.isScreenSharing) return stopScreenShare();
+                if(!navigator.mediaDevices || !navigator.mediaDevices.getDisplayMedia) return showToast('المتصفح لا يدعم مشاركة الشاشة. استخدم Chrome أو Edge.', 'error');
+                try {
+                    const screen = await navigator.mediaDevices.getDisplayMedia({
+                        video:{frameRate:{ideal:12,max:20}},
+                        audio:false
+                    });
+                    const screenTrack = screen.getVideoTracks()[0];
+                    if(!screenTrack) return showToast('لم يتم اختيار شاشة للمشاركة.', 'error');
+                    state.screenStream = screen;
+                    state.isScreenSharing = true;
+                    await replaceLocalVideoTrack(screenTrack, 'مشاركة شاشة المعلم');
+                    await ref(roomPath()).update({screenSharing:true, shareVersion:Date.now(), screenOwner:me()});
+                    setShareUi(true);
+                    await hardReconnectStudents('screen_on');
+                    showToast('مشاركة الشاشة بدأت. لو طالب لا يراها ينتظر ثواني أو يضغط خروج ثم دخول.', 'success');
+                    screenTrack.onended = () => stopScreenShare().catch(console.error);
+                } catch(e) {
+                    console.error(e);
+                    showToast('تم إلغاء مشاركة الشاشة أو حدث خطأ في الصلاحيات.', 'warning');
+                    setShareUi(false);
+                }
+            }
+
+            function buildMixedRecordingStream(){
+                const canvas = document.createElement('canvas'); canvas.width = 1280; canvas.height = 720;
+                const ctx = canvas.getContext('2d');
+                state.recordingCanvas = canvas;
+                let lastDraw = 0;
+                const draw = (ts) => {
+                    if(!lastDraw || ts - lastDraw > 80) {
+                        lastDraw = ts || Date.now();
+                        const vids = Array.from(($('vc-admin-grid')||document).querySelectorAll('video')).filter(v=>v.srcObject);
+                        ctx.fillStyle='#020617'; ctx.fillRect(0,0,canvas.width,canvas.height);
+                        const cols=Math.ceil(Math.sqrt(Math.max(1,vids.length))), rows=Math.ceil(Math.max(1,vids.length)/cols), w=canvas.width/cols, h=canvas.height/rows;
+                        vids.forEach((v,i)=>{
+                            const x=(i%cols)*w,y=Math.floor(i/cols)*h;
+                            try{ctx.drawImage(v,x,y,w,h);}catch(e){}
+                        });
+                    }
+                    state.recordingTimer=requestAnimationFrame(draw);
+                }; draw(0);
+                const out = canvas.captureStream(12);
+                try{
+                    const ac = new AudioContext(); const dest = ac.createMediaStreamDestination();
+                    [state.localStream, ...Object.values(state.remoteStreams)].filter(Boolean).forEach(s=>{
+                        if(s.getAudioTracks().length){ try{ ac.createMediaStreamSource(s).connect(dest); }catch(e){} }
+                    });
+                    dest.stream.getAudioTracks().forEach(t=>out.addTrack(t));
+                }catch(e){ console.warn(e); }
+                return out;
+            }
+
+            function downloadRecording(blob){
+                const stamp = new Date().toISOString().replace(/[:.]/g,'-');
+                const filename = `Titan-Class-${state.sessionId || 'recording'}-${stamp}.webm`;
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = filename;
+                a.style.display = 'none';
+                document.body.appendChild(a);
+                a.click();
+                setTimeout(() => { URL.revokeObjectURL(url); a.remove(); }, 1500);
+                showToast('تم تنزيل التسجيل في Downloads', 'success');
+                return filename;
+            }
+
+            async function uploadRecording(blob){
+                if(!window.storage) throw new Error('Firebase Storage غير متاح، لكن التسجيل اتنزل عندك محلياً.');
+                const path=`class_recordings/${me()}/${state.sessionId}/${Date.now()}_recording.webm`;
+                const r=window.storage.ref(path);
+                await r.put(blob, {contentType:'video/webm', customMetadata:{sessionId:state.sessionId, teacher:me()}});
+                const url=await r.getDownloadURL();
+                const payload={sessionId:state.sessionId,title:$('vc-admin-title')?.value||'تسجيل حصة',url,path,createdAt:now(),when:new Date().toLocaleString('ar-EG')};
+                await ref('live_recordings').push(payload);
+                await ref(roomPath()).update({recordingUrl:url, lastRecordingAt:now()});
+                showToast('تم حفظ نسخة من التسجيل على Firebase Storage', 'success');
+            }
+
+            async function startClass(){
+                if(!window.auth || !window.auth.currentUser) return showToast('سجل دخول الإدارة أولاً', 'error');
+                const code=($('vc-admin-code')?.value||'').trim() || ('CLS-' + Math.random().toString(36).slice(2,8).toUpperCase());
+                state.sessionId=code;
+                await ensureLocalStream();
+                await ref(roomPath()).set({title:($('vc-admin-title')?.value||'حصة مباشرة').trim(), level:$('vc-admin-level')?.value||'1', status:'live', sessionId:code, teacherUid:me(), screenSharing:false, shareVersion:Date.now(), createdAt:now(), startedAt:new Date().toLocaleString('ar-EG')});
+                await ref(`${roomPath('participants')}/${me()}`).set({name:name(), role:'teacher', online:true, micAllowed:true, camAllowed:true, micOn:true, camOn:true, joinedAt:now()});
+                $('vc-admin-session-code').textContent=code;
+                listenRoom();
+                showToast('تم بدء الحصة. انسخ الكود وارسله للطلاب.', 'success');
+            }
+
+            async function endClass(){
+                if(!state.sessionId) return;
+                if(state.mediaRecorder && state.mediaRecorder.state==='recording') await toggleRecording();
+                if(state.isScreenSharing) await stopScreenShare().catch(()=>{});
+                await ref(roomPath()).update({status:'ended', endedAt:now()});
+                Object.keys(state.peers).forEach(uid=>removePeer(uid));
+                if(state.localStream) state.localStream.getTracks().forEach(t=>t.stop());
+                state.localStream=null; state.sessionId=null; if(window.setShareUi){try{setShareUi(false)}catch(e){}} $('vc-admin-session-code').textContent='لا توجد حصة'; $('vc-admin-grid').innerHTML='';
+                showToast('تم إنهاء الحصة', 'warning');
+            }
+
+            async function toggleMic(){
+                await ensureLocalStream();
+                state.micOn=!state.micOn;
+                state.localStream.getAudioTracks().forEach(t=>t.enabled=state.micOn);
+                if(state.sessionId) await ref(`${roomPath('participants')}/${me()}`).update({micOn:state.micOn});
+            }
+
+            async function toggleCamera(){
+                await ensureLocalStream();
+                if(state.isScreenSharing) return showToast('الكاميرا متوقفة أثناء مشاركة الشاشة. أوقف المشاركة أولاً.', 'warning');
+                state.camOn=!state.camOn;
+                state.localStream.getVideoTracks().forEach(t=>t.enabled=state.camOn);
+                if(state.sessionId) await ref(`${roomPath('participants')}/${me()}`).update({camOn:state.camOn});
+            }
+
+            async function toggleRecording(){
+                const btn=$('vc-admin-record-btn');
+                if(state.mediaRecorder && state.mediaRecorder.state==='recording'){
+                    return new Promise(resolve=>{
+                        state.mediaRecorder.onstop=async()=>{
+                            if(state.recordingTimer) cancelAnimationFrame(state.recordingTimer);
+                            const blob=new Blob(state.recordedChunks,{type:'video/webm'});
+                            state.recordedChunks=[];
+                            if(btn) btn.innerHTML='<i class="fas fa-record-vinyl"></i> بدء التسجيل';
+                            const filename = downloadRecording(blob);
+                            try {
+                                await uploadRecording(blob);
+                            } catch(e) {
+                                console.warn(e);
+                                await ref('live_recordings').push({sessionId:state.sessionId,title:$('vc-admin-title')?.value||'تسجيل حصة',localOnly:true,filename,createdAt:now(),when:new Date().toLocaleString('ar-EG')}).catch(()=>{});
+                                showToast('التسجيل اتنزل في Downloads. الحفظ على Storage لم يتم: ' + (e.message || e), 'warning');
+                            }
+                            resolve();
+                        };
+                        state.mediaRecorder.stop();
+                    });
+                }
+                if(!state.sessionId) return showToast('ابدأ الحصة أولاً', 'error');
+                const stream=buildMixedRecordingStream();
+                state.recordedChunks=[];
+                const mime = MediaRecorder.isTypeSupported('video/webm;codecs=vp9') ? 'video/webm;codecs=vp9' : 'video/webm';
+                state.mediaRecorder=new MediaRecorder(stream, {mimeType:mime});
+                state.mediaRecorder.ondataavailable=e=>{ if(e.data && e.data.size) state.recordedChunks.push(e.data); };
+                state.mediaRecorder.start(1000);
+                if(btn) btn.innerHTML='<i class="fas fa-stop"></i> إيقاف وتنزيل التسجيل';
+                showToast('بدأ التسجيل. عند الإيقاف سينزل في Downloads تلقائياً.', 'success');
+            }
+
+            async function setPermission(uid, field, value){ await ref(`${roomPath('participants')}/${uid}`).update({[field]:value}); }
+            async function forceOff(uid){ await ref(`${roomPath('participants')}/${uid}`).update({micAllowed:false, camAllowed:false, micOn:false, camOn:false, forceOffAt:Date.now()}); }
+            async function kick(uid){ await ref(`${roomPath('participants')}/${uid}`).update({kicked:true, online:false}); removePeer(uid); }
+            async function sendChat(){ const input=$('vc-admin-chat-input'); const text=(input?.value||'').trim(); if(!text||!state.sessionId)return; input.value=''; await ref(roomPath('chat')).push({from:me(),name:name(),text,time:Date.now(),when:new Date().toLocaleTimeString('ar-EG')}); }
+            function copyCode(){ const code=state.sessionId || $('vc-admin-session-code')?.textContent || ''; navigator.clipboard?.writeText(code); showToast('تم نسخ كود الحصة', 'success'); }
+            return {startClass,endClass,toggleMic,toggleCamera,shareScreen,stopScreenShare,toggleRecording,setPermission,forceOff,kick,sendChat,copyCode};
+        })();
+
+</script>
 </body>
 </html>

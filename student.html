@@ -11,7 +11,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     
     <style>
-        /* الوضع الليلي - متغيرات الألوان */
+        /* 4. الوضع الليلي - متغيرات الألوان */
         :root {
             --primary: #4f46e5;
             --primary-gradient: linear-gradient(135deg, #4f46e5, #0ea5e9);
@@ -76,6 +76,19 @@
         .nav-link i { font-size: 1.2rem; }
         .nav-link:hover { background: var(--bg-body); color: var(--primary); transform: translateX(-5px); }
         .nav-link.active { background: var(--primary-gradient); color: white; }
+        .student-menu-btn {
+            display: none; align-items: center; justify-content: center; gap: 8px;
+            min-width: 46px; height: 46px; padding: 0 14px; border: 0;
+            border-radius: 16px; background: var(--primary-gradient); color: #fff;
+            font-weight: 800; cursor: pointer; box-shadow: var(--shadow-sm);
+        }
+        .student-menu-btn i { font-size: 1.1rem; }
+        .sidebar-backdrop {
+            display: none; position: fixed; inset: 0; background: rgba(15, 23, 42, .55);
+            z-index: 98; backdrop-filter: blur(2px);
+        }
+        body.sidebar-open { overflow: hidden; }
+        body.sidebar-open .sidebar-backdrop { display: block; }
 
         .main-content { flex: 1; margin-right: var(--sidebar-width); padding: 2.5rem; }
         .app-section { display: none; animation: slideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
@@ -109,7 +122,7 @@
         .notif-dropdown.active { display: block; }
         .notif-item { padding: 10px; border-bottom: 1px solid var(--border); font-size: 0.9rem; color: var(--text-dim); }
 
-        /* مؤقت التركيز */
+        /* مؤقت التركيز (الإضافة الجديدة) */
         .timer-dropdown {
             position: absolute; top: 70px; left: 80px; background: var(--card-bg); border: 1px solid var(--border);
             border-radius: 16px; width: 250px; box-shadow: var(--shadow-md); display: none; z-index: 1000;
@@ -135,7 +148,7 @@
         .task-item.done { opacity: 0.6; text-decoration: line-through; }
         .leaderboard-item { display: flex; justify-content: space-between; padding: 12px; border-bottom: 1px solid var(--border); }
 
-        /* محرر الأكواد */
+        /* محرر الأكواد (Live Editor) */
         .editor-layout { display: flex; flex-direction: column; gap: 15px; height: 75vh; }
         .editor-inputs { display: flex; gap: 15px; flex: 1; }
         .code-box { flex: 1; display: flex; flex-direction: column; background: var(--card-bg); border-radius: 16px; border: 1px solid var(--border); overflow: hidden;}
@@ -143,12 +156,12 @@
         .code-box textarea { flex: 1; border: none; padding: 15px; font-family: monospace; font-size: 1rem; resize: none; background: transparent; color: var(--text-main); outline: none;}
         .editor-output { flex: 1; background: white; border-radius: 16px; border: 1px solid var(--border); width: 100%; }
 
-        /* ملف الإنجاز */
+        /* ملف الإنجاز (Portfolio) */
         #portfolio-content { background: var(--card-bg); padding: 3rem; border-radius: var(--radius); text-align: center; border: 1px solid var(--border); }
         .badges-container { display: flex; gap: 15px; justify-content: center; margin-top: 2rem; }
         .badge-icon { font-size: 3rem; color: #fbbf24; }
 
-        /* باقي الأقسام */
+        /* باقي الأقسام (الدروس، الامتحانات، الشات) */
         .lessons-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 24px; }
         .lesson-card { background: var(--card-bg); border-radius: var(--radius); overflow: hidden; border: 1px solid var(--border); }
         .video-box { position: relative; padding-bottom: 56.25%; height: 0; background: #0f172a; }
@@ -168,16 +181,419 @@
         
         .btn { padding: 0.9rem 1.8rem; border-radius: 16px; border: none; cursor: pointer; font-weight: 800; background: var(--primary); color: white; display: inline-flex; align-items: center; gap: 10px; justify-content: center; }
         .btn-success { background: #10b981; }
+        .btn-ghost { background: transparent; color: var(--primary); border: 2px solid rgba(79,70,229,.2); }
+        .mini-note { color: var(--text-dim); font-size: .9rem; line-height: 1.8; margin-top: 12px; }
+        .signup-box { display:none; margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--border); }
+        .signup-box.active { display:block; }
         .badge { background: rgba(79, 70, 229, 0.1); color: var(--primary); padding: 8px 16px; border-radius: 12px; font-weight: 800; font-size: 0.9rem;}
         
-        @media (max-width: 768px) {
-            :root { --sidebar-width: 80px; }
+
+
+        .pro-controls { display:grid; grid-template-columns: 2fr 1fr 1fr; gap:12px; margin-bottom:18px; }
+        .pro-controls input, .pro-controls select { width:100%; padding:14px 16px; border:1px solid var(--border); border-radius:16px; background:var(--card-bg); color:var(--text-main); outline:none; }
+        .lesson-meta { display:flex; flex-wrap:wrap; gap:8px; margin: 10px 0 14px; }
+        .mini-badge { display:inline-flex; align-items:center; gap:6px; padding:7px 11px; border-radius:999px; background:rgba(79,70,229,.1); color:var(--primary); font-size:.82rem; font-weight:800; text-decoration:none; }
+        .lesson-actions { display:flex; gap:10px; flex-wrap:wrap; margin-top:12px; }
+        .lesson-video-player { width:100%; max-height:280px; background:#000; display:block; }
+        .cover-img { width:100%; height:190px; object-fit:cover; display:block; background:var(--bg-body); }
+        .assignment-card { background: var(--card-bg); border:1px solid var(--border); border-radius: var(--radius); padding:1.4rem; margin-bottom:1rem; box-shadow: var(--shadow-sm); }
+        .assignment-card textarea { width:100%; min-height:90px; padding:14px; border:1px solid var(--border); border-radius:16px; background:var(--bg-body); color:var(--text-main); resize:vertical; margin-top:10px; }
+        .assignment-card input[type=file] { width:100%; padding:12px; border:1px dashed var(--primary); border-radius:16px; background:var(--bg-body); margin:10px 0; }
+        .progress-wrap { width:100%; height:12px; background:var(--bg-body); border-radius:999px; overflow:hidden; border:1px solid var(--border); margin-top:10px; display:none; }
+        .progress-bar { width:0%; height:100%; background:var(--primary-gradient); color:#fff; font-size:10px; line-height:12px; text-align:center; transition:width .25s ease; }
+        @media (max-width: 768px) { .pro-controls { grid-template-columns:1fr; } }
+
+        @media (max-width: 900px) {
+            :root { --sidebar-width: 88px; }
+            .sidebar {
+                padding: 1rem 0.55rem; align-items: stretch; overflow-y: auto; overflow-x: hidden;
+            }
+            .sidebar-brand { margin-bottom: 1.2rem; font-size: 1.15rem; }
             .sidebar span, .sidebar-brand span { display: none; }
-            .main-content { padding: 1.5rem; }
+            .nav-link {
+                justify-content: center; padding: 0.95rem 0.65rem; gap: 0; margin-bottom: 8px;
+                border-radius: 18px;
+            }
+            .nav-link:hover { transform: none; }
+            .nav-link i { font-size: 1.28rem; }
+            .sidebar .btn span { display: none; }
+            .sidebar .btn { padding: 0.9rem; border-radius: 18px; }
+            .main-content { padding: 1rem; }
+            header { flex-direction: column; align-items: stretch; gap: 15px; padding: 1rem; }
+            .header-actions { flex-wrap: wrap; }
             .tasks-leaderboard-grid { grid-template-columns: 1fr; }
             .editor-inputs { flex-direction: column; }
+            .lessons-grid { grid-template-columns: 1fr; }
         }
-    </style>
+        @media (max-width: 640px) {
+            :root { --sidebar-width: 0px; }
+            .wrapper { display: block; }
+            .main-content { margin-right: 0; width: 100%; padding: 0.85rem; }
+            .student-menu-btn { display: inline-flex; }
+            .sidebar {
+                position: fixed; top: 0; right: 0; width: min(86vw, 320px); height: 100dvh;
+                padding: 1rem; z-index: 99; transform: translateX(105%);
+                transition: transform .28s ease; border-left: 1px solid var(--border);
+                box-shadow: -20px 0 50px rgba(15,23,42,.22); align-items: stretch;
+                overflow-y: auto; overflow-x: hidden;
+            }
+            body.sidebar-open .sidebar { transform: translateX(0); }
+            .sidebar-brand { display: flex; margin-bottom: 1.1rem; }
+            .sidebar span, .sidebar-brand span { display: inline; }
+            .nav-link {
+                justify-content: flex-start; white-space: normal; padding: 0.95rem 1rem;
+                gap: 14px; margin-bottom: 8px; border-radius: 16px;
+            }
+            .nav-link i { width: 24px; text-align: center; }
+            .sidebar .btn {
+                margin-top: 1rem !important; width: 100%; justify-content: center;
+                padding: 0.95rem 1rem; border-radius: 16px;
+            }
+            .sidebar .btn span { display: inline; }
+            header { position: sticky; top: 0; z-index: 80; margin-bottom: 1rem; }
+            .header-actions { gap: 10px; }
+            .notif-dropdown, .timer-dropdown { left: 0; right: auto; width: min(92vw, 320px); }
+        }
+    
+
+        /* ===== Titan Live Classroom ===== */
+        .vc-shell { display:grid; grid-template-columns: 1.7fr .9fr; gap:18px; align-items:start; }
+        .vc-toolbar { display:flex; flex-wrap:wrap; gap:10px; align-items:center; margin:12px 0; }
+        .vc-room-badge { display:inline-flex; align-items:center; gap:8px; padding:8px 12px; border-radius:999px; background:rgba(16,185,129,.12); color:#10b981; font-weight:800; }
+        .vc-video-grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap:12px; min-height:280px; }
+        .vc-tile { position:relative; background:#020617; border:1px solid var(--border); border-radius:18px; overflow:hidden; min-height:170px; box-shadow: var(--shadow); }
+        .vc-tile video { width:100%; height:100%; min-height:170px; object-fit:cover; background:#020617; display:block; }
+        .vc-tile .vc-name { position:absolute; bottom:8px; right:8px; background:rgba(15,23,42,.76); color:#fff; border-radius:999px; padding:5px 10px; font-size:.82rem; font-weight:800; }
+        .vc-tile .vc-status { position:absolute; top:8px; left:8px; display:flex; gap:6px; }
+        .vc-pill { background:rgba(15,23,42,.76); color:#fff; border-radius:999px; padding:5px 8px; font-size:.78rem; font-weight:800; }
+        .vc-side { display:flex; flex-direction:column; gap:14px; }
+        .vc-chat-box { height:310px; overflow:auto; background:var(--bg-body); border:1px solid var(--border); border-radius:16px; padding:12px; }
+        .vc-chat-msg { margin-bottom:10px; padding:10px 12px; border-radius:14px; background:var(--bg-card); border:1px solid var(--border); line-height:1.7; }
+        .vc-chat-msg strong { color:var(--primary); }
+        .vc-participant { display:grid; grid-template-columns: 1fr auto; gap:10px; align-items:center; padding:10px; border-radius:14px; border:1px solid var(--border); background:var(--bg-body); margin-bottom:8px; }
+        .vc-mini-actions { display:flex; gap:6px; flex-wrap:wrap; justify-content:flex-end; }
+        .vc-warning { background:rgba(245,158,11,.12); color:#f59e0b; padding:12px; border-radius:14px; line-height:1.8; border:1px solid rgba(245,158,11,.25); }
+        .vc-ok { background:rgba(16,185,129,.12); color:#10b981; padding:12px; border-radius:14px; line-height:1.8; border:1px solid rgba(16,185,129,.25); }
+        .vc-danger-note { background:rgba(239,68,68,.10); color:#ef4444; padding:12px; border-radius:14px; line-height:1.8; border:1px solid rgba(239,68,68,.25); }
+        @media (max-width: 980px) { .vc-shell { grid-template-columns:1fr; } .vc-chat-box { height:240px; } }
+
+    
+/* ===== FIX V2: Student sidebar drawer + scroll ===== */
+@media (max-width: 900px) {
+    :root { --sidebar-width: 0px; }
+    .wrapper { display: block; }
+    .main-content { margin-right: 0 !important; width: 100% !important; padding: 0.85rem !important; }
+    .student-menu-btn { display: inline-flex !important; }
+    .sidebar {
+        position: fixed !important;
+        top: 0 !important;
+        right: 0 !important;
+        width: min(88vw, 340px) !important;
+        height: 100vh !important;
+        max-height: 100vh !important;
+        padding: 1rem 1rem 1.25rem !important;
+        z-index: 9999 !important;
+        transform: translateX(110%) !important;
+        transition: transform .25s ease !important;
+        border-left: 1px solid var(--border) !important;
+        box-shadow: -22px 0 55px rgba(15,23,42,.30) !important;
+        overflow-y: auto !important;
+        overflow-x: hidden !important;
+        -webkit-overflow-scrolling: touch !important;
+        overscroll-behavior: contain !important;
+        display: block !important;
+    }
+    body.sidebar-open .sidebar { transform: translateX(0) !important; }
+    .sidebar-brand { display: flex !important; margin-bottom: 1rem !important; }
+    .sidebar span, .sidebar-brand span { display: inline !important; }
+    .nav-link {
+        justify-content: flex-start !important;
+        white-space: normal !important;
+        padding: 0.95rem 1rem !important;
+        gap: 14px !important;
+        margin-bottom: 8px !important;
+        border-radius: 16px !important;
+    }
+    .nav-link i { width: 24px !important; text-align: center !important; }
+    .sidebar .btn {
+        margin-top: 0.75rem !important;
+        width: 100% !important;
+        justify-content: center !important;
+        padding: 0.95rem 1rem !important;
+        border-radius: 16px !important;
+    }
+    .sidebar .btn span { display: inline !important; }
+    .sidebar-backdrop { z-index: 9998 !important; }
+    header { position: sticky !important; top: 0 !important; z-index: 90 !important; margin-bottom: 1rem !important; }
+}
+.vc-join-status {
+    margin-top: 10px;
+    padding: 11px 13px;
+    border-radius: 14px;
+    background: rgba(79,70,229,.10);
+    color: var(--text-main);
+    border: 1px solid rgba(79,70,229,.22);
+    font-weight: 700;
+}
+.vc-empty-state {
+    grid-column: 1 / -1;
+    min-height: 220px;
+    border: 1px dashed var(--border);
+    border-radius: 18px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    color: var(--text-dim);
+    padding: 20px;
+    background: var(--bg-body);
+}
+
+</style>
+
+<style id="titan-student-ui-v4">
+/* ===== TITAN UI V4: faster, cleaner, fixed student sidebar ===== */
+:root {
+  --primary:#2563eb;
+  --primary-2:#7c3aed;
+  --primary-gradient:linear-gradient(135deg,#2563eb,#7c3aed);
+  --bg-body:#f4f7fb;
+  --card-bg:#ffffff;
+  --text-main:#0f172a;
+  --text-dim:#64748b;
+  --border:#e2e8f0;
+  --shadow-sm:0 4px 14px rgba(15,23,42,.06);
+  --shadow-md:0 18px 45px rgba(15,23,42,.10);
+  --radius:22px;
+}
+[data-theme="dark"] {
+  --bg-body:#0b1220;
+  --card-bg:#121c2f;
+  --text-main:#f8fafc;
+  --text-dim:#94a3b8;
+  --border:#243247;
+  --shadow-sm:0 4px 14px rgba(0,0,0,.32);
+  --shadow-md:0 18px 45px rgba(0,0,0,.42);
+}
+* {
+  transition-property: background-color,color,border-color,box-shadow,transform,opacity !important;
+  transition-duration: .16s !important;
+  transition-timing-function: ease !important;
+}
+html, body { scroll-behavior:auto !important; }
+body { background:var(--bg-body) !important; color:var(--text-main); overflow-x:hidden; }
+.wrapper { min-height:100vh; }
+.sidebar {
+  background:rgba(255,255,255,.96) !important;
+  backdrop-filter: blur(14px);
+  border-left:1px solid var(--border) !important;
+  box-shadow: -8px 0 28px rgba(15,23,42,.06);
+  overflow-y:auto !important;
+  overflow-x:hidden !important;
+  -webkit-overflow-scrolling:touch !important;
+  overscroll-behavior:contain;
+  scrollbar-width:thin;
+  scrollbar-color:#94a3b8 transparent;
+}
+[data-theme="dark"] .sidebar { background:rgba(18,28,47,.96) !important; }
+.sidebar::-webkit-scrollbar{ width:8px; }
+.sidebar::-webkit-scrollbar-track{ background:transparent; }
+.sidebar::-webkit-scrollbar-thumb{ background:#94a3b8; border-radius:999px; }
+.sidebar-brand {
+  position:sticky;
+  top:0;
+  z-index:3;
+  background:inherit;
+  padding:.65rem .25rem 1rem;
+  margin-bottom:1rem !important;
+}
+.nav-link {
+  min-height:52px;
+  border:1px solid transparent;
+  color:#52627a !important;
+}
+[data-theme="dark"] .nav-link { color:#b7c4d6 !important; }
+.nav-link:hover {
+  background:rgba(37,99,235,.08) !important;
+  color:var(--primary) !important;
+  transform:translateX(-4px) !important;
+}
+.nav-link.active {
+  background:var(--primary-gradient) !important;
+  color:#fff !important;
+  box-shadow:0 14px 30px rgba(37,99,235,.25);
+}
+.main-content { background:var(--bg-body); }
+header, .panel, .stat-card, .lesson-card, .exam-paper, .login-card, .chat-container, #portfolio-content {
+  border:1px solid var(--border) !important;
+  box-shadow:var(--shadow-sm) !important;
+}
+header {
+  position:sticky;
+  top:14px;
+  z-index:80;
+}
+.btn, .icon-btn, .student-menu-btn {
+  box-shadow:0 8px 18px rgba(37,99,235,.14);
+}
+.btn:hover, .icon-btn:hover, .student-menu-btn:hover { transform:translateY(-1px); }
+.mobile-sidebar-head { display:none; }
+.sidebar-backdrop { z-index:9998 !important; }
+
+.vc-shell { display:grid; grid-template-columns:minmax(0,1.75fr) minmax(280px,.85fr); gap:18px; align-items:start; }
+.vc-video-grid {
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+  gap:14px;
+  min-height:360px;
+  contain:layout paint;
+}
+.vc-tile {
+  min-height:220px !important;
+  border-radius:20px !important;
+  background:#020617 !important;
+  box-shadow:0 12px 28px rgba(15,23,42,.18) !important;
+}
+.vc-tile video { min-height:220px !important; object-fit:contain !important; background:#020617 !important; }
+.vc-empty-state { min-height:260px !important; }
+.vc-chat-box { max-height:360px; }
+.vc-danger-note, .vc-join-status {
+  border-radius:16px !important;
+  line-height:1.8;
+}
+
+@media (min-width: 901px) {
+  :root { --sidebar-width: 280px; }
+  .sidebar {
+    position:fixed !important;
+    right:0 !important;
+    top:0 !important;
+    height:100vh !important;
+    max-height:100vh !important;
+    width:280px !important;
+    padding:1.25rem 1rem 1rem !important;
+    display:flex !important;
+    flex-direction:column !important;
+  }
+  .main-content {
+    margin-right:280px !important;
+    width:calc(100% - 280px) !important;
+    padding:1.5rem !important;
+  }
+  .student-menu-btn { display:none !important; }
+}
+
+@media (max-width: 900px) {
+  :root { --sidebar-width:0px; }
+  .wrapper { display:block !important; }
+  .main-content {
+    margin-right:0 !important;
+    width:100% !important;
+    padding:.85rem !important;
+  }
+  header {
+    top:0 !important;
+    border-radius:0 0 22px 22px !important;
+    margin:-.85rem -.85rem 1rem !important;
+    padding:1rem !important;
+  }
+  .student-menu-btn { display:inline-flex !important; }
+  .mobile-sidebar-head {
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+    padding:.6rem .25rem 1rem;
+    border-bottom:1px solid var(--border);
+    margin-bottom:1rem;
+  }
+  .mobile-sidebar-head button {
+    width:42px;height:42px;border:0;border-radius:14px;
+    background:#eef2ff;color:#2563eb;font-weight:900;cursor:pointer;
+  }
+  [data-theme="dark"] .mobile-sidebar-head button { background:#1f2a44;color:#93c5fd; }
+  .sidebar {
+    position:fixed !important;
+    top:0 !important;
+    right:0 !important;
+    width:min(88vw,360px) !important;
+    height:100dvh !important;
+    max-height:100dvh !important;
+    padding:1rem !important;
+    z-index:9999 !important;
+    transform:translateX(110%) !important;
+    display:block !important;
+  }
+  body.sidebar-open { overflow:hidden !important; }
+  body.sidebar-open .sidebar { transform:translateX(0) !important; }
+  body.sidebar-open .sidebar-backdrop { display:block !important; }
+  .sidebar-brand { position:relative; padding:.4rem 0 1rem; }
+  .sidebar span, .sidebar-brand span { display:inline !important; }
+  .nav-link {
+    white-space:normal !important;
+    justify-content:flex-start !important;
+    padding:.95rem 1rem !important;
+    margin-bottom:8px !important;
+  }
+  .nav-link i { width:24px; text-align:center; }
+  .sidebar .btn {
+    margin-top:.8rem !important;
+    width:100% !important;
+    justify-content:center !important;
+  }
+  .tasks-leaderboard-grid, .vc-shell { grid-template-columns:1fr !important; }
+  .vc-video-grid { grid-template-columns:1fr !important; min-height:260px; }
+  .vc-tile, .vc-tile video { min-height:260px !important; }
+}
+
+@media (max-width: 560px) {
+  header .header-actions { gap:8px; justify-content:flex-start; }
+  .badge { font-size:.82rem; padding:7px 10px; }
+  .stat-card { padding:1.25rem !important; }
+  .lessons-grid { grid-template-columns:1fr !important; }
+}
+</style>
+
+
+<style id="titan-share-fix-v5">
+/* ===== TITAN SHARE FIX V5 ===== */
+.vc-share-button-fix {
+  background: linear-gradient(135deg,#0ea5e9,#2563eb) !important;
+  color:#fff !important;
+  border:0 !important;
+  font-weight:900 !important;
+  box-shadow:0 14px 34px rgba(14,165,233,.28) !important;
+}
+.vc-share-button-fix.is-sharing {
+  background: linear-gradient(135deg,#f97316,#ef4444) !important;
+  box-shadow:0 14px 34px rgba(239,68,68,.28) !important;
+}
+.vc-share-banner {
+  display:none;
+  margin:12px 0 0;
+  padding:12px 14px;
+  border-radius:16px;
+  border:1px solid rgba(14,165,233,.28);
+  background:rgba(14,165,233,.12);
+  color:var(--text-main);
+  font-weight:900;
+  line-height:1.7;
+}
+.vc-share-banner.active { display:block; }
+.vc-screen-tile {
+  grid-column: 1 / -1 !important;
+  min-height:420px !important;
+  outline:3px solid rgba(14,165,233,.38);
+}
+.vc-screen-tile video {
+  min-height:420px !important;
+  object-fit:contain !important;
+}
+@media (max-width:900px){
+  .vc-screen-tile, .vc-screen-tile video { min-height:300px !important; }
+}
+</style>
+
 </head>
 <body>
     <!-- صفحة الدخول -->
@@ -187,6 +603,17 @@
             <input type="text" id="student-code-input" placeholder="أدخل كود الطالب" onkeypress="if(event.key === 'Enter') studentLogin()">
             <input type="tel" id="student-phone-input" placeholder="رقم الهاتف (مسجل لدى الإدارة)" onkeypress="if(event.key === 'Enter') studentLogin()">
             <button class="btn" style="width: 100%; font-size: 1.1rem; padding: 15px;" onclick="studentLogin()"><i class="fas fa-sign-in-alt"></i> دخول المنصة</button>
+            <button class="btn btn-ghost" style="width:100%; margin-top: 12px;" onclick="toggleSignupBox()"><i class="fas fa-user-plus"></i> ليس لدي حساب / طلب إنشاء حساب</button>
+            <div id="signup-box" class="signup-box">
+                <input type="text" id="signup-name" placeholder="الاسم بالكامل">
+                <input type="text" id="signup-code" placeholder="كود الطالب المطلوب">
+                <select id="signup-level" style="width:100%; padding:15px; border-radius:16px; border:2px solid var(--border); margin-bottom:1rem; background:var(--bg-body); color:var(--text-main);">
+                    <option value="1">مستوى 1</option><option value="2">مستوى 2</option><option value="3">مستوى 3</option>
+                </select>
+                <input type="tel" id="signup-phone" placeholder="رقم الهاتف - 6 أرقام أو أكثر">
+                <button class="btn btn-success" style="width:100%;" onclick="sendAccountRequest()"><i class="fas fa-paper-plane"></i> إرسال طلب للإدارة</button>
+                <p class="mini-note">بعد موافقة الإدارة ستدخل بالكود ورقم الهاتف نفسه.</p>
+            </div>
         </div>
     </div>
 
@@ -194,20 +621,22 @@
     <div id="main-platform" style="display: none;">
         <div class="wrapper">
             <aside class="sidebar">
+                <div class="mobile-sidebar-head"><strong><i class="fas fa-bars"></i> القائمة</strong><button type="button" onclick="closeStudentSidebar()" aria-label="إغلاق القائمة">×</button></div>
                 <div class="sidebar-brand"><i class="fas fa-rocket"></i> <span>بوابة التميز</span></div>
                 <div class="nav-link active" onclick="showSection('stats-sec', this)"><i class="fas fa-star"></i> <span>مستواي</span></div>
                 <div class="nav-link" onclick="showSection('lessons-sec', this)"><i class="fas fa-graduation-cap"></i> <span>الدروس</span></div>
                 <div class="nav-link" onclick="showSection('editor-sec', this)"><i class="fas fa-code"></i> <span>محرر الكود</span></div>
                 <div class="nav-link" onclick="showSection('exams-sec', this)"><i class="fas fa-laptop-code"></i> <span>الامتحانات</span></div>
+                <div class="nav-link" onclick="showSection('assignments-sec', this)"><i class="fas fa-folder-open"></i> <span>المهام</span></div>
+                <div class="nav-link" onclick="showSection('live-class-sec', this)"><i class="fas fa-video"></i> <span>الحصص</span></div>
                 <div class="nav-link" onclick="showSection('chat-sec', this)"><i class="fas fa-comments"></i> <span>المجتمع</span></div>
                 <div class="nav-link" onclick="showSection('portfolio-sec', this)"><i class="fas fa-id-card"></i> <span>ملف الإنجاز</span></div>
-                <!-- زر الدعم الفني -->
-                <div class="nav-link" onclick="showSection('support-sec', this)"><i class="fas fa-headset"></i> <span>الدعم الفني</span></div>
-                
-                <button class="btn" style="margin-top: auto; background: #fee2e2; color: #ef4444;" onclick="location.reload()">
+                <div class="nav-link" onclick="showSection('support-sec', this)"><i class="fas fa-headset"></i> <span>الدعم</span></div>
+                <button class="btn" style="margin-top: auto; background: #fee2e2; color: #ef4444;" onclick="studentLogout()">
                     <i class="fas fa-sign-out-alt"></i> <span>خروج</span>
                 </button>
             </aside>
+            <div class="sidebar-backdrop" onclick="closeStudentSidebar()" aria-hidden="true"></div>
 
             <main class="main-content">
                 <header>
@@ -217,10 +646,13 @@
                     </div>
                     
                     <div class="header-actions">
+                        <button class="student-menu-btn" type="button" onclick="toggleStudentSidebar()" aria-label="فتح القائمة">
+                            <i class="fas fa-bars"></i><span>القائمة</span>
+                        </button>
                         <!-- النقاط (XP) -->
                         <span class="badge" id="xp-badge" style="background: #fef3c7; color: #d97706;"><i class="fas fa-bolt"></i> 0 XP</span>
                         
-                        <!-- مؤقت التركيز -->
+                        <!-- مؤقت التركيز (Pomodoro) -->
                         <div style="position: relative;">
                             <button class="icon-btn" onclick="toggleTimer()" title="مؤقت التركيز">
                                 <i class="fas fa-stopwatch"></i>
@@ -275,6 +707,7 @@
                     </div>
 
                     <div class="tasks-leaderboard-grid">
+                        <!-- المهام اليومية -->
                         <div class="panel">
                             <h3 style="margin-bottom: 15px; color: var(--primary);"><i class="fas fa-calendar-check"></i> المهام اليومية</h3>
                             <div id="daily-tasks">
@@ -285,6 +718,7 @@
                             </div>
                         </div>
 
+                        <!-- لوحة الشرف -->
                         <div class="panel">
                             <h3 style="margin-bottom: 15px; color: #d97706;"><i class="fas fa-trophy"></i> أبطال المستوى</h3>
                             <div id="leaderboard-list">
@@ -317,8 +751,14 @@
                 </section>
 
                 <!-- قسم الدروس -->
+
                 <section id="lessons-sec" class="app-section">
                     <h3 style="margin-bottom: 1.5rem;">📺 مكتبة الدروس الذكية</h3>
+                    <div class="pro-controls">
+                        <input type="text" id="lesson-search-student" placeholder="ابحث عن درس أو كلمة..." oninput="renderStudentLessons()">
+                        <select id="lesson-category-filter" onchange="renderStudentLessons()"><option value="all">كل الأقسام</option></select>
+                        <select id="lesson-difficulty-filter" onchange="renderStudentLessons()"><option value="all">كل المستويات</option><option value="مبتدئ">مبتدئ</option><option value="متوسط">متوسط</option><option value="متقدم">متقدم</option></select>
+                    </div>
                     <div id="lessons-list" class="lessons-grid"></div>
                 </section>
 
@@ -336,7 +776,14 @@
                     </div>
                 </section>
 
-                <!-- قسم المجتمع -->
+
+
+                <section id="assignments-sec" class="app-section">
+                    <h3 style="margin-bottom: 1.5rem;"><i class="fas fa-folder-open"></i> المهام والمشاريع المطلوبة</h3>
+                    <div id="student-assignments-list"><p style="color: var(--text-dim);">جاري التحميل...</p></div>
+                </section>
+
+                <!-- قسم المجتمع (شات) -->
                 <section id="chat-sec" class="app-section">
                     <div class="chat-container">
                         <div class="chat-header">
@@ -350,7 +797,7 @@
                     </div>
                 </section>
 
-                <!-- قسم ملف الإنجاز -->
+                <!-- قسم ملف الإنجاز (Portfolio) -->
                 <section id="portfolio-sec" class="app-section">
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
                         <h3><i class="fas fa-id-card"></i> ملف الإنجاز الخاص بي</h3>
@@ -372,27 +819,73 @@
                     </div>
                 </section>
 
-                <!-- قسم الدعم الفني -->
-                <section id="support-sec" class="app-section">
-                    <h3 style="margin-bottom: 1.5rem;"><i class="fas fa-headset"></i> مركز الدعم والشكاوى</h3>
-                    <div class="panel" style="margin-bottom: 2rem;">
-                        <textarea id="complaint-text" placeholder="اكتب شكواك أو مشكلتك هنا بوضوح..." style="width: 100%; height: 120px; padding: 15px; border-radius: 16px; border: 2px solid var(--border); background: var(--bg-body); color: var(--text-main); font-family: inherit; resize: none; outline: none; margin-bottom: 15px;"></textarea>
-                        <button class="btn btn-primary" onclick="sendComplaint()"><i class="fas fa-paper-plane"></i> إرسال الشكوى للإدارة</button>
+
+
+                <section id="live-class-sec" class="app-section">
+                    <h3 style="margin-bottom: 1.5rem;"><i class="fas fa-video"></i> الحصص المباشرة</h3>
+                    <div class="panel" style="margin-bottom:1.5rem;">
+                        <div class="vc-warning">ادخل كود الحصة الذي أرسله المعلم. المايك والكاميرا لن يعملوا إلا بعد إذن المعلم.</div>
+                        <div style="display:grid; grid-template-columns:1fr auto; gap:12px; margin-top:14px;">
+                            <input id="vc-student-code" placeholder="كود الحصة">
+                            <button class="btn" onclick="VCStudent.joinClass()"><i class="fas fa-sign-in-alt"></i> دخول الحصة</button>
+                        </div>
+                        <div id="vc-student-active-list" style="margin-top:12px;"></div>
+                        <div id="vc-student-join-status" class="vc-join-status" style="display:none;"></div>
+                        <div class="vc-toolbar">
+                            <span class="vc-room-badge"><i class="fas fa-signal"></i> الحصة: <b id="vc-student-session-code">غير متصل</b></span>
+                            <button class="btn" id="vc-student-mic-btn" onclick="VCStudent.toggleMic()" disabled><i class="fas fa-microphone"></i> المايك</button>
+                            <button class="btn" id="vc-student-cam-btn" onclick="VCStudent.toggleCamera()" disabled><i class="fas fa-video"></i> الكاميرا</button>
+                            <button class="btn" style="background:#ef4444;" onclick="VCStudent.leaveClass()"><i class="fas fa-phone-slash"></i> خروج</button>
+                        </div>
                     </div>
-                    
-                    <h3 style="margin-bottom: 1rem;"><i class="fas fa-history"></i> سجل شكاوي السابقة</h3>
-                    <div id="my-complaints-list">
-                        <!-- ستظهر الشكاوى هنا -->
+                    <div class="vc-shell">
+                        <div class="panel">
+                            <h3 style="margin-bottom:15px;"><i class="fas fa-th-large"></i> شاشة الحصة</h3>
+                            <div id="vc-student-share-banner" class="vc-share-banner"></div>
+                            <div id="vc-student-grid" class="vc-video-grid"></div>
+                        </div>
+                        <div class="vc-side">
+                            <div class="panel">
+                                <h3 style="margin-bottom:15px;"><i class="fas fa-lock"></i> صلاحياتي</h3>
+                                <div id="vc-student-permissions" class="vc-danger-note">لم تدخل حصة بعد.</div>
+                            </div>
+                            <div class="panel">
+                                <h3 style="margin-bottom:15px;"><i class="fas fa-comments"></i> شات الحصة</h3>
+                                <div id="vc-student-chat" class="vc-chat-box"></div>
+                                <div style="display:flex; gap:8px; margin-top:10px;">
+                                    <input id="vc-student-chat-input" placeholder="اكتب رسالة..." onkeypress="if(event.key==='Enter') VCStudent.sendChat()">
+                                    <button class="btn" onclick="VCStudent.sendChat()"><i class="fas fa-paper-plane"></i></button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </section>
-                
+
+
+                <!-- قسم الدعم الفني والشكاوى -->
+                <section id="support-sec" class="app-section">
+                    <div class="panel" style="margin-bottom: 1.5rem;">
+                        <h3 style="margin-bottom: 15px; color: var(--primary);"><i class="fas fa-headset"></i> الدعم الفني والشكاوى</h3>
+                        <textarea id="support-text" class="chat-input" rows="5" style="width:100%; min-height:130px; resize:vertical;" placeholder="اكتب مشكلتك أو سؤالك للإدارة..."></textarea>
+                        <button class="btn" style="width:100%; margin-top: 12px;" onclick="sendSupportRequest()"><i class="fas fa-paper-plane"></i> إرسال للإدارة</button>
+                    </div>
+                    <div class="panel">
+                        <h3 style="margin-bottom: 15px;"><i class="fas fa-history"></i> طلباتي السابقة</h3>
+                        <div id="support-list-student"><p style="color: var(--text-dim);">لا توجد طلبات حتى الآن.</p></div>
+                    </div>
+                </section>
             </main>
         </div>
     </div>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js" onerror="window.firebaseLoadError='فشل تحميل Firebase app';"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js" onerror="window.firebaseLoadError='فشل تحميل Firebase auth';"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js" onerror="window.firebaseLoadError='فشل تحميل Firebase database';"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-storage-compat.js" onerror="window.firebaseLoadError='فشل تحميل Firebase storage';"></script>
 
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { getDatabase, ref, onValue, push, update } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+    <script>
+
+
 
         const firebaseConfig = {
             apiKey: "AIzaSyDgMV79LTyiQerEOZvtuszH6ONaOAset5c",
@@ -403,11 +896,63 @@
             appId: "1:131761323515:web:50641907e66eed129e9f5e"
         };
 
-        const app = initializeApp(firebaseConfig);
-        const db = getDatabase(app);
+        if (!window.firebase || !firebase.initializeApp) { alert('Firebase لم يتحمل. تأكد من الإنترنت ثم أعد تحميل الصفحة.'); }
+        if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+        const db = firebase.database();
+        const auth = firebase.auth();
+        const storage = firebase.storage ? firebase.storage() : null;
         let currentStudent = null;
         let currentExamData = null; 
+
+        function escapeHTML(value) {
+            return String(value ?? '').replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+        }
+        function safeUrl(value) {
+            const raw = String(value ?? '').trim();
+            if (!raw) return '';
+            try {
+                const parsed = new URL(raw, location.href);
+                if (['http:', 'https:'].includes(parsed.protocol)) return escapeHTML(raw);
+            } catch (e) {}
+            return '';
+        }
+        function todayKey(prefix) {
+            return `${prefix}_${new Date().toISOString().slice(0,10)}`;
+        }
+        function makeStudentEmail(code) {
+            const safeCode = String(code || '').trim().toLowerCase().replace(/[^a-z0-9._-]/g, '');
+            return `${safeCode}@students.titan-academy.app`;
+        }
+        function markTaskDone(id) {
+            const item = document.getElementById(id);
+            if (!item) return;
+            item.classList.add('done');
+            const input = item.querySelector('input');
+            if (input) input.checked = true;
+        }
         
+        
+        window.toggleStudentSidebar = function() {
+            document.body.classList.toggle('sidebar-open');
+            const btn = document.querySelector('.student-menu-btn');
+            if (btn) btn.setAttribute('aria-expanded', document.body.classList.contains('sidebar-open') ? 'true' : 'false');
+        };
+        window.closeStudentSidebar = function() {
+            document.body.classList.remove('sidebar-open');
+            const btn = document.querySelector('.student-menu-btn');
+            if (btn) btn.setAttribute('aria-expanded', 'false');
+        };
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && document.body.classList.contains('sidebar-open')) closeStudentSidebar();
+        });
+        document.addEventListener('click', function(e) {
+            if (e.target.closest('.sidebar .nav-link') || e.target.closest('.sidebar .btn')) closeStudentSidebar();
+        });
+        window.addEventListener('resize', function() {
+            if (window.innerWidth > 900) closeStudentSidebar();
+        });
+
+        // دالة الوضع الليلي
         window.toggleTheme = function() {
             const html = document.documentElement;
             const current = html.getAttribute('data-theme');
@@ -418,16 +963,46 @@
         }
         if(localStorage.getItem('theme') === 'dark') toggleTheme();
 
+        // دالة عرض الإشعارات
         window.toggleNotifications = function() {
             document.getElementById('notif-dropdown').classList.toggle('active');
             document.getElementById('notif-dot').style.display = 'none'; 
         }
         function addNotification(msg) {
             const list = document.getElementById('notif-list');
-            list.innerHTML = `<div class="notif-item">${msg}</div>` + list.innerHTML;
+            list.innerHTML = `<div class="notif-item">${escapeHTML(msg)}</div>` + list.innerHTML;
             document.getElementById('notif-dot').style.display = 'block';
         }
 
+        window.toggleSignupBox = function() {
+            document.getElementById('signup-box').classList.toggle('active');
+        }
+
+        window.sendAccountRequest = async function() {
+            const name = document.getElementById('signup-name').value.trim();
+            const code = document.getElementById('signup-code').value.trim();
+            const level = document.getElementById('signup-level').value;
+            const phone = document.getElementById('signup-phone').value.trim();
+            if (!name || !code || !phone) return alert('اكتب الاسم والكود والهاتف أولاً.');
+            if (phone.length < 6) return alert('رقم الهاتف يجب ألا يقل عن 6 أرقام لأنه سيكون كلمة المرور.');
+            try {
+                await db.ref('registration_requests').push({
+                    name, code, level, phone,
+                    status: 'pending',
+                    createdAt: new Date().toISOString(),
+                    date: new Date().toLocaleString('ar-EG'),
+                    source: 'student-login-page'
+                });
+                alert('تم إرسال طلب إنشاء الحساب للإدارة. بعد الموافقة ستدخل بالكود ورقم الهاتف.');
+                ['signup-name','signup-code','signup-phone'].forEach(id => document.getElementById(id).value = '');
+                document.getElementById('signup-box').classList.remove('active');
+            } catch (err) {
+                console.error(err);
+                alert('تعذر إرسال الطلب. تأكد من قواعد Firebase أو اتصال الإنترنت.');
+            }
+        }
+
+        // مؤقت البومودورو
         let timerInterval;
         let timeLeft = 25 * 60;
         let isTimerRunning = false;
@@ -449,9 +1024,8 @@
                     addNotification("⏰ انتهت جلسة التركيز! أحسنت العمل.");
                     
                     if(!document.getElementById('task-pomodoro').classList.contains('done')){
-                        document.getElementById('task-pomodoro').classList.add('done');
-                        document.querySelector('#task-pomodoro input').checked = true;
-                        awardXP(30, "إكمال جلسة تركيز (Pomodoro)");
+                        markTaskDone('task-pomodoro');
+                        awardXP(30, "إكمال جلسة تركيز (Pomodoro)", todayKey('pomodoro'));
                     }
                     resetTimer();
                 }
@@ -477,6 +1051,7 @@
                 `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
         }
 
+        // تشغيل محرر الكود
         window.runCode = function() {
             const html = document.getElementById('html-code').value;
             const css = `<style>${document.getElementById('css-code').value}</style>`;
@@ -491,6 +1066,7 @@
             }
         }
 
+        // تحميل ملف الإنجاز PDF
         window.downloadPortfolio = function() {
             const element = document.getElementById('portfolio-content');
             const opt = {
@@ -503,27 +1079,42 @@
             html2pdf().set(opt).from(element).save();
         }
 
+        // التنقل بين الأقسام
         window.showSection = function(id, el) {
             document.querySelectorAll('.app-section').forEach(s => s.classList.remove('active'));
             document.querySelectorAll('.nav-link').forEach(n => n.classList.remove('active'));
             document.getElementById(id).classList.add('active');
             el.classList.add('active');
+            closeStudentSidebar();
             
             if(id === 'chat-sec') scrollChat();
-            if(id === 'editor-sec') runCode(); 
+            if(id === 'editor-sec') runCode();
+            if(id === 'live-class-sec' && window.VCStudent && VCStudent.refreshRooms) VCStudent.refreshRooms();
             if(id !== 'exams-sec') closeExam();
         }
 
-        function awardXP(amount, reason) {
-            let newXP = (currentStudent.xp || 0) + amount;
+        // نظام النقاط XP
+        async function awardXP(amount, reason, uniqueKey = reason) {
+            if (!currentStudent || !currentStudent.key) return false;
+            currentStudent.xpLog = currentStudent.xpLog || {};
+            if (currentStudent.xpLog[uniqueKey]) return false;
+            const newXP = (Number(currentStudent.xp) || 0) + Number(amount);
             currentStudent.xp = newXP;
+            currentStudent.xpLog[uniqueKey] = true;
             document.getElementById('xp-badge').innerHTML = `<i class="fas fa-bolt"></i> ${newXP} XP`;
             document.getElementById('port-xp').innerText = newXP;
-            
-            update(ref(db, `students/${currentStudent.key}`), { xp: newXP });
+            const updates = { xp: newXP };
+            updates[`xpLog/${uniqueKey}`] = true;
+            updates[`xpHistory/${Date.now()}`] = { amount, reason, date: new Date().toISOString() };
+            await db.ref(`students/${currentStudent.key}`).update(updates);
+            await db.ref(`leaderboard/${currentStudent.key}`).update({
+                name: String(currentStudent.name || '').split(' ')[0],
+                level: currentStudent.level,
+                xp: newXP
+            });
             addNotification(`🎉 حصلت على ${amount} XP بسبب: ${reason}`);
-            
             checkBadges();
+            return true;
         }
 
         function checkBadges() {
@@ -535,43 +1126,58 @@
             document.getElementById('port-badges').innerHTML = badgesHtml;
         }
 
-        window.studentLogin = function() {
+        // دالة تسجيل الدخول الآمنة: كود الطالب يتحول إلى بريد داخلي، والهاتف هو كلمة المرور
+        window.studentLogin = async function() {
             const code = document.getElementById('student-code-input').value.trim();
             const phone = document.getElementById('student-phone-input').value.trim();
             if(!code) return alert("يرجى إدخال كود الطالب");
             if(!phone) return alert("يرجى إدخال رقم الهاتف (كما هو مسجل لدى الإدارة)");
-            
-            onValue(ref(db, 'students'), (snap) => {
-                const data = snap.val();
-                let found = false;
-                for(let k in data) {
-                    if(data[k].code === code && data[k].phone === phone) {
-                        currentStudent = { ...data[k], key: k };
-                        initApp();
-                        found = true;
-                        return;
-                    }
+            try {
+                const cred = await auth.signInWithEmailAndPassword(makeStudentEmail(code), phone);
+                const snap = await db.ref(`students/${cred.user.uid}`).once('value');
+                if (!snap.exists()) {
+                    await auth.signOut();
+                    return alert('تم تسجيل الدخول لكن لا توجد بيانات طالب مرتبطة بهذا الحساب. تواصل مع الإدارة.');
                 }
-                if(!found) alert("❌ الكود أو رقم الهاتف غير صحيح. تأكد من بياناتك لدى الإدارة.");
-            }, { onlyOnce: true });
+                const data = snap.val();
+                if (data.code !== code || data.phone !== phone) {
+                    await auth.signOut();
+                    return alert('الكود أو رقم الهاتف غير صحيح.');
+                }
+                currentStudent = { ...data, key: cred.user.uid };
+                initApp();
+            } catch (err) {
+                console.error(err);
+                alert('❌ الكود أو رقم الهاتف غير صحيح، أو لم يتم تفعيل حسابك بعد من الإدارة. يمكنك إرسال طلب إنشاء حساب من نفس الصفحة.');
+            }
+        }
+
+        window.studentLogout = async function() {
+            try { await auth.signOut(); } finally { location.reload(); }
         }
 
         function initApp() {
             document.getElementById('login-page').style.display = 'none';
             document.getElementById('main-platform').style.display = 'block';
-            document.getElementById('welcome-msg').innerText = "أهلاً، " + currentStudent.name.split(' ')[0];
-            document.getElementById('level-badge').innerText = "مستوى " + currentStudent.level;
-            document.getElementById('comm-lvl').innerText = currentStudent.level;
+            document.getElementById('welcome-msg').textContent = "أهلاً، " + String(currentStudent.name || '').split(' ')[0];
+            document.getElementById('level-badge').textContent = "مستوى " + currentStudent.level;
+            document.getElementById('comm-lvl').textContent = currentStudent.level;
             
-            document.getElementById('port-name').innerText = currentStudent.name;
-            document.getElementById('port-level').innerText = "طالب بمستوى " + currentStudent.level;
+            document.getElementById('port-name').textContent = currentStudent.name;
+            document.getElementById('port-level').textContent = "طالب بمستوى " + currentStudent.level;
             document.getElementById('xp-badge').innerHTML = `<i class="fas fa-bolt"></i> ${currentStudent.xp || 0} XP`;
             document.getElementById('port-xp').innerText = currentStudent.xp || 0;
             checkBadges();
 
-            awardXP(10, "تسجيل الدخول اليومي");
+            currentStudent.xpLog = currentStudent.xpLog || {};
+            if (currentStudent.xpLog[todayKey('login')]) markTaskDone('task-login');
+            if (currentStudent.xpLog[todayKey('chat')]) markTaskDone('task-chat');
+            if (currentStudent.xpLog[todayKey('pomodoro')]) markTaskDone('task-pomodoro');
+            // منح نقاط الدخول مرة واحدة يومياً فقط
+            awardXP(10, "تسجيل الدخول اليومي", todayKey('login')).then(done => { if(done) markTaskDone('task-login'); });
 
-            onValue(ref(db, `students/${currentStudent.key}/evaluations`), (snap) => {
+            // جلب التقييمات
+            db.ref(`students/${currentStudent.key}/evaluations`).on('value', (snap) => {
                 const evals = snap.val();
                 if(evals) {
                     const last = Object.values(evals).pop();
@@ -581,16 +1187,17 @@
                 }
             });
 
-            onValue(ref(db, 'students'), (snap) => {
+            // لوحة الشرف
+            db.ref('leaderboard').on('value', (snap) => {
                 const allStudents = snap.val();
                 if(allStudents) {
-                    let sorted = Object.values(allStudents).sort((a, b) => (b.xp || 0) - (a.xp || 0)).slice(0, 5);
+                    let sorted = Object.values(allStudents).filter(s => !currentStudent.level || s.level == currentStudent.level).sort((a, b) => (b.xp || 0) - (a.xp || 0)).slice(0, 5);
                     let lbHtml = '';
                     sorted.forEach((s, i) => {
                         let rankIcon = i === 0 ? '🥇' : (i === 1 ? '🥈' : (i === 2 ? '🥉' : `🔹`));
                         lbHtml += `
                         <div class="leaderboard-item">
-                            <span>${rankIcon} ${s.name.split(' ')[0]}</span>
+                            <span>${rankIcon} ${escapeHTML(String(s.name || '').split(' ')[0])}</span>
                             <span style="font-weight:bold; color:var(--primary);">${s.xp || 0} XP</span>
                         </div>`;
                     });
@@ -598,36 +1205,86 @@
                 }
             });
 
+
+            // جلب الدروس بنظام Titan Pro
             let firstLoadLessons = true;
-            onValue(ref(db, 'content'), (snap) => {
-                const lessons = snap.val();
+            window.allLessons = {};
+            function youtubeId(url) {
+                const raw = String(url || '').trim();
+                if (!raw) return '';
+                try {
+                    const parsed = new URL(raw, location.href);
+                    if (parsed.hostname.includes('youtu.be')) return parsed.pathname.replace('/', '').split('/')[0];
+                    if (parsed.searchParams.get('v')) return parsed.searchParams.get('v');
+                    const parts = parsed.pathname.split('/').filter(Boolean);
+                    const idx = parts.findIndex(p => p === 'embed' || p === 'shorts');
+                    if (idx >= 0 && parts[idx + 1]) return parts[idx + 1];
+                } catch (e) {}
+                return raw.includes('v=') ? raw.split('v=')[1].split('&')[0] : '';
+            }
+            function proBadge(text, icon = 'fa-tag') { return `<span class="mini-badge"><i class="fas ${icon}"></i> ${escapeHTML(text)}</span>`; }
+            function actionLink(label, url, icon = 'fa-link') { return safeUrl(url) ? `<a href="${safeUrl(url)}" target="_blank" rel="noopener noreferrer" class="mini-badge"><i class="fas ${icon}"></i> ${escapeHTML(label)}</a>` : ''; }
+            window.markLessonWatched = async function(lessonKey, points = 15) {
+                if (!lessonKey) return;
+                const done = await awardXP(Number(points) || 15, 'مشاهدة درس', `lesson_${lessonKey}`);
+                if (done) markTaskDone('task-login');
+            }
+            window.renderStudentLessons = function() {
                 const list = document.getElementById('lessons-list');
-                let html = "";
-                if(lessons) {
-                    if(!firstLoadLessons) addNotification("📚 تم إضافة درس جديد لمستواك!");
-                    Object.values(lessons).reverse().forEach(l => {
-                        if(l.level == currentStudent.level) {
-                            let vid = l.video ? (l.video.includes('v=') ? l.video.split('v=')[1].split('&')[0] : l.video.split('/').pop()) : null;
-                            html += `
-                                <div class="lesson-card">
-                                    ${vid ? `<div class="video-box"><iframe src="https://www.youtube.com/embed/${vid}"></iframe></div>` : ''}
-                                    <div class="lesson-body">
-                                        <h4 style="margin-bottom: 10px;">${l.title}</h4>
-                                        <div style="display:flex; gap:10px;">
-                                            ${l.code ? `<a href="${l.code}" target="_blank" class="badge" style="text-decoration:none;"><i class="fas fa-code"></i> كود</a>` : ''}
-                                            ${l.pdf ? `<a href="${l.pdf}" target="_blank" class="badge" style="text-decoration:none; background:#fee2e2; color:#ef4444;"><i class="fas fa-file-pdf"></i> ملخص</a>` : ''}
-                                        </div>
-                                    </div>
-                                </div>`;
-                        }
-                    });
+                const catSel = document.getElementById('lesson-category-filter');
+                if (!list) return;
+                const q = (document.getElementById('lesson-search-student')?.value || '').toLowerCase();
+                const cat = catSel ? catSel.value : 'all';
+                const difficulty = document.getElementById('lesson-difficulty-filter')?.value || 'all';
+                const lessons = Object.entries(window.allLessons || {}).map(([key, l]) => ({...l, key})).filter(l => l.level == currentStudent.level);
+                const categories = [...new Set(lessons.map(l => l.category || 'عام'))].sort();
+                if (catSel) {
+                    const current = catSel.value;
+                    catSel.innerHTML = '<option value="all">كل الأقسام</option>' + categories.map(c => `<option value="${escapeHTML(c)}">${escapeHTML(c)}</option>`).join('');
+                    catSel.value = categories.includes(current) ? current : 'all';
                 }
-                list.innerHTML = html || "<p style='grid-column: 1/-1; text-align:center;'>لا توجد دروس حالياً</p>";
+                let filtered = lessons.filter(l => {
+                    const hay = [l.title, l.desc, l.category, l.difficulty].join(' ').toLowerCase();
+                    return (!q || hay.includes(q)) && (cat === 'all' || (l.category || 'عام') === cat) && (difficulty === 'all' || l.difficulty === difficulty);
+                }).sort((a,b) => String(b.createdAt || '').localeCompare(String(a.createdAt || '')) || (b.featured ? 1 : 0));
+                let html = '';
+                filtered.forEach(l => {
+                    const vid = youtubeId(l.video);
+                    const media = l.videoUrl
+                        ? `<video class="lesson-video-player" controls preload="metadata" ${safeUrl(l.thumbnailUrl) ? `poster="${safeUrl(l.thumbnailUrl)}"` : ''} src="${safeUrl(l.videoUrl)}"></video>`
+                        : (vid ? `<div class="video-box"><iframe src="https://www.youtube.com/embed/${escapeHTML(vid)}" allowfullscreen></iframe></div>`
+                               : (safeUrl(l.thumbnailUrl) ? `<img class="cover-img" src="${safeUrl(l.thumbnailUrl)}" alt="غلاف الدرس">` : `<div class="cover-img" style="display:flex;align-items:center;justify-content:center;"><i class="fas fa-graduation-cap" style="font-size:3rem;color:var(--primary);"></i></div>`));
+                    html += `<div class="lesson-card">
+                        ${media}
+                        <div class="lesson-body">
+                            <h4 style="margin-bottom: 8px;">${l.featured ? '⭐ ' : ''}${escapeHTML(l.title)}</h4>
+                            <div class="lesson-meta">
+                                ${proBadge(l.category || 'عام', 'fa-layer-group')}
+                                ${proBadge(l.difficulty || 'مبتدئ', 'fa-signal')}
+                                ${l.duration ? proBadge(l.duration + ' دقيقة', 'fa-clock') : ''}
+                                ${l.videoUrl ? proBadge('فيديو مرفوع', 'fa-video') : (vid ? proBadge('YouTube', 'fa-youtube') : '')}
+                            </div>
+                            ${l.desc ? `<p style="color:var(--text-dim); line-height:1.8; margin-bottom:12px;">${escapeHTML(l.desc)}</p>` : ''}
+                            <div class="lesson-actions">
+                                ${actionLink('ملزمة PDF', l.pdfUrl || l.pdf, 'fa-file-pdf')}
+                                ${actionLink('ملف الكود', l.codeFileUrl || l.code, 'fa-file-code')}
+                                <button class="btn" style="padding:.65rem 1rem;" onclick="markLessonWatched('${escapeHTML(l.key)}', 15)"><i class="fas fa-check"></i> أنهيت الدرس</button>
+                            </div>
+                        </div>
+                    </div>`;
+                });
+                list.innerHTML = html || "<p style='grid-column: 1/-1; text-align:center;'>لا توجد دروس مطابقة حالياً</p>";
+            }
+            db.ref('content').on('value', (snap) => {
+                window.allLessons = snap.val() || {};
+                if(!firstLoadLessons) addNotification('📚 تم تحديث مكتبة الدروس!');
+                renderStudentLessons();
                 firstLoadLessons = false;
             });
 
+            // الامتحانات
             let firstLoadExams = true;
-            onValue(ref(db, 'online_exams'), (snap) => {
+            db.ref('online_exams').on('value', (snap) => {
                 const exams = snap.val();
                 const list = document.getElementById('exams-list');
                 window.allExams = exams; 
@@ -636,13 +1293,14 @@
                     if(!firstLoadExams) addNotification("📝 امتحان جديد متاح الآن!");
                     Object.entries(exams).forEach(([key, e]) => {
                         if(e.level == currentStudent.level) {
+                            const attempted = currentStudent.examAttempts && currentStudent.examAttempts[key];
                             html += `
-                                <div class="stat-card" style="cursor:pointer;" onclick="openExam('${key}')">
+                                <div class="stat-card" style="cursor:${attempted ? 'default' : 'pointer'};" ${attempted ? '' : `onclick="openExam('${key}')"`}>
                                     <div style="background: rgba(79, 70, 229, 0.1); width: 70px; height: 70px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem auto;">
                                         <i class="fas fa-file-signature" style="font-size: 2rem; color: var(--primary);"></i>
                                     </div>
-                                    <h3 style="color:var(--text-main); margin-bottom:10px;">${e.title}</h3>
-                                    <button class="btn" style="width: 100%;"><i class="fas fa-play"></i> ابدأ الامتحان</button>
+                                    <h3 style="color:var(--text-main); margin-bottom:10px;">${escapeHTML(e.title)}</h3>
+                                    ${attempted ? `<span class="badge" style="display:block;">تم الحل: ${escapeHTML(attempted.score)} / ${escapeHTML(attempted.total)}</span>` : `<button class="btn" style="width: 100%;"><i class="fas fa-play"></i> ابدأ الامتحان</button>`}
                                 </div>
                             `;
                         }
@@ -652,8 +1310,9 @@
                 firstLoadExams = false;
             });
 
+            // جلب رسائل المجتمع
             let firstLoadChat = true;
-            onValue(ref(db, 'community'), (snap) => {
+            db.ref('community').on('value', (snap) => {
                 const posts = snap.val();
                 const container = document.getElementById('chat-messages');
                 let html = "";
@@ -669,9 +1328,9 @@
                             const isMine = p.sender === currentStudent.name;
                             html += `
                                 <div class="msg-item ${isMine ? 'mine' : 'others'}">
-                                    <span style="font-size: 0.8rem; font-weight: bold; margin-bottom: 5px; display: block;">${isMine ? 'أنت' : p.sender}</span>
-                                    <div>${p.text}</div>
-                                    <div style="font-size:0.7rem; margin-top:8px; opacity:0.8;">${p.time}</div>
+                                    <span style="font-size: 0.8rem; font-weight: bold; margin-bottom: 5px; display: block;">${isMine ? 'أنت' : escapeHTML(p.sender)}</span>
+                                    <div>${escapeHTML(p.text)}</div>
+                                    <div style="font-size:0.7rem; margin-top:8px; opacity:0.8;">${escapeHTML(p.time)}</div>
                                 </div>`;
                         }
                     });
@@ -681,38 +1340,32 @@
                 firstLoadChat = false;
             });
 
-            // جلب الشكاوى الخاصة بالطالب (الإضافة الجديدة)
-            onValue(ref(db, 'support'), (snap) => {
-                const complaints = snap.val();
-                const list = document.getElementById('my-complaints-list');
-                let html = "";
-                
-                if(complaints) {
-                    Object.entries(complaints).reverse().forEach(([key, c]) => {
-                        if(c.studentName === currentStudent.name) {
-                            html += `
-                            <div style="background: var(--bg-body); padding: 1.5rem; border-radius: 16px; margin-bottom: 15px; border: 1px solid var(--border);">
-                                <p style="font-weight: bold; margin-bottom: 10px;">${c.text}</p>
-                                <span style="font-size: 0.8rem; color: var(--text-dim); display: block; margin-bottom: 15px;"><i class="far fa-clock"></i> ${c.date}</span>
-                                
-                                ${c.reply ? 
-                                `<div style="background: rgba(16, 185, 129, 0.1); border-right: 4px solid #10b981; padding: 15px; border-radius: 12px; color: #059669;">
-                                    <strong><i class="fas fa-user-shield"></i> رد الإدارة:</strong> ${c.reply}
-                                </div>` : 
-                                `<div style="background: rgba(245, 158, 11, 0.1); border-right: 4px solid #f59e0b; padding: 10px; border-radius: 12px; color: #d97706;">
-                                    <i class="fas fa-hourglass-half"></i> قيد المراجعة من قِبل الإدارة...
-                                </div>`}
-                            </div>`;
-                        }
-                    });
-                }
-                list.innerHTML = html || "<p style='color: var(--text-dim);'>لا توجد شكاوى أو استفسارات سابقة.</p>";
+            // تشغيل قائمة الحصص المباشرة بعد تسجيل الدخول
+            if (window.VCStudent && VCStudent.refreshRooms) VCStudent.refreshRooms();
+
+            // جلب طلبات الدعم وردود الإدارة الخاصة بالطالب
+            const supportQuery = db.ref('support').orderByChild('studentKey').equalTo(currentStudent.key);
+            supportQuery.on('value', (snap) => {
+                renderStudentSupport(snap.val());
+            });
+
+            db.ref('assignments').on('value', (snap) => {
+                window.allAssignments = snap.val() || {};
+                renderStudentAssignments();
+            });
+            db.ref('submissions').orderByChild('studentKey').equalTo(currentStudent.key).on('value', (snap) => {
+                window.mySubmissions = snap.val() || {};
+                renderStudentAssignments();
             });
         }
 
         window.openExam = function(examKey) {
             const exam = window.allExams[examKey];
             if(!exam) return;
+            if (currentStudent.examAttempts && currentStudent.examAttempts[examKey]) {
+                alert('لقد قمت بحل هذا الامتحان من قبل.');
+                return;
+            }
             currentExamData = { ...exam, key: examKey };
             
             document.getElementById('exams-view-list').style.display = 'none';
@@ -723,12 +1376,12 @@
             (exam.questions || []).forEach((q, i) => {
                 qHtml += `
                     <div class="q-box">
-                        <h4 style="margin-bottom: 15px;">${i + 1}. ${q.text}</h4>
+                        <h4 style="margin-bottom: 15px;">${i + 1}. ${escapeHTML(q.text)}</h4>
                         <div style="display:flex; flex-direction:column;">
                             ${(q.options || []).map((opt, optIdx) => `
                                 <label class="opt-label">
                                     <input type="radio" name="question-${i}" value="${optIdx}">
-                                    <span>${opt}</span>
+                                    <span>${escapeHTML(opt)}</span>
                                 </label>
                             `).join('')}
                         </div>
@@ -745,7 +1398,7 @@
             currentExamData = null;
         }
 
-        window.submitExam = function() {
+        window.submitExam = async function() {
             if(!currentExamData) return;
             let score = 0; let totalQuestions = currentExamData.questions.length; let allAnswered = true;
             currentExamData.questions.forEach((q, i) => {
@@ -757,53 +1410,580 @@
             if(!allAnswered && !confirm("⚠️ لم تقم بالإجابة على جميع الأسئلة! متأكد من التسليم؟")) return; 
 
             alert(`🎉 تم تسليم الامتحان بنجاح!\n\nنتيجتك هي: ${score} من ${totalQuestions}`);
-            push(ref(db, 'grades'), { std: currentStudent.name, name: "امتحان: " + currentExamData.title, grade: `${score} / ${totalQuestions}` });
+            const attempt = { score, total: totalQuestions, title: currentExamData.title, date: new Date().toISOString() };
+            db.ref('grades').push({ studentKey: currentStudent.key, std: currentStudent.name, name: "امتحان: " + currentExamData.title, grade: `${score} / ${totalQuestions}` });
+            await db.ref(`students/${currentStudent.key}/examAttempts/${currentExamData.key}`).set(attempt);
+            currentStudent.examAttempts = currentStudent.examAttempts || {};
+            currentStudent.examAttempts[currentExamData.key] = attempt;
             
             document.getElementById('task-exam').classList.add('done');
             document.querySelector('#task-exam input').checked = true;
-            awardXP(50, "إكمال امتحان");
+            await awardXP(50, "إكمال امتحان", `exam_${currentExamData.key}`);
 
             closeExam(); 
         }
 
+
+
+        // ===== Titan Pro: student assignment submissions =====
+        function proBadge(text, icon = 'fa-tag') { return `<span class="mini-badge"><i class="fas ${icon}"></i> ${escapeHTML(text)}</span>`; }
+        function actionLink(label, url, icon = 'fa-link') { return safeUrl(url) ? `<a href="${safeUrl(url)}" target="_blank" rel="noopener noreferrer" class="mini-badge"><i class="fas ${icon}"></i> ${escapeHTML(label)}</a>` : ''; }
+        function setSubmissionProgress(key, value) {
+            const wrap = document.getElementById(`sub-progress-wrap-${key}`);
+            const bar = document.getElementById(`sub-progress-${key}`);
+            if (!wrap || !bar) return;
+            wrap.style.display = 'block';
+            const pct = Math.max(0, Math.min(100, Math.round(value || 0)));
+            bar.style.width = pct + '%';
+            bar.textContent = pct + '%';
+            if (pct >= 100) setTimeout(() => { wrap.style.display = 'none'; bar.style.width = '0%'; }, 1300);
+        }
+        async function uploadSubmissionFile(file, assignmentKey) {
+            if (!file) return null;
+            if (!storage) throw new Error('Firebase Storage غير متاح.');
+            if (file.size > 80 * 1024 * 1024) throw new Error('حجم ملف التسليم أكبر من 80MB.');
+            const safeName = String(file.name || 'submission').replace(/[^a-zA-Z0-9._-]+/g, '_');
+            const path = `submissions/${currentStudent.key}/${assignmentKey}_${Date.now()}_${safeName}`;
+            const ref = storage.ref(path);
+            const task = ref.put(file, { contentType: file.type || undefined, customMetadata: { assignmentKey, studentKey: currentStudent.key } });
+            return await new Promise((resolve, reject) => {
+                task.on('state_changed', snap => setSubmissionProgress(assignmentKey, snap.totalBytes ? snap.bytesTransferred / snap.totalBytes * 100 : 0), reject, async () => {
+                    resolve({ url: await task.snapshot.ref.getDownloadURL(), path, name: file.name, size: file.size, type: file.type || '' });
+                });
+            });
+        }
+        function renderStudentAssignments() {
+            const el = document.getElementById('student-assignments-list');
+            if (!el || !currentStudent) return;
+            const submissions = window.mySubmissions || {};
+            const assignments = Object.entries(window.allAssignments || {}).map(([key, a]) => ({...a, key})).filter(a => a.level == currentStudent.level).sort((a,b) => String(a.dueDate || '9999').localeCompare(String(b.dueDate || '9999')));
+            el.innerHTML = assignments.length ? assignments.map(a => {
+                const submissionKey = `${a.key}_${currentStudent.key}`;
+                const sub = submissions[submissionKey];
+                const late = a.dueDate && new Date(a.dueDate + 'T23:59:59') < new Date();
+                return `<div class="assignment-card">
+                    <div style="display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap; align-items:flex-start;">
+                        <div>
+                            <h3 style="color:var(--primary); margin-bottom:8px;">${escapeHTML(a.title)}</h3>
+                            <div class="lesson-meta">
+                                ${proBadge('آخر موعد: ' + (a.dueDate || 'غير محدد'), 'fa-calendar')}
+                                ${proBadge((Number(a.points) || 40) + ' XP', 'fa-bolt')}
+                                ${late ? proBadge('تأخير', 'fa-triangle-exclamation') : ''}
+                            </div>
+                        </div>
+                        ${sub ? '<span class="badge" style="background:#dcfce7;color:#059669;">تم التسليم ✅</span>' : ''}
+                    </div>
+                    ${a.desc ? `<p style="line-height:1.9; color:var(--text-dim); margin-top:8px;">${escapeHTML(a.desc)}</p>` : ''}
+                    <div class="lesson-actions">
+                        ${actionLink('ملف المهمة', a.fileUrl, 'fa-paperclip')}
+                        ${actionLink('رابط المهمة', a.link, 'fa-link')}
+                        ${sub && sub.fileUrl ? actionLink('ملفك المرسل', sub.fileUrl, 'fa-download') : ''}
+                    </div>
+                    <textarea id="sub-note-${escapeHTML(a.key)}" placeholder="اكتب ملاحظتك أو رابط المشروع هنا...">${sub ? escapeHTML(sub.note || '') : ''}</textarea>
+                    <input type="file" id="sub-file-${escapeHTML(a.key)}" accept=".zip,.rar,.pdf,.png,.jpg,.jpeg,.html,.css,.js,.txt">
+                    <div class="progress-wrap" id="sub-progress-wrap-${escapeHTML(a.key)}"><div class="progress-bar" id="sub-progress-${escapeHTML(a.key)}">0%</div></div>
+                    <button class="btn btn-success" style="width:100%; margin-top:10px;" onclick="submitAssignment('${escapeHTML(a.key)}')"><i class="fas fa-cloud-upload-alt"></i> ${sub ? 'تحديث التسليم' : 'تسليم المهمة'}</button>
+                </div>`;
+            }).join('') : '<p style="color: var(--text-dim);">لا توجد مهام حالياً.</p>';
+        }
+        window.submitAssignment = async function(assignmentKey) {
+            const assignment = (window.allAssignments || {})[assignmentKey];
+            if (!assignment || !currentStudent) return;
+            const note = document.getElementById(`sub-note-${assignmentKey}`)?.value.trim() || '';
+            const file = document.getElementById(`sub-file-${assignmentKey}`)?.files?.[0] || null;
+            if (!note && !file) return alert('اكتب ملاحظة أو ارفع ملفاً للتسليم.');
+            try {
+                const upload = await uploadSubmissionFile(file, assignmentKey);
+                const key = `${assignmentKey}_${currentStudent.key}`;
+                const old = (window.mySubmissions || {})[key] || {};
+                await db.ref(`submissions/${key}`).set({
+                    assignmentKey,
+                    assignmentTitle: assignment.title || '',
+                    studentKey: currentStudent.key,
+                    studentCode: currentStudent.code,
+                    studentName: currentStudent.name,
+                    level: currentStudent.level,
+                    note,
+                    fileUrl: upload ? upload.url : (old.fileUrl || ''),
+                    filePath: upload ? upload.path : (old.filePath || ''),
+                    fileName: upload ? upload.name : (old.fileName || ''),
+                    date: new Date().toLocaleString('ar-EG'),
+                    updatedAt: new Date().toISOString()
+                });
+                setSubmissionProgress(assignmentKey, 100);
+                const points = Number(assignment.points) || 40;
+                awardXP(points, 'تسليم مهمة: ' + (assignment.title || ''), `assignment_${assignmentKey}`);
+                addNotification('تم تسليم المهمة للإدارة بنجاح.');
+            } catch (err) {
+                console.error(err);
+                alert(err.message || 'فشل تسليم المهمة.');
+            }
+        }
+
         window.sendPost = function() {
-            const txt = document.getElementById('post-text').value;
+            const txt = document.getElementById('post-text').value.trim();
             if(!txt) return;
-            push(ref(db, 'community'), {
+            if (txt.length > 1000) return alert('الرسالة طويلة جداً.');
+            db.ref('community').push({
+                studentKey: currentStudent.key,
                 sender: currentStudent.name, text: txt, level: currentStudent.level,
                 time: new Date().toLocaleTimeString('ar-EG', {hour:'2-digit', minute:'2-digit'})
             });
             document.getElementById('post-text').value = "";
             
             if(!document.getElementById('task-chat').classList.contains('done')){
-                document.getElementById('task-chat').classList.add('done');
-                document.querySelector('#task-chat input').checked = true;
-                awardXP(20, "المشاركة في المجتمع");
+                markTaskDone('task-chat');
+                awardXP(20, "المشاركة في المجتمع", todayKey('chat'));
             }
         }
 
-        // دالة إرسال الشكوى (الإضافة الجديدة)
-        window.sendComplaint = function() {
-            const text = document.getElementById('complaint-text').value.trim();
-            if(!text) return alert("يرجى كتابة الشكوى أولاً");
-            
-            push(ref(db, 'support'), {
+        window.sendSupportRequest = function() {
+            if (!currentStudent) return alert('يجب تسجيل الدخول أولاً.');
+            const input = document.getElementById('support-text');
+            const text = input.value.trim();
+            if (!text) return alert('اكتب رسالتك أولاً.');
+            if (text.length > 1500) return alert('الرسالة طويلة جداً.');
+            db.ref('support').push({
+                studentKey: currentStudent.key,
+                studentCode: currentStudent.code,
                 studentName: currentStudent.name,
+                phone: currentStudent.phone || '',
                 level: currentStudent.level,
-                phone: currentStudent.phone, // أضفنا رقم الهاتف لسهولة التواصل
-                text: text,
-                reply: "", // فارغ حتى يرد الأدمن
+                text,
+                reply: '',
                 date: new Date().toLocaleString('ar-EG')
             });
-            
-            document.getElementById('complaint-text').value = "";
-            addNotification("✅ تم إرسال الشكوى للإدارة بنجاح!");
+            input.value = '';
+            addNotification('تم إرسال طلب الدعم للإدارة.');
+        }
+
+        function renderStudentSupport(items) {
+            const el = document.getElementById('support-list-student');
+            if (!el) return;
+            const mine = Object.values(items || {}).filter(c => c.studentKey === currentStudent.key || c.studentCode === currentStudent.code).reverse();
+            el.innerHTML = mine.length ? mine.map(c => `
+                <div class="task-item" style="display:block;">
+                    <div style="font-weight:800; margin-bottom:6px;">${escapeHTML(c.text)}</div>
+                    <div style="font-size:0.85rem; color:var(--text-dim); margin-bottom:8px;">${escapeHTML(c.date)}</div>
+                    <div style="background:var(--card-bg); border:1px solid var(--border); border-radius:12px; padding:10px;">
+                        ${c.reply ? `<strong style="color:#10b981;">رد الإدارة:</strong> ${escapeHTML(c.reply)}` : '<span style="color:var(--text-dim);">لم يتم الرد بعد.</span>'}
+                    </div>
+                </div>`).join('') : '<p style="color: var(--text-dim);">لا توجد طلبات حتى الآن.</p>';
         }
 
         function scrollChat() {
             const chat = document.getElementById('chat-messages');
             if(chat) chat.scrollTop = chat.scrollHeight;
         }
-    </script>
+    
+
+        // ===== Titan Live Classroom: upload stability hotfix for student submissions =====
+        function titanHumanBytes(bytes) {
+            const n = Number(bytes) || 0;
+            if (n < 1024) return n + ' B';
+            if (n < 1024*1024) return (n/1024).toFixed(1) + ' KB';
+            if (n < 1024*1024*1024) return (n/1024/1024).toFixed(1) + ' MB';
+            return (n/1024/1024/1024).toFixed(1) + ' GB';
+        }
+        uploadSubmissionFile = async function(file, assignmentKey) {
+            if (!file) return null;
+            if (!storage) throw new Error('Firebase Storage غير متاح. فعّل Storage وراجع القواعد.');
+            if (!auth.currentUser || !currentStudent) throw new Error('سجل دخول الطالب أولاً.');
+            if (file.size > 80 * 1024 * 1024) throw new Error('حجم ملف التسليم أكبر من 80MB.');
+            const safeName = String(file.name || 'submission').replace(/[^a-zA-Z0-9._-]+/g, '_');
+            const path = `submissions/${currentStudent.key}/${assignmentKey}_${Date.now()}_${safeName}`;
+            const ref = storage.ref(path);
+            setSubmissionProgress(assignmentKey, 1);
+            const task = ref.put(file, { contentType: file.type || undefined, customMetadata: { assignmentKey, studentKey: currentStudent.key, originalName: file.name || safeName } });
+            return await new Promise((resolve, reject) => {
+                let lastMove = Date.now();
+                const watchdog = setInterval(() => {
+                    if (Date.now() - lastMove > 45000) {
+                        clearInterval(watchdog);
+                        try { task.cancel(); } catch(e) {}
+                        reject(new Error('الرفع متوقف منذ 45 ثانية. جرّب ملف أصغر أو راجع Storage Rules.'));
+                    }
+                }, 5000);
+                task.on('state_changed', snap => {
+                    lastMove = Date.now();
+                    setSubmissionProgress(assignmentKey, snap.totalBytes ? snap.bytesTransferred / snap.totalBytes * 100 : 0);
+                }, err => {
+                    clearInterval(watchdog);
+                    const code = err && err.code ? err.code : '';
+                    let msg = err && err.message ? err.message : 'فشل رفع التسليم.';
+                    if (code.includes('unauthorized')) msg = 'مرفوض من Firebase Storage Rules. اطلب من الإدارة تحديث قواعد Storage.';
+                    reject(new Error(msg));
+                }, async () => {
+                    clearInterval(watchdog);
+                    resolve({ url: await task.snapshot.ref.getDownloadURL(), path, name: file.name, size: file.size, type: file.type || '' });
+                });
+            });
+        };
+
+
+        
+// ===== Titan Live Classroom: Student - FIX V2 =====
+        window.VCStudent = (() => {
+            const state = {
+                sessionId:null, localStream:null, peers:{}, remoteStreams:{}, participants:{}, room:{},
+                micAllowed:false, camAllowed:false, micOn:false, camOn:false, kicked:false,
+                partRef:null, chatRef:null, sigRef:null, roomRef:null, roomsRef:null, roomRef:null, lastShareVersion:null
+            };
+            const rtcConfig = { iceServers: [{urls:'stun:stun.l.google.com:19302'}, {urls:'stun:stun1.l.google.com:19302'}] };
+            const $ = id => document.getElementById(id);
+            const me = () => currentStudent ? currentStudent.key : (auth.currentUser ? auth.currentUser.uid : 'student');
+            const myName = () => currentStudent ? currentStudent.name : 'طالب';
+            const uidSafe = v => String(v || '').replace(/[^a-zA-Z0-9_-]/g,'_');
+            const now = () => new Date().toISOString();
+            const roomPath = (p='') => `live_classes/${state.sessionId}${p?'/'+p:''}`;
+
+            function setJoinStatus(message, type='info') {
+                const el = $('vc-student-join-status');
+                if (!el) return;
+                el.style.display = message ? 'block' : 'none';
+                el.textContent = message || '';
+                el.style.background = type === 'error' ? 'rgba(239,68,68,.12)' : (type === 'success' ? 'rgba(16,185,129,.12)' : 'rgba(79,70,229,.10)');
+                el.style.borderColor = type === 'error' ? 'rgba(239,68,68,.30)' : (type === 'success' ? 'rgba(16,185,129,.30)' : 'rgba(79,70,229,.22)');
+            }
+            function setGridNotice(message) {
+                const grid = $('vc-student-grid');
+                if (!grid) return;
+                if (!grid.querySelector('video')) {
+                    grid.innerHTML = `<div class="vc-empty-state">${escapeHTML(message)}</div>`;
+                }
+            }
+            function clearGridNotice() {
+                const grid = $('vc-student-grid');
+                const empty = grid ? grid.querySelector('.vc-empty-state') : null;
+                if (empty) empty.remove();
+            }
+            function updateShareBanner(isSharing){
+                const banner = $('vc-student-share-banner');
+                if(!banner) return;
+                banner.classList.toggle('active', !!isSharing);
+                banner.innerHTML = isSharing
+                    ? '<i class="fas fa-desktop"></i> المعلم يشارك الشاشة الآن. لو لم تظهر خلال ثواني اضغط خروج ثم دخول الحصة.'
+                    : '';
+                const teacherUid = getTeacherUid();
+                if(teacherUid) {
+                    const tile = document.getElementById('vc-tile-student-'+uidSafe(teacherUid));
+                    if(tile) {
+                        tile.classList.toggle('vc-screen-tile', !!isSharing);
+                        const name = tile.querySelector('.vc-name');
+                        if(name) name.textContent = isSharing ? 'مشاركة شاشة المعلم' : 'المعلم';
+                    }
+                }
+            }
+            function getTeacherUid() {
+                if (state.room && state.room.teacherUid) return state.room.teacherUid;
+                const row = Object.entries(state.participants || {}).find(([uid,p]) => p && p.role === 'teacher');
+                return row ? row[0] : null;
+            }
+            function updateTeacherTileLabel(){
+                const teacherUid = getTeacherUid();
+                if(!teacherUid) return;
+                const tile = document.getElementById('vc-tile-student-' + uidSafe(teacherUid));
+                if(tile) {
+                    const nameEl = tile.querySelector('.vc-name');
+                    if(nameEl) nameEl.textContent = state.room && state.room.screenSharing ? 'مشاركة شاشة المعلم' : 'المعلم';
+                }
+            }
+            function ensureVideo(id,label,muted=false,isScreen=false){
+                const grid=$('vc-student-grid'); if(!grid) return null;
+                clearGridNotice();
+                let tile=document.getElementById('vc-tile-student-'+uidSafe(id));
+                if(!tile){
+                    tile=document.createElement('div');
+                    tile.className='vc-tile';
+                    tile.id='vc-tile-student-'+uidSafe(id);
+                    tile.innerHTML=`<video playsinline autoplay ${muted?'muted':''}></video><div class="vc-status"><span class="vc-pill"><i class="fas fa-microphone"></i></span><span class="vc-pill"><i class="fas fa-video"></i></span></div><div class="vc-name"></div>`;
+                    grid.appendChild(tile);
+                }
+                tile.classList.toggle('vc-screen-tile', !!isScreen);
+                tile.querySelector('.vc-name').textContent=label||id;
+                return tile.querySelector('video');
+            }
+            async function ensureLocalStream(){
+                if(!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+                    alert('المتصفح لا يدعم فتح الكاميرا أو المايك. استخدم Chrome/Edge وافتح الموقع عبر HTTPS أو localhost.');
+                    if(!state.localStream) state.localStream = new MediaStream();
+                    return state.localStream;
+                }
+                if(!window.isSecureContext && location.hostname !== 'localhost' && location.hostname !== '127.0.0.1') {
+                    alert('لازم تفتحي الموقع من HTTPS عشان الكاميرا والمايك يشتغلوا.');
+                    if(!state.localStream) state.localStream = new MediaStream();
+                    return state.localStream;
+                }
+                if(!state.localStream) state.localStream = new MediaStream();
+                const needAudio = state.micAllowed && !state.localStream.getAudioTracks().length;
+                const needVideo = state.camAllowed && !state.localStream.getVideoTracks().length;
+                if (needAudio || needVideo) {
+                    try {
+                        const fresh = await navigator.mediaDevices.getUserMedia({audio: needAudio, video: needVideo});
+                        fresh.getTracks().forEach(t => state.localStream.addTrack(t));
+                    } catch(e) {
+                        console.error(e);
+                        alert('المتصفح رفض صلاحية الكاميرا/المايك. افتحي الصلاحيات من علامة القفل بجانب الرابط ثم جرّبي تاني.');
+                    }
+                }
+                state.localStream.getAudioTracks().forEach(t=>t.enabled=state.micAllowed && state.micOn);
+                state.localStream.getVideoTracks().forEach(t=>t.enabled=state.camAllowed && state.camOn);
+                const localVideo = ensureVideo(me(),'أنت',true);
+                if(localVideo) localVideo.srcObject=state.localStream;
+                return state.localStream;
+            }
+            async function syncOutgoingTracks(pc){
+                if(!state.localStream || !pc) return;
+                const liveTracks = state.localStream.getTracks().filter(t => t.readyState !== 'ended');
+                for (const track of liveTracks) {
+                    const sender = pc.getSenders().find(s => s.track && s.track.kind === track.kind);
+                    if (sender) {
+                        if (sender.track !== track) {
+                            try { await sender.replaceTrack(track); } catch(e) { console.warn(e); }
+                        }
+                    } else {
+                        try { pc.addTrack(track, state.localStream); } catch(e) { console.warn(e); }
+                    }
+                }
+            }
+            async function getPeer(peerUid){
+                if(state.peers[peerUid]) return state.peers[peerUid];
+                const pc=new RTCPeerConnection(rtcConfig);
+                state.peers[peerUid]=pc;
+                pc.onicecandidate=e=>{ if(e.candidate) sendSignal(peerUid,{type:'candidate',candidate:e.candidate.toJSON?e.candidate.toJSON():e.candidate}); };
+                pc.ontrack=e=>{
+                    const stream=e.streams[0]; if(!stream)return;
+                    state.remoteStreams[peerUid]=stream;
+                    const p=state.participants[peerUid]||{};
+                    const teacherUid = getTeacherUid();
+                    const label = (p.role==='teacher' || peerUid===teacherUid) ? ((state.room && state.room.screenSharing) ? 'مشاركة شاشة المعلم' : 'المعلم') : (p.name||'مشارك');
+                    const v = ensureVideo(peerUid, label, false, !!(state.room && state.room.screenSharing && (p.role==='teacher' || peerUid===teacherUid)));
+                    if(v) v.srcObject=stream;
+                    setJoinStatus('تم الاتصال ببث المعلم.', 'success');
+                };
+                pc.onconnectionstatechange=()=>{
+                    if(pc.connectionState === 'connected') setJoinStatus('الاتصال يعمل الآن.', 'success');
+                    if(pc.connectionState === 'failed' || pc.connectionState === 'closed') {
+                        setJoinStatus('الاتصال اتقطع. اضغط خروج ثم دخول لو الحصة ما زالت مفتوحة.', 'error');
+                        removePeer(peerUid,false);
+                    }
+                    if(pc.connectionState === 'disconnected') {
+                        setTimeout(() => {
+                            if(state.peers[peerUid] && state.peers[peerUid].connectionState === 'disconnected') {
+                                setJoinStatus('الاتصال ضعيف حالياً... جاري الانتظار بدل إعادة الاتصال المتكرر.', 'info');
+                            }
+                        }, 2500);
+                    }
+                };
+                if(state.localStream) syncOutgoingTracks(pc).catch(console.warn);
+                return pc;
+            }
+            function removePeer(peerUid,removeTile=true){
+                if(state.peers[peerUid]){try{state.peers[peerUid].close()}catch(e){} delete state.peers[peerUid];}
+                delete state.remoteStreams[peerUid];
+                if(removeTile) document.getElementById('vc-tile-student-'+uidSafe(peerUid))?.remove();
+            }
+            async function sendSignal(to,payload){
+                if(!state.sessionId)return;
+                await db.ref(`${roomPath('signals')}/${uidSafe(to)}`).push({...payload,from:me(),to,at:Date.now()});
+            }
+            async function syncTracksToTeacher(){
+                const teacherUid = getTeacherUid();
+                if(teacherUid && state.peers[teacherUid]) {
+                    await syncOutgoingTracks(state.peers[teacherUid]);
+                }
+            }
+            async function handleSignal(key,sig){
+                if(!sig||sig.to!==me()||!sig.from)return;
+                const pc=await getPeer(sig.from);
+                try {
+                    if(sig.type==='restart'){
+                        removePeer(sig.from, true);
+                        setJoinStatus(sig.reason === 'screen_on' ? 'المعلم بدأ مشاركة الشاشة... جاري إعادة الاتصال.' : 'تم تغيير بث المعلم... جاري إعادة الاتصال.', 'info');
+                        db.ref(`${roomPath('signals')}/${uidSafe(me())}/${key}`).remove();
+                        return;
+                    }
+                    if(sig.type==='offer'){
+                        if(sig.shareVersion) setJoinStatus('جاري تحديث بث المعلم / مشاركة الشاشة...', 'info');
+                        if(pc.signalingState !== 'stable') {
+                            try { await pc.setLocalDescription({type:'rollback'}); } catch(e) {}
+                        }
+                        await pc.setRemoteDescription(new RTCSessionDescription(sig.sdp));
+                        await syncOutgoingTracks(pc);
+                        const ans=await pc.createAnswer();
+                        await pc.setLocalDescription(ans);
+                        await sendSignal(sig.from,{type:'answer',sdp:pc.localDescription});
+                        updateTeacherTileLabel();
+                    } else if(sig.type==='answer') {
+                        if(pc.signalingState === 'have-local-offer') await pc.setRemoteDescription(new RTCSessionDescription(sig.sdp));
+                    } else if(sig.type==='candidate') {
+                        try{await pc.addIceCandidate(new RTCIceCandidate(sig.candidate));}catch(e){console.warn(e);}
+                    }
+                    db.ref(`${roomPath('signals')}/${uidSafe(me())}/${key}`).remove();
+                } catch(err) {
+                    console.error(err);
+                    setJoinStatus('حدث خطأ في اتصال الحصة. جرّب الخروج والدخول مرة أخرى.', 'error');
+                }
+            }
+            function listenActiveRooms(){
+                const el=$('vc-student-active-list');
+                if(!el) return;
+                if(!currentStudent) {
+                    el.innerHTML = '<span style="color:var(--text-dim);">سجّل دخول الطالب أولاً لعرض الحصص.</span>';
+                    return;
+                }
+                if(state.roomsRef && state.roomsRef.off) state.roomsRef.off();
+                const r=db.ref('live_classes').orderByChild('status').equalTo('live').limitToLast(20);
+                r.on('value',snap=>{
+                    const rooms=Object.values(snap.val()||{}).filter(c=>!currentStudent.level || c.level==currentStudent.level);
+                    el.innerHTML = rooms.length ? rooms.map(c=>`<button class="btn" style="margin:4px;" onclick="document.getElementById('vc-student-code').value='${escapeHTML(c.sessionId)}'; VCStudent.joinClass();"><i class="fas fa-video"></i> ${escapeHTML(c.title||'حصة مباشرة')} - ${escapeHTML(c.sessionId)}</button>`).join('') : '<span style="color:var(--text-dim);">لا توجد حصة مباشرة لمستواك الآن. ممكن تدخل الكود يدويًا لو المعلم أرسله لك.</span>';
+                }, err => {
+                    console.error(err);
+                    el.innerHTML = '<span style="color:#ef4444;">تعذر قراءة الحصص. راجع Realtime Database Rules.</span>';
+                });
+                state.roomsRef=r;
+            }
+            function renderPermissions(){
+                const el=$('vc-student-permissions'); if(!el)return;
+                const mic=state.micAllowed?'مسموح':'مغلق من المعلم';
+                const cam=state.camAllowed?'مسموح':'مغلق من المعلم';
+                el.className = (state.micAllowed||state.camAllowed)?'vc-ok':'vc-danger-note';
+                el.innerHTML=`<strong>المايك:</strong> ${mic}<br><strong>الكاميرا:</strong> ${cam}<br><small>لو المعلم سمح، زر التشغيل يصبح متاحاً.</small>`;
+                const mb=$('vc-student-mic-btn'), cb=$('vc-student-cam-btn');
+                if(mb) {
+                    mb.disabled=!state.micAllowed;
+                    mb.innerHTML = state.micOn ? '<i class="fas fa-microphone-slash"></i> قفل المايك' : '<i class="fas fa-microphone"></i> فتح المايك';
+                }
+                if(cb) {
+                    cb.disabled=!state.camAllowed;
+                    cb.innerHTML = state.camOn ? '<i class="fas fa-video-slash"></i> قفل الكاميرا' : '<i class="fas fa-video"></i> فتح الكاميرا';
+                }
+            }
+            function renderChat(items){
+                const el=$('vc-student-chat'); if(!el)return;
+                el.innerHTML=Object.values(items || {}).sort((a,b)=>(a.time||0)-(b.time||0)).map(m=>`<div class="vc-chat-msg"><strong>${escapeHTML(m.name||'مشارك')}</strong><div>${escapeHTML(m.text||'')}</div><small>${escapeHTML(m.when||'')}</small></div>`).join('');
+                el.scrollTop=el.scrollHeight;
+            }
+            async function joinClass(){
+                if(!currentStudent) return alert('سجل دخول الطالب أولاً.');
+                const code=($('vc-student-code')?.value||'').trim();
+                if(!code) return alert('اكتب كود الحصة.');
+                setJoinStatus('جاري الدخول للحصة...', 'info');
+                setGridNotice('جاري انتظار بث المعلم...');
+                const snap=await db.ref(`live_classes/${code}`).once('value').catch(err => {
+                    console.error(err);
+                    setJoinStatus('تعذر قراءة الحصة. راجع قواعد Realtime Database.', 'error');
+                    return null;
+                });
+                if(!snap || !snap.exists() || snap.val().status!=='live') {
+                    setJoinStatus('كود الحصة غير صحيح أو الحصة انتهت.', 'error');
+                    return;
+                }
+                await leaveClass(false);
+                state.sessionId=code;
+                state.room=snap.val();
+                $('vc-student-session-code').textContent=code;
+                state.roomRef = db.ref(roomPath());
+                state.roomRef.on('value', roomSnap => {
+                    state.room = roomSnap.val() || {};
+                    updateTeacherTileLabel();
+                    if(state.room.status === 'ended') {
+                        setJoinStatus('انتهت الحصة.', 'info');
+                        leaveClass(false);
+                        return;
+                    }
+                    if(state.room.screenSharing) {
+                        setJoinStatus('المعلم يشارك الشاشة الآن. لو الشاشة لم تظهر اضغط خروج ثم دخول الحصة مرة أخرى.', 'success');
+                    }
+                });
+                await db.ref(`${roomPath('participants')}/${me()}`).set({
+                    name:myName(), code:currentStudent.code||'', level:currentStudent.level||'', role:'student',
+                    online:true, micAllowed:false, camAllowed:false, micOn:false, camOn:false, joinedAt:now()
+                });
+                setJoinStatus('دخلت الحصة. انتظر بث المعلم أو سماح المعلم بالمايك/الكاميرا.', 'success');
+                state.partRef=db.ref(roomPath('participants'));
+                state.partRef.on('value',snap=>{
+                    state.participants=snap.val()||{};
+                    updateTeacherTileLabel();
+                    const mine=state.participants[me()]||{};
+                    if(mine.kicked){ alert('تم إخراجك من الحصة بواسطة المعلم.'); leaveClass(); return; }
+                    state.micAllowed=!!mine.micAllowed;
+                    state.camAllowed=!!mine.camAllowed;
+                    if(!state.micAllowed) state.micOn = false;
+                    if(!state.camAllowed) state.camOn = false;
+                    renderPermissions();
+
+                    const teacherUid = getTeacherUid();
+                    Object.entries(state.participants).forEach(([uid,p])=>{
+                        if(uid!==me() && p && p.online!==false && (p.role==='teacher' || uid === teacherUid)) {
+                            getPeer(uid).catch(console.warn);
+                        }
+                    });
+                    Object.keys(state.peers).forEach(uid=>{
+                        if(!state.participants[uid] || state.participants[uid].online===false) removePeer(uid);
+                    });
+                    if(state.localStream){
+                        state.localStream.getAudioTracks().forEach(t=>t.enabled=state.micAllowed&&state.micOn);
+                        state.localStream.getVideoTracks().forEach(t=>t.enabled=state.camAllowed&&state.camOn);
+                    }
+                });
+                state.chatRef=db.ref(roomPath('chat')).limitToLast(80);
+                state.chatRef.on('value',snap=>renderChat(snap.val()||{}));
+                state.sigRef=db.ref(`${roomPath('signals')}/${uidSafe(me())}`);
+                state.sigRef.on('child_added',snap=>handleSignal(snap.key,snap.val()).catch(console.error));
+            }
+            async function toggleMic(){
+                if(!state.sessionId) return alert('ادخل الحصة أولاً.');
+                if(!state.micAllowed)return alert('المعلم لم يسمح بفتح المايك.');
+                await ensureLocalStream();
+                state.micOn=!state.micOn;
+                state.localStream.getAudioTracks().forEach(t=>t.enabled=state.micOn);
+                await db.ref(`${roomPath('participants')}/${me()}`).update({micOn:state.micOn});
+                await syncTracksToTeacher();
+                renderPermissions();
+            }
+            async function toggleCamera(){
+                if(!state.sessionId) return alert('ادخل الحصة أولاً.');
+                if(!state.camAllowed)return alert('المعلم لم يسمح بفتح الكاميرا.');
+                await ensureLocalStream();
+                state.camOn=!state.camOn;
+                state.localStream.getVideoTracks().forEach(t=>t.enabled=state.camOn);
+                await db.ref(`${roomPath('participants')}/${me()}`).update({camOn:state.camOn});
+                await syncTracksToTeacher();
+                renderPermissions();
+            }
+            async function sendChat(){
+                const input=$('vc-student-chat-input');
+                const text=(input?.value||'').trim();
+                if(!text) return;
+                if(!state.sessionId) return alert('ادخل الحصة أولاً.');
+                input.value='';
+                await db.ref(roomPath('chat')).push({from:me(),name:myName(),text,time:Date.now(),when:new Date().toLocaleTimeString('ar-EG')});
+            }
+            async function leaveClass(update=true){
+                if(state.partRef && state.partRef.off) state.partRef.off();
+                if(state.chatRef && state.chatRef.off) state.chatRef.off();
+                if(state.sigRef && state.sigRef.off) state.sigRef.off();
+                if(state.roomRef && state.roomRef.off) state.roomRef.off();
+                if(state.roomRef && state.roomRef.off) state.roomRef.off();
+                if(update && state.sessionId) await db.ref(`${roomPath('participants')}/${me()}`).update({online:false,leftAt:now()}).catch(()=>{});
+                Object.keys(state.peers).forEach(uid=>removePeer(uid));
+                if(state.localStream) state.localStream.getTracks().forEach(t=>t.stop());
+                state.localStream=null;
+                state.peers={};
+                state.remoteStreams={};
+                state.sessionId=null;
+                state.micAllowed=false; state.camAllowed=false; state.micOn=false; state.camOn=false;
+                const codeEl = $('vc-student-session-code'); if(codeEl) codeEl.textContent='غير متصل';
+                const grid=$('vc-student-grid'); if(grid) grid.innerHTML='';
+                renderPermissions();
+                updateShareBanner(false);
+                if(update) setJoinStatus('', 'info');
+            }
+            setTimeout(listenActiveRooms, 1500);
+            return {joinClass,toggleMic,toggleCamera,sendChat,leaveClass,refreshRooms:listenActiveRooms};
+        })();
+
+</script>
 </body>
 </html>
