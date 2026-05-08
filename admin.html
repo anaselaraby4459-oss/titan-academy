@@ -469,6 +469,12 @@ th { background:rgba(37,99,235,.07) !important; color:#1d4ed8 !important; }
 .upload-fix-ok{border:1px solid rgba(16,185,129,.32);background:rgba(16,185,129,.12);color:#10b981}
 </style>
 
+
+<style id="titan-v13-admin-css">
+.v13-hero{background:linear-gradient(135deg,rgba(37,99,235,.16),rgba(124,58,237,.16));border:1px solid rgba(37,99,235,.25);border-radius:24px;padding:18px;margin-bottom:16px;line-height:1.9}
+.v13-hero h3{color:var(--primary);margin-bottom:8px}.v13-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin:14px 0}.v13-card{background:var(--bg-body);border:1px solid var(--border);border-radius:18px;padding:15px;box-shadow:0 8px 20px rgba(15,23,42,.06)}.v13-card h4{color:var(--primary);margin-bottom:8px;display:flex;gap:8px;align-items:center}.v13-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px}.v13-question-box{border:1px solid var(--border);border-radius:16px;padding:12px;background:var(--bg-card);margin:10px 0}.v13-list-item{display:flex;justify-content:space-between;gap:10px;align-items:center;padding:12px;border:1px solid var(--border);background:var(--bg-body);border-radius:16px;margin-bottom:8px}.v13-status{padding:11px 13px;border-radius:15px;font-weight:800;line-height:1.8;margin-top:10px}.v13-ok{background:rgba(16,185,129,.12);border:1px solid rgba(16,185,129,.24);color:#10b981}.v13-warn{background:rgba(245,158,11,.12);border:1px solid rgba(245,158,11,.25);color:#f59e0b}.v13-error{background:rgba(239,68,68,.10);border:1px solid rgba(239,68,68,.22);color:#ef4444}
+</style>
+
 </head>
 <body data-theme="dark">
 
@@ -517,6 +523,7 @@ th { background:rgba(37,99,235,.07) !important; color:#1d4ed8 !important; }
             <button class="btn btn-outline" onclick="showSec('admin-roles')"><i class="fas fa-user-lock"></i> صلاحيات الفريق</button>
             <button class="btn btn-outline" onclick="showSec('protection-center')"><i class="fas fa-shield-halved"></i> الحماية والنشاط</button>
             <button class="btn btn-outline" onclick="showSec('v10-mega')"><i class="fas fa-wand-magic-sparkles"></i> V10 Mega</button>
+            <button class="btn btn-outline" onclick="showSec('v13-pro')"><i class="fas fa-crown"></i> V13 Pro</button>
             <button class="btn btn-outline" onclick="showSec('settings')"><i class="fas fa-database"></i> الإدارة والنسخ</button>
         </nav>
         <button class="btn btn-danger" style="margin-top: auto; justify-content: center; padding: 0.8rem;" onclick="adminLogout()"><i class="fas fa-sign-out-alt"></i> تسجيل الخروج</button>
@@ -1126,7 +1133,48 @@ th { background:rgba(37,99,235,.07) !important; color:#1d4ed8 !important; }
                 <button class="btn btn-danger" onclick="factoryReset()" style="margin-top: 1rem;"><i class="fas fa-trash-alt"></i> فورمات الموقع (حذف شامل)</button>
             </div>
         </section>
-    </main>
+    
+        <section id="sec-v13-pro" style="display:none;">
+            <div class="v13-hero">
+                <h3><i class="fas fa-crown"></i> V13 Pro Platform</h3>
+                <p>مركز تطوير المنصة: كويزات بعد الدروس، متابعة تقدم الطلاب، وصفحة رئيسية احترافية.</p>
+            </div>
+            <div class="v13-grid">
+                <div class="v13-card">
+                    <h4><i class="fas fa-question-circle"></i> إنشاء كويز بعد درس</h4>
+                    <div class="v13-row">
+                        <select id="v13-quiz-lesson"><option value="">اختر الدرس...</option></select>
+                        <input id="v13-quiz-title" placeholder="عنوان الكويز">
+                        <input id="v13-quiz-points" type="number" placeholder="XP" value="20">
+                    </div>
+                    <div class="v13-question-box">
+                        <input id="v13-q-text" placeholder="نص السؤال">
+                        <div class="v13-row">
+                            <input id="v13-o-0" placeholder="اختيار 1">
+                            <input id="v13-o-1" placeholder="اختيار 2">
+                            <input id="v13-o-2" placeholder="اختيار 3">
+                            <input id="v13-o-3" placeholder="اختيار 4">
+                        </div>
+                        <select id="v13-correct"><option value="0">الإجابة الصحيحة 1</option><option value="1">الإجابة الصحيحة 2</option><option value="2">الإجابة الصحيحة 3</option><option value="3">الإجابة الصحيحة 4</option></select>
+                        <button class="btn btn-info" onclick="TitanV13Admin.addQuizQuestion()"><i class="fas fa-plus"></i> إضافة السؤال</button>
+                    </div>
+                    <div id="v13-quiz-draft"></div>
+                    <button class="btn btn-success" style="width:100%;justify-content:center;margin-top:10px;" onclick="TitanV13Admin.publishQuiz()"><i class="fas fa-upload"></i> نشر الكويز</button>
+                    <div id="v13-admin-status"></div>
+                </div>
+                <div class="v13-card">
+                    <h4><i class="fas fa-list-check"></i> الكويزات المنشورة</h4>
+                    <div id="v13-quiz-list"><div class="v13-status v13-warn">جاري التحميل...</div></div>
+                </div>
+                <div class="v13-card">
+                    <h4><i class="fas fa-chart-simple"></i> تقدم الطلاب</h4>
+                    <p style="color:var(--text-dim);line-height:1.8">التقدم يحفظ في <b>lesson_progress/STUDENT_UID/LESSON_ID</b>، ونتائج الكويز في <b>mega_records</b>.</p>
+                    <button class="btn btn-primary" onclick="TitanV13Admin.refresh()"><i class="fas fa-rotate"></i> تحديث البيانات</button>
+                </div>
+            </div>
+        </section>
+
+</main>
 
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js" onerror="window.firebaseLoadError='فشل تحميل firebase-app-compat من gstatic';"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js" onerror="window.firebaseLoadError='فشل تحميل firebase-auth-compat من gstatic';"></script>
@@ -3034,6 +3082,27 @@ window.addEventListener('DOMContentLoaded', function(){
   }
   window.TitanV10Admin={sendMegaNotification,sendTestNotification,runNotificationHealthCheck,renderMegaRecords,addMegaRecord,exportMegaCsv,saveAutomationRule,deleteAutomation,sendFanout};
   window.addEventListener('DOMContentLoaded',()=>{renderFeatureGrid(); setInterval(refreshStudents,1000); setInterval(installOverrides,1200); setTimeout(runNotificationHealthCheck,1800); setInterval(subscribe,1500);});
+})();
+</script>
+
+
+<script id="titan-v13-admin-js">
+(function(){
+  const draft=[];
+  const $=id=>document.getElementById(id);
+  const esc=v=>String(v==null?'':v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const db=()=>window.firebase&&firebase.database?firebase.database():null;
+  function status(msg,type){const el=$('v13-admin-status');if(el)el.innerHTML='<div class="v13-status v13-'+(type||'warn')+'">'+esc(msg)+'</div>'}
+  function renderDraft(){const el=$('v13-quiz-draft');if(!el)return;el.innerHTML=draft.length?draft.map((q,i)=>'<div class="v13-list-item"><span><b>'+(i+1)+'.</b> '+esc(q.text)+'</span><button class="btn btn-danger" onclick="TitanV13Admin.removeQuestion('+i+')"><i class="fas fa-trash"></i></button></div>').join(''):'<div class="v13-status v13-warn">لم يتم إضافة أسئلة بعد.</div>'}
+  function addQuizQuestion(){const text=($('v13-q-text')?.value||'').trim();const options=[0,1,2,3].map(i=>($('v13-o-'+i)?.value||'').trim()).filter(Boolean);const correct=Number($('v13-correct')?.value||0);if(!text||options.length<2)return status('اكتب السؤال واختيارين على الأقل.','error');draft.push({text,options,correct:Math.min(correct,options.length-1)});['v13-q-text','v13-o-0','v13-o-1','v13-o-2','v13-o-3'].forEach(id=>{if($(id))$(id).value=''});renderDraft()}
+  function removeQuestion(i){draft.splice(i,1);renderDraft()}
+  async function loadLessons(){const d=db();if(!d||!$('v13-quiz-lesson'))return;const snap=await d.ref('content').once('value');const lessons=snap.val()||{};$('v13-quiz-lesson').innerHTML='<option value="">اختر الدرس...</option>'+Object.entries(lessons).map(([k,l])=>'<option value="'+esc(k)+'" data-level="'+esc(l.level||'')+'">'+esc(l.title||k)+' - مستوى '+esc(l.level||'-')+'</option>').join('')}
+  function loadQuizzes(){const d=db(),el=$('v13-quiz-list');if(!d||!el)return;d.ref('lesson_quizzes').limitToLast(50).on('value',snap=>{const q=snap.val()||{},rows=Object.entries(q).reverse();el.innerHTML=rows.length?rows.map(([k,v])=>'<div class="v13-list-item"><span><b>'+esc(v.title||'كويز')+'</b><br><small>مستوى '+esc(v.level||'-')+' | '+((v.questions||[]).length||v.questionCount||0)+' سؤال</small></span><button class="btn btn-danger" onclick="TitanV13Admin.deleteQuiz(\''+esc(k)+'\')"><i class="fas fa-trash"></i></button></div>').join(''):'<div class="v13-status v13-warn">لا توجد كويزات بعد.</div>'})}
+  async function publishQuiz(){const d=db();if(!d)return status('Firebase غير جاهز.','error');const sel=$('v13-quiz-lesson'),lessonKey=sel?.value||'';if(!lessonKey)return status('اختار الدرس أولاً.','error');if(!draft.length)return status('أضف سؤال واحد على الأقل.','error');const level=sel.selectedOptions[0]?.dataset.level||'';await d.ref('lesson_quizzes').push({lessonKey,level,title:($('v13-quiz-title')?.value||'كويز الدرس').trim(),points:Number($('v13-quiz-points')?.value||20),questions:draft.slice(),questionCount:draft.length,createdAt:Date.now(),status:'active'});draft.length=0;renderDraft();if($('v13-quiz-title'))$('v13-quiz-title').value='';status('تم نشر الكويز بنجاح.','ok')}
+  async function deleteQuiz(key){if(confirm('حذف الكويز؟'))await db().ref('lesson_quizzes/'+key).remove()}
+  function refresh(){loadLessons();loadQuizzes();renderDraft()}
+  window.TitanV13Admin={addQuizQuestion,removeQuestion,publishQuiz,deleteQuiz,refresh};
+  document.addEventListener('DOMContentLoaded',()=>setTimeout(refresh,1200));
 })();
 </script>
 

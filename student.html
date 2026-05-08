@@ -749,6 +749,12 @@ html, body { min-height:100%; background:var(--bg-body,#f1f5f9) !important; }
 .titan-v12-card .video-box{border-radius:18px 18px 0 0;overflow:hidden}
 </style>
 
+
+<style id="titan-v13-student-css">
+:root{--v13-blue:#2563eb;--v13-purple:#7c3aed;--v13-green:#10b981;--v13-card-radius:24px}
+#login-page{background:radial-gradient(circle at top right,rgba(37,99,235,.95),rgba(124,58,237,.92) 45%,#0f172a 100%) !important}.login-card{box-shadow:0 30px 80px rgba(15,23,42,.35) !important;border:1px solid rgba(255,255,255,.20)}.v13-progress-card{background:linear-gradient(135deg,rgba(37,99,235,.10),rgba(16,185,129,.08));border:1px solid rgba(37,99,235,.22);border-radius:22px;padding:14px;margin:12px 0}.v13-progress{height:12px;border-radius:99px;background:var(--bg-body);border:1px solid var(--border);overflow:hidden;margin:9px 0}.v13-progress span{display:block;height:100%;width:0%;background:var(--primary-gradient)}.v13-lesson-controls{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}.v13-btn{border:0;border-radius:14px;padding:.72rem 1rem;font-weight:900;cursor:pointer;display:inline-flex;gap:8px;align-items:center;background:var(--primary-gradient);color:white;text-decoration:none}.v13-btn.secondary{background:var(--bg-body);color:var(--text-main);border:1px solid var(--border)}.v13-btn.success{background:#10b981;color:#fff}.v13-btn.warn{background:#f59e0b;color:#fff}.v13-quiz-panel{display:none;position:fixed;inset:0;z-index:99999;background:rgba(15,23,42,.62);backdrop-filter:blur(4px);align-items:center;justify-content:center;padding:16px}.v13-quiz-card{width:min(760px,96vw);max-height:88vh;overflow:auto;background:var(--card-bg);color:var(--text-main);border:1px solid var(--border);border-radius:28px;padding:22px;box-shadow:0 30px 80px rgba(0,0,0,.30)}.v13-quiz-q{background:var(--bg-body);border:1px solid var(--border);border-radius:18px;padding:14px;margin:12px 0}.v13-quiz-q label{display:flex;gap:10px;align-items:center;background:var(--card-bg);border:1px solid var(--border);border-radius:14px;padding:10px;margin:8px 0;cursor:pointer}.v13-toast{position:fixed;right:16px;bottom:16px;z-index:999999;background:var(--card-bg);border:1px solid rgba(37,99,235,.28);border-right:5px solid #2563eb;border-radius:18px;padding:13px 15px;box-shadow:0 18px 45px rgba(15,23,42,.22);font-weight:900;line-height:1.8;max-width:min(420px,92vw)}.v13-toast.ok{border-right-color:#10b981}.v13-toast.err{border-right-color:#ef4444}.lesson-card{transition:transform .18s ease,box-shadow .18s ease !important}.lesson-card:hover{transform:translateY(-2px);box-shadow:0 18px 45px rgba(15,23,42,.10) !important}@media(max-width:900px){.v13-quiz-card{padding:16px;border-radius:22px}.v13-lesson-controls{display:grid;grid-template-columns:1fr}.v13-btn{justify-content:center}}
+</style>
+
 </head>
 <body>
     <!-- صفحة الدخول -->
@@ -2521,133 +2527,37 @@ window.addEventListener('DOMContentLoaded', function(){
 </script>
 
 
-<script id="titan-lessons-display-fix-v12">
+
+<div id="v13-quiz-panel" class="v13-quiz-panel"><div class="v13-quiz-card" id="v13-quiz-card"></div></div>
+<script id="titan-v13-student-js">
 (function(){
-  const state = {student:null, lessons:{}, studentLoading:false, contentListening:false};
-  const $ = id => document.getElementById(id);
-  const esc = v => String(v == null ? '' : v).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-  const safe = v => { const raw=String(v||'').trim(); if(!raw) return ''; try{ const u=new URL(raw, location.href); return ['http:','https:','blob:','data:'].includes(u.protocol)?raw:''; }catch(e){ return ''; } };
-  const db = () => (window.firebase && firebase.database) ? firebase.database() : null;
-  const auth = () => (window.firebase && firebase.auth) ? firebase.auth() : null;
-  const currentUser = () => { const a=auth(); return a && a.currentUser; };
-  function youtubeId(url){
-    const raw=String(url||'').trim(); if(!raw) return '';
-    try{
-      const u=new URL(raw, location.href);
-      if(u.hostname.includes('youtu.be')) return u.pathname.replace('/','').split('/')[0];
-      if(u.searchParams.get('v')) return u.searchParams.get('v');
-      const parts=u.pathname.split('/').filter(Boolean);
-      const i=parts.findIndex(p=>p==='embed'||p==='shorts');
-      if(i>=0 && parts[i+1]) return parts[i+1];
-    }catch(e){}
-    return raw.includes('v=') ? raw.split('v=')[1].split('&')[0] : '';
-  }
-  function isYouTube(url){ return /youtube\.com|youtu\.be/i.test(String(url||'')); }
-  function levelFromDom(){
-    const t = ($('level-badge') && $('level-badge').textContent) || '';
-    const m = t.match(/\d+/);
-    return m ? m[0] : '';
-  }
-  async function loadStudent(){
-    if(state.student || state.studentLoading) return state.student;
-    const u=currentUser(), d=db(); if(!u || !d) return null;
-    state.studentLoading = true;
-    try{
-      const snap = await d.ref('students/'+u.uid).once('value');
-      if(snap.exists()) state.student = Object.assign({}, snap.val(), {key:u.uid});
-    }catch(e){ console.warn('v12 student load failed', e); }
-    state.studentLoading = false;
-    return state.student;
-  }
-  function lessonMedia(l){
-    const raw = l.videoUrl || l.videoFileUrl || l.uploadedVideo || l.video || '';
-    const thumb = safe(l.thumbnailUrl || l.thumbnail || '');
-    if(raw && isYouTube(raw)){
-      const vid = youtubeId(raw);
-      return vid ? '<div class="video-box"><iframe src="https://www.youtube.com/embed/'+esc(vid)+'" allowfullscreen></iframe></div>' : '';
-    }
-    if(safe(raw)){
-      const poster = thumb ? ' poster="'+esc(thumb)+'"' : '';
-      return '<video class="lesson-video-player" controls preload="metadata"'+poster+' src="'+esc(safe(raw))+'"></video>';
-    }
-    if(thumb) return '<img class="cover-img" src="'+esc(thumb)+'" alt="غلاف الدرس">';
-    return '<div class="cover-img" style="display:flex;align-items:center;justify-content:center;background:var(--bg-body);min-height:190px;"><i class="fas fa-graduation-cap" style="font-size:3rem;color:var(--primary);"></i></div>';
-  }
-  function action(label,url,icon){
-    const u=safe(url);
-    return u ? '<a href="'+esc(u)+'" target="_blank" rel="noopener noreferrer" class="mini-badge"><i class="fas '+(icon||'fa-link')+'"></i> '+esc(label)+'</a>' : '';
-  }
-  function badge(text, icon){ return '<span class="mini-badge"><i class="fas '+(icon||'fa-tag')+'"></i> '+esc(text)+'</span>'; }
-  function renderLessonsV12(){
-    const list = $('lessons-list'), catSel = $('lesson-category-filter'), diffSel = $('lesson-difficulty-filter');
-    if(!list) return;
-    const level = (state.student && state.student.level) || levelFromDom();
-    if(!level){
-      list.innerHTML = '<div class="titan-v12-status">جاري تحميل بيانات الطالب... لو استمر النص أكثر من ثواني، سجّلي خروج ودخول.</div>';
-      loadStudent().then(renderLessonsV12);
-      return;
-    }
-    const source = state.lessons || window.allLessons || {};
-    const all = Object.entries(source).map(([key,l]) => Object.assign({}, l || {}, {key:key}));
-    const sameLevel = all.filter(l => String(l.level || '').trim() === String(level).trim());
-    const categories = [...new Set(sameLevel.map(l => l.category || 'عام'))].sort();
-    if(catSel){
-      const old = catSel.value || 'all';
-      catSel.innerHTML = '<option value="all">كل الأقسام</option>' + categories.map(c => '<option value="'+esc(c)+'">'+esc(c)+'</option>').join('');
-      catSel.value = (old === 'all' || categories.includes(old)) ? old : 'all';
-    }
-    const q = (($('lesson-search-student') && $('lesson-search-student').value) || '').toLowerCase();
-    const cat = catSel ? catSel.value : 'all';
-    const diff = diffSel ? diffSel.value : 'all';
-    const filtered = sameLevel
-      .filter(l => {
-        const hay = [l.title,l.desc,l.category,l.difficulty].join(' ').toLowerCase();
-        return (!q || hay.includes(q)) && (cat==='all' || (l.category||'عام')===cat) && (diff==='all' || l.difficulty===diff);
-      })
-      .sort((a,b) => (Number(a.sequence||a.order||0)-Number(b.sequence||b.order||0)) || (Number(b.createdAt||0)-Number(a.createdAt||0)));
-
-    if(!filtered.length){
-      list.innerHTML = '<div class="titan-v12-status">تم تحميل الدروس، لكن لا يوجد درس مطابق لمستوى الطالب الحالي: '+esc(level)+'. تأكدي أن مستوى الدرس في الإدارة = '+esc(level)+'.</div>';
-      return;
-    }
-
-    list.innerHTML = filtered.map(l => {
-      const videoRaw = l.videoUrl || l.video || '';
-      return '<div class="lesson-card titan-v12-card">'+lessonMedia(l)+'<div class="lesson-body">'
-        + '<h4 style="margin-bottom:8px;">'+(l.featured?'⭐ ':'')+esc(l.title || 'درس بدون عنوان')+'</h4>'
-        + '<div class="lesson-meta">'+badge('مستوى '+(l.level||level),'fa-layer-group')+badge(l.category||'عام','fa-tag')+badge(l.difficulty||'مبتدئ','fa-signal')+(l.duration?badge(l.duration+' دقيقة','fa-clock'):'')+'</div>'
-        + (l.desc ? '<p style="color:var(--text-dim);line-height:1.8;margin:10px 0;">'+esc(l.desc)+'</p>' : '')
-        + '<div class="lesson-actions">'+action('فتح الفيديو', videoRaw, 'fa-video')+action('ملزمة PDF', l.pdfUrl || l.pdf, 'fa-file-pdf')+action('ملف الكود', l.codeFileUrl || l.code, 'fa-file-code')+'</div>'
-        + '</div></div>';
-    }).join('');
-  }
-  function startContentListener(){
-    const d = db(); if(!d || state.contentListening) return;
-    state.contentListening = true;
-    d.ref('content').on('value', snap => {
-      state.lessons = snap.val() || {};
-      window.allLessons = state.lessons;
-      loadStudent().then(renderLessonsV12);
-    }, err => {
-      console.error('v12 content read failed', err);
-      const list=$('lessons-list');
-      if(list) list.innerHTML='<div class="titan-v12-error">فشل تحميل الدروس من Firebase. راجعي Realtime Database Rules لمسار content.</div>';
-    });
-  }
-  function boot(){
-    if(!auth()) return;
-    const u=currentUser();
-    if(u){ loadStudent().then(() => { startContentListener(); renderLessonsV12(); }); }
-    window.renderStudentLessons = renderLessonsV12;
-    if(window.TitanStudentV9) window.TitanStudentV9.renderLessons = renderLessonsV12;
-  }
-  window.TitanLessonsFixV12 = {render:renderLessonsV12, reload:function(){state.student=null; loadStudent().then(()=>{startContentListener(); renderLessonsV12();});}};
-  document.addEventListener('DOMContentLoaded', function(){
-    setTimeout(boot, 400);
-    setTimeout(boot, 1200);
-    setTimeout(boot, 2500);
-    setInterval(boot, 5000);
-  });
+  const state={student:null,lessons:{},progress:{},quizzes:{},listening:false};
+  const $=id=>document.getElementById(id);
+  const esc=v=>String(v==null?'':v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const safe=v=>{const raw=String(v||'').trim();if(!raw)return'';try{const u=new URL(raw,location.href);return['http:','https:','blob:','data:'].includes(u.protocol)?raw:''}catch(e){return''}};
+  const db=()=>window.firebase&&firebase.database?firebase.database():null;
+  const auth=()=>window.firebase&&firebase.auth?firebase.auth():null;
+  const uid=()=>auth()&&auth().currentUser?auth().currentUser.uid:'';
+  function toast(msg,type){let t=document.createElement('div');t.className='v13-toast '+(type==='err'?'err':'ok');t.innerHTML=esc(msg);document.body.appendChild(t);setTimeout(()=>t.remove(),3600)}
+  function ytId(url){const raw=String(url||'').trim();if(!raw)return'';try{const u=new URL(raw,location.href);if(u.hostname.includes('youtu.be'))return u.pathname.replace('/','').split('/')[0];if(u.searchParams.get('v'))return u.searchParams.get('v');const p=u.pathname.split('/').filter(Boolean),i=p.findIndex(x=>x==='embed'||x==='shorts');if(i>=0&&p[i+1])return p[i+1]}catch(e){}return raw.includes('v=')?raw.split('v=')[1].split('&')[0]:''}
+  function isYT(u){return/youtube\.com|youtu\.be/i.test(String(u||''))}
+  async function loadStudent(){if(state.student)return state.student;const id=uid(),d=db();if(!id||!d)return null;const s=await d.ref('students/'+id).once('value');if(s.exists())state.student={...s.val(),key:id};return state.student}
+  function progressOf(k){return Number((state.progress[k]&&state.progress[k].percent)||0)}
+  function quizFor(k){return Object.entries(state.quizzes).find(([id,q])=>q.lessonKey===k&&q.status!=='disabled')}
+  function media(l,k){const raw=l.videoUrl||l.videoFileUrl||l.uploadedVideo||l.video||'',thumb=safe(l.thumbnailUrl||l.thumbnail||'');if(raw&&isYT(raw)){const y=ytId(raw);return y?'<div class="video-box"><iframe src="https://www.youtube.com/embed/'+esc(y)+'" allowfullscreen></iframe></div>':''}if(safe(raw))return'<video class="lesson-video-player" controls preload="metadata" data-lesson-key="'+esc(k)+'" '+(thumb?'poster="'+esc(thumb)+'"':'')+' src="'+esc(safe(raw))+'"></video>';return thumb?'<img class="cover-img" src="'+esc(thumb)+'" alt="غلاف الدرس">':'<div class="cover-img" style="display:flex;align-items:center;justify-content:center;background:var(--bg-body);min-height:190px;"><i class="fas fa-graduation-cap" style="font-size:3rem;color:var(--primary);"></i></div>'}
+  function badge(text,icon){return'<span class="mini-badge"><i class="fas '+(icon||'fa-tag')+'"></i> '+esc(text)+'</span>'}
+  function action(label,url,icon){const u=safe(url);return u?'<a class="v13-btn secondary" href="'+esc(u)+'" target="_blank" rel="noopener noreferrer"><i class="fas '+(icon||'fa-link')+'"></i> '+esc(label)+'</a>':''}
+  function render(){const list=$('lessons-list');if(!list)return;const level=(state.student&&state.student.level)||'';if(!level){list.innerHTML='<div class="titan-v12-status">جاري تحميل بيانات الطالب...</div>';return}const all=Object.entries(state.lessons||{}).map(([key,l])=>({...l,key}));const q=(($('lesson-search-student')&&$('lesson-search-student').value)||'').toLowerCase();const filtered=all.filter(l=>String(l.level||'')===String(level)).filter(l=>[l.title,l.desc,l.category,l.difficulty].join(' ').toLowerCase().includes(q)).sort((a,b)=>(Number(a.sequence||0)-Number(b.sequence||0))||(Number(b.createdAt||0)-Number(a.createdAt||0)));if(!filtered.length){list.innerHTML='<div class="titan-v12-status">لا توجد دروس مناسبة لمستواك حتى الآن.</div>';return}list.innerHTML=filtered.map(l=>{const p=progressOf(l.key),qz=quizFor(l.key);return'<div class="lesson-card titan-v12-card">'+media(l,l.key)+'<div class="lesson-body"><h4 style="margin-bottom:8px;">'+(l.featured?'⭐ ':'')+esc(l.title||'درس')+'</h4><div class="lesson-meta">'+badge('مستوى '+(l.level||level),'fa-layer-group')+badge(l.category||'عام','fa-tag')+badge(l.difficulty||'مبتدئ','fa-signal')+(l.duration?badge(l.duration+' دقيقة','fa-clock'):'')+'</div>'+(l.desc?'<p style="color:var(--text-dim);line-height:1.8;margin:10px 0;">'+esc(l.desc)+'</p>':'')+'<div class="v13-progress-card"><b>تقدمك في الدرس: '+p+'%</b><div class="v13-progress"><span style="width:'+p+'%"></span></div>'+(p>=100?'✅ مكتمل':'استمر في المشاهدة أو اضغط تم')+'</div><div class="v13-lesson-controls">'+action('فتح الفيديو',l.videoUrl||l.video,'fa-video')+action('PDF',l.pdfUrl||l.pdf,'fa-file-pdf')+action('الكود',l.codeFileUrl||l.code,'fa-file-code')+'<button class="v13-btn success" onclick="TitanV13Student.markComplete(\''+esc(l.key)+'\')"><i class="fas fa-check"></i> تم الدرس</button>'+(qz?'<button class="v13-btn warn" onclick="TitanV13Student.openQuiz(\''+esc(l.key)+'\')"><i class="fas fa-question-circle"></i> كويز الدرس</button>':'')+'</div></div></div>'}).join('');attachVideoTracking()}
+  async function saveProgress(k,percent){const id=uid(),d=db();if(!id||!d||!k)return;percent=Math.max(progressOf(k),Math.min(100,Math.round(percent)));state.progress[k]={lessonKey:k,percent,updatedAt:Date.now()};render();await d.ref('lesson_progress/'+id+'/'+k).update({lessonKey:k,percent,updatedAt:Date.now()}).catch(console.warn)}
+  function attachVideoTracking(){document.querySelectorAll('video[data-lesson-key]').forEach(v=>{if(v.dataset.v13Bound)return;v.dataset.v13Bound='1';v.addEventListener('timeupdate',()=>{if(v.duration>10){const pct=v.currentTime/v.duration*100;if(pct>=10)saveProgress(v.dataset.lessonKey,pct)}});v.addEventListener('ended',()=>saveProgress(v.dataset.lessonKey,100))})}
+  async function markComplete(k){await saveProgress(k,100);toast('تم تسجيل الدرس كمكتمل ✅')}
+  function openQuiz(k){const found=quizFor(k);if(!found)return toast('لا يوجد كويز لهذا الدرس','err');const qid=found[0],qz=found[1],card=$('v13-quiz-card'),panel=$('v13-quiz-panel');card.dataset.quiz=qid;card.dataset.lesson=k;card.innerHTML='<div style="display:flex;justify-content:space-between;gap:10px;align-items:center;"><h2>'+esc(qz.title||'كويز الدرس')+'</h2><button class="v13-btn secondary" onclick="TitanV13Student.closeQuiz()">إغلاق</button></div>'+(qz.questions||[]).map((q,i)=>'<div class="v13-quiz-q"><h4>'+(i+1)+'. '+esc(q.text)+'</h4>'+(q.options||[]).map((o,j)=>'<label><input type="radio" name="v13-q-'+i+'" value="'+j+'"><span>'+esc(o)+'</span></label>').join('')+'</div>').join('')+'<button class="v13-btn success" style="width:100%;justify-content:center" onclick="TitanV13Student.submitQuiz()"><i class="fas fa-paper-plane"></i> تسليم الكويز</button>';panel.style.display='flex'}
+  function closeQuiz(){const p=$('v13-quiz-panel');if(p)p.style.display='none'}
+  async function submitQuiz(){const card=$('v13-quiz-card'),qid=card.dataset.quiz,lessonKey=card.dataset.lesson,qz=state.quizzes[qid];if(!qz)return;let score=0,total=(qz.questions||[]).length,answers={};(qz.questions||[]).forEach((q,i)=>{const ch=document.querySelector('input[name="v13-q-'+i+'"]:checked'),val=ch?Number(ch.value):-1;answers[i]=val;if(val===Number(q.correct))score++});const pct=total?Math.round(score/total*100):0;await db().ref('mega_records').push({type:'lesson_quiz_result',studentKey:uid(),studentName:(state.student&&state.student.name)||'',level:(state.student&&state.student.level)||'',lessonKey,quizKey:qid,score,total,percent:pct,answers,createdAt:Date.now(),status:pct>=60?'passed':'failed'}).catch(console.warn);closeQuiz();toast('نتيجتك: '+score+' / '+total+(pct>=60?' ✅':' حاول مرة أخرى'),pct>=60?'ok':'err');if(pct>=60)saveProgress(lessonKey,100)}
+  function listen(){const d=db(),id=uid();if(!d||!id||state.listening)return;state.listening=true;d.ref('content').on('value',s=>{state.lessons=s.val()||{};render()});d.ref('lesson_progress/'+id).on('value',s=>{state.progress=s.val()||{};render()});d.ref('lesson_quizzes').on('value',s=>{state.quizzes=s.val()||{};render()})}
+  async function boot(){await loadStudent();listen();render()}
+  window.TitanV13Student={markComplete,openQuiz,closeQuiz,submitQuiz,render};
+  document.addEventListener('DOMContentLoaded',()=>{setTimeout(boot,900);setTimeout(boot,2200)});
 })();
 </script>
 
