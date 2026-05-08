@@ -381,6 +381,94 @@ th { background:rgba(37,99,235,.07) !important; color:#1d4ed8 !important; }
 }
 </style>
 
+
+<style id="titan-live-v7-css">
+/* ===== TITAN LIVE V7: stable share + no broken WebRTC signals ===== */
+.vc-share-banner{
+  display:none;
+  margin:0 0 14px;
+  padding:12px 14px;
+  border-radius:16px;
+  border:1px solid rgba(14,165,233,.35);
+  background:rgba(14,165,233,.12);
+  color:var(--text-main,#0f172a);
+  font-weight:900;
+  line-height:1.8;
+}
+.vc-share-banner.active{display:block}
+.vc-screen-tile{
+  grid-column:1/-1 !important;
+  min-height:440px !important;
+  outline:3px solid rgba(14,165,233,.45);
+  box-shadow:0 18px 50px rgba(14,165,233,.22) !important;
+}
+.vc-screen-tile video{
+  min-height:440px !important;
+  object-fit:contain !important;
+  background:#020617 !important;
+}
+.vc-share-button-fix{
+  background:linear-gradient(135deg,#0ea5e9,#2563eb) !important;
+  color:#fff !important;
+  font-weight:900 !important;
+  border:0 !important;
+}
+.vc-share-button-fix.is-sharing{
+  background:linear-gradient(135deg,#f97316,#ef4444) !important;
+}
+.vc-debug-note{
+  margin-top:8px;
+  padding:10px 12px;
+  border-radius:14px;
+  background:#fff7ed;
+  color:#9a3412;
+  border:1px solid #fdba74;
+  font-weight:800;
+  line-height:1.7;
+}
+@media (max-width:900px){
+  .vc-screen-tile,.vc-screen-tile video{min-height:320px !important}
+}
+</style>
+
+
+<style id="titan-admin-v9-protection-css">
+/* ===== TITAN V9: protection center ===== */
+.v9-kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:14px;margin-bottom:16px;}
+.v9-kpi{background:var(--bg-card);border:1px solid var(--border);border-radius:18px;padding:16px;box-shadow:var(--shadow);}
+.v9-kpi small{display:block;color:var(--text-dim);font-weight:800;margin-bottom:8px;}
+.v9-kpi strong{font-size:2rem;color:var(--primary);}
+.v9-progress{height:10px;border-radius:999px;background:var(--bg-body);border:1px solid var(--border);overflow:hidden;min-width:110px;}
+.v9-progress span{display:block;height:100%;background:linear-gradient(135deg,#2563eb,#7c3aed);}
+.v9-device{direction:ltr;text-align:left;font-size:.78rem;color:var(--text-dim);max-width:260px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:inline-block;}
+</style>
+
+
+<style id="titan-v10-mega-css">
+/* ===== TITAN V10 MEGA: fixed notifications + 10000+ scalable dashboards ===== */
+.v10-hero{background:linear-gradient(135deg,rgba(37,99,235,.16),rgba(124,58,237,.14));border:1px solid rgba(37,99,235,.25);border-radius:24px;padding:18px;margin-bottom:16px;line-height:1.9}
+.v10-hero h3{margin-bottom:8px;color:var(--primary)}
+.v10-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(245px,1fr));gap:14px;margin:14px 0}
+.v10-card{background:var(--bg-body);border:1px solid var(--border);border-radius:18px;padding:15px;box-shadow:0 8px 18px rgba(15,23,42,.06);min-height:135px}
+.v10-card h4{color:var(--primary);margin-bottom:8px;display:flex;gap:8px;align-items:center;font-weight:900}
+.v10-card p{color:var(--text-dim);line-height:1.8;font-size:.92rem}
+.v10-kpi{background:linear-gradient(135deg,rgba(14,165,233,.12),rgba(16,185,129,.10));border:1px solid rgba(14,165,233,.22);border-radius:18px;padding:15px;text-align:center}
+.v10-kpi small{display:block;color:var(--text-dim);font-weight:800}.v10-kpi strong{font-size:2rem;color:var(--primary);display:block;margin-top:6px}
+.v10-status-ok{background:rgba(16,185,129,.10);border:1px solid rgba(16,185,129,.24);color:#059669;border-radius:16px;padding:12px;line-height:1.8;font-weight:800}
+.v10-status-warn{background:rgba(245,158,11,.12);border:1px solid rgba(245,158,11,.25);color:#b45309;border-radius:16px;padding:12px;line-height:1.8;font-weight:800}
+.v10-status-error{background:rgba(239,68,68,.10);border:1px solid rgba(239,68,68,.22);color:#dc2626;border-radius:16px;padding:12px;line-height:1.8;font-weight:800}
+.v10-table-tools{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:12px 0}.v10-table-tools input,.v10-table-tools select{max-width:280px}
+.v10-progress{height:11px;background:var(--bg-body);border:1px solid var(--border);border-radius:99px;overflow:hidden}.v10-progress span{display:block;height:100%;background:linear-gradient(135deg,#2563eb,#10b981)}
+</style>
+
+
+<style id="titan-upload-fix-v11-css">
+.upload-fix-note,.upload-fix-error,.upload-fix-ok{margin-top:10px;padding:12px 14px;border-radius:16px;font-weight:800;line-height:1.8}
+.upload-fix-note{border:1px solid rgba(245,158,11,.32);background:rgba(245,158,11,.12);color:#f59e0b}
+.upload-fix-error{border:1px solid rgba(239,68,68,.32);background:rgba(239,68,68,.12);color:#ef4444}
+.upload-fix-ok{border:1px solid rgba(16,185,129,.32);background:rgba(16,185,129,.12);color:#10b981}
+</style>
+
 </head>
 <body data-theme="dark">
 
@@ -421,6 +509,14 @@ th { background:rgba(37,99,235,.07) !important; color:#1d4ed8 !important; }
             <button class="btn btn-outline" onclick="showSec('schedule')"><i class="fas fa-clock"></i> المواعيد</button>
             <button class="btn btn-outline" onclick="showSec('report-att')"><i class="fas fa-table"></i> تقرير الغياب</button>
             <button class="btn btn-outline" onclick="showSec('support')"><i class="fas fa-headset"></i> الشكاوى والدعم الفني</button> <!-- تمت إضافة الزر هنا -->
+
+            <button class="btn btn-outline" onclick="showSec('notifications')"><i class="fas fa-bell"></i> الإشعارات الذكية</button>
+            <button class="btn btn-outline" onclick="showSec('parent-portal')"><i class="fas fa-people-roof"></i> أولياء الأمور</button>
+            <button class="btn btn-outline" onclick="showSec('question-bank')"><i class="fas fa-database"></i> بنك الأسئلة</button>
+            <button class="btn btn-outline" onclick="showSec('student-reports')"><i class="fas fa-file-pdf"></i> تقارير وشهادات</button>
+            <button class="btn btn-outline" onclick="showSec('admin-roles')"><i class="fas fa-user-lock"></i> صلاحيات الفريق</button>
+            <button class="btn btn-outline" onclick="showSec('protection-center')"><i class="fas fa-shield-halved"></i> الحماية والنشاط</button>
+            <button class="btn btn-outline" onclick="showSec('v10-mega')"><i class="fas fa-wand-magic-sparkles"></i> V10 Mega</button>
             <button class="btn btn-outline" onclick="showSec('settings')"><i class="fas fa-database"></i> الإدارة والنسخ</button>
         </nav>
         <button class="btn btn-danger" style="margin-top: auto; justify-content: center; padding: 0.8rem;" onclick="adminLogout()"><i class="fas fa-sign-out-alt"></i> تسجيل الخروج</button>
@@ -615,6 +711,8 @@ th { background:rgba(37,99,235,.07) !important; color:#1d4ed8 !important; }
                     <select id="lesson-difficulty"><option value="مبتدئ">مبتدئ</option><option value="متوسط">متوسط</option><option value="متقدم">متقدم</option></select>
                     <input type="number" id="lesson-duration" placeholder="مدة الدرس بالدقائق">
                     <select id="lesson-featured"><option value="false">درس عادي</option><option value="true">درس مميز ⭐</option></select>
+                    <input type="number" id="lesson-sequence-v9" placeholder="ترتيب الدرس للتسلسل" min="1">
+                    <select id="lesson-unlock-mode-v9"><option value="sequence">يفتح بعد السابق</option><option value="free">مفتوح دائماً</option></select>
                 </div>
                 <textarea id="lesson-desc" placeholder="وصف الدرس، أهدافه، وما المطلوب من الطالب بعد المشاهدة..." rows="4"></textarea>
                 <div class="pro-grid">
@@ -626,7 +724,7 @@ th { background:rgba(37,99,235,.07) !important; color:#1d4ed8 !important; }
                     <div class="upload-zone">
                         <label><i class="fas fa-video"></i> رفع فيديو من الجهاز</label>
                         <input type="file" id="lesson-video-file" accept="video/*">
-                        <div class="muted-help">يدعم MP4/WebM حسب المتصفح. للأداء الأفضل اضغط الفيديو قبل الرفع.</div>
+                        <div class="muted-help">يدعم MP4/WebM حسب المتصفح. للأداء الأفضل اضغط الفيديو قبل الرفع. لو مشروع Firebase على Spark المجاني فرفع الفيديو من الجهاز قد لا يعمل؛ استخدمي رابط فيديو أو فعّلي Storage.</div>
                     </div>
                     <div class="upload-zone">
                         <label><i class="fas fa-file-pdf"></i> رفع PDF / ملزمة</label>
@@ -645,6 +743,7 @@ th { background:rgba(37,99,235,.07) !important; color:#1d4ed8 !important; }
                     </div>
                 </div>
                 <div class="progress-wrap" id="lesson-upload-progress-wrap"><div class="progress-bar" id="lesson-upload-progress">0%</div></div>
+                <div id="lesson-upload-fix-status"></div>
                 <button class="btn btn-primary" id="publish-lesson-btn" style="width: 100%; margin-top: 15px; justify-content: center;" onclick="uploadLesson()"><i class="fas fa-cloud-upload-alt"></i> رفع ونشر الدرس</button>
             </div>
             <div class="card">
@@ -811,7 +910,7 @@ th { background:rgba(37,99,235,.07) !important; color:#1d4ed8 !important; }
                     <button class="btn btn-primary" onclick="VCAdmin.copyCode()"><i class="fas fa-copy"></i> نسخ الكود</button>
                     <button class="btn btn-warning" onclick="VCAdmin.toggleMic()"><i class="fas fa-microphone"></i> مايك المعلم</button>
                     <button class="btn btn-warning" onclick="VCAdmin.toggleCamera()"><i class="fas fa-video"></i> كاميرا المعلم</button>
-                    <button class="btn btn-info vc-share-button-fix" id="vc-admin-share-btn" onclick="VCAdmin.shareScreen()"><i class="fas fa-desktop"></i> مشاركة الشاشة</button>
+                    <button class="btn btn-info vc-share-button-fix" id="vc-admin-share-btn" onclick="VCAdmin.shareScreen()" id="vc-admin-share-btn" class="btn btn-info vc-share-button-fix"><i class="fas fa-desktop"></i> مشاركة الشاشة</button>
                     <button class="btn btn-success" id="vc-admin-record-btn" onclick="VCAdmin.toggleRecording()"><i class="fas fa-record-vinyl"></i> بدء التسجيل</button>
                     <button class="btn btn-danger" onclick="VCAdmin.endClass()"><i class="fas fa-phone-slash"></i> إنهاء الحصة</button>
                 </div>
@@ -844,6 +943,182 @@ th { background:rgba(37,99,235,.07) !important; color:#1d4ed8 !important; }
             </div>
         </section>
 
+
+
+        <section id="sec-notifications" style="display: none;">
+            <div class="card">
+                <h3><i class="fas fa-bell"></i> الإشعارات الذكية</h3>
+                <p class="teacher-note">أرسل تنبيه فوري لكل الطلاب أو مستوى محدد أو طالب بعينه. الصفحة ترسل أيضاً تنبيهات تلقائية عند نشر درس/امتحان/مهمة وبدء حصة مباشرة.</p>
+                <div class="pro-grid">
+                    <input type="text" id="notify-title" placeholder="عنوان الإشعار: مثال واجب جديد">
+                    <select id="notify-target-type" onchange="TitanAdminV8.refreshNotificationTargets()">
+                        <option value="all">كل الطلاب</option>
+                        <option value="level">مستوى محدد</option>
+                        <option value="student">طالب محدد</option>
+                    </select>
+                    <select id="notify-level"><option value="1">مستوى 1</option><option value="2">مستوى 2</option><option value="3">مستوى 3</option></select>
+                    <select id="notify-student"></select>
+                </div>
+                <textarea id="notify-body" rows="4" placeholder="نص الإشعار..."></textarea>
+                <button class="btn btn-primary" onclick="TitanAdminV8.sendNotificationManual()"><i class="fas fa-paper-plane"></i> إرسال الإشعار</button>
+            </div>
+            <div class="card">
+                <h3><i class="fas fa-clock-rotate-left"></i> آخر الإشعارات</h3>
+                <table><thead><tr><th>العنوان</th><th>النطاق</th><th>الرسالة</th><th>الوقت</th><th>إجراء</th></tr></thead><tbody id="notifications-admin-list"></tbody></table>
+            </div>
+        </section>
+
+        <section id="sec-parent-portal" style="display: none;">
+            <div class="card">
+                <h3><i class="fas fa-people-roof"></i> لوحة ولي الأمر</h3>
+                <p class="teacher-note">ولي الأمر يدخل من صفحة الطالب بنفس كود الطالب ورقم الهاتف، ويظهر له وضع متابعة فقط مع التقارير والشهادات المنشورة من الإدارة.</p>
+                <div class="pro-grid">
+                    <select id="parent-student-select"></select>
+                    <button class="btn btn-info" onclick="TitanAdminV8.copyParentInstructions()"><i class="fas fa-copy"></i> نسخ تعليمات الدخول لولي الأمر</button>
+                    <button class="btn btn-success" onclick="TitanAdminV8.generateParentReport()"><i class="fas fa-file-circle-plus"></i> إنشاء تقرير سريع</button>
+                </div>
+                <div id="parent-instructions-box" class="vc-ok" style="margin-top:12px;"></div>
+            </div>
+        </section>
+
+        <section id="sec-question-bank" style="display: none;">
+            <div class="card">
+                <h3><i class="fas fa-database"></i> بنك الأسئلة</h3>
+                <div class="pro-grid">
+                    <input type="text" id="qb-text" placeholder="نص السؤال">
+                    <select id="qb-level"><option value="1">مستوى 1</option><option value="2">مستوى 2</option><option value="3">مستوى 3</option></select>
+                    <input type="text" id="qb-category" placeholder="التصنيف: HTML / CSS / JS">
+                    <select id="qb-difficulty"><option value="سهل">سهل</option><option value="متوسط">متوسط</option><option value="صعب">صعب</option></select>
+                </div>
+                <div class="pro-grid">
+                    <input type="text" id="qb-o1" placeholder="الاختيار الأول">
+                    <input type="text" id="qb-o2" placeholder="الاختيار الثاني">
+                    <input type="text" id="qb-o3" placeholder="الاختيار الثالث">
+                    <input type="text" id="qb-o4" placeholder="الاختيار الرابع">
+                    <select id="qb-answer"><option value="0">الصحيح: الأول</option><option value="1">الصحيح: الثاني</option><option value="2">الصحيح: الثالث</option><option value="3">الصحيح: الرابع</option></select>
+                </div>
+                <button class="btn btn-primary" onclick="TitanAdminV8.addQuestionToBank()"><i class="fas fa-plus"></i> إضافة السؤال للبنك</button>
+            </div>
+            <div class="card">
+                <h3><i class="fas fa-wand-magic-sparkles"></i> إنشاء امتحان عشوائي من البنك</h3>
+                <div class="pro-grid">
+                    <input type="text" id="qb-exam-title" placeholder="عنوان الامتحان العشوائي">
+                    <select id="qb-exam-level"><option value="1">مستوى 1</option><option value="2">مستوى 2</option><option value="3">مستوى 3</option></select>
+                    <input type="text" id="qb-exam-category" placeholder="تصنيف اختياري أو اتركه فارغاً">
+                    <input type="number" id="qb-exam-count" value="10" min="1" placeholder="عدد الأسئلة">
+                    <button class="btn btn-success" onclick="TitanAdminV8.createRandomExam()"><i class="fas fa-shuffle"></i> نشر امتحان عشوائي</button>
+                </div>
+            </div>
+            <div class="card">
+                <h3><i class="fas fa-list"></i> الأسئلة المحفوظة</h3>
+                <table><thead><tr><th>السؤال</th><th>المستوى</th><th>التصنيف</th><th>الصعوبة</th><th>إجراء</th></tr></thead><tbody id="question-bank-list"></tbody></table>
+            </div>
+        </section>
+
+        <section id="sec-student-reports" style="display: none;">
+            <div class="card">
+                <h3><i class="fas fa-file-pdf"></i> تقارير شهرية وشهادات</h3>
+                <div class="pro-grid">
+                    <select id="report-student-select"></select>
+                    <input type="month" id="report-month-input">
+                    <button class="btn btn-primary" onclick="TitanAdminV8.generateStudentReport()"><i class="fas fa-file-circle-check"></i> إنشاء/تحديث التقرير</button>
+                    <button class="btn btn-info" onclick="TitanAdminV8.previewStudentReport()"><i class="fas fa-eye"></i> معاينة التقرير</button>
+                </div>
+                <div class="pro-grid" style="margin-top:12px;">
+                    <input type="text" id="cert-title" placeholder="عنوان الشهادة: مثال إتمام مستوى HTML">
+                    <button class="btn btn-success" onclick="TitanAdminV8.issueCertificate()"><i class="fas fa-award"></i> إصدار شهادة للطالب</button>
+                </div>
+            </div>
+            <div class="card">
+                <h3><i class="fas fa-folder-open"></i> آخر التقارير المنشورة</h3>
+                <div id="student-reports-list" class="pro-grid-2"></div>
+            </div>
+        </section>
+
+        <section id="sec-admin-roles" style="display: none;">
+            <div class="card">
+                <h3><i class="fas fa-user-lock"></i> صلاحيات الفريق</h3>
+                <p class="danger-note">مهم: أمان قاعدة البيانات ما زال يعتمد على admins/UID = true. هذه الصلاحيات تنظّم واجهة الإدارة وسجل النشاط، ولا تغني عن جعل الأشخاص الموثوقين فقط داخل admins.</p>
+                <div class="pro-grid">
+                    <input type="text" id="role-uid" placeholder="UID حساب الموظف من Firebase Authentication">
+                    <input type="text" id="role-name" placeholder="اسم الموظف">
+                    <select id="role-type"><option value="owner">مالك</option><option value="teacher">مدرس</option><option value="accountant">محاسب</option><option value="support">دعم فني</option><option value="viewer">مشاهدة فقط</option></select>
+                    <button class="btn btn-primary" onclick="TitanAdminV8.saveAdminProfile()"><i class="fas fa-save"></i> حفظ الصلاحية</button>
+                </div>
+            </div>
+            <div class="card">
+                <h3><i class="fas fa-users-gear"></i> الفريق الحالي</h3>
+                <table><thead><tr><th>الاسم</th><th>UID</th><th>الدور</th><th>إجراء</th></tr></thead><tbody id="admin-profiles-list"></tbody></table>
+            </div>
+            <div class="card">
+                <h3><i class="fas fa-clipboard-list"></i> سجل النشاط</h3>
+                <table><thead><tr><th>المستخدم</th><th>النشاط</th><th>التاريخ</th></tr></thead><tbody id="audit-log-list"></tbody></table>
+            </div>
+        </section>
+
+
+        <section id="sec-v10-mega" style="display:none;">
+            <div class="card">
+                <div class="v10-hero">
+                    <h3><i class="fas fa-wand-magic-sparkles"></i> V10 Mega Center — إشعارات ثابتة + أقسام قابلة لـ 10,000+ سجل</h3>
+                    <p>هذا المركز يصلح مشكلة الإشعارات بإرسال مزدوج: إشعار عام + صندوق إشعارات خاص بكل طالب. كما يضيف أدوات تشغيل وإدارة كبيرة بحيث كل جزء يكون جاهزاً للتوسع لآلاف السجلات بدون تحميل الصفحة كلها مرة واحدة.</p>
+                </div>
+                <div class="v10-grid">
+                    <div class="v10-kpi"><small>إشعارات آخر تحميل</small><strong id="v10-notif-count">0</strong></div>
+                    <div class="v10-kpi"><small>طلاب مستهدفون</small><strong id="v10-target-count">0</strong></div>
+                    <div class="v10-kpi"><small>سجلات V10</small><strong id="v10-record-count">0</strong></div>
+                    <div class="v10-kpi"><small>حالة Firebase</small><strong id="v10-firebase-state">...</strong></div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3><i class="fas fa-bell"></i> إصلاح واختبار الإشعارات</h3>
+                <div id="v10-notification-health" class="v10-status-warn">جاري فحص Firebase والصلاحيات...</div>
+                <div class="pro-grid" style="margin-top:12px;">
+                    <input id="v10-notify-title" placeholder="عنوان الإشعار">
+                    <select id="v10-notify-target"><option value="all">كل الطلاب</option><option value="level">مستوى محدد</option><option value="student">طالب محدد</option></select>
+                    <select id="v10-notify-level"><option value="1">مستوى 1</option><option value="2">مستوى 2</option><option value="3">مستوى 3</option></select>
+                    <select id="v10-notify-student"></select>
+                </div>
+                <textarea id="v10-notify-body" rows="4" placeholder="نص الإشعار..."></textarea>
+                <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:10px;">
+                    <button class="btn btn-primary" onclick="TitanV10Admin.sendMegaNotification()"><i class="fas fa-paper-plane"></i> إرسال مضمون</button>
+                    <button class="btn btn-info" onclick="TitanV10Admin.sendTestNotification()"><i class="fas fa-vial"></i> اختبار لطالب مختار</button>
+                    <button class="btn btn-warning" onclick="TitanV10Admin.runNotificationHealthCheck()"><i class="fas fa-stethoscope"></i> فحص الإشعارات</button>
+                </div>
+                <p class="muted-help" style="margin-top:10px;">لو الإشعار القديم لا يظهر، استخدم زر الإرسال المضمون هنا. هو يكتب داخل <b>notifications</b> وداخل <b>student_notifications/STUDENT_UID</b> مباشرة.</p>
+            </div>
+
+            <div class="card">
+                <h3><i class="fas fa-layer-group"></i> إضافات V10 المقترحة والمنفذة كمسارات جاهزة</h3>
+                <div class="v10-grid" id="v10-feature-grid"></div>
+            </div>
+
+            <div class="card">
+                <h3><i class="fas fa-gauge-high"></i> لوحة 10,000+ لكل جزء</h3>
+                <div class="v10-table-tools">
+                    <input id="v10-search" placeholder="بحث سريع في آخر 10,000 سجل..." oninput="TitanV10Admin.renderMegaRecords()">
+                    <select id="v10-record-type" onchange="TitanV10Admin.renderMegaRecords()">
+                        <option value="all">كل الأنواع</option><option value="notification">إشعارات</option><option value="campaign">حملات</option><option value="payment">مدفوعات</option><option value="risk">مخاطر</option><option value="automation">أتمتة</option>
+                    </select>
+                    <button class="btn btn-success" onclick="TitanV10Admin.addMegaRecord()"><i class="fas fa-plus"></i> إضافة سجل تجربة</button>
+                    <button class="btn btn-info" onclick="TitanV10Admin.exportMegaCsv()"><i class="fas fa-file-csv"></i> تصدير CSV</button>
+                </div>
+                <table><thead><tr><th>النوع</th><th>العنوان</th><th>الوصف</th><th>التاريخ</th><th>حالة</th></tr></thead><tbody id="v10-mega-records"></tbody></table>
+            </div>
+
+            <div class="card">
+                <h3><i class="fas fa-robot"></i> الأتمتة الذكية</h3>
+                <div class="pro-grid">
+                    <input id="v10-auto-title" placeholder="اسم قاعدة الأتمتة: مثال غياب متكرر">
+                    <select id="v10-auto-type"><option value="absence">غياب</option><option value="payment">دفع</option><option value="lesson">درس لم يكتمل</option><option value="exam">درجة منخفضة</option></select>
+                    <input id="v10-auto-threshold" type="number" value="3" placeholder="الحد">
+                    <button class="btn btn-success" onclick="TitanV10Admin.saveAutomationRule()"><i class="fas fa-save"></i> حفظ قاعدة</button>
+                </div>
+                <div id="v10-automation-list" style="margin-top:12px;"></div>
+            </div>
+        </section>
+
         <section id="sec-settings" style="display: none;">
             <div class="card">
                 <h3><i class="fas fa-cog"></i> إدارة البيانات</h3>
@@ -871,6 +1146,7 @@ th { background:rgba(37,99,235,.07) !important; color:#1d4ed8 !important; }
                 const firebaseConfig = {
                     apiKey: "AIzaSyDgMV79LTyiQerEOZvtuszH6ONaOAset5c",
                     authDomain: "programming-cc297.firebaseapp.com",
+                    databaseURL: "https://programming-cc297-default-rtdb.firebaseio.com",
                     projectId: "programming-cc297",
                     storageBucket: "programming-cc297.firebasestorage.app",
                     messagingSenderId: "131761323515",
@@ -1593,7 +1869,7 @@ th { background:rgba(37,99,235,.07) !important; color:#1d4ed8 !important; }
         };
 
         async function saveBackup() {
-            const paths = ['students', 'content', 'invoices', 'expenses', 'attendance', 'homework', 'grades', 'staff', 'schedule', 'community', 'online_exams', 'support', 'registration_requests', 'assignments', 'submissions', 'live_classes', 'live_recordings'];
+            const paths = ['students', 'content', 'invoices', 'expenses', 'attendance', 'homework', 'grades', 'staff', 'schedule', 'community', 'online_exams', 'support', 'registration_requests', 'assignments', 'submissions', 'live_classes', 'live_recordings', 'notifications', 'question_bank', 'student_reports', 'admin_profiles', 'audit_logs', 'active_sessions', 'student_activity', 'lesson_progress', 'live_attendance'];
             const backup = { exportedAt: new Date().toISOString(), version: 'secure-admin-1.0', data: {} };
             try {
                 for (const path of paths) {
@@ -1808,7 +2084,7 @@ th { background:rgba(37,99,235,.07) !important; color:#1d4ed8 !important; }
 
         function toggleTheme() { document.body.setAttribute('data-theme', document.body.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'); }
         function initChart() { const ctx = document.getElementById('mainChart').getContext('2d'); if (mainChart) mainChart.destroy(); mainChart = new Chart(ctx, { type: 'line', data: { labels: ['يناير', 'فبراير', 'مارس', 'أبريل'], datasets: [{ label: 'الإيرادات', data: [500, 1200, 800, 1500], borderColor: '#4f46e5', tension: 0.4 }] } }); window.mainChart = mainChart; }
-        function factoryReset() { if(confirm("حذف كل شيء؟")) { ['students', 'content', 'invoices', 'expenses', 'attendance', 'homework', 'grades', 'staff', 'schedule', 'community', 'online_exams', 'support', 'registration_requests', 'assignments', 'submissions', 'live_classes', 'live_recordings'].forEach(p => fbRemove(fbRef(db, p))); location.reload(); } }
+        function factoryReset() { if(confirm("حذف كل شيء؟")) { ['students', 'content', 'invoices', 'expenses', 'attendance', 'homework', 'grades', 'staff', 'schedule', 'community', 'online_exams', 'support', 'registration_requests', 'assignments', 'submissions', 'live_classes', 'live_recordings', 'notifications', 'question_bank', 'student_reports', 'admin_profiles', 'audit_logs', 'active_sessions', 'student_activity', 'lesson_progress', 'live_attendance'].forEach(p => fbRemove(fbRef(db, p))); location.reload(); } }
         setInterval(() => { document.getElementById('live-clock').innerText = new Date().toLocaleString('ar-EG'); }, 1000);
     
 
@@ -1878,7 +2154,7 @@ th { background:rgba(37,99,235,.07) !important; color:#1d4ed8 !important; }
                 sessionId:null, localStream:null, screenStream:null, peers:{}, remoteStreams:{}, participants:{},
                 chatUnsub:null, partUnsub:null, sigUnsub:null, recUnsub:null,
                 mediaRecorder:null, recordedChunks:[], recordingCanvas:null, recordingTimer:null,
-                micOn:true, camOn:true, isScreenSharing:false, lastOffers:{}
+                micOn:true, camOn:true, isScreenSharing:false, lastOffers:{}, lastOffers:{}
             };
             const rtcConfig = { iceServers: [{urls:'stun:stun.l.google.com:19302'}, {urls:'stun:stun1.l.google.com:19302'}] };
             const $ = id => document.getElementById(id);
@@ -1946,15 +2222,21 @@ th { background:rgba(37,99,235,.07) !important; color:#1d4ed8 !important; }
 
             async function makeOffer(peerUid, opts={}){
                 const nowMs = Date.now();
-                if(!opts.force && !opts.iceRestart && state.lastOffers[peerUid] && nowMs - state.lastOffers[peerUid] < 2500) return;
+                state.lastOffers = state.lastOffers || {};
+                if(!opts.force && !opts.iceRestart && state.lastOffers[peerUid] && nowMs - state.lastOffers[peerUid] < 2200) return;
                 state.lastOffers[peerUid] = nowMs;
                 const pc = await getPeer(peerUid);
                 await syncTracks(pc);
                 if(pc.signalingState !== 'stable' && !opts.iceRestart) return;
                 const offer = await pc.createOffer(opts);
                 await pc.setLocalDescription(offer);
-                await sendSignal(peerUid, {type:'offer', sdp:pc.localDescription, shareVersion: Date.now()});
+                if(!pc.localDescription || !pc.localDescription.sdp) {
+                    console.warn('لم يتم إنشاء offer صالح للطالب', peerUid);
+                    return;
+                }
+                await sendSignal(peerUid, {type:'offer', sdp:{type:pc.localDescription.type, sdp:pc.localDescription.sdp}, shareVersion: Date.now()});
             }
+
 
             async function getPeer(peerUid){
                 if(state.peers[peerUid]) return state.peers[peerUid];
@@ -1983,7 +2265,8 @@ th { background:rgba(37,99,235,.07) !important; color:#1d4ed8 !important; }
 
             async function sendSignal(to, payload){
                 if(!state.sessionId) return;
-                await ref(`${roomPath('signals')}/${uidSafe(to)}`).push({...payload, from:me(), to, at:Date.now()});
+                const clean = JSON.parse(JSON.stringify({...payload, from:me(), to, at:Date.now()}));
+                await ref(`${roomPath('signals')}/${uidSafe(to)}`).push(clean);
             }
 
             async function handleSignal(sigKey, sig){
@@ -2132,14 +2415,14 @@ th { background:rgba(37,99,235,.07) !important; color:#1d4ed8 !important; }
                     await replaceLocalVideoTrack(camTrack, 'أنت - المعلم');
                     await ref(roomPath()).update({screenSharing:false, shareVersion:Date.now(), screenOwner:null});
                     setShareUi(false);
-                    await hardReconnectStudents('screen_off');
-                    showToast('تم إيقاف مشاركة الشاشة والعودة لكاميرا المعلم', 'warning');
+                    await reconnectStudentsForShare('screen_off');
+                    showToast('تم إيقاف مشاركة الشاشة', 'warning');
                 } catch(e) {
                     console.error(e);
                     await ref(roomPath()).update({screenSharing:false, shareVersion:Date.now(), screenOwner:null}).catch(()=>{});
                     setShareUi(false);
-                    await hardReconnectStudents('screen_off').catch(()=>{});
-                    showToast('تم إيقاف مشاركة الشاشة. افتح الكاميرا مرة أخرى من المتصفح إذا لزم.', 'warning');
+                    await reconnectStudentsForShare('screen_off').catch(()=>{});
+                    showToast('تم إيقاف مشاركة الشاشة. افتح الكاميرا مرة أخرى إذا لزم.', 'warning');
                 }
             }
 
@@ -2148,10 +2431,7 @@ th { background:rgba(37,99,235,.07) !important; color:#1d4ed8 !important; }
                 if(state.isScreenSharing) return stopScreenShare();
                 if(!navigator.mediaDevices || !navigator.mediaDevices.getDisplayMedia) return showToast('المتصفح لا يدعم مشاركة الشاشة. استخدم Chrome أو Edge.', 'error');
                 try {
-                    const screen = await navigator.mediaDevices.getDisplayMedia({
-                        video:{frameRate:{ideal:12,max:20}},
-                        audio:false
-                    });
+                    const screen = await navigator.mediaDevices.getDisplayMedia({video:{frameRate:{ideal:12,max:20}}, audio:false});
                     const screenTrack = screen.getVideoTracks()[0];
                     if(!screenTrack) return showToast('لم يتم اختيار شاشة للمشاركة.', 'error');
                     state.screenStream = screen;
@@ -2159,12 +2439,12 @@ th { background:rgba(37,99,235,.07) !important; color:#1d4ed8 !important; }
                     await replaceLocalVideoTrack(screenTrack, 'مشاركة شاشة المعلم');
                     await ref(roomPath()).update({screenSharing:true, shareVersion:Date.now(), screenOwner:me()});
                     setShareUi(true);
-                    await hardReconnectStudents('screen_on');
-                    showToast('مشاركة الشاشة بدأت. لو طالب لا يراها ينتظر ثواني أو يضغط خروج ثم دخول.', 'success');
+                    await reconnectStudentsForShare('screen_on');
+                    showToast('مشاركة الشاشة بدأت. انتظر ثواني حتى تظهر عند الطلاب.', 'success');
                     screenTrack.onended = () => stopScreenShare().catch(console.error);
                 } catch(e) {
                     console.error(e);
-                    showToast('تم إلغاء مشاركة الشاشة أو حدث خطأ في الصلاحيات.', 'warning');
+                    showToast('تم إلغاء مشاركة الشاشة أو الصلاحية مرفوضة.', 'warning');
                     setShareUi(false);
                 }
             }
@@ -2305,5 +2585,457 @@ th { background:rgba(37,99,235,.07) !important; color:#1d4ed8 !important; }
         })();
 
 </script>
+
+<script id="titan-admin-share-note-v6">
+window.addEventListener('DOMContentLoaded', function(){
+  try {
+    if(location.protocol === 'file:') {
+      var box = document.createElement('div');
+      box.style.cssText='position:fixed;left:14px;bottom:14px;z-index:999999;background:#fff7ed;color:#9a3412;border:1px solid #fdba74;border-radius:16px;padding:12px 14px;font-family:Cairo,Arial,sans-serif;font-weight:800;direction:rtl;box-shadow:0 12px 30px rgba(0,0,0,.14)';
+      box.innerHTML='تنبيه: مشاركة الشاشة والكاميرا أفضل على Live Server / localhost أو HTTPS، وليس file://';
+      document.body.appendChild(box);
+      setTimeout(function(){box.remove()}, 7000);
+    }
+  } catch(e){}
+});
+</script>
+
+
+<script id="titan-file-origin-note-v7">
+window.addEventListener('DOMContentLoaded', function(){
+  try {
+    if(location.protocol === 'file:') {
+      var box=document.createElement('div');
+      box.className='vc-debug-note';
+      box.style.cssText+='position:fixed;left:14px;bottom:14px;z-index:999999;max-width:520px;';
+      box.innerHTML='تنبيه مهم: أنت فاتح الصفحة من file://. مشاركة الشاشة والكاميرا والـ WebRTC أحياناً لا يعملوا بثبات من file. افتح الملفات من VS Code Live Server أو localhost.';
+      document.body.appendChild(box);
+      setTimeout(function(){box.remove()}, 9000);
+    }
+  } catch(e){}
+});
+</script>
+
+
+
+
+        <section id="sec-protection-center" style="display: none;">
+            <div class="card">
+                <h3><i class="fas fa-shield-halved"></i> مركز الحماية وتتبع النشاط V9</h3>
+                <p class="teacher-note">هذا القسم يعرض الجلسات النشطة، منع فتح نفس حساب الطالب على جهازين، تتبع مشاهدة الدروس، الحضور التلقائي للحصص، وآخر نشاط لكل طالب.</p>
+                <div class="v9-kpi-grid">
+                    <div class="v9-kpi"><small>جلسات نشطة الآن</small><strong id="v9-active-count">0</strong></div>
+                    <div class="v9-kpi"><small>دروس مكتملة</small><strong id="v9-completed-lessons">0</strong></div>
+                    <div class="v9-kpi"><small>حضور حصص مسجل</small><strong id="v9-attendance-count">0</strong></div>
+                    <div class="v9-kpi"><small>طلاب نشطوا آخر 15 دقيقة</small><strong id="v9-recent-activity">0</strong></div>
+                </div>
+            </div>
+            <div class="card">
+                <h3><i class="fas fa-user-shield"></i> الجلسات النشطة ومنع مشاركة الحساب</h3>
+                <table><thead><tr><th>الطالب</th><th>الكود</th><th>المستوى</th><th>آخر ظهور</th><th>الجهاز</th><th>إجراء</th></tr></thead><tbody id="v9-active-sessions-list"></tbody></table>
+            </div>
+            <div class="card">
+                <h3><i class="fas fa-chart-line"></i> تقدم مشاهدة الدروس</h3>
+                <table><thead><tr><th>الطالب</th><th>الدرس</th><th>المستوى</th><th>النسبة</th><th>آخر تحديث</th><th>واتساب</th></tr></thead><tbody id="v9-progress-list"></tbody></table>
+            </div>
+            <div class="card">
+                <h3><i class="fas fa-video"></i> الحضور التلقائي للحصص المباشرة</h3>
+                <table><thead><tr><th>كود الحصة</th><th>الطالب</th><th>المستوى</th><th>الدخول</th><th>الخروج/آخر ظهور</th><th>المدة</th></tr></thead><tbody id="v9-live-attendance-list"></tbody></table>
+            </div>
+            <div class="card">
+                <h3><i class="fas fa-clock-rotate-left"></i> آخر نشاط للطلاب</h3>
+                <table><thead><tr><th>الطالب</th><th>الكود</th><th>المستوى</th><th>القسم</th><th>آخر ظهور</th><th>الجهاز</th></tr></thead><tbody id="v9-activity-list"></tbody></table>
+            </div>
+        </section>
+
+<script id="titan-admin-v8-features">
+(function(){
+  const $ = (id) => document.getElementById(id);
+  const esc = (v) => window.escapeHTML ? window.escapeHTML(v) : String(v ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const nowIso = () => new Date().toISOString();
+  const nowAr = () => new Date().toLocaleString('ar-EG');
+  const toast = (m,t='success') => window.showToast ? showToast(m,t) : alert(m);
+  function getDb(){ return window.db || (window.firebase && firebase.database && firebase.database()); }
+  function getUser(){ return window.auth && window.auth.currentUser; }
+  function studentOptions(){ return (window.db_students || []).map(s => `<option value="${esc(s.fbKey)}">${esc(s.name)} - كود ${esc(s.code)}</option>`).join(''); }
+  function currentAdminLabel(){ const u=getUser(); return (u && (u.email || u.uid)) || 'admin'; }
+  async function audit(action, extra={}){ try{ const db=getDb(); const u=getUser(); if(db && u) await db.ref('audit_logs').push({action, extra, by:u.uid, byEmail:u.email||'', at:nowIso(), when:nowAr()}); }catch(e){ console.warn(e); } }
+  async function pushNotification(payload){
+    const db=getDb(); if(!db) throw new Error('Firebase غير جاهز');
+    const u=getUser();
+    const clean = Object.assign({title:'تنبيه جديد', body:'', level:'all', studentKey:'', type:'general', createdAt:nowIso(), when:nowAr(), createdBy:u?u.uid:'admin', createdByLabel:currentAdminLabel()}, payload || {});
+    await db.ref('notifications').push(clean);
+    await audit('إرسال إشعار: ' + clean.title, {level:clean.level, studentKey:clean.studentKey || ''});
+    return clean;
+  }
+  function targetText(n){ if(n.studentKey){ const s=(window.db_students||[]).find(x=>x.fbKey===n.studentKey); return s ? 'طالب: ' + s.name : 'طالب محدد'; } if(n.level && n.level !== 'all') return 'مستوى ' + n.level; return 'كل الطلاب'; }
+  function refreshSelects(){
+    ['notify-student','parent-student-select','report-student-select'].forEach(id => { const el=$(id); if(el) el.innerHTML = studentOptions(); });
+    const month=$('report-month-input'); if(month && !month.value) month.value = new Date().toISOString().slice(0,7);
+    refreshNotificationTargets();
+  }
+  function refreshNotificationTargets(){
+    const type=$('notify-target-type')?.value || 'all';
+    if($('notify-level')) $('notify-level').style.display = type === 'level' ? 'block' : 'none';
+    if($('notify-student')) $('notify-student').style.display = type === 'student' ? 'block' : 'none';
+  }
+  async function sendNotificationManual(){
+    const title=($('notify-title')?.value||'').trim();
+    const body=($('notify-body')?.value||'').trim();
+    const type=$('notify-target-type')?.value || 'all';
+    if(!title || !body) return toast('اكتب عنوان ونص الإشعار أولاً','error');
+    const payload={title, body, level:'all', studentKey:'', type:'manual'};
+    if(type==='level') payload.level=$('notify-level')?.value || '1';
+    if(type==='student') { payload.studentKey=$('notify-student')?.value || ''; payload.level='student'; }
+    await pushNotification(payload);
+    if($('notify-title')) $('notify-title').value=''; if($('notify-body')) $('notify-body').value='';
+    toast('تم إرسال الإشعار','success');
+  }
+  function renderNotifications(){
+    const el=$('notifications-admin-list'); if(!el) return;
+    const items=(window.db_notifications||[]).slice().reverse();
+    el.innerHTML = items.length ? items.map(n=>`<tr><td><b>${esc(n.title)}</b></td><td>${esc(targetText(n))}</td><td style="text-align:right;max-width:360px;">${esc(n.body)}</td><td>${esc(n.when || n.createdAt || '')}</td><td><button class="btn btn-danger" onclick="TitanAdminV8.deleteNotification('${esc(n.fbKey)}')"><i class="fas fa-trash"></i></button></td></tr>`).join('') : '<tr><td colspan="5">لا توجد إشعارات بعد.</td></tr>';
+  }
+  async function deleteNotification(key){ if(!key || !confirm('حذف الإشعار؟')) return; await getDb().ref('notifications/'+key).remove(); toast('تم حذف الإشعار','warning'); }
+  function renderQuestionBank(){
+    const el=$('question-bank-list'); if(!el) return;
+    const rows=(window.db_question_bank||[]).slice().reverse();
+    el.innerHTML = rows.length ? rows.map(q=>`<tr><td style="text-align:right;max-width:420px;">${esc(q.text)}</td><td>${esc(q.level)}</td><td>${esc(q.category||'عام')}</td><td>${esc(q.difficulty||'')}</td><td><button class="btn btn-danger" onclick="TitanAdminV8.deleteQuestion('${esc(q.fbKey)}')"><i class="fas fa-trash"></i></button></td></tr>`).join('') : '<tr><td colspan="5">لا توجد أسئلة في البنك بعد.</td></tr>';
+  }
+  async function addQuestionToBank(){
+    const text=($('qb-text')?.value||'').trim();
+    const options=['qb-o1','qb-o2','qb-o3','qb-o4'].map(id=>($(id)?.value||'').trim()).filter(Boolean);
+    if(!text || options.length < 2) return toast('اكتب السؤال واختيارين على الأقل','error');
+    const answer=Number($('qb-answer')?.value || 0);
+    if(answer >= options.length) return toast('الإجابة الصحيحة لا تطابق الاختيارات المكتوبة','error');
+    await getDb().ref('question_bank').push({text, options, answer, level:$('qb-level')?.value||'1', category:($('qb-category')?.value||'عام').trim()||'عام', difficulty:$('qb-difficulty')?.value||'سهل', createdAt:nowIso(), createdBy:getUser()?.uid||''});
+    ['qb-text','qb-o1','qb-o2','qb-o3','qb-o4'].forEach(id=>{ if($(id)) $(id).value=''; });
+    await audit('إضافة سؤال إلى بنك الأسئلة', {level:$('qb-level')?.value||'1'});
+    toast('تم حفظ السؤال','success');
+  }
+  async function deleteQuestion(key){ if(!key || !confirm('حذف السؤال؟')) return; await getDb().ref('question_bank/'+key).remove(); toast('تم حذف السؤال','warning'); }
+  function shuffle(arr){ return arr.map(v=>[Math.random(),v]).sort((a,b)=>a[0]-b[0]).map(x=>x[1]); }
+  async function createRandomExam(){
+    const title=($('qb-exam-title')?.value||'').trim();
+    const level=$('qb-exam-level')?.value||'1';
+    const category=($('qb-exam-category')?.value||'').trim();
+    const count=Math.max(1, Number($('qb-exam-count')?.value || 10));
+    if(!title) return toast('اكتب عنوان الامتحان','error');
+    let pool=(window.db_question_bank||[]).filter(q => q.level == level && (!category || String(q.category||'').toLowerCase() === category.toLowerCase()));
+    if(!pool.length) return toast('لا توجد أسئلة مطابقة في البنك','error');
+    const questions=shuffle(pool).slice(0,count).map(q=>({text:q.text, options:q.options || [], answer:Number(q.answer)||0, category:q.category||'', difficulty:q.difficulty||''}));
+    await getDb().ref('online_exams').push({title, level, questions, randomFromBank:true, date:new Date().toLocaleDateString('ar-EG'), createdAt:nowIso()});
+    await pushNotification({title:'📝 امتحان جديد', body:title, level, type:'exam'}).catch(console.warn);
+    await audit('نشر امتحان عشوائي من بنك الأسئلة', {title, level, count:questions.length});
+    toast('تم نشر الامتحان العشوائي','success');
+  }
+  function getSelectedStudent(id='report-student-select'){ const key=$(id)?.value; return (window.db_students||[]).find(s=>s.fbKey===key); }
+  function buildReport(student, monthKey){
+    const name=student.name || '';
+    const code=student.code || '';
+    const level=student.level || '';
+    const evals=student.evaluations ? Object.values(student.evaluations) : [];
+    const lastEval=evals[evals.length-1] || {};
+    const attendance=(window.db_attendance||[]).filter(a => a.code == code && (!monthKey || String(a.date||'').startsWith(monthKey)));
+    const present=attendance.filter(a=>a.status==='ح').length;
+    const absent=attendance.filter(a=>a.status==='غ').length;
+    const homework=(window.db_homework||[]).filter(h => h.std === name);
+    const hwDone=homework.filter(h=>String(h.status||'').includes('تم') && !String(h.status||'').includes('لم')).length;
+    const grades=(window.db_grades||[]).filter(g => g.studentKey === student.fbKey || g.std === name);
+    const invoices=(window.db_invoices||[]).filter(i => i.name === name || String(i.phone||'') === String(student.phone||''));
+    const paid=invoices.reduce((a,b)=>a+(Number(b.paid)||0),0);
+    const remaining=invoices.reduce((a,b)=>a+(Number(b.remaining)||0),0);
+    const submissions=(window.db_submissions||[]).filter(s => s.studentKey === student.fbKey || s.studentCode === code).length;
+    const assignments=(window.db_assignments||[]).filter(a => a.level == level).length;
+    const xp=Number(student.xp)||0;
+    const summary={name, code, level, month:monthKey, xp, present, absent, homeworkCount:homework.length, homeworkDone:hwDone, gradesCount:grades.length, paid, remaining, submissions, assignments, lastEvaluation:lastEval};
+    const gradeRows=grades.slice(-10).reverse().map(g=>`<tr><td>${esc(g.name||'اختبار')}</td><td>${esc(g.grade||'')}</td></tr>`).join('') || '<tr><td colspan="2">لا توجد درجات مسجلة.</td></tr>';
+    const html=`<div dir="rtl" style="font-family:Cairo,Arial,sans-serif;line-height:1.8;color:#0f172a;padding:24px;">
+      <h1 style="color:#2563eb;margin:0 0 10px;">تقرير الطالب الشهري</h1>
+      <h2 style="margin:0 0 18px;">${esc(name)} - مستوى ${esc(level)}</h2>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:18px 0;">
+        <div style="border:1px solid #e2e8f0;border-radius:16px;padding:14px;"><b>XP</b><br><span style="font-size:26px;color:#2563eb;">${xp}</span></div>
+        <div style="border:1px solid #e2e8f0;border-radius:16px;padding:14px;"><b>الحضور</b><br>${present} حضور / ${absent} غياب</div>
+        <div style="border:1px solid #e2e8f0;border-radius:16px;padding:14px;"><b>الواجبات</b><br>${hwDone} مكتمل من ${homework.length}</div>
+        <div style="border:1px solid #e2e8f0;border-radius:16px;padding:14px;"><b>التسليمات</b><br>${submissions} من ${assignments}</div>
+      </div>
+      <h3>آخر تقييم</h3><p>واجب: ${esc(lastEval.work||'-')}/10 - أداء: ${esc(lastEval.perf||'-')}/10 - سلوك: ${esc(lastEval.beh||'-')}/10</p>
+      <h3>الدرجات الأخيرة</h3><table style="width:100%;border-collapse:collapse;" border="1" cellpadding="8"><thead><tr><th>الاختبار</th><th>الدرجة</th></tr></thead><tbody>${gradeRows}</tbody></table>
+      <h3>المالي</h3><p>المدفوع: ${paid} ج.م - المتبقي: ${remaining} ج.م</p>
+      <p style="color:#64748b;font-size:13px;">تم إنشاء التقرير: ${nowAr()}</p>
+    </div>`;
+    return {summary, html, createdAt:nowIso(), when:nowAr()};
+  }
+  async function generateStudentReport(){
+    const student=getSelectedStudent(); if(!student) return toast('اختر الطالب أولاً','error');
+    const month=$('report-month-input')?.value || new Date().toISOString().slice(0,7);
+    const report=buildReport(student, month);
+    await getDb().ref(`student_reports/${student.fbKey}/${month}`).set(report);
+    await audit('إنشاء تقرير طالب', {student:student.name, month});
+    toast('تم إنشاء التقرير ونشره لولي الأمر والطالب','success');
+    renderReportsList();
+  }
+  function previewStudentReport(){ const student=getSelectedStudent(); if(!student) return toast('اختر الطالب أولاً','error'); const month=$('report-month-input')?.value || new Date().toISOString().slice(0,7); const report=buildReport(student, month); openPrintWindow(report.html); }
+  function openPrintWindow(html){ const w=window.open('', '_blank'); if(!w) return toast('المتصفح منع النافذة المنبثقة','error'); w.document.write(`<!doctype html><html lang="ar" dir="rtl"><head><meta charset="utf-8"><title>تقرير</title><link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;800&display=swap" rel="stylesheet"></head><body>${html}<script>setTimeout(()=>window.print(),500)<\/script></body></html>`); w.document.close(); }
+  async function generateParentReport(){ const old=$('report-student-select'); const p=$('parent-student-select'); if(old && p) old.value=p.value; await generateStudentReport(); copyParentInstructions(); }
+  function copyParentInstructions(){
+    const student=getSelectedStudent('parent-student-select'); if(!student) return toast('اختر الطالب','error');
+    const msg=`دخول ولي الأمر لمنصة Titan:\nافتح صفحة الطالب، اضغط زر \"دخول ولي الأمر\"، ثم اكتب كود الطالب: ${student.code}\nورقم الهاتف المسجل: ${student.phone}\nستظهر لوحة متابعة وتقارير الطالب فقط.`;
+    const box=$('parent-instructions-box'); if(box) box.textContent=msg;
+    navigator.clipboard?.writeText(msg).then(()=>toast('تم نسخ التعليمات','success')).catch(()=>toast('التعليمات جاهزة للنسخ','success'));
+  }
+  async function issueCertificate(){
+    const student=getSelectedStudent(); if(!student) return toast('اختر الطالب أولاً','error');
+    const title=($('cert-title')?.value||'شهادة إنجاز').trim();
+    const key='CERT-' + Date.now();
+    const html=`<div dir="rtl" style="font-family:Cairo,Arial,sans-serif;text-align:center;padding:60px;border:10px solid #2563eb;border-radius:30px;margin:30px;color:#0f172a;"><h1 style="font-size:46px;color:#2563eb;">شهادة تقدير</h1><p style="font-size:24px;">تُمنح إلى الطالب/ة</p><h2 style="font-size:38px;">${esc(student.name)}</h2><p style="font-size:26px;">عن: ${esc(title)}</p><p>تاريخ الإصدار: ${nowAr()}</p></div>`;
+    await getDb().ref(`student_reports/${student.fbKey}/certificates/${key}`).set({title, html, createdAt:nowIso(), when:nowAr()});
+    await audit('إصدار شهادة', {student:student.name, title});
+    toast('تم إصدار الشهادة وستظهر للطالب/ولي الأمر','success');
+  }
+  function renderReportsList(){
+    const el=$('student-reports-list'); if(!el) return;
+    const reports=window.db_student_reports || {};
+    let cards=[];
+    Object.entries(reports).forEach(([studentKey, data])=>{
+      const st=(window.db_students||[]).find(s=>s.fbKey===studentKey) || {name:studentKey};
+      Object.entries(data||{}).forEach(([k,r])=>{ if(k !== 'certificates' && r && r.summary) cards.push({student:st.name, key:k, report:r}); });
+    });
+    cards=cards.sort((a,b)=>String(b.report.createdAt||'').localeCompare(String(a.report.createdAt||''))).slice(0,12);
+    el.innerHTML=cards.length?cards.map(c=>`<div class="task-item" style="display:block;"><b>${esc(c.student)}</b><br><span class="muted-help">${esc(c.key)} - ${esc(c.report.when||'')}</span><br><span class="mini-badge">${esc((c.report.summary||{}).xp||0)} XP</span><span class="mini-badge">غياب ${esc((c.report.summary||{}).absent||0)}</span></div>`).join(''):'<p class="muted-help">لا توجد تقارير منشورة بعد.</p>';
+  }
+  async function saveAdminProfile(){
+    const uid=($('role-uid')?.value||'').trim(); if(!uid) return toast('اكتب UID','error');
+    const profile={name:($('role-name')?.value||'موظف').trim(), role:$('role-type')?.value||'viewer', updatedAt:nowIso(), updatedBy:getUser()?.uid||''};
+    await getDb().ref('admin_profiles/'+uid).set(profile);
+    await audit('تعديل صلاحية موظف', {uid, role:profile.role});
+    toast('تم حفظ الصلاحية','success');
+  }
+  function renderAdminProfiles(){ const el=$('admin-profiles-list'); if(!el) return; const rows=Object.entries(window.db_admin_profiles||{}); el.innerHTML=rows.length?rows.map(([uid,p])=>`<tr><td>${esc(p.name)}</td><td style="direction:ltr;">${esc(uid)}</td><td>${esc(p.role)}</td><td><button class="btn btn-danger" onclick="TitanAdminV8.deleteAdminProfile('${esc(uid)}')"><i class="fas fa-trash"></i></button></td></tr>`).join(''):'<tr><td colspan="4">لا يوجد فريق مسجل.</td></tr>'; }
+  async function deleteAdminProfile(uid){ if(!uid || !confirm('حذف صلاحية الواجهة؟')) return; await getDb().ref('admin_profiles/'+uid).remove(); toast('تم الحذف','warning'); }
+  function renderAuditLogs(){ const el=$('audit-log-list'); if(!el) return; const rows=(window.db_audit_logs||[]).slice().reverse().slice(0,30); el.innerHTML=rows.length?rows.map(a=>`<tr><td>${esc(a.byEmail||a.by||'')}</td><td>${esc(a.action)}</td><td>${esc(a.when||a.at||'')}</td></tr>`).join(''):'<tr><td colspan="3">لا يوجد نشاط بعد.</td></tr>'; }
+  function applyRoleUi(){
+    const u=getUser(); const profile = u && (window.db_admin_profiles||{})[u.uid]; if(!profile || profile.role==='owner') return;
+    const allowed={teacher:['dash','students','content','assignments','online-exams','live-class','homework','exams','schedule','question-bank','student-reports'], accountant:['dash','billing','expenses','student-reports'], support:['dash','support','notifications'], viewer:['dash','student-reports']};
+    const list=allowed[profile.role] || allowed.viewer;
+    document.querySelectorAll('.sidebar .btn-outline').forEach(btn=>{ const m=(btn.getAttribute('onclick')||'').match(/showSec\('([^']+)'\)/); if(m && !list.includes(m[1]) && m[1] !== 'settings') btn.style.display='none'; });
+    toast('تم تفعيل صلاحيات واجهة: ' + profile.role, 'success');
+  }
+  function wireAutoNotifications(){
+    function wrap(name, before, after){
+      const original=window[name]; if(typeof original !== 'function' || original.__titanV8Wrapped) return;
+      window[name]=async function(...args){ const ctx=before ? before(args) : {}; const res=await original.apply(this,args); try{ await after(ctx,args,res); }catch(e){ console.warn(e); } return res; };
+      window[name].__titanV8Wrapped=true;
+    }
+    wrap('publishOnlineExam', ()=>({title:$('new-exam-title')?.value||'', level:$('new-exam-level')?.value||'1'}), async (c)=>{ if(c.title) await pushNotification({title:'📝 امتحان جديد', body:c.title, level:c.level, type:'exam'}); });
+    wrap('adminSendPost', ()=>({body:$('admin-post-txt')?.value||'', level:$('admin-post-lvl')?.value||'1'}), async (c)=>{ if(c.body) await pushNotification({title:'📢 إعلان جديد', body:c.body, level:c.level, type:'announcement'}); });
+    wrap('uploadLesson', ()=>({title:$('lesson-title')?.value||'', level:$('lesson-level-select')?.value||'1'}), async (c)=>{ if(c.title) await pushNotification({title:'📚 درس جديد', body:c.title, level:c.level, type:'lesson'}); });
+    wrap('createAssignment', ()=>({title:$('assignment-title')?.value||'', level:$('assignment-level')?.value||'1'}), async (c)=>{ if(c.title) await pushNotification({title:'🗂️ مهمة جديدة', body:c.title, level:c.level, type:'assignment'}); });
+    wrap('replyComplaint', (args)=>({key:args[0], ticket:(window.db_support||[]).find(x=>x.fbKey===args[0])}), async (c)=>{ if(c.ticket) await pushNotification({title:'✅ رد جديد من الدعم', body:'تم الرد على طلب الدعم الخاص بك', level:'student', studentKey:c.ticket.studentKey, type:'support'}); });
+    if(window.VCAdmin && typeof VCAdmin.startClass === 'function' && !VCAdmin.startClass.__titanV8Wrapped){
+      const old=VCAdmin.startClass.bind(VCAdmin); VCAdmin.startClass=async function(){ const title=$('vc-admin-title')?.value||'حصة مباشرة'; const level=$('vc-admin-level')?.value||'1'; const res=await old(); try{ await pushNotification({title:'🔴 بدأت حصة مباشرة', body:title + ' - الكود: ' + ($('vc-admin-session-code')?.textContent||''), level, type:'live'}); }catch(e){console.warn(e)} return res; }; VCAdmin.startClass.__titanV8Wrapped=true;
+    }
+  }
+  function start(){
+    const db=getDb(); if(!db || start.started) return; start.started=true;
+    db.ref('notifications').limitToLast(80).on('value', s=>{ window.db_notifications=Object.entries(s.val()||{}).map(([fbKey,v])=>Object.assign({},v,{fbKey})); renderNotifications(); });
+    db.ref('question_bank').on('value', s=>{ window.db_question_bank=Object.entries(s.val()||{}).map(([fbKey,v])=>Object.assign({},v,{fbKey})); renderQuestionBank(); });
+    db.ref('student_reports').on('value', s=>{ window.db_student_reports=s.val()||{}; renderReportsList(); });
+    db.ref('admin_profiles').on('value', s=>{ window.db_admin_profiles=s.val()||{}; renderAdminProfiles(); applyRoleUi(); });
+    db.ref('audit_logs').limitToLast(50).on('value', s=>{ window.db_audit_logs=Object.values(s.val()||{}); renderAuditLogs(); });
+    refreshSelects(); setInterval(refreshSelects, 2500); setInterval(wireAutoNotifications, 1500); wireAutoNotifications();
+  }
+  window.TitanAdminV8={refreshNotificationTargets, sendNotificationManual, deleteNotification, addQuestionToBank, deleteQuestion, createRandomExam, generateStudentReport, previewStudentReport, generateParentReport, copyParentInstructions, issueCertificate, saveAdminProfile, deleteAdminProfile, pushNotification};
+  window.addEventListener('DOMContentLoaded', function(){ setInterval(start, 800); setTimeout(start, 1000); });
+})();
+</script>
+
+
+<script id="titan-admin-v9-protection">
+(function(){
+  const $=(id)=>document.getElementById(id);
+  const esc=(v)=>String(v ?? '').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const nowIso=()=>new Date().toISOString();
+  const toast=(m,t='success')=>window.showToast?showToast(m,t):alert(m);
+  const state={sessions:{}, progress:{}, attendance:{}, activity:{}, started:false, uploadWrapped:false};
+  function db(){ return window.db || (window.firebase && firebase.database && firebase.database()); }
+  function studentByKey(uid){ return (window.db_students||[]).find(s=>s.fbKey===uid) || {}; }
+  function fmtDate(v){ if(!v) return '-'; try{ return new Date(v).toLocaleString('ar-EG'); }catch(e){ return v; } }
+  function agoRecent(v, min){ const t=Date.parse(v||''); return t && (Date.now()-t <= min*60*1000); }
+  function secondsLabel(s){ s=Number(s)||0; const m=Math.floor(s/60), r=s%60; return m?`${m}د ${r}ث`:`${r}ث`; }
+  function setText(id,v){ const el=$(id); if(el) el.textContent=String(v); }
+  function renderKpis(){
+    const sessions=Object.values(state.sessions||{}).filter(s=>agoRecent(s.lastSeen,6));
+    let completed=0; Object.values(state.progress||{}).forEach(byStudent=>Object.values(byStudent||{}).forEach(p=>{ if(Number(p.percent||0)>=85) completed++; }));
+    let att=0; Object.values(state.attendance||{}).forEach(room=>att+=Object.keys(room||{}).length);
+    const recent=Object.values(state.activity||{}).filter(a=>agoRecent(a.lastSeen,15)).length;
+    setText('v9-active-count', sessions.length); setText('v9-completed-lessons', completed); setText('v9-attendance-count', att); setText('v9-recent-activity', recent);
+  }
+  function renderSessions(){ const el=$('v9-active-sessions-list'); if(!el) return; const rows=Object.entries(state.sessions||{}).map(([uid,s])=>Object.assign({uid},s)).sort((a,b)=>String(b.lastSeen||'').localeCompare(String(a.lastSeen||''))); el.innerHTML=rows.length?rows.map(s=>`<tr><td>${esc(s.studentName||studentByKey(s.uid).name||s.uid)}</td><td>${esc(s.code||studentByKey(s.uid).code||'')}</td><td>${esc(s.level||studentByKey(s.uid).level||'')}</td><td>${fmtDate(s.lastSeen)} ${agoRecent(s.lastSeen,6)?'<span class="mini-badge">متصل</span>':'<span class="mini-badge">قديم</span>'}</td><td><span class="v9-device">${esc(s.userAgent||s.deviceId||'')}</span></td><td><button class="btn btn-danger" onclick="TitanAdminV9.clearSession('${esc(s.uid)}')"><i class="fas fa-plug-circle-xmark"></i> فصل</button></td></tr>`).join(''):'<tr><td colspan="6">لا توجد جلسات نشطة.</td></tr>'; }
+  function renderProgress(){ const el=$('v9-progress-list'); if(!el) return; const rows=[]; Object.entries(state.progress||{}).forEach(([uid,lessons])=>{ Object.entries(lessons||{}).forEach(([lessonKey,p])=>rows.push(Object.assign({uid,lessonKey},p))); }); rows.sort((a,b)=>String(b.updatedAt||'').localeCompare(String(a.updatedAt||''))); el.innerHTML=rows.length?rows.slice(0,80).map(p=>{ const st=studentByKey(p.uid); const pct=Math.max(0,Math.min(100,Number(p.percent||0))); return `<tr><td>${esc(p.studentName||st.name||p.uid)}</td><td>${esc(p.lessonTitle||p.lessonKey)}</td><td>${esc(p.level||st.level||'')}</td><td><div class="v9-progress"><span style="width:${pct}%"></span></div><b>${pct}%</b></td><td>${fmtDate(p.updatedAt)}</td><td><button class="btn btn-success" onclick="TitanAdminV9.whatsApp('${esc(p.uid)}','progress')"><i class="fab fa-whatsapp"></i></button></td></tr>`; }).join(''):'<tr><td colspan="6">لا يوجد تقدم مسجل بعد.</td></tr>'; }
+  function renderAttendance(){ const el=$('v9-live-attendance-list'); if(!el) return; const rows=[]; Object.entries(state.attendance||{}).forEach(([sessionId,room])=>{ Object.entries(room||{}).forEach(([uid,a])=>rows.push(Object.assign({sessionId,uid},a))); }); rows.sort((a,b)=>String(b.joinedAt||'').localeCompare(String(a.joinedAt||''))); el.innerHTML=rows.length?rows.slice(0,80).map(a=>`<tr><td>${esc(a.sessionId)}</td><td>${esc(a.studentName||studentByKey(a.uid).name||a.uid)}</td><td>${esc(a.level||'')}</td><td>${fmtDate(a.joinedAt)}</td><td>${fmtDate(a.leftAt||a.lastSeen)}</td><td>${secondsLabel(a.seconds || ((Date.now()-(Number(a.joinMs)||Date.now()))/1000))}</td></tr>`).join(''):'<tr><td colspan="6">لم يتم تسجيل حضور تلقائي بعد.</td></tr>'; }
+  function renderActivity(){ const el=$('v9-activity-list'); if(!el) return; const rows=Object.entries(state.activity||{}).map(([uid,a])=>Object.assign({uid},a)).sort((a,b)=>String(b.lastSeen||'').localeCompare(String(a.lastSeen||''))); el.innerHTML=rows.length?rows.slice(0,80).map(a=>`<tr><td>${esc(a.studentName||studentByKey(a.uid).name||a.uid)}</td><td>${esc(a.code||studentByKey(a.uid).code||'')}</td><td>${esc(a.level||studentByKey(a.uid).level||'')}</td><td>${esc(a.page||a.event||'')}</td><td>${fmtDate(a.lastSeen)}</td><td><span class="v9-device">${esc(a.userAgent||a.deviceId||'')}</span></td></tr>`).join(''):'<tr><td colspan="6">لا يوجد نشاط مسجل بعد.</td></tr>'; }
+  function renderAll(){ renderKpis(); renderSessions(); renderProgress(); renderAttendance(); renderActivity(); }
+  async function clearSession(uid){ if(!uid||!confirm('فصل جلسة الطالب؟ سيتم إخراجه من الجهاز الحالي.')) return; await db().ref('active_sessions/'+uid).remove(); toast('تم فصل الجلسة','warning'); }
+  function whatsApp(uid,type){ const st=studentByKey(uid); if(!st.phone) return toast('لا يوجد رقم هاتف للطالب','error'); const msg=type==='progress'?`مرحباً ${st.name||''}، برجاء استكمال مشاهدة الدروس داخل منصة Titan. الإدارة تتابع تقدمك أولاً بأول.`:`مرحباً ${st.name||''}`; const phone=String(st.phone).replace(/[^0-9+]/g,''); window.open('https://wa.me/'+phone.replace(/^0/,'20')+'?text='+encodeURIComponent(msg),'_blank'); }
+  function addLessonHintFields(){ const seq=$('lesson-sequence-v9'); if(!seq) return; const count=(window.db_content||[]).length; if(!seq.value) seq.placeholder='ترتيب الدرس للتسلسل - المقترح: '+(count+1); }
+  function wrapUploadLesson(){ if(state.uploadWrapped || typeof window.uploadLesson!=='function') return; const old=window.uploadLesson; window.uploadLesson=async function(){ const meta={title:$('lesson-title')?.value.trim()||'', level:$('lesson-level-select')?.value||'1', sequence:Number($('lesson-sequence-v9')?.value||0), unlockMode:$('lesson-unlock-mode-v9')?.value||'sequence'}; const res=await old.apply(this,arguments); try{ if(meta.title){ const snap=await db().ref('content').once('value'); let bestKey='', bestAt=''; snap.forEach(ch=>{ const v=ch.val()||{}; if(String(v.title||'')===meta.title && String(v.level||'')===String(meta.level) && String(v.createdAt||'')>=bestAt){ bestAt=String(v.createdAt||''); bestKey=ch.key; } }); if(bestKey){ await db().ref('content/'+bestKey).update({sequence:meta.sequence || null, unlockMode:meta.unlockMode, v9UpdatedAt:nowIso()}); toast('تم حفظ ترتيب الدرس ونظام فتحه','success'); } } }catch(e){ console.warn(e); } return res; }; window.uploadLesson.__titanV9Wrapped=true; state.uploadWrapped=true; }
+  function start(){ const d=db(); if(!d||state.started) return; state.started=true; d.ref('active_sessions').on('value',s=>{state.sessions=s.val()||{};renderAll();}); d.ref('lesson_progress').on('value',s=>{state.progress=s.val()||{};renderAll();}); d.ref('live_attendance').on('value',s=>{state.attendance=s.val()||{};renderAll();}); d.ref('student_activity').on('value',s=>{state.activity=s.val()||{};renderAll();}); setInterval(()=>{addLessonHintFields();wrapUploadLesson();renderAll();},1600); addLessonHintFields(); wrapUploadLesson(); }
+  window.TitanAdminV9={clearSession, whatsApp, renderAll};
+  window.addEventListener('DOMContentLoaded', function(){ setInterval(start,800); setTimeout(start,1200); });
+})();
+</script>
+
+
+<script id="titan-admin-v10-mega-notifications">
+(function(){
+  const $=id=>document.getElementById(id);
+  const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const nowIso=()=>new Date().toISOString();
+  const nowAr=()=>new Date().toLocaleString('ar-EG');
+  const db=()=>window.db || (window.firebase&&firebase.database&&firebase.database());
+  const auth=()=>window.auth || (window.firebase&&firebase.auth&&firebase.auth());
+  const toast=(m,t='success')=>window.showToast?showToast(m,t):alert(m);
+  const chunkSize=350;
+  const features=[
+    ['notification','إشعارات مضمونة','صندوق خاص لكل طالب + إشعار عام + عداد غير مقروء + صوت وتنبيه داخل الصفحة.'],
+    ['campaign','حملات تعليمية','حملة لمستوى أو طالب: تذكير واجب، متابعة غياب، دعوة حصة، أو خطة مراجعة.'],
+    ['payment','اشتراكات وكوبونات','باقات شهرية، كوبونات، خصومات، وجدولة تذكير قبل موعد الدفع.'],
+    ['risk','إنذار طالب معرض للخطر','يرصد الغياب، عدم مشاهدة الدروس، عدم تسليم الواجبات، والدرجات الضعيفة.'],
+    ['automation','أتمتة كاملة','قواعد تلقائية ترسل إشعاراً أو تفتح إجراء متابعة بناءً على سلوك الطالب.'],
+    ['library','مكتبة ملفات ضخمة','ملفات عامة لكل مستوى مع بحث وفلترة وتحميل آمن.'],
+    ['quiz','كويز بعد كل درس','اختبار قصير مرتبط بالدرس ولا يفتح التالي إلا بعد حد نجاح محدد.'],
+    ['parent','رسائل ولي الأمر','ملخص أسبوعي وشهري، رابط واتساب جاهز، وتنبيه خاص بولي الأمر.'],
+    ['certificate','شهادات وشارات','شهادات PDF وشارات إنجاز بناءً على XP والحضور والتقييم.'],
+    ['scale','تشغيل 10,000+','كل الجداول الجديدة تستخدم آخر 10,000 سجل مع بحث محلي وتصدير CSV.']
+  ];
+  function students(){return Array.isArray(window.db_students)?window.db_students:[];}
+  function optionStudents(){return students().map(s=>`<option value="${esc(s.fbKey)}">${esc(s.name||s.code||s.fbKey)} - ${esc(s.code||'')}</option>`).join('');}
+  function targets(payload){
+    const all=students();
+    if(payload.studentKey) return all.filter(s=>String(s.fbKey)===String(payload.studentKey));
+    if(payload.level && payload.level!=='all' && payload.level!=='student') return all.filter(s=>String(s.level)===String(payload.level));
+    return all;
+  }
+  async function multiUpdateInChunks(updates){
+    const d=db(); const keys=Object.keys(updates); let done=0;
+    for(let i=0;i<keys.length;i+=chunkSize){
+      const part={}; keys.slice(i,i+chunkSize).forEach(k=>part[k]=updates[k]);
+      await d.ref().update(part); done += Object.keys(part).length;
+    }
+    return done;
+  }
+  async function sendFanout(payload){
+    const d=db(); if(!d) throw new Error('Firebase غير جاهز');
+    const u=auth()&&auth().currentUser;
+    const clean=Object.assign({title:'تنبيه جديد',body:'',level:'all',studentKey:'',type:'notification',createdAt:nowIso(),when:nowAr(),createdBy:u?u.uid:'admin',v10:true},payload||{});
+    const globalRef=d.ref('notifications').push();
+    clean.key=globalRef.key;
+    const selected=targets(clean);
+    const updates={};
+    updates['notifications/'+globalRef.key]=clean;
+    selected.forEach(s=>{ if(s && s.fbKey) updates['student_notifications/'+s.fbKey+'/'+globalRef.key]=Object.assign({},clean,{targetStudentKey:s.fbKey,read:false}); });
+    updates['mega_records/'+Date.now()+'_notif']={type:'notification',title:clean.title,body:clean.body,status:'sent',targetCount:selected.length,createdAt:clean.createdAt,when:clean.when};
+    const written=await multiUpdateInChunks(updates);
+    toast('تم إرسال الإشعار إلى '+selected.length+' طالب','success');
+    return {selected,written,key:globalRef.key,clean};
+  }
+  async function sendMegaNotification(){
+    const target=$('v10-notify-target')?.value||'all';
+    const title=($('v10-notify-title')?.value||'').trim() || ($('notify-title')?.value||'').trim();
+    const body=($('v10-notify-body')?.value||'').trim() || ($('notify-body')?.value||'').trim();
+    if(!title||!body) return toast('اكتب عنوان ونص الإشعار أولاً','error');
+    const p={title,body,level:'all',studentKey:'',type:'manual'};
+    if(target==='level') p.level=$('v10-notify-level')?.value||'1';
+    if(target==='student'){ p.level='student'; p.studentKey=$('v10-notify-student')?.value||''; }
+    await sendFanout(p);
+    ['v10-notify-title','v10-notify-body','notify-title','notify-body'].forEach(id=>{if($(id)) $(id).value='';});
+    renderMegaRecords();
+  }
+  async function sendTestNotification(){
+    const st=$('v10-notify-student')?.value || (students()[0]&&students()[0].fbKey) || '';
+    if(!st) return toast('لا يوجد طالب للاختبار','error');
+    await sendFanout({title:'✅ اختبار إشعارات V10',body:'لو ظهرت الرسالة هنا وفي صفحة الطالب فالإشعارات تعمل بشكل صحيح.',level:'student',studentKey:st,type:'test'});
+  }
+  async function runNotificationHealthCheck(){
+    const box=$('v10-notification-health');
+    try{
+      const d=db(); const u=auth()&&auth().currentUser;
+      if(!d) throw new Error('Firebase Database غير جاهز');
+      if(!u) throw new Error('سجل دخول الإدارة أولاً');
+      const probe='health_'+Date.now();
+      await d.ref('mega_records/'+probe).set({type:'health',title:'فحص إشعارات',createdAt:nowIso(),by:u.uid,status:'ok'});
+      await d.ref('mega_records/'+probe).remove();
+      const count=students().length;
+      if(box){box.className='v10-status-ok';box.innerHTML='✅ Firebase والكتابة يعملان. عدد الطلاب المحملين: '+count+'. استخدم زر اختبار لطالب مختار للتأكد من ظهور التنبيه في صفحة الطالب.';}
+      if($('v10-firebase-state')) $('v10-firebase-state').textContent='OK';
+    }catch(e){
+      if(box){box.className='v10-status-error';box.textContent='❌ '+(e.message||e);}
+      if($('v10-firebase-state')) $('v10-firebase-state').textContent='ERROR';
+    }
+  }
+  function renderFeatureGrid(){
+    const el=$('v10-feature-grid'); if(!el) return;
+    el.innerHTML=features.map(f=>`<div class="v10-card"><h4><i class="fas fa-circle-check"></i> ${esc(f[1])}</h4><p>${esc(f[2])}</p><span class="mini-badge">جاهز للتوسع 10,000+</span></div>`).join('');
+  }
+  let megaRecords=[];
+  function renderMegaRecords(){
+    const el=$('v10-mega-records'); if(!el) return;
+    const q=($('v10-search')?.value||'').toLowerCase(); const type=$('v10-record-type')?.value||'all';
+    const rows=megaRecords.filter(r=>(type==='all'||String(r.type)===type) && (!q || JSON.stringify(r).toLowerCase().includes(q))).slice(-10000).reverse();
+    el.innerHTML=rows.slice(0,250).map(r=>`<tr><td>${esc(r.type||'-')}</td><td><b>${esc(r.title||'-')}</b></td><td style="text-align:right;max-width:420px;">${esc(r.body||r.desc||'')}</td><td>${esc(r.when||r.createdAt||'')}</td><td><span class="mini-badge">${esc(r.status||'active')}</span></td></tr>`).join('') || '<tr><td colspan="5">لا توجد سجلات بعد.</td></tr>';
+    if($('v10-record-count')) $('v10-record-count').textContent=String(rows.length);
+  }
+  async function addMegaRecord(){
+    const type=$('v10-record-type')?.value==='all'?'campaign':$('v10-record-type')?.value||'campaign';
+    await db().ref('mega_records').push({type,title:'سجل V10 تجريبي',body:'تمت إضافته لاختبار البحث والتصدير واستيعاب 10,000+ سجل.',status:'active',createdAt:nowIso(),when:nowAr()});
+    toast('تمت إضافة سجل V10','success');
+  }
+  function exportMegaCsv(){
+    const headers=['type','title','body','status','createdAt'];
+    const csv=[headers.join(',')].concat(megaRecords.map(r=>headers.map(h=>'"'+String(r[h]??'').replace(/"/g,'""')+'"').join(','))).join('\n');
+    const blob=new Blob([csv],{type:'text/csv;charset=utf-8'}); const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='titan_v10_mega_records.csv'; a.click(); URL.revokeObjectURL(a.href);
+  }
+  async function saveAutomationRule(){
+    const title=($('v10-auto-title')?.value||'').trim(); if(!title) return toast('اكتب اسم قاعدة الأتمتة','error');
+    await db().ref('automation_rules').push({title,type:$('v10-auto-type')?.value||'absence',threshold:Number($('v10-auto-threshold')?.value||0),active:true,createdAt:nowIso(),when:nowAr()});
+    if($('v10-auto-title')) $('v10-auto-title').value=''; toast('تم حفظ قاعدة الأتمتة','success');
+  }
+  function renderAutomation(data){
+    const el=$('v10-automation-list'); if(!el) return;
+    const rows=Object.entries(data||{}).map(([key,v])=>Object.assign({key},v)).reverse();
+    el.innerHTML=rows.map(r=>`<div class="task-item"><span><b>${esc(r.title)}</b> — ${esc(r.type)} / حد ${esc(r.threshold)}</span><button class="btn btn-danger" onclick="TitanV10Admin.deleteAutomation('${esc(r.key)}')"><i class="fas fa-trash"></i></button></div>`).join('') || '<p class="muted-help">لا توجد قواعد بعد.</p>';
+  }
+  async function deleteAutomation(key){ await db().ref('automation_rules/'+key).remove(); toast('تم حذف القاعدة','warning'); }
+  function refreshStudents(){
+    ['v10-notify-student','notify-student'].forEach(id=>{const el=$(id); if(el && !el.dataset.v10filled){el.innerHTML=optionStudents(); el.dataset.v10filled='1';}});
+    if($('v10-target-count')) $('v10-target-count').textContent=String(students().length);
+  }
+  function subscribe(){
+    const d=db(); if(!d || subscribe.done) return; subscribe.done=true;
+    d.ref('notifications').limitToLast(10000).on('value',s=>{ const v=s.val()||{}; if($('v10-notif-count')) $('v10-notif-count').textContent=String(Object.keys(v).length); });
+    d.ref('mega_records').limitToLast(10000).on('value',s=>{ megaRecords=Object.entries(s.val()||{}).map(([key,v])=>Object.assign({key},v)); renderMegaRecords(); });
+    d.ref('automation_rules').limitToLast(500).on('value',s=>renderAutomation(s.val()||{}));
+  }
+  function installOverrides(){
+    if(window.TitanAdminV8 && !window.TitanAdminV8.__v10_override){
+      window.TitanAdminV8.sendNotificationManual = async function(){
+        const title=($('notify-title')?.value||'').trim(); const body=($('notify-body')?.value||'').trim(); const type=$('notify-target-type')?.value||'all';
+        if(!title||!body) return toast('اكتب عنوان ونص الإشعار أولاً','error');
+        const p={title,body,level:'all',studentKey:'',type:'manual'};
+        if(type==='level') p.level=$('notify-level')?.value||'1';
+        if(type==='student'){p.level='student';p.studentKey=$('notify-student')?.value||'';}
+        await sendFanout(p); ['notify-title','notify-body'].forEach(id=>{if($(id)) $(id).value='';});
+      };
+      const oldPush=window.TitanAdminV8.pushNotification;
+      window.TitanAdminV8.pushNotification=async function(payload){ try{return await sendFanout(payload||{});}catch(e){ if(oldPush) return oldPush(payload); throw e; } };
+      window.TitanAdminV8.__v10_override=true;
+    }
+  }
+  window.TitanV10Admin={sendMegaNotification,sendTestNotification,runNotificationHealthCheck,renderMegaRecords,addMegaRecord,exportMegaCsv,saveAutomationRule,deleteAutomation,sendFanout};
+  window.addEventListener('DOMContentLoaded',()=>{renderFeatureGrid(); setInterval(refreshStudents,1000); setInterval(installOverrides,1200); setTimeout(runNotificationHealthCheck,1800); setInterval(subscribe,1500);});
+})();
+</script>
+
 </body>
 </html>

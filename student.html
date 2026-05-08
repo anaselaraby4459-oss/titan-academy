@@ -555,43 +555,198 @@ header {
 </style>
 
 
-<style id="titan-share-fix-v5">
-/* ===== TITAN SHARE FIX V5 ===== */
-.vc-share-button-fix {
-  background: linear-gradient(135deg,#0ea5e9,#2563eb) !important;
-  color:#fff !important;
-  border:0 !important;
-  font-weight:900 !important;
-  box-shadow:0 14px 34px rgba(14,165,233,.28) !important;
+<script id="titan-white-screen-guard-v6">
+(function(){
+  function showTitanError(message){
+    try {
+      var box = document.getElementById('titan-runtime-error-box');
+      if(!box){
+        box = document.createElement('div');
+        box.id = 'titan-runtime-error-box';
+        box.style.cssText = 'position:fixed;left:14px;right:14px;bottom:14px;z-index:999999;background:#fee2e2;color:#7f1d1d;border:1px solid #fca5a5;border-radius:16px;padding:14px 16px;font-family:Cairo,Arial,sans-serif;font-weight:800;line-height:1.8;box-shadow:0 18px 45px rgba(0,0,0,.18);direction:rtl;text-align:right;';
+        document.addEventListener('DOMContentLoaded', function(){ document.body.appendChild(box); });
+        if(document.body) document.body.appendChild(box);
+      }
+      box.innerHTML = 'حصل خطأ في صفحة الطالب، لكن الصفحة لم تعد بيضاء.<br><small style="font-weight:600">' + String(message).replace(/[<>&]/g, function(c){return {'<':'&lt;','>':'&gt;','&':'&amp;'}[c]}) + '</small>';
+      var login = document.getElementById('login-page');
+      if(login) login.style.display = 'flex';
+    } catch(e){}
+  }
+  window.addEventListener('error', function(e){ showTitanError((e.message || 'Runtime error') + (e.filename ? ' - ' + e.filename + ':' + e.lineno : '')); });
+  window.addEventListener('unhandledrejection', function(e){ showTitanError((e.reason && (e.reason.message || e.reason.code)) || e.reason || 'Promise error'); });
+  window.__titanShowError = showTitanError;
+})();
+</script>
+
+
+<style id="titan-student-stable-v6-css">
+/* ===== Student stable v6: no white page + sidebar + share display ===== */
+html, body { min-height:100%; background:var(--bg-body,#f1f5f9) !important; }
+#login-page { min-height:100vh; }
+.sidebar {
+  overflow-y:auto !important;
+  overflow-x:hidden !important;
+  -webkit-overflow-scrolling:touch !important;
+  overscroll-behavior:contain;
+  scrollbar-width:thin;
 }
-.vc-share-button-fix.is-sharing {
-  background: linear-gradient(135deg,#f97316,#ef4444) !important;
-  box-shadow:0 14px 34px rgba(239,68,68,.28) !important;
-}
-.vc-share-banner {
+.sidebar::-webkit-scrollbar{width:8px}
+.sidebar::-webkit-scrollbar-thumb{background:#94a3b8;border-radius:99px}
+.mobile-sidebar-head{display:none}
+.vc-share-banner{
   display:none;
-  margin:12px 0 0;
+  margin:0 0 14px;
   padding:12px 14px;
   border-radius:16px;
-  border:1px solid rgba(14,165,233,.28);
+  border:1px solid rgba(14,165,233,.35);
   background:rgba(14,165,233,.12);
-  color:var(--text-main);
+  color:var(--text-main,#0f172a);
   font-weight:900;
-  line-height:1.7;
+  line-height:1.8;
 }
-.vc-share-banner.active { display:block; }
-.vc-screen-tile {
-  grid-column: 1 / -1 !important;
-  min-height:420px !important;
-  outline:3px solid rgba(14,165,233,.38);
+.vc-share-banner.active{display:block}
+.vc-screen-tile{
+  grid-column:1/-1 !important;
+  min-height:430px !important;
+  outline:3px solid rgba(14,165,233,.45);
+  box-shadow:0 18px 50px rgba(14,165,233,.22) !important;
 }
-.vc-screen-tile video {
-  min-height:420px !important;
+.vc-screen-tile video{
+  min-height:430px !important;
   object-fit:contain !important;
+  background:#020617 !important;
+}
+@media (min-width:901px){
+  :root{--sidebar-width:280px}
+  .sidebar{
+    position:fixed !important;
+    right:0 !important; top:0 !important;
+    width:280px !important;
+    height:100vh !important;
+    max-height:100vh !important;
+  }
+  .main-content{
+    margin-right:280px !important;
+    width:calc(100% - 280px) !important;
+    padding:1.5rem !important;
+  }
 }
 @media (max-width:900px){
-  .vc-screen-tile, .vc-screen-tile video { min-height:300px !important; }
+  :root{--sidebar-width:0px}
+  .wrapper{display:block !important}
+  .main-content{margin-right:0 !important;width:100% !important;padding:.85rem !important}
+  .student-menu-btn{display:inline-flex !important}
+  .mobile-sidebar-head{
+    display:flex;align-items:center;justify-content:space-between;gap:10px;
+    padding:.65rem .25rem 1rem;margin-bottom:1rem;border-bottom:1px solid var(--border,#e2e8f0);
+  }
+  .mobile-sidebar-head button{
+    width:42px;height:42px;border:0;border-radius:14px;background:#eef2ff;color:#2563eb;font-size:24px;font-weight:900;cursor:pointer;
+  }
+  .sidebar{
+    position:fixed !important;
+    top:0 !important; right:0 !important;
+    width:min(88vw,360px) !important;
+    height:100dvh !important;
+    max-height:100dvh !important;
+    z-index:9999 !important;
+    padding:1rem !important;
+    transform:translateX(110%) !important;
+    background:var(--card-bg,#fff) !important;
+    box-shadow:-22px 0 55px rgba(15,23,42,.28) !important;
+    display:block !important;
+  }
+  body.sidebar-open{overflow:hidden !important}
+  body.sidebar-open .sidebar{transform:translateX(0) !important}
+  .sidebar span,.sidebar-brand span{display:inline !important}
+  .nav-link{white-space:normal !important;justify-content:flex-start !important;padding:.95rem 1rem !important;margin-bottom:8px !important}
+  .nav-link i{width:24px;text-align:center}
+  .sidebar .btn{width:100% !important;justify-content:center !important;margin-top:.8rem !important}
+  .vc-screen-tile,.vc-screen-tile video{min-height:300px !important}
 }
+</style>
+
+
+<style id="titan-live-v7-css">
+/* ===== TITAN LIVE V7: stable share + no broken WebRTC signals ===== */
+.vc-share-banner{
+  display:none;
+  margin:0 0 14px;
+  padding:12px 14px;
+  border-radius:16px;
+  border:1px solid rgba(14,165,233,.35);
+  background:rgba(14,165,233,.12);
+  color:var(--text-main,#0f172a);
+  font-weight:900;
+  line-height:1.8;
+}
+.vc-share-banner.active{display:block}
+.vc-screen-tile{
+  grid-column:1/-1 !important;
+  min-height:440px !important;
+  outline:3px solid rgba(14,165,233,.45);
+  box-shadow:0 18px 50px rgba(14,165,233,.22) !important;
+}
+.vc-screen-tile video{
+  min-height:440px !important;
+  object-fit:contain !important;
+  background:#020617 !important;
+}
+.vc-share-button-fix{
+  background:linear-gradient(135deg,#0ea5e9,#2563eb) !important;
+  color:#fff !important;
+  font-weight:900 !important;
+  border:0 !important;
+}
+.vc-share-button-fix.is-sharing{
+  background:linear-gradient(135deg,#f97316,#ef4444) !important;
+}
+.vc-debug-note{
+  margin-top:8px;
+  padding:10px 12px;
+  border-radius:14px;
+  background:#fff7ed;
+  color:#9a3412;
+  border:1px solid #fdba74;
+  font-weight:800;
+  line-height:1.7;
+}
+@media (max-width:900px){
+  .vc-screen-tile,.vc-screen-tile video{min-height:320px !important}
+}
+</style>
+
+
+<style id="titan-student-v9-protection-css">
+/* ===== TITAN V9: account protection + progress tracking ===== */
+.titan-v9-lock-note{padding:12px 14px;border-radius:16px;background:rgba(245,158,11,.12);border:1px solid rgba(245,158,11,.28);color:#b45309;font-weight:800;line-height:1.8;margin:10px 0;}
+.titan-v9-progress{height:12px;border-radius:999px;background:var(--bg-body,#f1f5f9);border:1px solid var(--border,#e2e8f0);overflow:hidden;margin:10px 0;}
+.titan-v9-progress>span{display:block;height:100%;width:0%;background:var(--primary-gradient,linear-gradient(135deg,#2563eb,#7c3aed));transition:width .2s ease;}
+.titan-v9-locked{position:relative;filter:grayscale(.15);opacity:.78;}
+.titan-v9-locked .lesson-body{padding-bottom:1.3rem;}
+.titan-v9-status-pill{display:inline-flex;align-items:center;gap:6px;border-radius:999px;padding:7px 11px;font-weight:900;font-size:.82rem;background:rgba(37,99,235,.10);color:var(--primary,#2563eb);}
+.titan-v9-session-banner{display:none;margin:0 0 14px;padding:12px 14px;border-radius:16px;background:rgba(37,99,235,.10);border:1px solid rgba(37,99,235,.22);font-weight:800;line-height:1.8;}
+.titan-v9-session-banner.active{display:block;}
+</style>
+
+
+<style id="titan-student-v10-css">
+/* ===== TITAN STUDENT V10: reliable inbox + browser alert ===== */
+.v10-notif-panel{background:var(--card-bg);border:1px solid var(--border);border-radius:24px;padding:1.4rem;box-shadow:var(--shadow-sm)}
+.v10-notif-item{padding:14px 16px;border:1px solid var(--border);border-radius:18px;background:var(--bg-body);margin-bottom:10px;line-height:1.8}
+.v10-notif-item.unread{border-color:rgba(37,99,235,.42);background:rgba(37,99,235,.08)}
+.v10-notif-title{font-weight:900;color:var(--primary);display:flex;align-items:center;gap:8px;margin-bottom:5px}.v10-notif-date{color:var(--text-dim);font-size:.85rem}.v10-notif-actions{display:flex;gap:10px;flex-wrap:wrap;margin:12px 0}
+.v10-toast{position:fixed;right:16px;bottom:16px;z-index:999999;background:var(--card-bg);color:var(--text-main);border:1px solid rgba(37,99,235,.35);border-right:5px solid #2563eb;border-radius:18px;padding:14px 16px;box-shadow:0 18px 45px rgba(15,23,42,.22);max-width:min(420px,92vw);line-height:1.8;font-weight:800;animation:v10pop .25s ease}
+@keyframes v10pop{from{transform:translateY(18px);opacity:0}to{transform:translateY(0);opacity:1}}
+.v10-health{padding:12px 14px;border-radius:16px;border:1px solid rgba(16,185,129,.24);background:rgba(16,185,129,.10);color:#059669;font-weight:800;line-height:1.8;margin-bottom:12px}
+</style>
+
+
+<style id="titan-lessons-v12-css">
+.titan-v12-status{grid-column:1/-1;margin:8px 0 14px;padding:12px 14px;border-radius:16px;background:rgba(37,99,235,.09);border:1px solid rgba(37,99,235,.22);color:var(--text-main);font-weight:800;line-height:1.8}
+.titan-v12-error{grid-column:1/-1;margin:8px 0 14px;padding:12px 14px;border-radius:16px;background:rgba(239,68,68,.10);border:1px solid rgba(239,68,68,.25);color:#ef4444;font-weight:800;line-height:1.8}
+.titan-v12-card .lesson-video-player{width:100%;max-height:320px;background:#000;border-radius:18px 18px 0 0;display:block}
+.titan-v12-card .video-box{border-radius:18px 18px 0 0;overflow:hidden}
 </style>
 
 </head>
@@ -603,6 +758,7 @@ header {
             <input type="text" id="student-code-input" placeholder="أدخل كود الطالب" onkeypress="if(event.key === 'Enter') studentLogin()">
             <input type="tel" id="student-phone-input" placeholder="رقم الهاتف (مسجل لدى الإدارة)" onkeypress="if(event.key === 'Enter') studentLogin()">
             <button class="btn" style="width: 100%; font-size: 1.1rem; padding: 15px;" onclick="studentLogin()"><i class="fas fa-sign-in-alt"></i> دخول المنصة</button>
+            <button class="btn btn-ghost" style="width:100%; margin-top: 12px;" onclick="parentLogin()"><i class="fas fa-people-roof"></i> دخول ولي الأمر</button>
             <button class="btn btn-ghost" style="width:100%; margin-top: 12px;" onclick="toggleSignupBox()"><i class="fas fa-user-plus"></i> ليس لدي حساب / طلب إنشاء حساب</button>
             <div id="signup-box" class="signup-box">
                 <input type="text" id="signup-name" placeholder="الاسم بالكامل">
@@ -631,6 +787,8 @@ header {
                 <div class="nav-link" onclick="showSection('live-class-sec', this)"><i class="fas fa-video"></i> <span>الحصص</span></div>
                 <div class="nav-link" onclick="showSection('chat-sec', this)"><i class="fas fa-comments"></i> <span>المجتمع</span></div>
                 <div class="nav-link" onclick="showSection('portfolio-sec', this)"><i class="fas fa-id-card"></i> <span>ملف الإنجاز</span></div>
+                <div class="nav-link" onclick="showSection('parent-reports-sec', this)"><i class="fas fa-file-pdf"></i> <span>التقارير والشهادات</span></div>
+                <div class="nav-link" onclick="showSection('notifications-sec', this)"><i class="fas fa-bell"></i> <span>الإشعارات</span></div>
                 <div class="nav-link" onclick="showSection('support-sec', this)"><i class="fas fa-headset"></i> <span>الدعم</span></div>
                 <button class="btn" style="margin-top: auto; background: #fee2e2; color: #ef4444;" onclick="studentLogout()">
                     <i class="fas fa-sign-out-alt"></i> <span>خروج</span>
@@ -783,6 +941,20 @@ header {
                     <div id="student-assignments-list"><p style="color: var(--text-dim);">جاري التحميل...</p></div>
                 </section>
 
+
+                <section id="notifications-sec" class="app-section">
+                    <div class="v10-notif-panel">
+                        <h3 style="margin-bottom:1rem;color:var(--primary);"><i class="fas fa-bell"></i> مركز الإشعارات V10</h3>
+                        <div id="v10-student-health" class="v10-health">جاري تشغيل صندوق الإشعارات...</div>
+                        <div class="v10-notif-actions">
+                            <button class="btn" onclick="TitanStudentNotifyV10.enableBrowserNotifications()"><i class="fas fa-bell"></i> تفعيل إشعارات المتصفح</button>
+                            <button class="btn btn-success" onclick="TitanStudentNotifyV10.markAllRead()"><i class="fas fa-check-double"></i> تعليم الكل كمقروء</button>
+                            <button class="btn btn-ghost" onclick="TitanStudentNotifyV10.refreshNow()"><i class="fas fa-rotate"></i> تحديث</button>
+                        </div>
+                        <div id="v10-notifications-list"><p style="color:var(--text-dim);">لا توجد إشعارات بعد.</p></div>
+                    </div>
+                </section>
+
                 <!-- قسم المجتمع (شات) -->
                 <section id="chat-sec" class="app-section">
                     <div class="chat-container">
@@ -794,6 +966,22 @@ header {
                             <input type="text" id="post-text" class="chat-input" placeholder="اكتب رسالتك هنا..." onkeypress="if(event.key === 'Enter') sendPost()">
                             <button class="btn" onclick="sendPost()"><i class="fas fa-paper-plane"></i></button>
                         </div>
+                    </div>
+                </section>
+
+
+
+                <section id="parent-reports-sec" class="app-section">
+                    <h3 style="margin-bottom: 1.5rem;"><i class="fas fa-people-roof"></i> متابعة ولي الأمر والتقارير</h3>
+                    <div id="parent-mode-banner" class="vc-join-status" style="display:none; margin-bottom:16px;">أنت الآن في وضع ولي الأمر: متابعة فقط بدون تسليمات أو مشاركة في المجتمع.</div>
+                    <div class="stats-grid" id="parent-summary-cards"></div>
+                    <div class="panel" style="margin-bottom:18px;">
+                        <h3 style="color:var(--primary); margin-bottom:12px;"><i class="fas fa-file-pdf"></i> التقارير الشهرية</h3>
+                        <div id="student-reports-view"><p style="color:var(--text-dim);">لا توجد تقارير منشورة بعد.</p></div>
+                    </div>
+                    <div class="panel">
+                        <h3 style="color:#d97706; margin-bottom:12px;"><i class="fas fa-award"></i> الشهادات</h3>
+                        <div id="student-certificates-view"><p style="color:var(--text-dim);">لا توجد شهادات بعد.</p></div>
                     </div>
                 </section>
 
@@ -890,6 +1078,7 @@ header {
         const firebaseConfig = {
             apiKey: "AIzaSyDgMV79LTyiQerEOZvtuszH6ONaOAset5c",
             authDomain: "programming-cc297.firebaseapp.com",
+            databaseURL: "https://programming-cc297-default-rtdb.firebaseio.com",
             projectId: "programming-cc297",
             storageBucket: "programming-cc297.firebasestorage.app",
             messagingSenderId: "131761323515",
@@ -932,25 +1121,20 @@ header {
         }
         
         
+        
         window.toggleStudentSidebar = function() {
             document.body.classList.toggle('sidebar-open');
             const btn = document.querySelector('.student-menu-btn');
-            if (btn) btn.setAttribute('aria-expanded', document.body.classList.contains('sidebar-open') ? 'true' : 'false');
+            if(btn) btn.setAttribute('aria-expanded', document.body.classList.contains('sidebar-open') ? 'true' : 'false');
         };
         window.closeStudentSidebar = function() {
             document.body.classList.remove('sidebar-open');
             const btn = document.querySelector('.student-menu-btn');
-            if (btn) btn.setAttribute('aria-expanded', 'false');
+            if(btn) btn.setAttribute('aria-expanded', 'false');
         };
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape' && document.body.classList.contains('sidebar-open')) closeStudentSidebar();
-        });
-        document.addEventListener('click', function(e) {
-            if (e.target.closest('.sidebar .nav-link') || e.target.closest('.sidebar .btn')) closeStudentSidebar();
-        });
-        window.addEventListener('resize', function() {
-            if (window.innerWidth > 900) closeStudentSidebar();
-        });
+        document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeStudentSidebar(); });
+        document.addEventListener('click', function(e){ if(e.target.closest('.sidebar .nav-link') || e.target.closest('.sidebar .btn')) closeStudentSidebar(); });
+        window.addEventListener('resize', function(){ if(window.innerWidth > 900) closeStudentSidebar(); });
 
         // دالة الوضع الليلي
         window.toggleTheme = function() {
@@ -1657,23 +1841,6 @@ header {
                 const empty = grid ? grid.querySelector('.vc-empty-state') : null;
                 if (empty) empty.remove();
             }
-            function updateShareBanner(isSharing){
-                const banner = $('vc-student-share-banner');
-                if(!banner) return;
-                banner.classList.toggle('active', !!isSharing);
-                banner.innerHTML = isSharing
-                    ? '<i class="fas fa-desktop"></i> المعلم يشارك الشاشة الآن. لو لم تظهر خلال ثواني اضغط خروج ثم دخول الحصة.'
-                    : '';
-                const teacherUid = getTeacherUid();
-                if(teacherUid) {
-                    const tile = document.getElementById('vc-tile-student-'+uidSafe(teacherUid));
-                    if(tile) {
-                        tile.classList.toggle('vc-screen-tile', !!isSharing);
-                        const name = tile.querySelector('.vc-name');
-                        if(name) name.textContent = isSharing ? 'مشاركة شاشة المعلم' : 'المعلم';
-                    }
-                }
-            }
             function getTeacherUid() {
                 if (state.room && state.room.teacherUid) return state.room.teacherUid;
                 const row = Object.entries(state.participants || {}).find(([uid,p]) => p && p.role === 'teacher');
@@ -1681,14 +1848,21 @@ header {
             }
             function updateTeacherTileLabel(){
                 const teacherUid = getTeacherUid();
+                const sharing = !!(state.room && state.room.screenSharing);
+                const banner = document.getElementById('vc-student-share-banner');
+                if(banner){
+                    banner.classList.toggle('active', sharing);
+                    banner.innerHTML = sharing ? '<i class="fas fa-desktop"></i> المعلم يشارك الشاشة الآن. لو لم تظهر خلال ثواني اضغط خروج ثم دخول الحصة.' : '';
+                }
                 if(!teacherUid) return;
                 const tile = document.getElementById('vc-tile-student-' + uidSafe(teacherUid));
                 if(tile) {
+                    tile.classList.toggle('vc-screen-tile', sharing);
                     const nameEl = tile.querySelector('.vc-name');
-                    if(nameEl) nameEl.textContent = state.room && state.room.screenSharing ? 'مشاركة شاشة المعلم' : 'المعلم';
+                    if(nameEl) nameEl.textContent = sharing ? 'مشاركة شاشة المعلم' : 'المعلم';
                 }
             }
-            function ensureVideo(id,label,muted=false,isScreen=false){
+            function ensureVideo(id,label,muted=false){
                 const grid=$('vc-student-grid'); if(!grid) return null;
                 clearGridNotice();
                 let tile=document.getElementById('vc-tile-student-'+uidSafe(id));
@@ -1699,7 +1873,8 @@ header {
                     tile.innerHTML=`<video playsinline autoplay ${muted?'muted':''}></video><div class="vc-status"><span class="vc-pill"><i class="fas fa-microphone"></i></span><span class="vc-pill"><i class="fas fa-video"></i></span></div><div class="vc-name"></div>`;
                     grid.appendChild(tile);
                 }
-                tile.classList.toggle('vc-screen-tile', !!isScreen);
+                tile.classList.toggle('vc-screen-tile', String(label||'').includes('مشاركة شاشة'));
+                tile.classList.toggle('vc-screen-tile', String(label||'').includes('مشاركة شاشة'));
                 tile.querySelector('.vc-name').textContent=label||id;
                 return tile.querySelector('video');
             }
@@ -1757,9 +1932,10 @@ header {
                     const p=state.participants[peerUid]||{};
                     const teacherUid = getTeacherUid();
                     const label = (p.role==='teacher' || peerUid===teacherUid) ? ((state.room && state.room.screenSharing) ? 'مشاركة شاشة المعلم' : 'المعلم') : (p.name||'مشارك');
-                    const v = ensureVideo(peerUid, label, false, !!(state.room && state.room.screenSharing && (p.role==='teacher' || peerUid===teacherUid)));
+                    const v = ensureVideo(peerUid, label);
                     if(v) v.srcObject=stream;
-                    setJoinStatus('تم الاتصال ببث المعلم.', 'success');
+                    showShareState();
+                    setJoinStatus((state.room && state.room.screenSharing) ? 'تم الاتصال بمشاركة شاشة المعلم.' : 'تم الاتصال ببث المعلم.', 'success');
                 };
                 pc.onconnectionstatechange=()=>{
                     if(pc.connectionState === 'connected') setJoinStatus('الاتصال يعمل الآن.', 'success');
@@ -1793,18 +1969,52 @@ header {
                     await syncOutgoingTracks(state.peers[teacherUid]);
                 }
             }
+            function validSdpObject(sdp, type){
+                return !!(sdp && typeof sdp === 'object' && sdp.type === type && typeof sdp.sdp === 'string' && sdp.sdp.length > 10);
+            }
+            function validCandidate(c){
+                return !!(c && typeof c === 'object' && (typeof c.candidate === 'string' || c.candidate === null));
+            }
+            function showShareState(){
+                const sharing = !!(state.room && state.room.screenSharing);
+                const banner = document.getElementById('vc-student-share-banner');
+                if(banner){
+                    banner.classList.toggle('active', sharing);
+                    banner.innerHTML = sharing ? '<i class="fas fa-desktop"></i> المعلم يشارك الشاشة الآن. لو لم تظهر خلال ثواني اضغط خروج ثم دخول الحصة.' : '';
+                }
+                const teacherUid = getTeacherUid();
+                if(teacherUid){
+                    const tile = document.getElementById('vc-tile-student-' + uidSafe(teacherUid));
+                    if(tile){
+                        tile.classList.toggle('vc-screen-tile', sharing);
+                        const n = tile.querySelector('.vc-name');
+                        if(n) n.textContent = sharing ? 'مشاركة شاشة المعلم' : 'المعلم';
+                    }
+                }
+            }
+            async function cleanupMySignals(){
+                if(!state.sessionId) return;
+                await db.ref(`${roomPath('signals')}/${uidSafe(me())}`).remove().catch(()=>{});
+            }
             async function handleSignal(key,sig){
-                if(!sig||sig.to!==me()||!sig.from)return;
-                const pc=await getPeer(sig.from);
+                if(!sig || sig.to!==me() || !sig.from) {
+                    if(key) db.ref(`${roomPath('signals')}/${uidSafe(me())}/${key}`).remove().catch(()=>{});
+                    return;
+                }
                 try {
-                    if(sig.type==='restart'){
+                    if(sig.type === 'restart' || sig.type === 'screen_on' || sig.type === 'screen_off'){
                         removePeer(sig.from, true);
-                        setJoinStatus(sig.reason === 'screen_on' ? 'المعلم بدأ مشاركة الشاشة... جاري إعادة الاتصال.' : 'تم تغيير بث المعلم... جاري إعادة الاتصال.', 'info');
-                        db.ref(`${roomPath('signals')}/${uidSafe(me())}/${key}`).remove();
+                        setJoinStatus(sig.reason === 'screen_on' || sig.type === 'screen_on' ? 'المعلم بدأ مشاركة الشاشة... جاري تحديث الاتصال.' : 'تم تغيير بث المعلم... جاري تحديث الاتصال.', 'info');
+                        await db.ref(`${roomPath('signals')}/${uidSafe(me())}/${key}`).remove().catch(()=>{});
                         return;
                     }
-                    if(sig.type==='offer'){
-                        if(sig.shareVersion) setJoinStatus('جاري تحديث بث المعلم / مشاركة الشاشة...', 'info');
+                    if(sig.type === 'offer'){
+                        if(!validSdpObject(sig.sdp, 'offer')){
+                            console.warn('تم تجاهل offer ناقص من Firebase', sig);
+                            await db.ref(`${roomPath('signals')}/${uidSafe(me())}/${key}`).remove().catch(()=>{});
+                            return;
+                        }
+                        const pc=await getPeer(sig.from);
                         if(pc.signalingState !== 'stable') {
                             try { await pc.setLocalDescription({type:'rollback'}); } catch(e) {}
                         }
@@ -1812,19 +2022,43 @@ header {
                         await syncOutgoingTracks(pc);
                         const ans=await pc.createAnswer();
                         await pc.setLocalDescription(ans);
-                        await sendSignal(sig.from,{type:'answer',sdp:pc.localDescription});
-                        updateTeacherTileLabel();
+                        if(pc.localDescription) await sendSignal(sig.from,{type:'answer',sdp:{type:pc.localDescription.type, sdp:pc.localDescription.sdp}});
+                        setJoinStatus('تم استقبال بث المعلم.', 'success');
                     } else if(sig.type==='answer') {
+                        if(!validSdpObject(sig.sdp, 'answer')){
+                            console.warn('تم تجاهل answer ناقص من Firebase', sig);
+                            await db.ref(`${roomPath('signals')}/${uidSafe(me())}/${key}`).remove().catch(()=>{});
+                            return;
+                        }
+                        const pc=await getPeer(sig.from);
                         if(pc.signalingState === 'have-local-offer') await pc.setRemoteDescription(new RTCSessionDescription(sig.sdp));
                     } else if(sig.type==='candidate') {
-                        try{await pc.addIceCandidate(new RTCIceCandidate(sig.candidate));}catch(e){console.warn(e);}
+                        if(!validCandidate(sig.candidate)){
+                            console.warn('تم تجاهل candidate ناقص من Firebase', sig);
+                            await db.ref(`${roomPath('signals')}/${uidSafe(me())}/${key}`).remove().catch(()=>{});
+                            return;
+                        }
+                        const pc=await getPeer(sig.from);
+                        if(pc.remoteDescription && pc.remoteDescription.type){
+                            try{await pc.addIceCandidate(new RTCIceCandidate(sig.candidate));}catch(e){console.warn(e);}
+                        } else {
+                            setTimeout(async () => {
+                                try {
+                                    if(pc.remoteDescription && pc.remoteDescription.type) await pc.addIceCandidate(new RTCIceCandidate(sig.candidate));
+                                } catch(e) { console.warn(e); }
+                            }, 700);
+                        }
+                    } else {
+                        console.warn('تم تجاهل signal غير معروف', sig);
                     }
-                    db.ref(`${roomPath('signals')}/${uidSafe(me())}/${key}`).remove();
+                    await db.ref(`${roomPath('signals')}/${uidSafe(me())}/${key}`).remove().catch(()=>{});
                 } catch(err) {
                     console.error(err);
                     setJoinStatus('حدث خطأ في اتصال الحصة. جرّب الخروج والدخول مرة أخرى.', 'error');
+                    await db.ref(`${roomPath('signals')}/${uidSafe(me())}/${key}`).remove().catch(()=>{});
                 }
             }
+
             function listenActiveRooms(){
                 const el=$('vc-student-active-list');
                 if(!el) return;
@@ -1881,6 +2115,7 @@ header {
                 }
                 await leaveClass(false);
                 state.sessionId=code;
+                await cleanupMySignals();
                 state.room=snap.val();
                 $('vc-student-session-code').textContent=code;
                 state.roomRef = db.ref(roomPath());
@@ -1977,7 +2212,6 @@ header {
                 const codeEl = $('vc-student-session-code'); if(codeEl) codeEl.textContent='غير متصل';
                 const grid=$('vc-student-grid'); if(grid) grid.innerHTML='';
                 renderPermissions();
-                updateShareBanner(false);
                 if(update) setJoinStatus('', 'info');
             }
             setTimeout(listenActiveRooms, 1500);
@@ -1985,5 +2219,437 @@ header {
         })();
 
 </script>
+
+<script id="titan-blank-watchdog-v6">
+window.addEventListener('DOMContentLoaded', function(){
+  setTimeout(function(){
+    try {
+      var login = document.getElementById('login-page');
+      var main = document.getElementById('main-platform');
+      var bodyText = (document.body && document.body.innerText || '').trim();
+      if(login && main && bodyText.length < 20){
+        login.style.display = 'flex';
+        if(window.__titanShowError) window.__titanShowError('تم منع الشاشة البيضاء تلقائياً. افتحي Console لو في رسالة خطأ.');
+      }
+    } catch(e){}
+  }, 1500);
+});
+</script>
+
+
+<script id="titan-file-origin-note-v7">
+window.addEventListener('DOMContentLoaded', function(){
+  try {
+    if(location.protocol === 'file:') {
+      var box=document.createElement('div');
+      box.className='vc-debug-note';
+      box.style.cssText+='position:fixed;left:14px;bottom:14px;z-index:999999;max-width:520px;';
+      box.innerHTML='تنبيه مهم: أنت فاتح الصفحة من file://. مشاركة الشاشة والكاميرا والـ WebRTC أحياناً لا يعملوا بثبات من file. افتح الملفات من VS Code Live Server أو localhost.';
+      document.body.appendChild(box);
+      setTimeout(function(){box.remove()}, 9000);
+    }
+  } catch(e){}
+});
+</script>
+
+
+
+<script id="titan-student-v8-features">
+(function(){
+  const $ = (id) => document.getElementById(id);
+  const esc = (v) => window.escapeHTML ? window.escapeHTML(v) : String(v ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const safe = (v) => window.safeUrl ? window.safeUrl(v) : String(v||'');
+  let bootedFor = '';
+  let lastStudent = null;
+  function db(){ return window.firebase && firebase.database ? firebase.database() : null; }
+  function auth(){ return window.firebase && firebase.auth ? firebase.auth() : null; }
+  function isParentMode(){ return localStorage.getItem('titan_parent_mode') === '1'; }
+  function card(label, value, icon){ return `<div class="stat-card"><span class="stat-value" style="font-size:2.2rem;">${esc(value)}</span><span style="color:var(--text-dim);font-weight:700;"><i class="fas ${icon}"></i> ${esc(label)}</span></div>`; }
+  function renderParentSummary(student, latest){
+    const el=$('parent-summary-cards'); if(!el) return;
+    const sum=(latest && latest.summary) || {};
+    el.innerHTML = card('النقاط XP', student.xp || sum.xp || 0, 'fa-bolt') + card('الحضور', `${sum.present || 0} حضور / ${sum.absent || 0} غياب`, 'fa-calendar-check') + card('الواجبات', `${sum.homeworkDone || 0} من ${sum.homeworkCount || 0}`, 'fa-book') + card('المتبقي المالي', `${sum.remaining || 0} ج.م`, 'fa-file-invoice-dollar');
+  }
+  function openReport(html){ const w=window.open('', '_blank'); if(!w) return alert('المتصفح منع فتح التقرير.'); w.document.write(`<!doctype html><html lang="ar" dir="rtl"><head><meta charset="utf-8"><title>تقرير الطالب</title><link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;800&display=swap" rel="stylesheet"></head><body>${html}<script>setTimeout(()=>window.print(),500)<\/script></body></html>`); w.document.close(); }
+  window.TitanStudentV8OpenReport = function(path){ try{ const obj = path.split('/').reduce((a,k)=>a && a[k], window.__titanStudentReports || {}); if(obj && obj.html) openReport(obj.html); }catch(e){ console.warn(e); } };
+  function renderReports(data, student){
+    window.__titanStudentReports = data || {};
+    const reportsEl=$('student-reports-view'); const certEl=$('student-certificates-view');
+    const reports = Object.entries(data||{}).filter(([k,v]) => k !== 'certificates' && v && v.summary).sort((a,b)=>String(b[1].createdAt||'').localeCompare(String(a[1].createdAt||'')));
+    const latest = reports[0] ? reports[0][1] : null;
+    renderParentSummary(student, latest);
+    if(reportsEl) reportsEl.innerHTML = reports.length ? reports.map(([key,r])=>`<div class="assignment-card"><h3 style="color:var(--primary);">تقرير ${esc(key)}</h3><div class="lesson-meta"><span class="mini-badge"><i class="fas fa-bolt"></i> ${esc((r.summary||{}).xp||0)} XP</span><span class="mini-badge"><i class="fas fa-calendar-check"></i> حضور ${esc((r.summary||{}).present||0)}</span><span class="mini-badge"><i class="fas fa-triangle-exclamation"></i> غياب ${esc((r.summary||{}).absent||0)}</span></div><p class="mini-note">${esc(r.when||'')}</p><button class="btn" onclick="TitanStudentV8OpenReport('${esc(key)}')"><i class="fas fa-print"></i> فتح / طباعة التقرير</button></div>`).join('') : '<p style="color:var(--text-dim);">لا توجد تقارير منشورة بعد.</p>';
+    const certs = Object.entries((data||{}).certificates || {}).sort((a,b)=>String(b[1].createdAt||'').localeCompare(String(a[1].createdAt||'')));
+    if(certEl) certEl.innerHTML = certs.length ? certs.map(([key,c])=>`<div class="assignment-card"><h3 style="color:#d97706;"><i class="fas fa-award"></i> ${esc(c.title||'شهادة')}</h3><p class="mini-note">${esc(c.when||'')}</p><button class="btn btn-success" onclick="TitanStudentV8OpenReport('certificates/${esc(key)}')"><i class="fas fa-print"></i> فتح / طباعة الشهادة</button></div>`).join('') : '<p style="color:var(--text-dim);">لا توجد شهادات بعد.</p>';
+  }
+  function renderNotifications(items, student){
+    const list=$('notif-list'); if(!list || !student) return;
+    const filtered=Object.entries(items||{}).map(([key,n])=>Object.assign({key},n)).filter(n => n.studentKey === student.key || n.level === 'all' || String(n.level) === String(student.level)).sort((a,b)=>String(b.createdAt||'').localeCompare(String(a.createdAt||''))).slice(0,20);
+    list.innerHTML = filtered.length ? filtered.map(n=>`<div class="notif-item"><b>${esc(n.title||'تنبيه')}</b><br>${esc(n.body||'')}<br><small>${esc(n.when||'')}</small></div>`).join('') : '<div class="notif-item">لا توجد إشعارات جديدة.</div>';
+    const lastSeen=Number(localStorage.getItem('titan_last_notif_seen') || 0);
+    const newest=filtered[0] ? Date.parse(filtered[0].createdAt || '') || 0 : 0;
+    if(newest > lastSeen && $('notif-dot')) $('notif-dot').style.display='block';
+  }
+  function enforceParentMode(){
+    if(!isParentMode()) return;
+    if($('parent-mode-banner')) $('parent-mode-banner').style.display='block';
+    if($('welcome-msg')) $('welcome-msg').textContent='متابعة ولي الأمر';
+    document.querySelectorAll('.nav-link').forEach(link=>{
+      const txt=link.textContent || '';
+      if(!/مستواي|الدروس|التقارير|ملف الإنجاز|خروج/.test(txt)) link.style.display='none';
+    });
+    ['post-text','support-text'].forEach(id=>{ if($(id)) $(id).disabled=true; });
+    document.querySelectorAll('button[onclick*="submitAssignment"], button[onclick*="sendPost"], button[onclick*="sendSupportRequest"], button[onclick*="openExam"]').forEach(b=>b.disabled=true);
+  }
+  async function boot(){
+    const a=auth(); const d=db(); const user=a && a.currentUser; if(!user || !d || bootedFor===user.uid) return;
+    bootedFor=user.uid;
+    const snap=await d.ref('students/'+user.uid).once('value');
+    if(!snap.exists()) return;
+    const student=Object.assign({}, snap.val(), {key:user.uid}); lastStudent=student;
+    d.ref('notifications').limitToLast(80).on('value', s=>renderNotifications(s.val()||{}, student));
+    d.ref('student_reports/'+user.uid).on('value', s=>renderReports(s.val()||{}, student));
+    enforceParentMode();
+  }
+  const oldToggle = window.toggleNotifications;
+  window.toggleNotifications = function(){ localStorage.setItem('titan_last_notif_seen', String(Date.now())); if($('notif-dot')) $('notif-dot').style.display='none'; return oldToggle ? oldToggle.apply(this, arguments) : undefined; };
+  const oldStudentLogin = window.studentLogin;
+  if(typeof oldStudentLogin === 'function'){
+    window.studentLogin = async function(){ localStorage.removeItem('titan_parent_mode'); return oldStudentLogin.apply(this, arguments); };
+    window.parentLogin = async function(){ localStorage.setItem('titan_parent_mode','1'); return oldStudentLogin.apply(this, arguments); };
+  } else {
+    window.parentLogin = function(){ localStorage.setItem('titan_parent_mode','1'); alert('أعد تحميل الصفحة ثم جرب مرة أخرى.'); };
+  }
+  window.addEventListener('DOMContentLoaded', function(){ setInterval(boot, 900); setInterval(enforceParentMode, 2500); });
+})();
+</script>
+
+
+<script id="titan-student-v9-protection">
+(function(){
+  const DEVICE_KEY='titan_v9_device_id';
+  const HEARTBEAT_MS=30000;
+  const ACTIVE_WINDOW_MS=5*60*1000;
+  const state={uid:'', student:null, progress:{}, deviceId:'', sessionClaimed:false, progressReady:false, attendance:null, hb:null, activityTimer:null, renderPatched:false, loginWrapped:false, logoutWrapped:false, vcWrapped:false};
+  const $=(id)=>document.getElementById(id);
+  const esc=(v)=>String(v ?? '').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const safe=(url)=>{ const u=String(url||'').trim(); if(!u) return ''; try{ const p=new URL(u, location.href); return ['http:','https:','data:','blob:'].includes(p.protocol)?p.href:''; }catch(e){ return ''; } };
+  const nowIso=()=>new Date().toISOString();
+  const nowAr=()=>new Date().toLocaleString('ar-EG');
+  function db(){ return window.firebase && firebase.database ? firebase.database() : null; }
+  function auth(){ return window.firebase && firebase.auth ? firebase.auth() : null; }
+  function user(){ const a=auth(); return a && a.currentUser; }
+  function isParentMode(){ return localStorage.getItem('titan_parent_mode')==='1'; }
+  function toast(msg,type){ if(window.__titanShowError && type==='error') window.__titanShowError(msg); else if(window.alert && type==='error') alert(msg); }
+  function ensureDeviceId(){ let id=localStorage.getItem(DEVICE_KEY); if(!id){ id='dev_'+Date.now().toString(36)+'_'+Math.random().toString(36).slice(2,12); localStorage.setItem(DEVICE_KEY,id); } state.deviceId=id; return id; }
+  function parseMs(v){ const n=Date.parse(v||''); return Number.isFinite(n)?n:0; }
+  async function loadStudent(uid){ const d=db(); if(!d||!uid) return null; const snap=await d.ref('students/'+uid).once('value'); if(!snap.exists()) return null; state.student=Object.assign({},snap.val(),{key:uid}); return state.student; }
+  async function updateActivity(extra){ try{ const d=db(), u=user(); if(!d||!u||isParentMode()) return; const student=state.student || await loadStudent(u.uid); const page=document.querySelector('.app-section.active')?.id || ''; await d.ref('student_activity/'+u.uid).update(Object.assign({studentKey:u.uid, studentName:student?.name||'', code:student?.code||'', level:student?.level||'', deviceId:ensureDeviceId(), page, lastSeen:nowIso(), when:nowAr(), userAgent:navigator.userAgent.slice(0,160)}, extra||{})); }catch(e){ console.warn('activity',e); } }
+  async function claimSession(){
+    const d=db(), u=user(); if(!d||!u||isParentMode()) return true;
+    ensureDeviceId();
+    const student=state.student || await loadStudent(u.uid);
+    const ref=d.ref('active_sessions/'+u.uid);
+    const snap=await ref.once('value');
+    const old=snap.val()||{};
+    const oldRecent=old.deviceId && old.deviceId!==state.deviceId && (Date.now()-parseMs(old.lastSeen) < ACTIVE_WINDOW_MS);
+    if(oldRecent){
+      alert('هذا الحساب مفتوح حالياً على جهاز آخر. لحماية المحتوى تم منع فتحه من جهازين في نفس الوقت. اطلب من الإدارة فصل الجلسة لو الجهاز القديم مغلق.');
+      try{ await auth().signOut(); }catch(e){}
+      location.reload();
+      return false;
+    }
+    await ref.set({studentKey:u.uid, studentName:student?.name||'', code:student?.code||'', level:student?.level||'', deviceId:state.deviceId, startedAt:nowIso(), lastSeen:nowIso(), when:nowAr(), userAgent:navigator.userAgent.slice(0,180)});
+    try{ ref.onDisconnect().remove(); }catch(e){}
+    if(!state.sessionClaimed){
+      state.sessionClaimed=true;
+      ref.on('value', async s=>{ const v=s.val(); if(v && v.deviceId && v.deviceId!==state.deviceId && !isParentMode()){ alert('تم فتح حسابك من جهاز آخر، لذلك تم تسجيل خروج هذا الجهاز.'); try{ await auth().signOut(); }catch(e){} location.reload(); } });
+    }
+    clearInterval(state.hb);
+    state.hb=setInterval(()=>{ ref.update({lastSeen:nowIso(), when:nowAr()}).catch(()=>{}); updateActivity(); }, HEARTBEAT_MS);
+    updateActivity({event:'login'});
+    return true;
+  }
+  async function releaseSession(){ try{ const d=db(), u=user(); if(d&&u&&!isParentMode()) await d.ref('active_sessions/'+u.uid).remove(); }catch(e){} }
+  function youtubeId(url){ const raw=String(url||'').trim(); if(!raw) return ''; try{ const parsed=new URL(raw, location.href); if(parsed.hostname.includes('youtu.be')) return parsed.pathname.replace('/','').split('/')[0]; if(parsed.searchParams.get('v')) return parsed.searchParams.get('v'); const parts=parsed.pathname.split('/').filter(Boolean); const idx=parts.findIndex(p=>p==='embed'||p==='shorts'); if(idx>=0&&parts[idx+1]) return parts[idx+1]; }catch(e){} return raw.includes('v=')?raw.split('v=')[1].split('&')[0]:''; }
+  function badge(text, icon){ return `<span class="mini-badge"><i class="fas ${icon||'fa-tag'}"></i> ${esc(text)}</span>`; }
+  function action(label,url,icon){ const u=safe(url); return u?`<a href="${u}" target="_blank" rel="noopener noreferrer" class="mini-badge"><i class="fas ${icon||'fa-link'}"></i> ${esc(label)}</a>`:''; }
+  function getPct(key){ const p=state.progress && state.progress[key]; return Math.max(0, Math.min(100, Number((p&&p.percent)||0))); }
+  function isDone(key){ return getPct(key)>=85; }
+  async function writeProgress(lessonKey, pct, extra){
+    const d=db(), u=user(); if(!d||!u||!lessonKey||isParentMode()) return;
+    const cur=getPct(lessonKey); const next=Math.max(cur, Math.round(Number(pct)||0));
+    const lesson=(window.allLessons||{})[lessonKey]||{};
+    const payload=Object.assign({lessonKey, lessonTitle:lesson.title||'', level:lesson.level||state.student?.level||'', percent:next, updatedAt:nowIso(), when:nowAr(), deviceId:ensureDeviceId()}, extra||{});
+    if(next>=85 && !state.progress[lessonKey]?.completedAt) payload.completedAt=nowIso();
+    await d.ref('lesson_progress/'+u.uid+'/'+lessonKey).update(payload);
+    state.progress[lessonKey]=Object.assign({}, state.progress[lessonKey]||{}, payload);
+    updateActivity({event:'lesson_progress', lessonKey, percent:next});
+  }
+  async function completeLesson(lessonKey){
+    const before=getPct(lessonKey);
+    await writeProgress(lessonKey,100,{manual:true});
+    try{ if(before<85 && typeof window.markLessonWatched==='function') await window.markLessonWatched(lessonKey,15); }catch(e){ console.warn(e); }
+    if(typeof window.renderStudentLessons==='function') window.renderStudentLessons();
+  }
+  function trackVideo(video){
+    try{ const key=video.getAttribute('data-lesson-key'); if(!key||!video.duration) return; const pct=Math.floor((video.currentTime/video.duration)*100); if(pct>=5 && pct % 5 === 0 && pct>getPct(key)) writeProgress(key, Math.min(pct,99), {seconds:Math.round(video.currentTime)}); if(pct>=85 && getPct(key)<85) completeLesson(key); }catch(e){ console.warn(e); }
+  }
+  function startLesson(key){ updateActivity({event:'lesson_play', lessonKey:key}); writeProgress(key, Math.max(1,getPct(key)), {startedAt: nowIso()}); }
+  function renderLessonsV9(){
+    const list=$('lessons-list'), catSel=$('lesson-category-filter'); if(!list) return;
+    const student=state.student; if(!student){ list.innerHTML='<p style="grid-column:1/-1;text-align:center;">جاري تحميل بيانات الطالب...</p>'; return; }
+    const q=($('lesson-search-student')?.value||'').toLowerCase();
+    const cat=catSel?catSel.value:'all'; const difficulty=$('lesson-difficulty-filter')?.value||'all';
+    const lessons=Object.entries(window.allLessons||{}).map(([key,l])=>Object.assign({},l,{key})).filter(l=>String(l.level)==String(student.level));
+    const ordered=lessons.slice().sort((a,b)=>{
+      const sa=Number(a.sequence||a.order||0), sb=Number(b.sequence||b.order||0);
+      if(sa||sb) return sa-sb;
+      return String(a.createdAt||'').localeCompare(String(b.createdAt||''));
+    });
+    const categories=[...new Set(lessons.map(l=>l.category||'عام'))].sort();
+    if(catSel){ const current=catSel.value; catSel.innerHTML='<option value="all">كل الأقسام</option>'+categories.map(c=>`<option value="${esc(c)}">${esc(c)}</option>`).join(''); catSel.value=categories.includes(current)?current:'all'; }
+    const unlocked={};
+    ordered.forEach((l,idx)=>{ const prev=ordered[idx-1]; const free=l.unlockMode==='free' || l.free===true; unlocked[l.key]=free || idx===0 || !prev || isDone(prev.key) || isDone(l.key); });
+    const filtered=ordered.filter(l=>{ const hay=[l.title,l.desc,l.category,l.difficulty].join(' ').toLowerCase(); return (!q||hay.includes(q)) && (cat==='all'||(l.category||'عام')===cat) && (difficulty==='all'||l.difficulty===difficulty); });
+    list.innerHTML=filtered.map((l,idx)=>{
+      const locked=!unlocked[l.key]; const pct=getPct(l.key); const vid=youtubeId(l.video);
+      const phtml=`<div class="titan-v9-progress"><span style="width:${pct}%"></span></div><span class="titan-v9-status-pill"><i class="fas ${pct>=85?'fa-circle-check':'fa-chart-simple'}"></i> ${pct>=85?'مكتمل':pct+'% مشاهدة'}</span>`;
+      const lockedMedia=`<div class="cover-img titan-v9-locked" style="display:flex;align-items:center;justify-content:center;flex-direction:column;gap:10px;"><i class="fas fa-lock" style="font-size:2.5rem;color:#f59e0b;"></i><strong>مغلق حتى تنهي الدرس السابق</strong></div>`;
+      const media=locked?lockedMedia:(l.videoUrl?`<video class="lesson-video-player titan-v9-video" controls preload="metadata" data-lesson-key="${esc(l.key)}" onplay="TitanStudentV9.startLesson('${esc(l.key)}')" ontimeupdate="TitanStudentV9.trackVideo(this)" onended="TitanStudentV9.completeLesson('${esc(l.key)}')" ${safe(l.thumbnailUrl)?`poster="${safe(l.thumbnailUrl)}"`:''} src="${safe(l.videoUrl)}"></video>`:(vid?`<div class="video-box"><iframe src="https://www.youtube.com/embed/${esc(vid)}" allowfullscreen onload="TitanStudentV9.startLesson('${esc(l.key)}')"></iframe></div>`:(safe(l.thumbnailUrl)?`<img class="cover-img" src="${safe(l.thumbnailUrl)}" alt="غلاف الدرس">`:`<div class="cover-img" style="display:flex;align-items:center;justify-content:center;"><i class="fas fa-graduation-cap" style="font-size:3rem;color:var(--primary);"></i></div>`)));
+      return `<div class="lesson-card ${locked?'titan-v9-locked':''}">${media}<div class="lesson-body"><h4 style="margin-bottom:8px;">${l.featured?'⭐ ':''}${esc(l.title||'درس')}</h4><div class="lesson-meta">${badge('ترتيب '+(Number(l.sequence||l.order)||idx+1),'fa-list-ol')}${badge(l.category||'عام','fa-layer-group')}${badge(l.difficulty||'مبتدئ','fa-signal')}${l.duration?badge(l.duration+' دقيقة','fa-clock'):''}${locked?badge('مغلق','fa-lock'):badge('متاح','fa-unlock')}</div>${phtml}${l.desc?`<p style="color:var(--text-dim);line-height:1.8;margin-bottom:12px;">${esc(l.desc)}</p>`:''}${locked?`<div class="titan-v9-lock-note"><i class="fas fa-shield-halved"></i> افتح الدرس السابق وأكمله بنسبة 85% على الأقل حتى يفتح هذا الدرس.</div>`:`<div class="lesson-actions">${action('ملزمة PDF',l.pdfUrl||l.pdf,'fa-file-pdf')}${action('ملف الكود',l.codeFileUrl||l.code,'fa-file-code')}<button class="btn" style="padding:.65rem 1rem;" onclick="TitanStudentV9.completeLesson('${esc(l.key)}')"><i class="fas fa-check"></i> أنهيت الدرس</button></div>`}</div></div>`;
+    }).join('') || "<p style='grid-column:1/-1;text-align:center;'>لا توجد دروس مطابقة حالياً</p>";
+  }
+  function patchRender(){ if(state.renderPatched) return; const hasOriginal=typeof window.renderStudentLessons==='function'; if(!hasOriginal) return; window.renderStudentLessons=renderLessonsV9; state.renderPatched=true; try{ renderLessonsV9(); }catch(e){ console.warn(e); } }
+  function startProgressListener(){ const d=db(), u=user(); if(!d||!u||state.progressReady) return; state.progressReady=true; d.ref('lesson_progress/'+u.uid).on('value', s=>{ state.progress=s.val()||{}; patchRender(); if(typeof window.renderStudentLessons==='function') window.renderStudentLessons(); }); }
+  async function markAttendanceJoin(sessionId){ try{ const d=db(), u=user(); if(!d||!u||!sessionId||isParentMode()) return; const student=state.student||await loadStudent(u.uid); state.attendance={sessionId, started:Date.now()}; await d.ref('live_attendance/'+sessionId+'/'+u.uid).update({sessionId, studentKey:u.uid, studentName:student?.name||'', code:student?.code||'', level:student?.level||'', deviceId:ensureDeviceId(), joinedAt:nowIso(), lastSeen:nowIso(), joinMs:state.attendance.started, when:nowAr(), status:'present'}); updateActivity({event:'live_join', sessionId}); }catch(e){ console.warn('attendance join',e); } }
+  async function markAttendanceLeave(){ try{ const d=db(), u=user(); if(!d||!u||!state.attendance) return; const seconds=Math.max(1, Math.round((Date.now()-state.attendance.started)/1000)); await d.ref('live_attendance/'+state.attendance.sessionId+'/'+u.uid).update({leftAt:nowIso(), lastSeen:nowIso(), seconds, status:'left'}); updateActivity({event:'live_leave', sessionId:state.attendance.sessionId, seconds}); state.attendance=null; }catch(e){ console.warn('attendance leave',e); } }
+  function wrapVC(){ if(state.vcWrapped||!window.VCStudent) return; const vc=window.VCStudent; if(typeof vc.joinClass==='function'){ const oldJoin=vc.joinClass.bind(vc); vc.joinClass=async function(){ const code=($('vc-student-code')?.value||'').trim(); const res=await oldJoin.apply(this,arguments); if(code) await markAttendanceJoin(code); return res; }; } if(typeof vc.leaveClass==='function'){ const oldLeave=vc.leaveClass.bind(vc); vc.leaveClass=async function(){ await markAttendanceLeave(); return oldLeave.apply(this,arguments); }; } state.vcWrapped=true; }
+  function wrapLoginLogout(){
+    if(!state.loginWrapped && typeof window.studentLogin==='function'){
+      const old=window.studentLogin; window.studentLogin=async function(){ const res=await old.apply(this,arguments); setTimeout(()=>{ const u=user(); if(u){ loadStudent(u.uid).then(()=>claimSession()).then(()=>startProgressListener()).then(()=>patchRender()).catch(e=>console.warn(e)); } },800); return res; }; state.loginWrapped=true;
+    }
+    if(!state.logoutWrapped && typeof window.studentLogout==='function'){
+      const old=window.studentLogout; window.studentLogout=async function(){ await markAttendanceLeave(); await releaseSession(); return old.apply(this,arguments); }; state.logoutWrapped=true;
+    }
+    if(window.showSection && !window.showSection.__titanV9Activity){ const oldShow=window.showSection; window.showSection=function(){ const res=oldShow.apply(this,arguments); setTimeout(()=>updateActivity(),300); return res; }; window.showSection.__titanV9Activity=true; }
+  }
+  function boot(){
+    wrapLoginLogout(); wrapVC(); patchRender();
+    const u=user(); if(u){ if(state.uid!==u.uid){ state.uid=u.uid; loadStudent(u.uid).then(()=>{ if(!isParentMode()) claimSession(); startProgressListener(); updateActivity({event:'resume'}); }).catch(console.warn); } }
+    clearInterval(state.activityTimer); state.activityTimer=setInterval(updateActivity,45000);
+  }
+  window.TitanStudentV9={completeLesson, trackVideo, startLesson, renderLessons:renderLessonsV9, claimSession, releaseSession};
+  window.addEventListener('beforeunload', function(){ try{ markAttendanceLeave(); const d=db(), u=user(); if(d&&u&&!isParentMode()) d.ref('active_sessions/'+u.uid).update({lastSeen:nowIso(), closing:true}); }catch(e){} });
+  window.addEventListener('DOMContentLoaded', function(){ setInterval(boot,900); setTimeout(boot,500); });
+})();
+</script>
+
+
+<script id="titan-student-v10-mega-notifications">
+(function(){
+  const $=id=>document.getElementById(id);
+  const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const db=()=>window.db || (window.firebase&&firebase.database&&firebase.database());
+  const auth=()=>window.auth || (window.firebase&&firebase.auth&&firebase.auth());
+  let currentUid=null, student=null, inbox={}, globalItems={}, started=false, firstPaint=true;
+  const seenKey=()=> currentUid ? 'titan_v10_seen_'+currentUid : 'titan_v10_seen_guest';
+  function seenMap(){ try{return JSON.parse(localStorage.getItem(seenKey())||'{}');}catch(e){return{};} }
+  function saveSeen(m){ localStorage.setItem(seenKey(),JSON.stringify(m||{})); }
+  function beep(){ try{ const ctx=new (window.AudioContext||window.webkitAudioContext)(); const osc=ctx.createOscillator(); const gain=ctx.createGain(); osc.type='sine'; osc.frequency.value=880; gain.gain.value=.045; osc.connect(gain); gain.connect(ctx.destination); osc.start(); setTimeout(()=>{osc.stop();ctx.close();},140); }catch(e){} }
+  function toast(title,body){
+    const old=document.querySelector('.v10-toast'); if(old) old.remove();
+    const div=document.createElement('div'); div.className='v10-toast'; div.innerHTML='<div style="color:var(--primary);margin-bottom:4px"><i class="fas fa-bell"></i> '+esc(title)+'</div><div>'+esc(body)+'</div>'; document.body.appendChild(div); setTimeout(()=>div.remove(),7000);
+  }
+  function browserNotify(title,body){
+    try{ if('Notification' in window && Notification.permission==='granted') new Notification(title,{body,icon:''}); }catch(e){}
+  }
+  function allNotifications(){
+    if(!student) return [];
+    const merged={};
+    Object.entries(globalItems||{}).forEach(([key,n])=>{ if(!n) return; if(n.studentKey===student.key || n.level==='all' || String(n.level)===String(student.level)) merged[key]=Object.assign({key,source:'global'},n); });
+    Object.entries(inbox||{}).forEach(([key,n])=>{ if(n) merged[key]=Object.assign({key,source:'inbox'},n); });
+    return Object.values(merged).sort((a,b)=>String(b.createdAt||'').localeCompare(String(a.createdAt||''))).slice(0,200);
+  }
+  function updateBadge(unread){
+    const dot=$('notif-dot'); if(dot) dot.style.display=unread>0?'block':'none';
+    let badge=$('v10-unread-badge');
+    const bell=document.querySelector('button[onclick="toggleNotifications()"]');
+    if(!badge && bell){ badge=document.createElement('span'); badge.id='v10-unread-badge'; badge.style.cssText='position:absolute;left:-6px;top:-6px;background:#ef4444;color:white;border-radius:999px;min-width:20px;height:20px;font-size:11px;display:flex;align-items:center;justify-content:center;font-weight:900;'; bell.appendChild(badge); }
+    if(badge){ badge.textContent=unread>99?'99+':String(unread); badge.style.display=unread>0?'flex':'none'; }
+  }
+  function render(){
+    const items=allNotifications(); const seen=seenMap();
+    const unread=items.filter(n=>!seen[n.key] && !n.read).length; updateBadge(unread);
+    const html=items.length?items.map(n=>`<div class="v10-notif-item ${(!seen[n.key]&&!n.read)?'unread':''}"><div class="v10-notif-title"><i class="fas fa-bell"></i>${esc(n.title||'تنبيه')}</div><div>${esc(n.body||'')}</div><div class="v10-notif-date">${esc(n.when||n.createdAt||'')}</div></div>`).join(''):'<p style="color:var(--text-dim);">لا توجد إشعارات بعد.</p>';
+    if($('v10-notifications-list')) $('v10-notifications-list').innerHTML=html;
+    if($('notif-list')) $('notif-list').innerHTML=items.length?items.slice(0,20).map(n=>`<div class="notif-item"><b>${esc(n.title||'تنبيه')}</b><br>${esc(n.body||'')}<br><small>${esc(n.when||n.createdAt||'')}</small></div>`).join(''):'<div class="notif-item">لا توجد إشعارات جديدة.</div>';
+    const newest=items[0];
+    if(!firstPaint && newest && !seen[newest.key] && !newest.__announced){ newest.__announced=true; beep(); toast(newest.title||'تنبيه جديد',newest.body||''); browserNotify(newest.title||'تنبيه جديد',newest.body||''); }
+    firstPaint=false;
+    if($('v10-student-health')) $('v10-student-health').innerHTML='✅ صندوق الإشعارات يعمل. الموجود الآن: '+items.length+' / غير مقروء: '+unread;
+  }
+  async function loadStudent(uid){
+    const d=db(); if(!d||!uid) return null;
+    const snap=await d.ref('students/'+uid).once('value');
+    if(!snap.exists()) return null;
+    return Object.assign({key:uid},snap.val()||{});
+  }
+  function startListeners(){
+    const d=db(); const u=auth()&&auth().currentUser; if(!d||!u) return;
+    if(started && currentUid===u.uid) return;
+    started=true; currentUid=u.uid;
+    loadStudent(u.uid).then(s=>{ student=s; render(); }).catch(console.warn);
+    d.ref('student_notifications/'+u.uid).limitToLast(200).on('value',s=>{ inbox=s.val()||{}; render(); });
+    d.ref('notifications').limitToLast(200).on('value',s=>{ globalItems=s.val()||{}; render(); });
+  }
+  async function markAllRead(){
+    const items=allNotifications(); const m=seenMap(); items.forEach(n=>m[n.key]=Date.now()); saveSeen(m); updateBadge(0); render();
+    try{ const d=db(); const u=auth()&&auth().currentUser; if(d&&u){ const updates={}; items.forEach(n=>{ if(n.source==='inbox') updates['student_notifications/'+u.uid+'/'+n.key+'/read']=true; updates['notification_reads/'+u.uid+'/'+n.key]=Date.now(); }); await d.ref().update(updates); } }catch(e){console.warn(e)}
+  }
+  async function enableBrowserNotifications(){
+    if(!('Notification' in window)) return alert('المتصفح لا يدعم إشعارات سطح المكتب.');
+    const p=await Notification.requestPermission();
+    alert(p==='granted'?'تم تفعيل إشعارات المتصفح طالما الصفحة مفتوحة.':'لم يتم السماح بالإشعارات من المتصفح.');
+  }
+  function refreshNow(){ firstPaint=false; startListeners(); render(); }
+  const oldToggle=window.toggleNotifications;
+  window.toggleNotifications=function(){ markAllRead(); return oldToggle?oldToggle.apply(this,arguments):undefined; };
+  window.TitanStudentNotifyV10={markAllRead,enableBrowserNotifications,refreshNow};
+  window.addEventListener('DOMContentLoaded',()=>{ setInterval(startListeners,800); if(auth()&&auth().onAuthStateChanged) auth().onAuthStateChanged(()=>setTimeout(startListeners,300)); });
+})();
+</script>
+
+
+<script id="titan-lessons-display-fix-v12">
+(function(){
+  const state = {student:null, lessons:{}, studentLoading:false, contentListening:false};
+  const $ = id => document.getElementById(id);
+  const esc = v => String(v == null ? '' : v).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const safe = v => { const raw=String(v||'').trim(); if(!raw) return ''; try{ const u=new URL(raw, location.href); return ['http:','https:','blob:','data:'].includes(u.protocol)?raw:''; }catch(e){ return ''; } };
+  const db = () => (window.firebase && firebase.database) ? firebase.database() : null;
+  const auth = () => (window.firebase && firebase.auth) ? firebase.auth() : null;
+  const currentUser = () => { const a=auth(); return a && a.currentUser; };
+  function youtubeId(url){
+    const raw=String(url||'').trim(); if(!raw) return '';
+    try{
+      const u=new URL(raw, location.href);
+      if(u.hostname.includes('youtu.be')) return u.pathname.replace('/','').split('/')[0];
+      if(u.searchParams.get('v')) return u.searchParams.get('v');
+      const parts=u.pathname.split('/').filter(Boolean);
+      const i=parts.findIndex(p=>p==='embed'||p==='shorts');
+      if(i>=0 && parts[i+1]) return parts[i+1];
+    }catch(e){}
+    return raw.includes('v=') ? raw.split('v=')[1].split('&')[0] : '';
+  }
+  function isYouTube(url){ return /youtube\.com|youtu\.be/i.test(String(url||'')); }
+  function levelFromDom(){
+    const t = ($('level-badge') && $('level-badge').textContent) || '';
+    const m = t.match(/\d+/);
+    return m ? m[0] : '';
+  }
+  async function loadStudent(){
+    if(state.student || state.studentLoading) return state.student;
+    const u=currentUser(), d=db(); if(!u || !d) return null;
+    state.studentLoading = true;
+    try{
+      const snap = await d.ref('students/'+u.uid).once('value');
+      if(snap.exists()) state.student = Object.assign({}, snap.val(), {key:u.uid});
+    }catch(e){ console.warn('v12 student load failed', e); }
+    state.studentLoading = false;
+    return state.student;
+  }
+  function lessonMedia(l){
+    const raw = l.videoUrl || l.videoFileUrl || l.uploadedVideo || l.video || '';
+    const thumb = safe(l.thumbnailUrl || l.thumbnail || '');
+    if(raw && isYouTube(raw)){
+      const vid = youtubeId(raw);
+      return vid ? '<div class="video-box"><iframe src="https://www.youtube.com/embed/'+esc(vid)+'" allowfullscreen></iframe></div>' : '';
+    }
+    if(safe(raw)){
+      const poster = thumb ? ' poster="'+esc(thumb)+'"' : '';
+      return '<video class="lesson-video-player" controls preload="metadata"'+poster+' src="'+esc(safe(raw))+'"></video>';
+    }
+    if(thumb) return '<img class="cover-img" src="'+esc(thumb)+'" alt="غلاف الدرس">';
+    return '<div class="cover-img" style="display:flex;align-items:center;justify-content:center;background:var(--bg-body);min-height:190px;"><i class="fas fa-graduation-cap" style="font-size:3rem;color:var(--primary);"></i></div>';
+  }
+  function action(label,url,icon){
+    const u=safe(url);
+    return u ? '<a href="'+esc(u)+'" target="_blank" rel="noopener noreferrer" class="mini-badge"><i class="fas '+(icon||'fa-link')+'"></i> '+esc(label)+'</a>' : '';
+  }
+  function badge(text, icon){ return '<span class="mini-badge"><i class="fas '+(icon||'fa-tag')+'"></i> '+esc(text)+'</span>'; }
+  function renderLessonsV12(){
+    const list = $('lessons-list'), catSel = $('lesson-category-filter'), diffSel = $('lesson-difficulty-filter');
+    if(!list) return;
+    const level = (state.student && state.student.level) || levelFromDom();
+    if(!level){
+      list.innerHTML = '<div class="titan-v12-status">جاري تحميل بيانات الطالب... لو استمر النص أكثر من ثواني، سجّلي خروج ودخول.</div>';
+      loadStudent().then(renderLessonsV12);
+      return;
+    }
+    const source = state.lessons || window.allLessons || {};
+    const all = Object.entries(source).map(([key,l]) => Object.assign({}, l || {}, {key:key}));
+    const sameLevel = all.filter(l => String(l.level || '').trim() === String(level).trim());
+    const categories = [...new Set(sameLevel.map(l => l.category || 'عام'))].sort();
+    if(catSel){
+      const old = catSel.value || 'all';
+      catSel.innerHTML = '<option value="all">كل الأقسام</option>' + categories.map(c => '<option value="'+esc(c)+'">'+esc(c)+'</option>').join('');
+      catSel.value = (old === 'all' || categories.includes(old)) ? old : 'all';
+    }
+    const q = (($('lesson-search-student') && $('lesson-search-student').value) || '').toLowerCase();
+    const cat = catSel ? catSel.value : 'all';
+    const diff = diffSel ? diffSel.value : 'all';
+    const filtered = sameLevel
+      .filter(l => {
+        const hay = [l.title,l.desc,l.category,l.difficulty].join(' ').toLowerCase();
+        return (!q || hay.includes(q)) && (cat==='all' || (l.category||'عام')===cat) && (diff==='all' || l.difficulty===diff);
+      })
+      .sort((a,b) => (Number(a.sequence||a.order||0)-Number(b.sequence||b.order||0)) || (Number(b.createdAt||0)-Number(a.createdAt||0)));
+
+    if(!filtered.length){
+      list.innerHTML = '<div class="titan-v12-status">تم تحميل الدروس، لكن لا يوجد درس مطابق لمستوى الطالب الحالي: '+esc(level)+'. تأكدي أن مستوى الدرس في الإدارة = '+esc(level)+'.</div>';
+      return;
+    }
+
+    list.innerHTML = filtered.map(l => {
+      const videoRaw = l.videoUrl || l.video || '';
+      return '<div class="lesson-card titan-v12-card">'+lessonMedia(l)+'<div class="lesson-body">'
+        + '<h4 style="margin-bottom:8px;">'+(l.featured?'⭐ ':'')+esc(l.title || 'درس بدون عنوان')+'</h4>'
+        + '<div class="lesson-meta">'+badge('مستوى '+(l.level||level),'fa-layer-group')+badge(l.category||'عام','fa-tag')+badge(l.difficulty||'مبتدئ','fa-signal')+(l.duration?badge(l.duration+' دقيقة','fa-clock'):'')+'</div>'
+        + (l.desc ? '<p style="color:var(--text-dim);line-height:1.8;margin:10px 0;">'+esc(l.desc)+'</p>' : '')
+        + '<div class="lesson-actions">'+action('فتح الفيديو', videoRaw, 'fa-video')+action('ملزمة PDF', l.pdfUrl || l.pdf, 'fa-file-pdf')+action('ملف الكود', l.codeFileUrl || l.code, 'fa-file-code')+'</div>'
+        + '</div></div>';
+    }).join('');
+  }
+  function startContentListener(){
+    const d = db(); if(!d || state.contentListening) return;
+    state.contentListening = true;
+    d.ref('content').on('value', snap => {
+      state.lessons = snap.val() || {};
+      window.allLessons = state.lessons;
+      loadStudent().then(renderLessonsV12);
+    }, err => {
+      console.error('v12 content read failed', err);
+      const list=$('lessons-list');
+      if(list) list.innerHTML='<div class="titan-v12-error">فشل تحميل الدروس من Firebase. راجعي Realtime Database Rules لمسار content.</div>';
+    });
+  }
+  function boot(){
+    if(!auth()) return;
+    const u=currentUser();
+    if(u){ loadStudent().then(() => { startContentListener(); renderLessonsV12(); }); }
+    window.renderStudentLessons = renderLessonsV12;
+    if(window.TitanStudentV9) window.TitanStudentV9.renderLessons = renderLessonsV12;
+  }
+  window.TitanLessonsFixV12 = {render:renderLessonsV12, reload:function(){state.student=null; loadStudent().then(()=>{startContentListener(); renderLessonsV12();});}};
+  document.addEventListener('DOMContentLoaded', function(){
+    setTimeout(boot, 400);
+    setTimeout(boot, 1200);
+    setTimeout(boot, 2500);
+    setInterval(boot, 5000);
+  });
+})();
+</script>
+
 </body>
 </html>
