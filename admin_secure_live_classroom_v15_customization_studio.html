@@ -1,0 +1,926 @@
+<!DOCTYPE html>
+
+<html dir="rtl" lang="ar">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>أكاديمية تيتان - الإدارة الشاملة والمحتوى</title>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<link href="./assets/css/admin.css" rel="stylesheet"/>
+
+
+
+
+
+
+
+
+
+
+</head>
+<body data-theme="dark">
+<div id="toast-container"></div>
+<div id="login-screen">
+<div class="login-box">
+<i class="fas fa-user-shield" style="font-size: 3.5rem; color: var(--primary); margin-bottom: 1rem; filter: drop-shadow(0 4px 6px rgba(79,70,229,0.3));"></i>
+<h2>🔐 دخول الإدارة</h2>
+<input autocomplete="username" id="u" onkeypress="if(event.key === 'Enter') login()" placeholder="البريد الإلكتروني للإدارة" type="email"/>
+<input autocomplete="current-password" id="p" onkeypress="if(event.key === 'Enter') login()" placeholder="كلمة المرور" type="password"/>
+<button class="btn btn-primary" onclick="login()" style="width: 100%; justify-content: center; margin-top: 1rem; padding: 1rem; font-size: 1.1rem; border-radius: 12px;">تسجيل الدخول</button>
+</div>
+</div>
+<aside class="sidebar no-print">
+<div style="text-align: center; margin-bottom: 2rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--border);">
+<div style="background: linear-gradient(135deg, var(--primary), #a855f7); width: 70px; height: 70px; border-radius: 20px; display: flex; align-items: center; justify-content: center; margin: 0 auto 15px auto; box-shadow: 0 10px 15px -3px rgba(79, 70, 229, 0.4);">
+<i class="fas fa-rocket" style="font-size: 2.2rem; color: white;"></i>
+</div>
+<h3 style="margin-top: 10px;">لوحة Titan الموحدة</h3>
+</div>
+<nav style="display: flex; flex-direction: column;">
+<button class="btn btn-outline" onclick="showSec('dash')"><i class="fas fa-chart-line"></i> الإحصائيات والمهام</button>
+<button class="btn btn-outline" onclick="showSec('students')"><i class="fas fa-user-graduate"></i> الطلاب والتقييم</button>
+<button class="btn btn-outline" onclick="showSec('account-requests')"><i class="fas fa-user-plus"></i> طلبات إنشاء الحساب</button>
+<button class="btn btn-outline" onclick="showSec('community')"><i class="fas fa-comments"></i> إدارة المجتمع</button>
+<button class="btn btn-outline" onclick="showSec('content')"><i class="fas fa-upload"></i> رفع المحتوى والدروس</button>
+<button class="btn btn-outline" onclick="showSec('assignments')"><i class="fas fa-folder-open"></i> المشاريع والتسليمات</button>
+<button class="btn btn-outline" onclick="showSec('online-exams')"><i class="fas fa-laptop-code"></i> الامتحانات الإلكترونية</button>
+<button class="btn btn-outline" onclick="showSec('live-class')"><i class="fas fa-video"></i> الحصص المباشرة</button>
+<button class="btn btn-outline" onclick="showSec('daily-att')"><i class="fas fa-calendar-check"></i> التحضير اليومي</button>
+<button class="btn btn-outline" onclick="showSec('homework')"><i class="fas fa-book"></i> سجل الواجبات</button>
+<button class="btn btn-outline" onclick="showSec('exams')"><i class="fas fa-marker"></i> سجل الدرجات</button>
+<button class="btn btn-outline" onclick="showSec('billing')"><i class="fas fa-file-invoice-dollar"></i> الفواتير والديون</button>
+<button class="btn btn-outline" onclick="showSec('expenses')"><i class="fas fa-wallet"></i> المصروفات</button>
+<button class="btn btn-outline" onclick="showSec('staff')"><i class="fas fa-user-tie"></i> الموظفين</button>
+<button class="btn btn-outline" onclick="showSec('schedule')"><i class="fas fa-clock"></i> المواعيد</button>
+<button class="btn btn-outline" onclick="showSec('report-att')"><i class="fas fa-table"></i> تقرير الغياب</button>
+<button class="btn btn-outline" onclick="showSec('support')"><i class="fas fa-headset"></i> الشكاوى والدعم الفني</button> <!-- تمت إضافة الزر هنا -->
+<button class="btn btn-outline" onclick="showSec('notifications')"><i class="fas fa-bell"></i> الإشعارات الذكية</button>
+<button class="btn btn-outline" onclick="showSec('parent-portal')"><i class="fas fa-people-roof"></i> أولياء الأمور</button>
+<button class="btn btn-outline" onclick="showSec('question-bank')"><i class="fas fa-database"></i> بنك الأسئلة</button>
+<button class="btn btn-outline" onclick="showSec('student-reports')"><i class="fas fa-file-pdf"></i> تقارير وشهادات</button>
+<button class="btn btn-outline" onclick="showSec('admin-roles')"><i class="fas fa-user-lock"></i> صلاحيات الفريق</button>
+<button class="btn btn-outline" onclick="showSec('protection-center')"><i class="fas fa-shield-halved"></i> الحماية والنشاط</button>
+<button class="btn btn-outline" onclick="showSec('v10-mega')"><i class="fas fa-wand-magic-sparkles"></i> V10 Mega</button>
+<button class="btn btn-outline" onclick="showSec('v13-pro')"><i class="fas fa-crown"></i> V13 Pro</button>
+<button class="btn btn-outline" onclick="showSec('v15-customization')"><i class="fas fa-sliders"></i> Customization Studio</button>
+<button class="btn btn-outline" onclick="showSec('v14-saas')"><i class="fas fa-building"></i> SaaS والإعدادات</button>
+<button class="btn btn-outline" onclick="showSec('settings')"><i class="fas fa-database"></i> الإدارة والنسخ</button>
+</nav>
+<button class="btn btn-danger" onclick="adminLogout()" style="margin-top: auto; justify-content: center; padding: 0.8rem;"><i class="fas fa-sign-out-alt"></i> تسجيل الخروج</button>
+</aside>
+<main class="main-content" id="app" style="display: none;">
+<header class="no-print" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2.5rem; background: var(--bg-card); padding: 1.2rem 2rem; border-radius: var(--radius-lg); box-shadow: var(--shadow); border: 1px solid var(--border);">
+<div>
+<h1 id="page-title">لوحة التحكم</h1>
+</div>
+<div style="display: flex; align-items: center; gap: 15px;">
+<div id="live-clock">--:--:--</div>
+<button class="btn btn-outline" onclick="toggleTheme()" style="width:auto; margin:0; padding: 0.6rem 1rem; border-radius: 50%;"><i class="fas fa-moon"></i></button>
+</div>
+</header>
+<section id="sec-dash">
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; margin-bottom: 2.5rem;">
+<div class="card" style="border-bottom: 4px solid var(--primary);">
+<h4 style="color: var(--text-dim); font-size: 1.1rem; margin-bottom: 10px;">الطلاب المضافين</h4>
+<h2 id="st-count" style="font-size: 2.5rem; font-weight: 800;">0</h2>
+</div>
+<div class="card" style="border-bottom: 4px solid #8b5cf6;">
+<h4 style="color: var(--text-dim); font-size: 1.1rem; margin-bottom: 10px;">إجمالي الدروس</h4>
+<h2 id="content-count" style="font-size: 2.5rem; font-weight: 800;">0</h2>
+</div>
+<div class="card" style="border-bottom: 4px solid var(--success);">
+<h4 style="color: var(--text-dim); font-size: 1.1rem; margin-bottom: 10px;">الإيرادات المحصلة</h4>
+<h2 id="st-money" style="font-size: 2.5rem; font-weight: 800; color:var(--success)">0 ج.م</h2>
+</div>
+<div class="card" style="border-bottom: 4px solid var(--warning);">
+<h4 style="color: var(--text-dim); font-size: 1.1rem; margin-bottom: 10px;">الديون المتبقية</h4>
+<h2 id="st-debts" style="font-size: 2.5rem; font-weight: 800; color:var(--warning)">0 ج.م</h2>
+</div>
+<div class="card" style="border-bottom: 4px solid #0ea5e9;">
+<h4 style="color: var(--text-dim); font-size: 1.1rem; margin-bottom: 10px;">فيديوهات مرفوعة</h4>
+<h2 id="st-uploaded-videos" style="font-size: 2.5rem; font-weight: 800; color:#0ea5e9">0</h2>
+</div>
+<div class="card" style="border-bottom: 4px solid #a855f7;">
+<h4 style="color: var(--text-dim); font-size: 1.1rem; margin-bottom: 10px;">مهام منشورة</h4>
+<h2 id="st-assignments" style="font-size: 2.5rem; font-weight: 800; color:#a855f7">0</h2>
+</div>
+<div class="card" style="border-bottom: 4px solid #0ea5e9;">
+<h4 style="color: var(--text-dim); font-size: 1.1rem; margin-bottom: 10px;">طلبات الحساب الجديدة</h4>
+<h2 id="request-count" style="font-size: 2.5rem; font-weight: 800; color:#0ea5e9">0</h2>
+</div>
+</div>
+<div style="display: grid; grid-template-columns: 2fr 1fr; gap: 20px;">
+<div class="card">
+<h3><i class="fas fa-chart-line"></i> التحليل المالي والنمو</h3>
+<canvas height="90" id="mainChart"></canvas>
+</div>
+<div class="card">
+<h3><i class="fas fa-tasks"></i> مهام الإدارة السريعة</h3>
+<div style="display: flex; gap: 10px; margin-bottom: 15px;">
+<input id="new-task-input" onkeypress="if(event.key === 'Enter') addNewTask()" placeholder="اكتب مهمة جديدة..." type="text"/>
+<button class="btn btn-primary" onclick="addNewTask()"><i class="fas fa-plus"></i></button>
+</div>
+<div id="todo-list"></div>
+</div>
+</div>
+</section>
+<!-- باقي الأقسام هنا كما في المصدر الأصلي ... -->
+<!-- قسم الشكاوى والدعم الفني الجديد للإدارة -->
+<section id="sec-support" style="display: none;">
+<div class="card">
+<h3><i class="fas fa-headset"></i> مركز الشكاوى والدعم الفني</h3>
+<table>
+<thead>
+<tr>
+<th>الطالب</th>
+<th>المستوى</th>
+<th>الشكوى</th>
+<th>التاريخ</th>
+<th>حالة الرد</th>
+<th>إجراء</th>
+</tr>
+</thead>
+<tbody id="support-list-admin"></tbody>
+</table>
+</div>
+</section>
+<section id="sec-online-exams" style="display: none;">
+<!-- كود صانع الامتحانات ... -->
+<div class="card">
+<h3><i class="fas fa-plus-circle"></i> صانع الامتحانات التفاعلي</h3>
+<div style="display: grid; grid-template-columns: 2fr 1fr; gap: 15px; margin-bottom: 1rem;">
+<input id="new-exam-title" placeholder="عنوان الامتحان (مثال: اختبار الشهر الأول HTML)" type="text"/>
+<select id="new-exam-level">
+<option value="1">مستوى 1</option>
+<option value="2">مستوى 2</option>
+<option value="3">مستوى 3</option>
+</select>
+</div>
+<div id="questions-container"></div>
+<div style="display: flex; gap: 15px; margin-top: 15px;">
+<button class="btn btn-info" onclick="addQuestionUI()"><i class="fas fa-plus"></i> إضافة سؤال جديد</button>
+<button class="btn btn-success" onclick="publishOnlineExam()"><i class="fas fa-upload"></i> نشر الامتحان للطلاب</button>
+</div>
+</div>
+<div class="card">
+<h3><i class="fas fa-list-alt"></i> الامتحانات المنشورة حالياً</h3>
+<table>
+<thead><tr><th>عنوان الامتحان</th><th>المستوى</th><th>عدد الأسئلة</th><th>تاريخ النشر</th><th>إجراء</th></tr></thead>
+<tbody id="online-exams-list"></tbody>
+</table>
+</div>
+</section>
+<section id="sec-community" style="display: none;">
+<div class="card">
+<h3><i class="fas fa-bullhorn"></i> نشر إعلان عام للطلاب</h3>
+<div style="display: grid; grid-template-columns: 2fr 1fr auto; gap: 15px;">
+<input id="admin-post-txt" placeholder="اكتب التنبيه هنا..." type="text"/>
+<select id="admin-post-lvl"><option value="1">مستوى 1</option><option value="2">مستوى 2</option><option value="3">مستوى 3</option></select>
+<button class="btn btn-primary" onclick="adminSendPost()"><i class="fas fa-paper-plane"></i> نشر الآن</button>
+</div>
+</div>
+<div class="card">
+<h3><i class="fas fa-comments"></i> مراقبة جميع المنشورات</h3>
+<table>
+<thead><tr><th>الراسل</th><th>المستوى</th><th>المنشور</th><th>الوقت</th><th>إجراء</th></tr></thead>
+<tbody id="admin-comm-list"></tbody>
+</table>
+</div>
+</section>
+<section id="sec-account-requests" style="display: none;">
+<div class="card">
+<h3><i class="fas fa-user-check"></i> طلبات إنشاء حساب الطلاب</h3>
+<p style="color: var(--text-dim); line-height: 1.9; margin-bottom: 1rem;">
+                    أي طالب يطلب حساب من صفحة الدخول سيظهر هنا. عند الموافقة سيتم إنشاء حساب Firebase Authentication تلقائياً،
+                    وكلمة المرور ستكون رقم الهاتف المسجل، ثم يتم إنشاء ملف الطالب داخل قاعدة البيانات.
+                </p>
+<table>
+<thead>
+<tr><th>الاسم</th><th>الكود</th><th>المستوى</th><th>الهاتف</th><th>الحالة</th><th>التاريخ</th><th>إجراء</th></tr>
+</thead>
+<tbody id="account-requests-list"></tbody>
+</table>
+</div>
+</section>
+<section id="sec-students" style="display: none;">
+<!-- قسم إضافة الطلاب والتقييم كما كان -->
+<div class="card">
+<h3><i class="fas fa-user-plus"></i> إضافة طالب جديد</h3>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+<input id="std-name" placeholder="الاسم بالكامل" type="text"/>
+<input id="std-code" placeholder="كود الطالب" type="text"/>
+<select id="std-level"><option value="1">مستوى 1</option><option value="2">مستوى 2</option><option value="3">مستوى 3</option></select>
+<input id="std-phone" placeholder="رقم واتساب / كلمة مرور الطالب" type="text"/>
+<button class="btn btn-success" onclick="addStudent()"><i class="fas fa-save"></i> إنشاء الحساب وحفظ الطالب</button>
+</div>
+<p style="color: var(--text-dim); margin-top: 10px; line-height: 1.8;">
+                    ملاحظة: يتم إنشاء بريد داخلي تلقائياً بالشكل <b>code@students.titan-academy.app</b>، ويستخدم الطالب الكود + رقم الهاتف للدخول.
+                </p>
+</div>
+<div class="card">
+<h3><i class="fas fa-star" style="color: var(--warning);"></i> تقييم يومي سريع (من الموقع الثاني)</h3>
+<div style="display: grid; grid-template-columns: 2fr 1fr 1fr 1fr auto; gap: 15px;">
+<select id="eval-student-select"><option value="">اختر الطالب...</option></select>
+<input id="eval-work" placeholder="الواجب" type="number"/>
+<input id="eval-perf" placeholder="الأداء" type="number"/>
+<input id="eval-beh" placeholder="سلوك" type="number"/>
+<button class="btn btn-primary" onclick="submitEvaluation()"><i class="fas fa-check-circle"></i> حفظ التقييم</button>
+</div>
+</div>
+<div class="card">
+<input id="search-std" onkeyup="renderStudents()" placeholder="بحث باسم الطالب..." style="margin-bottom: 1rem;" type="text"/>
+<table>
+<thead><tr><th>الاسم</th><th>الكود</th><th>المستوى</th><th>واتساب</th><th>إجراءات</th></tr></thead>
+<tbody id="students-list"></tbody>
+</table>
+</div>
+</section>
+<section id="sec-content" style="display: none;">
+<div class="card">
+<h3><i class="fas fa-cloud-upload-alt"></i> إضافة درس احترافي</h3>
+<p class="teacher-note"><i class="fas fa-info-circle"></i> تقدر ترفع فيديو مباشر من جهازك عبر Firebase Storage، أو تضع رابط YouTube. لو رفعت فيديو ورابط YouTube معاً، الفيديو المرفوع سيظهر أولاً للطالب.</p>
+<div class="pro-grid">
+<input id="lesson-title" placeholder="عنوان الدرس" type="text"/>
+<select id="lesson-level-select"><option value="1">مستوى 1</option><option value="2">مستوى 2</option><option value="3">مستوى 3</option></select>
+<input id="lesson-category" placeholder="القسم/المسار: HTML, CSS, JavaScript" type="text"/>
+<select id="lesson-difficulty"><option value="مبتدئ">مبتدئ</option><option value="متوسط">متوسط</option><option value="متقدم">متقدم</option></select>
+<input id="lesson-duration" placeholder="مدة الدرس بالدقائق" type="number"/>
+<select id="lesson-featured"><option value="false">درس عادي</option><option value="true">درس مميز ⭐</option></select>
+<input id="lesson-sequence-v9" min="1" placeholder="ترتيب الدرس للتسلسل" type="number"/>
+<select id="lesson-unlock-mode-v9"><option value="sequence">يفتح بعد السابق</option><option value="free">مفتوح دائماً</option></select>
+</div>
+<textarea id="lesson-desc" placeholder="وصف الدرس، أهدافه، وما المطلوب من الطالب بعد المشاهدة..." rows="4"></textarea>
+<div class="pro-grid">
+<input id="lesson-video" placeholder="رابط YouTube اختياري" type="text"/>
+<input id="lesson-code" placeholder="رابط خارجي للكود GitHub / CodePen اختياري" type="text"/>
+<input id="lesson-pdf" placeholder="رابط PDF خارجي اختياري" type="text"/>
+</div>
+<div class="pro-grid-2" style="margin-top:12px;">
+<div class="upload-zone">
+<label><i class="fas fa-video"></i> رفع فيديو من الجهاز</label>
+<input accept="video/*" id="lesson-video-file" type="file"/>
+<div class="muted-help">يدعم MP4/WebM حسب المتصفح. للأداء الأفضل اضغط الفيديو قبل الرفع. لو مشروع Firebase على Spark المجاني فرفع الفيديو من الجهاز قد لا يعمل؛ استخدمي رابط فيديو أو فعّلي Storage.</div>
+</div>
+<div class="upload-zone">
+<label><i class="fas fa-file-pdf"></i> رفع PDF / ملزمة</label>
+<input accept="application/pdf,.pdf" id="lesson-pdf-file" type="file"/>
+<div class="muted-help">سيظهر زر تحميل الملزمة داخل كارت الدرس.</div>
+</div>
+<div class="upload-zone">
+<label><i class="fas fa-image"></i> صورة غلاف الدرس</label>
+<input accept="image/*" id="lesson-thumbnail-file" type="file"/>
+<div class="muted-help">اختياري، يظهر كغلاف للفيديو أو الكارت.</div>
+</div>
+<div class="upload-zone">
+<label><i class="fas fa-file-code"></i> ملف كود / ZIP</label>
+<input accept=".zip,.rar,.html,.css,.js,.pdf,.txt" id="lesson-code-file" type="file"/>
+<div class="muted-help">اختياري لملفات التدريب أو مشروع الدرس.</div>
+</div>
+</div>
+<div class="progress-wrap" id="lesson-upload-progress-wrap"><div class="progress-bar" id="lesson-upload-progress">0%</div></div>
+<div id="lesson-upload-fix-status"></div>
+<button class="btn btn-primary" id="publish-lesson-btn" onclick="uploadLesson()" style="width: 100%; margin-top: 15px; justify-content: center;"><i class="fas fa-cloud-upload-alt"></i> رفع ونشر الدرس</button>
+</div>
+<div class="card">
+<div style="display:flex; justify-content:space-between; gap:12px; align-items:center; flex-wrap:wrap;">
+<h3><i class="fas fa-layer-group"></i> مكتبة الدروس المنشورة</h3>
+<input id="content-search" onkeyup="renderContent()" placeholder="بحث في الدروس..." style="max-width:320px;" type="text"/>
+</div>
+<table>
+<thead><tr><th>الدرس</th><th>المستوى</th><th>النوع</th><th>الملفات</th><th>التاريخ</th><th>إجراء</th></tr></thead>
+<tbody id="content-list"></tbody>
+</table>
+</div>
+</section>
+<section id="sec-daily-att" style="display: none;">
+<div class="card">
+<h3><i class="fas fa-calendar-check"></i> تحديد الحضور</h3>
+<div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px;">
+<input id="att-date-input" type="date"/>
+<select id="att-level-select"><option value="1">مستوى 1</option><option value="2">مستوى 2</option><option value="3">مستوى 3</option></select>
+<button class="btn btn-primary" onclick="loadDailyAttendanceList()"><i class="fas fa-list"></i> عرض القائمة</button>
+</div>
+</div>
+<div class="card">
+<table><thead><tr><th>الطالب</th><th>الحالة</th><th>تنبيه</th></tr></thead><tbody id="daily-att-list"></tbody></table>
+<button class="btn btn-success" onclick="saveDailyAttendance()" style="width: 100%; margin-top: 20px; justify-content: center;"><i class="fas fa-save"></i> حفظ الكشف</button>
+</div>
+</section>
+<section id="sec-assignments" style="display: none;">
+<div class="card">
+<h3><i class="fas fa-folder-open"></i> إنشاء مشروع / واجب للتسليم</h3>
+<div class="pro-grid">
+<input id="assignment-title" placeholder="عنوان المشروع أو الواجب" type="text"/>
+<select id="assignment-level"><option value="1">مستوى 1</option><option value="2">مستوى 2</option><option value="3">مستوى 3</option></select>
+<input id="assignment-due" type="date"/>
+<input id="assignment-points" placeholder="النقاط XP" type="number" value="40"/>
+</div>
+<textarea id="assignment-desc" placeholder="وصف المطلوب، معايير التقييم، وملاحظات التسليم..." rows="4"></textarea>
+<div class="pro-grid">
+<input id="assignment-link" placeholder="رابط خارجي اختياري" type="text"/>
+<div class="upload-zone">
+<label><i class="fas fa-paperclip"></i> ملف مرفق للواجب</label>
+<input accept=".pdf,.zip,.rar,.png,.jpg,.jpeg,.html,.css,.js,.txt" id="assignment-file" type="file"/>
+</div>
+</div>
+<div class="progress-wrap" id="assignment-upload-progress-wrap"><div class="progress-bar" id="assignment-upload-progress">0%</div></div>
+<button class="btn btn-success" id="assignment-save-btn" onclick="createAssignment()" style="width:100%; margin-top:15px; justify-content:center;"><i class="fas fa-plus-circle"></i> نشر المهمة للطلاب</button>
+</div>
+<div class="card">
+<h3><i class="fas fa-list-check"></i> المهام المنشورة</h3>
+<table>
+<thead><tr><th>العنوان</th><th>المستوى</th><th>آخر موعد</th><th>XP</th><th>مرفق</th><th>إجراء</th></tr></thead>
+<tbody id="assignments-list-admin"></tbody>
+</table>
+</div>
+<div class="card">
+<h3><i class="fas fa-inbox"></i> تسليمات الطلاب</h3>
+<table>
+<thead><tr><th>الطالب</th><th>المهمة</th><th>الملاحظة</th><th>الملف</th><th>التاريخ</th><th>حالة</th></tr></thead>
+<tbody id="submissions-list-admin"></tbody>
+</table>
+</div>
+</section>
+<section id="sec-homework" style="display: none;">
+<div class="card">
+<h3><i class="fas fa-book-open"></i> تسجيل واجب</h3>
+<div style="display: grid; grid-template-columns: 1fr 1fr 1fr auto; gap: 15px;">
+<select id="hw-std-select"></select>
+<input id="hw-title" placeholder="اسم الواجب" type="text"/>
+<select id="hw-status"><option value="تم">تم ✅</option><option value="لم يتم">لم يتم ❌</option></select>
+<button class="btn btn-primary" onclick="addHomework()"><i class="fas fa-plus"></i> حفظ</button>
+</div>
+</div>
+<div class="card">
+<table id="hw-list-table"><thead><tr><th>التاريخ</th><th>الطالب</th><th>الواجب</th><th>الحالة</th></tr></thead><tbody id="hw-list"></tbody></table>
+</div>
+</section>
+<section id="sec-billing" style="display: none;">
+<div class="card">
+<h3><i class="fas fa-file-invoice"></i> فاتورة جديدة</h3>
+<div style="display: grid; grid-template-columns: 2fr 1fr 1fr auto; gap: 15px;">
+<select id="inv-select-std"></select>
+<input id="inv-amt" placeholder="المبلغ" type="number"/>
+<input id="inv-paid" placeholder="المدفوع" type="number"/>
+<button class="btn btn-primary" onclick="createInvoice()"><i class="fas fa-file-signature"></i> إصدار</button>
+</div>
+</div>
+<div class="card">
+<table><thead><tr><th>الاسم</th><th>الإجمالي</th><th>المدفوع</th><th>المتبقي</th><th>تحديث</th></tr></thead><tbody id="inv-list"></tbody></table>
+</div>
+</section>
+<section id="sec-expenses" style="display: none;">
+<div class="card">
+<h3><i class="fas fa-money-bill-wave"></i> إضافة مصروف</h3>
+<div style="display: grid; grid-template-columns: 2fr 1fr auto; gap: 15px;">
+<input id="exp-title" placeholder="البيان" type="text"/>
+<input id="exp-amt" placeholder="المبلغ" type="number"/>
+<button class="btn btn-danger" onclick="addExpense()"><i class="fas fa-plus-circle"></i> حفظ</button>
+</div>
+</div>
+<div class="card"><table><thead><tr><th>البيان</th><th>التاريخ</th><th>المبلغ</th></tr></thead><tbody id="exp-list"></tbody></table></div>
+</section>
+<section id="sec-exams" style="display: none;">
+<div class="card"><h3><i class="fas fa-marker"></i> إضافة درجة (يدوي)</h3><div style="display: grid; grid-template-columns: 1fr 1fr 1fr auto; gap: 15px;"><select id="exam-std-select"></select><input id="exam-name" placeholder="اسم الاختبار" type="text"/><input id="exam-grade" placeholder="الدرجة (مثال 9/10)" type="text"/><button class="btn btn-warning" onclick="addGrade()"><i class="fas fa-save"></i> حفظ</button></div></div>
+<div class="card">
+<h3><i class="fas fa-clipboard-list"></i> سجل درجات الامتحانات (تتضمن الامتحانات الإلكترونية)</h3>
+<table><thead><tr><th>الطالب</th><th>الاختبار</th><th>الدرجة</th></tr></thead><tbody id="grades-list"></tbody></table>
+</div>
+</section>
+<section id="sec-staff" style="display: none;">
+<div class="card"><h3><i class="fas fa-user-tie"></i> إضافة موظف</h3><div style="display: grid; grid-template-columns: 1fr 1fr 1fr auto; gap: 15px;"><input id="staff-name" placeholder="الاسم" type="text"/><input id="staff-role" placeholder="الوظيفة" type="text"/><input id="staff-salary" placeholder="الراتب" type="number"/><button class="btn btn-primary" onclick="addStaff()"><i class="fas fa-plus"></i> إضافة</button></div></div>
+<div class="card"><table><thead><tr><th>الاسم</th><th>الوظيفة</th><th>الراتب</th></tr></thead><tbody id="staff-list"></tbody></table></div>
+</section>
+<section id="sec-schedule" style="display: none;">
+<div class="card"><h3><i class="fas fa-calendar-alt"></i> جدول المواعيد</h3><div style="display: grid; grid-template-columns: 1fr 1fr 1fr auto; gap: 15px;"><input id="sch-group" placeholder="المجموعة" type="text"/><select id="sch-day"><option>السبت</option><option>الأحد</option><option>الإثنين</option><option>الثلاثاء</option><option>الأربعاء</option><option>الخميس</option></select><input id="sch-time" type="time"/><button class="btn btn-success" onclick="addSchedule()"><i class="fas fa-plus"></i> إضافة</button></div></div>
+<div class="card"><table><thead><tr><th>المجموعة</th><th>اليوم</th><th>الوقت</th></tr></thead><tbody id="sch-list"></tbody></table></div>
+</section>
+<section id="sec-report-att" style="display: none;">
+<div class="card no-print">
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+<h3><i class="fas fa-table"></i> تقرير غياب الشهر</h3>
+<button class="btn btn-info" onclick="window.print()"><i class="fas fa-print"></i> طباعة التقرير</button>
+</div>
+<div style="display: grid; grid-template-columns: 1fr 1fr 1fr auto; gap: 15px;">
+<div class="selection-container">
+<select class="form-select" id="monthSelect">
+<option value="1">يناير</option><option value="2">فبراير</option><option value="3">مارس</option><option value="4">أبريل</option><option value="5">مايو</option><option value="6">يونيو</option><option value="7">يوليو</option><option value="8">أغسطس</option><option value="9">سبتمبر</option><option value="10">أكتوبر</option><option value="11">نوفمبر</option><option value="12">ديسمبر</option>
+</select>
+</div>
+<input id="yearSelect" max="2100" min="2020" placeholder="السنة" style="margin:0;" type="number"/>
+<select id="rep-level-select"><option value="1">مستوى 1</option><option value="2">مستوى 2</option><option value="3">مستوى 3</option></select>
+<button class="btn btn-primary" onclick="renderExcelReport()"><i class="fas fa-eye"></i> عرض التقرير</button>
+</div>
+</div>
+<div class="card" style="overflow-x: auto;"><table id="excel-table-main"><thead id="excel-header"></thead><tbody id="excel-body"></tbody></table></div>
+</section>
+<section id="sec-live-class" style="display: none;">
+<div class="card">
+<h3><i class="fas fa-video"></i> الحصص المباشرة داخل الموقع</h3>
+<div class="vc-warning">
+                    النظام يعمل داخل موقعك باستخدام WebRTC و Firebase للإشارات والشات والتسجيل. مشاركة الشاشة للمعلم فقط، والطلاب لا يقدرون يفتحوا المايك أو الكاميرا إلا بعد إذن المعلم.
+                </div>
+<div style="display:grid; grid-template-columns:2fr 1fr 1fr auto; gap:12px; margin-top:14px;">
+<input id="vc-admin-title" placeholder="عنوان الحصة - مثال: مراجعة JavaScript"/>
+<select id="vc-admin-level"><option value="1">مستوى 1</option><option value="2">مستوى 2</option><option value="3">مستوى 3</option></select>
+<input id="vc-admin-code" placeholder="كود اختياري أو اتركه تلقائي"/>
+<button class="btn btn-success" onclick="VCAdmin.startClass()"><i class="fas fa-play"></i> بدء حصة</button>
+</div>
+<div class="vc-toolbar">
+<span class="vc-room-badge"><i class="fas fa-signal"></i> كود الحصة: <b id="vc-admin-session-code">لا توجد حصة</b></span>
+<button class="btn btn-primary" onclick="VCAdmin.copyCode()"><i class="fas fa-copy"></i> نسخ الكود</button>
+<button class="btn btn-warning" onclick="VCAdmin.toggleMic()"><i class="fas fa-microphone"></i> مايك المعلم</button>
+<button class="btn btn-warning" onclick="VCAdmin.toggleCamera()"><i class="fas fa-video"></i> كاميرا المعلم</button>
+<button class="btn btn-info vc-share-button-fix" id="vc-admin-share-btn" onclick="VCAdmin.shareScreen()"><i class="fas fa-desktop"></i> مشاركة الشاشة</button>
+<button class="btn btn-success" id="vc-admin-record-btn" onclick="VCAdmin.toggleRecording()"><i class="fas fa-record-vinyl"></i> بدء التسجيل</button>
+<button class="btn btn-danger" onclick="VCAdmin.endClass()"><i class="fas fa-phone-slash"></i> إنهاء الحصة</button>
+</div>
+<div class="vc-share-banner" id="vc-admin-share-banner"></div>
+</div>
+<div class="vc-shell">
+<div class="card">
+<h3><i class="fas fa-th-large"></i> شاشة الحصة</h3>
+<div class="vc-video-grid" id="vc-admin-grid"></div>
+</div>
+<div class="vc-side">
+<div class="card">
+<h3><i class="fas fa-users-cog"></i> تحكم الطلاب</h3>
+<div class="vc-ok">افتح/اقفل المايك والكاميرا لكل طالب من هنا. الطالب لن يستطيع تشغيلهم بدون السماح.</div>
+<div id="vc-admin-participants" style="margin-top:12px;"></div>
+</div>
+<div class="card">
+<h3><i class="fas fa-comments"></i> شات الحصة</h3>
+<div class="vc-chat-box" id="vc-admin-chat"></div>
+<div style="display:flex; gap:8px; margin-top:10px;">
+<input id="vc-admin-chat-input" onkeypress="if(event.key==='Enter') VCAdmin.sendChat()" placeholder="اكتب رسالة..."/>
+<button class="btn btn-primary" onclick="VCAdmin.sendChat()"><i class="fas fa-paper-plane"></i></button>
+</div>
+</div>
+<div class="card">
+<h3><i class="fas fa-film"></i> تسجيلات الحصص</h3>
+<div id="vc-admin-recordings"><span class="muted-help">التسجيلات تظهر هنا بعد حفظها.</span></div>
+</div>
+</div>
+</div>
+</section>
+<section id="sec-notifications" style="display: none;">
+<div class="card">
+<h3><i class="fas fa-bell"></i> الإشعارات الذكية</h3>
+<p class="teacher-note">أرسل تنبيه فوري لكل الطلاب أو مستوى محدد أو طالب بعينه. الصفحة ترسل أيضاً تنبيهات تلقائية عند نشر درس/امتحان/مهمة وبدء حصة مباشرة.</p>
+<div class="pro-grid">
+<input id="notify-title" placeholder="عنوان الإشعار: مثال واجب جديد" type="text"/>
+<select id="notify-target-type" onchange="TitanAdminV8.refreshNotificationTargets()">
+<option value="all">كل الطلاب</option>
+<option value="level">مستوى محدد</option>
+<option value="student">طالب محدد</option>
+</select>
+<select id="notify-level"><option value="1">مستوى 1</option><option value="2">مستوى 2</option><option value="3">مستوى 3</option></select>
+<select id="notify-student"></select>
+</div>
+<textarea id="notify-body" placeholder="نص الإشعار..." rows="4"></textarea>
+<button class="btn btn-primary" onclick="TitanAdminV8.sendNotificationManual()"><i class="fas fa-paper-plane"></i> إرسال الإشعار</button>
+</div>
+<div class="card">
+<h3><i class="fas fa-clock-rotate-left"></i> آخر الإشعارات</h3>
+<table><thead><tr><th>العنوان</th><th>النطاق</th><th>الرسالة</th><th>الوقت</th><th>إجراء</th></tr></thead><tbody id="notifications-admin-list"></tbody></table>
+</div>
+</section>
+<section id="sec-parent-portal" style="display: none;">
+<div class="card">
+<h3><i class="fas fa-people-roof"></i> لوحة ولي الأمر</h3>
+<p class="teacher-note">ولي الأمر يدخل من صفحة الطالب بنفس كود الطالب ورقم الهاتف، ويظهر له وضع متابعة فقط مع التقارير والشهادات المنشورة من الإدارة.</p>
+<div class="pro-grid">
+<select id="parent-student-select"></select>
+<button class="btn btn-info" onclick="TitanAdminV8.copyParentInstructions()"><i class="fas fa-copy"></i> نسخ تعليمات الدخول لولي الأمر</button>
+<button class="btn btn-success" onclick="TitanAdminV8.generateParentReport()"><i class="fas fa-file-circle-plus"></i> إنشاء تقرير سريع</button>
+</div>
+<div class="vc-ok" id="parent-instructions-box" style="margin-top:12px;"></div>
+</div>
+</section>
+<section id="sec-question-bank" style="display: none;">
+<div class="card">
+<h3><i class="fas fa-database"></i> بنك الأسئلة</h3>
+<div class="pro-grid">
+<input id="qb-text" placeholder="نص السؤال" type="text"/>
+<select id="qb-level"><option value="1">مستوى 1</option><option value="2">مستوى 2</option><option value="3">مستوى 3</option></select>
+<input id="qb-category" placeholder="التصنيف: HTML / CSS / JS" type="text"/>
+<select id="qb-difficulty"><option value="سهل">سهل</option><option value="متوسط">متوسط</option><option value="صعب">صعب</option></select>
+</div>
+<div class="pro-grid">
+<input id="qb-o1" placeholder="الاختيار الأول" type="text"/>
+<input id="qb-o2" placeholder="الاختيار الثاني" type="text"/>
+<input id="qb-o3" placeholder="الاختيار الثالث" type="text"/>
+<input id="qb-o4" placeholder="الاختيار الرابع" type="text"/>
+<select id="qb-answer"><option value="0">الصحيح: الأول</option><option value="1">الصحيح: الثاني</option><option value="2">الصحيح: الثالث</option><option value="3">الصحيح: الرابع</option></select>
+</div>
+<button class="btn btn-primary" onclick="TitanAdminV8.addQuestionToBank()"><i class="fas fa-plus"></i> إضافة السؤال للبنك</button>
+</div>
+<div class="card">
+<h3><i class="fas fa-wand-magic-sparkles"></i> إنشاء امتحان عشوائي من البنك</h3>
+<div class="pro-grid">
+<input id="qb-exam-title" placeholder="عنوان الامتحان العشوائي" type="text"/>
+<select id="qb-exam-level"><option value="1">مستوى 1</option><option value="2">مستوى 2</option><option value="3">مستوى 3</option></select>
+<input id="qb-exam-category" placeholder="تصنيف اختياري أو اتركه فارغاً" type="text"/>
+<input id="qb-exam-count" min="1" placeholder="عدد الأسئلة" type="number" value="10"/>
+<button class="btn btn-success" onclick="TitanAdminV8.createRandomExam()"><i class="fas fa-shuffle"></i> نشر امتحان عشوائي</button>
+</div>
+</div>
+<div class="card">
+<h3><i class="fas fa-list"></i> الأسئلة المحفوظة</h3>
+<table><thead><tr><th>السؤال</th><th>المستوى</th><th>التصنيف</th><th>الصعوبة</th><th>إجراء</th></tr></thead><tbody id="question-bank-list"></tbody></table>
+</div>
+</section>
+<section id="sec-student-reports" style="display: none;">
+<div class="card">
+<h3><i class="fas fa-file-pdf"></i> تقارير شهرية وشهادات</h3>
+<div class="pro-grid">
+<select id="report-student-select"></select>
+<input id="report-month-input" type="month"/>
+<button class="btn btn-primary" onclick="TitanAdminV8.generateStudentReport()"><i class="fas fa-file-circle-check"></i> إنشاء/تحديث التقرير</button>
+<button class="btn btn-info" onclick="TitanAdminV8.previewStudentReport()"><i class="fas fa-eye"></i> معاينة التقرير</button>
+</div>
+<div class="pro-grid" style="margin-top:12px;">
+<input id="cert-title" placeholder="عنوان الشهادة: مثال إتمام مستوى HTML" type="text"/>
+<button class="btn btn-success" onclick="TitanAdminV8.issueCertificate()"><i class="fas fa-award"></i> إصدار شهادة للطالب</button>
+</div>
+</div>
+<div class="card">
+<h3><i class="fas fa-folder-open"></i> آخر التقارير المنشورة</h3>
+<div class="pro-grid-2" id="student-reports-list"></div>
+</div>
+</section>
+<section id="sec-admin-roles" style="display: none;">
+<div class="card">
+<h3><i class="fas fa-user-lock"></i> صلاحيات الفريق</h3>
+<p class="danger-note">مهم: أمان قاعدة البيانات ما زال يعتمد على admins/UID = true. هذه الصلاحيات تنظّم واجهة الإدارة وسجل النشاط، ولا تغني عن جعل الأشخاص الموثوقين فقط داخل admins.</p>
+<div class="pro-grid">
+<input id="role-uid" placeholder="UID حساب الموظف من Firebase Authentication" type="text"/>
+<input id="role-name" placeholder="اسم الموظف" type="text"/>
+<select id="role-type"><option value="owner">مالك</option><option value="teacher">مدرس</option><option value="accountant">محاسب</option><option value="support">دعم فني</option><option value="viewer">مشاهدة فقط</option></select>
+<button class="btn btn-primary" onclick="TitanAdminV8.saveAdminProfile()"><i class="fas fa-save"></i> حفظ الصلاحية</button>
+</div>
+</div>
+<div class="card">
+<h3><i class="fas fa-users-gear"></i> الفريق الحالي</h3>
+<table><thead><tr><th>الاسم</th><th>UID</th><th>الدور</th><th>إجراء</th></tr></thead><tbody id="admin-profiles-list"></tbody></table>
+</div>
+<div class="card">
+<h3><i class="fas fa-clipboard-list"></i> سجل النشاط</h3>
+<table><thead><tr><th>المستخدم</th><th>النشاط</th><th>التاريخ</th></tr></thead><tbody id="audit-log-list"></tbody></table>
+</div>
+</section>
+<section id="sec-v10-mega" style="display:none;">
+<div class="card">
+<div class="v10-hero">
+<h3><i class="fas fa-wand-magic-sparkles"></i> V10 Mega Center — إشعارات ثابتة + أقسام قابلة لـ 10,000+ سجل</h3>
+<p>هذا المركز يصلح مشكلة الإشعارات بإرسال مزدوج: إشعار عام + صندوق إشعارات خاص بكل طالب. كما يضيف أدوات تشغيل وإدارة كبيرة بحيث كل جزء يكون جاهزاً للتوسع لآلاف السجلات بدون تحميل الصفحة كلها مرة واحدة.</p>
+</div>
+<div class="v10-grid">
+<div class="v10-kpi"><small>إشعارات آخر تحميل</small><strong id="v10-notif-count">0</strong></div>
+<div class="v10-kpi"><small>طلاب مستهدفون</small><strong id="v10-target-count">0</strong></div>
+<div class="v10-kpi"><small>سجلات V10</small><strong id="v10-record-count">0</strong></div>
+<div class="v10-kpi"><small>حالة Firebase</small><strong id="v10-firebase-state">...</strong></div>
+</div>
+</div>
+<div class="card">
+<h3><i class="fas fa-bell"></i> إصلاح واختبار الإشعارات</h3>
+<div class="v10-status-warn" id="v10-notification-health">جاري فحص Firebase والصلاحيات...</div>
+<div class="pro-grid" style="margin-top:12px;">
+<input id="v10-notify-title" placeholder="عنوان الإشعار"/>
+<select id="v10-notify-target"><option value="all">كل الطلاب</option><option value="level">مستوى محدد</option><option value="student">طالب محدد</option></select>
+<select id="v10-notify-level"><option value="1">مستوى 1</option><option value="2">مستوى 2</option><option value="3">مستوى 3</option></select>
+<select id="v10-notify-student"></select>
+</div>
+<textarea id="v10-notify-body" placeholder="نص الإشعار..." rows="4"></textarea>
+<div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:10px;">
+<button class="btn btn-primary" onclick="TitanV10Admin.sendMegaNotification()"><i class="fas fa-paper-plane"></i> إرسال مضمون</button>
+<button class="btn btn-info" onclick="TitanV10Admin.sendTestNotification()"><i class="fas fa-vial"></i> اختبار لطالب مختار</button>
+<button class="btn btn-warning" onclick="TitanV10Admin.runNotificationHealthCheck()"><i class="fas fa-stethoscope"></i> فحص الإشعارات</button>
+</div>
+<p class="muted-help" style="margin-top:10px;">لو الإشعار القديم لا يظهر، استخدم زر الإرسال المضمون هنا. هو يكتب داخل <b>notifications</b> وداخل <b>student_notifications/STUDENT_UID</b> مباشرة.</p>
+</div>
+<div class="card">
+<h3><i class="fas fa-layer-group"></i> إضافات V10 المقترحة والمنفذة كمسارات جاهزة</h3>
+<div class="v10-grid" id="v10-feature-grid"></div>
+</div>
+<div class="card">
+<h3><i class="fas fa-gauge-high"></i> لوحة 10,000+ لكل جزء</h3>
+<div class="v10-table-tools">
+<input id="v10-search" oninput="TitanV10Admin.renderMegaRecords()" placeholder="بحث سريع في آخر 10,000 سجل..."/>
+<select id="v10-record-type" onchange="TitanV10Admin.renderMegaRecords()">
+<option value="all">كل الأنواع</option><option value="notification">إشعارات</option><option value="campaign">حملات</option><option value="payment">مدفوعات</option><option value="risk">مخاطر</option><option value="automation">أتمتة</option>
+</select>
+<button class="btn btn-success" onclick="TitanV10Admin.addMegaRecord()"><i class="fas fa-plus"></i> إضافة سجل تجربة</button>
+<button class="btn btn-info" onclick="TitanV10Admin.exportMegaCsv()"><i class="fas fa-file-csv"></i> تصدير CSV</button>
+</div>
+<table><thead><tr><th>النوع</th><th>العنوان</th><th>الوصف</th><th>التاريخ</th><th>حالة</th></tr></thead><tbody id="v10-mega-records"></tbody></table>
+</div>
+<div class="card">
+<h3><i class="fas fa-robot"></i> الأتمتة الذكية</h3>
+<div class="pro-grid">
+<input id="v10-auto-title" placeholder="اسم قاعدة الأتمتة: مثال غياب متكرر"/>
+<select id="v10-auto-type"><option value="absence">غياب</option><option value="payment">دفع</option><option value="lesson">درس لم يكتمل</option><option value="exam">درجة منخفضة</option></select>
+<input id="v10-auto-threshold" placeholder="الحد" type="number" value="3"/>
+<button class="btn btn-success" onclick="TitanV10Admin.saveAutomationRule()"><i class="fas fa-save"></i> حفظ قاعدة</button>
+</div>
+<div id="v10-automation-list" style="margin-top:12px;"></div>
+</div>
+</section>
+<section id="sec-settings" style="display: none;">
+<div class="card">
+<h3><i class="fas fa-cog"></i> إدارة البيانات</h3>
+<button class="btn btn-primary" onclick="saveBackup()"><i class="fas fa-download"></i> تصدير نسخة احتياطية</button>
+<button class="btn btn-danger" onclick="factoryReset()" style="margin-top: 1rem;"><i class="fas fa-trash-alt"></i> فورمات الموقع (حذف شامل)</button>
+</div>
+</section>
+<section id="sec-v13-pro" style="display:none;">
+<div class="v13-hero">
+<h3><i class="fas fa-crown"></i> V13 Pro Platform</h3>
+<p>مركز تطوير المنصة: كويزات بعد الدروس، متابعة تقدم الطلاب، وصفحة رئيسية احترافية.</p>
+</div>
+<div class="v13-grid">
+<div class="v13-card">
+<h4><i class="fas fa-question-circle"></i> إنشاء كويز بعد درس</h4>
+<div class="v13-row">
+<select id="v13-quiz-lesson"><option value="">اختر الدرس...</option></select>
+<input id="v13-quiz-title" placeholder="عنوان الكويز"/>
+<input id="v13-quiz-points" placeholder="XP" type="number" value="20"/>
+</div>
+<div class="v13-question-box">
+<input id="v13-q-text" placeholder="نص السؤال"/>
+<div class="v13-row">
+<input id="v13-o-0" placeholder="اختيار 1"/>
+<input id="v13-o-1" placeholder="اختيار 2"/>
+<input id="v13-o-2" placeholder="اختيار 3"/>
+<input id="v13-o-3" placeholder="اختيار 4"/>
+</div>
+<select id="v13-correct"><option value="0">الإجابة الصحيحة 1</option><option value="1">الإجابة الصحيحة 2</option><option value="2">الإجابة الصحيحة 3</option><option value="3">الإجابة الصحيحة 4</option></select>
+<button class="btn btn-info" onclick="TitanV13Admin.addQuizQuestion()"><i class="fas fa-plus"></i> إضافة السؤال</button>
+</div>
+<div id="v13-quiz-draft"></div>
+<button class="btn btn-success" onclick="TitanV13Admin.publishQuiz()" style="width:100%;justify-content:center;margin-top:10px;"><i class="fas fa-upload"></i> نشر الكويز</button>
+<div id="v13-admin-status"></div>
+</div>
+<div class="v13-card">
+<h4><i class="fas fa-list-check"></i> الكويزات المنشورة</h4>
+<div id="v13-quiz-list"><div class="v13-status v13-warn">جاري التحميل...</div></div>
+</div>
+<div class="v13-card">
+<h4><i class="fas fa-chart-simple"></i> تقدم الطلاب</h4>
+<p style="color:var(--text-dim);line-height:1.8">التقدم يحفظ في <b>lesson_progress/STUDENT_UID/LESSON_ID</b>، ونتائج الكويز في <b>mega_records</b>.</p>
+<button class="btn btn-primary" onclick="TitanV13Admin.refresh()"><i class="fas fa-rotate"></i> تحديث البيانات</button>
+</div>
+</div>
+</section>
+<section id="sec-v14-saas" style="display:none;">
+<div class="v14-panel">
+<h3><i class="fas fa-building"></i> V14 SaaS Core</h3>
+<p>الأكاديمية الحالية: <b id="v14-current-tenant">--</b>. كل البيانات تُحفظ داخل مسار مستقل حسب `tenant`.</p>
+</div>
+<div class="v14-grid">
+<div class="v14-card">
+<h4><i class="fas fa-palette"></i> إعدادات عامة للأكاديمية</h4>
+<input id="v14-academy-name" placeholder="اسم الأكاديمية"/>
+<input id="v14-academy-logo" placeholder="رابط اللوجو"/>
+<input id="v14-academy-whatsapp" placeholder="رقم واتساب"/>
+<div class="v14-row">
+<label>اللون الأساسي<input class="v14-color" id="v14-primary-color" type="color" value="#2563eb"/></label>
+<label>اللون الثاني<input class="v14-color" id="v14-secondary-color" type="color" value="#7c3aed"/></label>
+</div>
+<button class="btn btn-success" onclick="TitanV14Admin.saveSettings()"><i class="fas fa-save"></i> حفظ الإعدادات</button>
+<div id="v14-settings-status"></div>
+</div>
+<div class="v14-card">
+<h4><i class="fas fa-credit-card"></i> اشتراك الطالب</h4>
+<select id="v14-sub-student"><option value="">اختر الطالب...</option></select>
+<div class="v14-row">
+<select id="v14-sub-status"><option value="active">فعال</option><option value="expired">منتهي</option></select>
+<input id="v14-sub-end" type="date"/>
+</div>
+<button class="btn btn-primary" onclick="TitanV14Admin.saveStudentSubscription()"><i class="fas fa-check"></i> حفظ الاشتراك</button>
+<div id="v14-sub-status-box"></div>
+</div>
+<div class="v14-card">
+<h4><i class="fas fa-qrcode"></i> QR حضور</h4>
+<div class="v14-row">
+<select id="v14-qr-level"><option value="1">مستوى 1</option><option value="2">مستوى 2</option><option value="3">مستوى 3</option></select>
+<input id="v14-qr-title" placeholder="عنوان الحصة"/>
+</div>
+<button class="btn btn-info" onclick="TitanV14Admin.createAttendanceQR()"><i class="fas fa-qrcode"></i> إنشاء QR</button>
+<div id="v14-qr-box"></div>
+</div>
+<div class="v14-card">
+<h4><i class="fas fa-shield-halved"></i> إعدادات الأمان</h4>
+<input id="v14-admin-uid" placeholder="UID أدمن جديد"/>
+<button class="btn btn-success" onclick="TitanV14Admin.addAdmin()"><i class="fas fa-user-plus"></i> إضافة Admin</button>
+<hr style="border:0;border-top:1px solid var(--border);margin:12px 0"/>
+<select id="v14-security-student"><option value="">اختر طالب...</option></select>
+<div style="display:flex;gap:8px;flex-wrap:wrap">
+<button class="btn btn-warning" onclick="TitanV14Admin.toggleStudentDisabled(true)"><i class="fas fa-ban"></i> تعطيل الطالب</button>
+<button class="btn btn-info" onclick="TitanV14Admin.toggleStudentDisabled(false)"><i class="fas fa-check"></i> تفعيل الطالب</button>
+</div>
+<label style="display:flex;gap:8px;align-items:center;margin-top:12px"><input id="v14-single-device" type="checkbox"/> قفل الدخول من أكثر من جهاز</label>
+<button class="btn btn-primary" onclick="TitanV14Admin.saveSecurity()"><i class="fas fa-lock"></i> حفظ الأمان</button>
+<div id="v14-security-status"></div>
+</div>
+<div class="v14-card">
+<h4><i class="fas fa-trophy"></i> ترتيب الطلاب</h4>
+<button class="btn btn-primary" onclick="TitanV14Admin.buildWeeklyLeaderboard()"><i class="fas fa-trophy"></i> تحديث ترتيب الأسبوع</button>
+<div id="v14-leaderboard-admin"></div>
+</div>
+</div>
+</section>
+<section id="sec-v15-customization" style="display:none;">
+<div class="v15-studio-hero">
+<h3><i class="fas fa-sliders"></i> V15 Customization Studio</h3>
+<p>تحكم كامل في هوية الأكاديمية، الألوان، صفحة الدخول، الأقسام، الشهادات، الاشتراكات، النصوص، والأمان بدون تعديل الكود.</p>
+<small>الأكاديمية الحالية: <b id="v15-tenant-name">--</b></small>
+</div>
+<div class="v15-tabs">
+<button class="v15-tab active" onclick="TitanV15Admin.showTab('branding')"><i class="fas fa-building"></i> الهوية</button>
+<button class="v15-tab" onclick="TitanV15Admin.showTab('theme')"><i class="fas fa-palette"></i> الألوان</button>
+<button class="v15-tab" onclick="TitanV15Admin.showTab('features')"><i class="fas fa-toggle-on"></i> الأقسام</button>
+<button class="v15-tab" onclick="TitanV15Admin.showTab('login')"><i class="fas fa-right-to-bracket"></i> الدخول</button>
+<button class="v15-tab" onclick="TitanV15Admin.showTab('certificates')"><i class="fas fa-certificate"></i> الشهادات</button>
+<button class="v15-tab" onclick="TitanV15Admin.showTab('plans')"><i class="fas fa-credit-card"></i> الاشتراكات</button>
+<button class="v15-tab" onclick="TitanV15Admin.showTab('security')"><i class="fas fa-shield-halved"></i> الأمان</button>
+<button class="v15-tab" onclick="TitanV15Admin.showTab('preview')"><i class="fas fa-eye"></i> معاينة</button>
+</div>
+<div class="v15-pane active" id="v15-pane-branding">
+<div class="v15-card">
+<h4><i class="fas fa-id-card"></i> هوية الأكاديمية</h4>
+<div class="v15-row">
+<div class="v15-field"><label>اسم الأكاديمية</label><input id="v15-brand-name" placeholder="مثال: أكاديمية تيتان"/></div>
+<div class="v15-field"><label>اسم المدرس / المؤسسة</label><input id="v15-brand-teacher" placeholder="مستر أحمد"/></div>
+<div class="v15-field"><label>رابط اللوجو</label><input id="v15-brand-logo" placeholder="https://..."/></div>
+<div class="v15-field"><label>رابط Favicon</label><input id="v15-brand-favicon" placeholder="https://..."/></div>
+</div>
+<div class="v15-row">
+<div class="v15-field"><label>رقم واتساب</label><input id="v15-brand-whatsapp" placeholder="2010..."/></div>
+<div class="v15-field"><label>فيسبوك</label><input id="v15-brand-facebook" placeholder="https://facebook.com/..."/></div>
+<div class="v15-field"><label>يوتيوب</label><input id="v15-brand-youtube" placeholder="https://youtube.com/..."/></div>
+<div class="v15-field"><label>تيليجرام</label><input id="v15-brand-telegram" placeholder="https://t.me/..."/></div>
+</div>
+<div class="v15-field"><label>وصف المنصة</label><textarea id="v15-brand-description" placeholder="اكتب وصف قصير يظهر في صفحة الدخول والصفحة الرئيسية"></textarea></div>
+</div>
+</div>
+<div class="v15-pane" id="v15-pane-theme">
+<div class="v15-card">
+<h4><i class="fas fa-palette"></i> ألوان الموقع بالتفصيل</h4>
+<div class="v15-row">
+<div class="v15-field"><label>Primary</label><input class="v15-color" id="v15-theme-primary" type="color" value="#2563eb"/></div>
+<div class="v15-field"><label>Secondary</label><input class="v15-color" id="v15-theme-secondary" type="color" value="#7c3aed"/></div>
+<div class="v15-field"><label>Background</label><input class="v15-color" id="v15-theme-background" type="color" value="#f4f7fb"/></div>
+<div class="v15-field"><label>Card</label><input class="v15-color" id="v15-theme-card" type="color" value="#ffffff"/></div>
+<div class="v15-field"><label>Text</label><input class="v15-color" id="v15-theme-text" type="color" value="#0f172a"/></div>
+<div class="v15-field"><label>Muted Text</label><input class="v15-color" id="v15-theme-muted" type="color" value="#64748b"/></div>
+<div class="v15-field"><label>Success</label><input class="v15-color" id="v15-theme-success" type="color" value="#10b981"/></div>
+<div class="v15-field"><label>Warning</label><input class="v15-color" id="v15-theme-warning" type="color" value="#f59e0b"/></div>
+<div class="v15-field"><label>Danger</label><input class="v15-color" id="v15-theme-danger" type="color" value="#ef4444"/></div>
+<div class="v15-field"><label>Border</label><input class="v15-color" id="v15-theme-border" type="color" value="#e2e8f0"/></div>
+</div>
+</div>
+</div>
+<div class="v15-pane" id="v15-pane-features">
+<div class="v15-grid">
+<div class="v15-card">
+<h4><i class="fas fa-toggle-on"></i> تشغيل/إيقاف الأقسام</h4>
+<label class="v15-check">الدروس <input checked="" id="v15-feature-lessons" type="checkbox"/></label>
+<label class="v15-check">الكويزات <input checked="" id="v15-feature-quizzes" type="checkbox"/></label>
+<label class="v15-check">الحصص المباشرة <input checked="" id="v15-feature-live" type="checkbox"/></label>
+<label class="v15-check">المجتمع <input checked="" id="v15-feature-community" type="checkbox"/></label>
+<label class="v15-check">ملف الإنجاز <input checked="" id="v15-feature-portfolio" type="checkbox"/></label>
+<label class="v15-check">ولي الأمر <input checked="" id="v15-feature-parent" type="checkbox"/></label>
+<label class="v15-check">طلب إنشاء حساب <input checked="" id="v15-feature-signup" type="checkbox"/></label>
+<label class="v15-check">الشهادات <input checked="" id="v15-feature-certificates" type="checkbox"/></label>
+</div>
+<div class="v15-card">
+<h4><i class="fas fa-i-cursor"></i> أسماء الأقسام</h4>
+<div class="v15-field"><label>الدروس</label><input id="v15-label-lessons" value="الدروس"/></div>
+<div class="v15-field"><label>الكويزات</label><input id="v15-label-quizzes" value="الكويزات"/></div>
+<div class="v15-field"><label>الحصص</label><input id="v15-label-live" value="الحصص"/></div>
+<div class="v15-field"><label>المجتمع</label><input id="v15-label-community" value="المجتمع"/></div>
+<div class="v15-field"><label>ملف الإنجاز</label><input id="v15-label-portfolio" value="ملف الإنجاز"/></div>
+<div class="v15-field"><label>ولي الأمر</label><input id="v15-label-parent" value="ولي الأمر"/></div>
+</div>
+</div>
+</div>
+<div class="v15-pane" id="v15-pane-login">
+<div class="v15-card">
+<h4><i class="fas fa-right-to-bracket"></i> صفحة الدخول</h4>
+<div class="v15-row">
+<div class="v15-field"><label>عنوان الدخول</label><input id="v15-login-title" value="دخول المنصة"/></div>
+<div class="v15-field"><label>نص ترحيبي</label><input id="v15-login-subtitle" value="أهلاً بك في منصة التعلم الذكية"/></div>
+<div class="v15-field"><label>رابط صورة الخلفية</label><input id="v15-login-bg" placeholder="https://..."/></div>
+<div class="v15-field"><label>طريقة دخول الطالب</label><select id="v15-login-mode"><option value="code_phone">كود + هاتف</option><option value="email_password">Email + Password</option></select></div>
+</div>
+<label class="v15-check">إظهار زر ولي الأمر <input checked="" id="v15-login-show-parent" type="checkbox"/></label>
+<label class="v15-check">إظهار طلب إنشاء حساب <input checked="" id="v15-login-show-signup" type="checkbox"/></label>
+</div>
+</div>
+<div class="v15-pane" id="v15-pane-certificates">
+<div class="v15-card">
+<h4><i class="fas fa-certificate"></i> تخصيص الشهادة</h4>
+<div class="v15-row">
+<div class="v15-field"><label>عنوان الشهادة</label><input id="v15-cert-title" value="شهادة إتمام مستوى"/></div>
+<div class="v15-field"><label>اسم التوقيع</label><input id="v15-cert-signature" placeholder="مدير الأكاديمية"/></div>
+<div class="v15-field"><label>رابط الختم / التوقيع</label><input id="v15-cert-seal" placeholder="https://..."/></div>
+<div class="v15-field"><label>لون الإطار</label><input class="v15-color" id="v15-cert-border" type="color" value="#2563eb"/></div>
+</div>
+<div class="v15-field"><label>نص الشهادة</label><textarea id="v15-cert-body">تشهد {academyName} بأن الطالب/ة {studentName} قد أتم/ت مستوى {levelName} بنجاح بتاريخ {date}.</textarea></div>
+<small>المتغيرات المتاحة: {studentName}, {academyName}, {levelName}, {date}</small>
+</div>
+</div>
+<div class="v15-pane" id="v15-pane-plans">
+<div class="v15-card">
+<h4><i class="fas fa-credit-card"></i> خطط الاشتراك</h4>
+<div id="v15-plans-box"></div>
+<button class="btn btn-info" onclick="TitanV15Admin.addPlan()"><i class="fas fa-plus"></i> إضافة خطة</button>
+</div>
+</div>
+<div class="v15-pane" id="v15-pane-security">
+<div class="v15-card">
+<h4><i class="fas fa-shield-halved"></i> الأمان والصلاحيات</h4>
+<label class="v15-check">قفل الدخول من أكثر من جهاز <input id="v15-sec-single-device" type="checkbox"/></label>
+<label class="v15-check">منع الطالب المنتهي اشتراكه من الدروس <input checked="" id="v15-sec-block-expired" type="checkbox"/></label>
+<label class="v15-check">تسجيل آخر دخول <input checked="" id="v15-sec-track-login" type="checkbox"/></label>
+<div class="v15-row">
+<div class="v15-field"><label>عدد الأجهزة المسموح</label><input id="v15-sec-device-limit" min="1" type="number" value="1"/></div>
+<div class="v15-field"><label>رسالة انتهاء الاشتراك</label><input id="v15-sec-expired-msg" value="اشتراكك منتهي. تواصل مع الإدارة للتجديد."/></div>
+</div>
+</div>
+</div>
+<div class="v15-pane" id="v15-pane-preview">
+<div class="v15-grid">
+<div class="v15-card">
+<h4><i class="fas fa-eye"></i> معاينة مباشرة</h4>
+<div class="v15-preview" id="v15-live-preview"></div>
+</div>
+<div class="v15-card">
+<h4><i class="fas fa-save"></i> حفظ وتطبيق</h4>
+<p style="color:var(--text-dim);line-height:1.8">اضغط حفظ لتطبيق التخصيص على صفحة الطالب والإدارة لهذه الأكاديمية فقط.</p>
+<button class="btn btn-success" onclick="TitanV15Admin.save()" style="width:100%;justify-content:center"><i class="fas fa-save"></i> حفظ التخصيص</button>
+<button class="btn btn-warning" onclick="TitanV15Admin.resetDefaults()" style="width:100%;justify-content:center;margin-top:10px"><i class="fas fa-rotate-left"></i> رجوع للإعدادات الافتراضية</button>
+<div id="v15-save-status"></div>
+</div>
+</div>
+</div>
+<div class="v15-card">
+<button class="btn btn-success" onclick="TitanV15Admin.save()"><i class="fas fa-save"></i> حفظ كل التخصيصات</button>
+<button class="btn btn-primary" onclick="TitanV15Admin.load()"><i class="fas fa-download"></i> تحميل الإعدادات</button>
+<button class="btn btn-info" onclick="TitanV15Admin.updatePreview()"><i class="fas fa-eye"></i> تحديث المعاينة</button>
+<div id="v15-global-status"></div>
+</div>
+</section>
+</main>
+<script onerror="window.firebaseLoadError='فشل تحميل firebase-app-compat من gstatic';" src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+<script onerror="window.firebaseLoadError='فشل تحميل firebase-auth-compat من gstatic';" src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+<script onerror="window.firebaseLoadError='فشل تحميل firebase-database-compat من gstatic';" src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+<script onerror="window.firebaseLoadError='فشل تحميل firebase-storage-compat من gstatic';" src="https://www.gstatic.com/firebasejs/10.7.1/firebase-storage-compat.js"></script>
+
+
+
+
+<section id="sec-protection-center" style="display: none;">
+<div class="card">
+<h3><i class="fas fa-shield-halved"></i> مركز الحماية وتتبع النشاط V9</h3>
+<p class="teacher-note">هذا القسم يعرض الجلسات النشطة، منع فتح نفس حساب الطالب على جهازين، تتبع مشاهدة الدروس، الحضور التلقائي للحصص، وآخر نشاط لكل طالب.</p>
+<div class="v9-kpi-grid">
+<div class="v9-kpi"><small>جلسات نشطة الآن</small><strong id="v9-active-count">0</strong></div>
+<div class="v9-kpi"><small>دروس مكتملة</small><strong id="v9-completed-lessons">0</strong></div>
+<div class="v9-kpi"><small>حضور حصص مسجل</small><strong id="v9-attendance-count">0</strong></div>
+<div class="v9-kpi"><small>طلاب نشطوا آخر 15 دقيقة</small><strong id="v9-recent-activity">0</strong></div>
+</div>
+</div>
+<div class="card">
+<h3><i class="fas fa-user-shield"></i> الجلسات النشطة ومنع مشاركة الحساب</h3>
+<table><thead><tr><th>الطالب</th><th>الكود</th><th>المستوى</th><th>آخر ظهور</th><th>الجهاز</th><th>إجراء</th></tr></thead><tbody id="v9-active-sessions-list"></tbody></table>
+</div>
+<div class="card">
+<h3><i class="fas fa-chart-line"></i> تقدم مشاهدة الدروس</h3>
+<table><thead><tr><th>الطالب</th><th>الدرس</th><th>المستوى</th><th>النسبة</th><th>آخر تحديث</th><th>واتساب</th></tr></thead><tbody id="v9-progress-list"></tbody></table>
+</div>
+<div class="card">
+<h3><i class="fas fa-video"></i> الحضور التلقائي للحصص المباشرة</h3>
+<table><thead><tr><th>كود الحصة</th><th>الطالب</th><th>المستوى</th><th>الدخول</th><th>الخروج/آخر ظهور</th><th>المدة</th></tr></thead><tbody id="v9-live-attendance-list"></tbody></table>
+</div>
+<div class="card">
+<h3><i class="fas fa-clock-rotate-left"></i> آخر نشاط للطلاب</h3>
+<table><thead><tr><th>الطالب</th><th>الكود</th><th>المستوى</th><th>القسم</th><th>آخر ظهور</th><th>الجهاز</th></tr></thead><tbody id="v9-activity-list"></tbody></table>
+</div>
+</section>
+
+
+
+
+
+
+
+
+<!-- ===== TITAN V16 FEATURES PACK: admin ===== -->
+
+
+<script src="./assets/js/admin.js"></script></body>
+</html>
