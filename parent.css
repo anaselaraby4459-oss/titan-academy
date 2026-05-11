@@ -1,0 +1,13 @@
+/* ===== parent_portal_v15_customization_studio.html :: inline-style-01 ===== */
+*{box-sizing:border-box;font-family:Cairo,sans-serif}body{margin:0;background:#f4f7fb;color:#0f172a}.wrap{width:min(1050px,94vw);margin:auto;padding:28px}.card{background:#fff;border:1px solid #e2e8f0;border-radius:24px;padding:22px;margin:16px 0;box-shadow:0 12px 30px rgba(15,23,42,.07)}input{width:100%;padding:14px;border:1px solid #e2e8f0;border-radius:14px;margin:7px 0}.btn{border:0;border-radius:14px;padding:13px 18px;font-weight:900;cursor:pointer;background:#2563eb;color:#fff}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}.kpi{background:#f8fafc;border:1px solid #e2e8f0;border-radius:18px;padding:16px}.kpi b{font-size:2rem;color:#2563eb}table{width:100%;border-collapse:collapse}td,th{padding:10px;border-bottom:1px solid #e2e8f0;text-align:center}
+
+
+/* ===== parent_portal_v15_customization_studio.html :: titan-v15-parent-css ===== */
+:root{--primary:#2563eb;--primary-gradient:linear-gradient(135deg,#2563eb,#7c3aed);--bg-body:#f4f7fb;--card-bg:#fff;--text-main:#0f172a;--text-dim:#64748b;--border:#e2e8f0}
+body{background:var(--bg-body)!important;color:var(--text-main)!important}
+.card{background:var(--card-bg)!important;border-color:var(--border)!important}
+.btn{background:var(--primary)!important}
+
+
+/* ===== parent_portal_v15_customization_studio.html :: titan-v16-parent-css ===== */
+.v16-parent-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}.v16-parent-card{background:var(--card-bg,#fff);border:1px solid var(--border,#e2e8f0);border-radius:22px;padding:16px;margin:14px 0;box-shadow:0 10px 24px rgba(15,23,42,.07)}.v16-parent-card h3{color:var(--primary,#2563eb);display:flex;gap:8px;align-items:center}.v16-parent-pill{display:inline-flex;gap:6px;align-items:center;border-radius:999px;padding:7px 11px;background:rgba(37,99,235,.10);color:var(--primary,#2563eb);font-weight:900;margin:3px}.v16-parent-item{border:1px solid var(--border,#e2e8f0);background:var(--bg-body,#f4f7fb);border-radius:16px;padding:12px;margin:8px 0;line-height:1.8}
