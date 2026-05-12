@@ -1,0 +1,939 @@
+<!DOCTYPE html>
+
+<html dir="rtl" lang="ar">
+<head>
+<meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>لوحة ولي الأمر</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+
+<style id="merged-parent-css">
+/* Inlined from assets/css/parent.css */
+/* ===== parent.html :: inline-style-01 ===== */
+*{box-sizing:border-box;font-family:Cairo,sans-serif}body{margin:0;background:#f4f7fb;color:#0f172a}.wrap{width:min(1050px,94vw);margin:auto;padding:28px}.card{background:#fff;border:1px solid #e2e8f0;border-radius:24px;padding:22px;margin:16px 0;box-shadow:0 12px 30px rgba(15,23,42,.07)}input{width:100%;padding:14px;border:1px solid #e2e8f0;border-radius:14px;margin:7px 0}.btn{border:0;border-radius:14px;padding:13px 18px;font-weight:900;cursor:pointer;background:#2563eb;color:#fff}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}.kpi{background:#f8fafc;border:1px solid #e2e8f0;border-radius:18px;padding:16px}.kpi b{font-size:2rem;color:#2563eb}table{width:100%;border-collapse:collapse}td,th{padding:10px;border-bottom:1px solid #e2e8f0;text-align:center}
+
+
+/* ===== parent.html :: titan-v15-parent-css ===== */
+:root{--primary:#2563eb;--primary-gradient:linear-gradient(135deg,#2563eb,#7c3aed);--bg-body:#f4f7fb;--card-bg:#fff;--text-main:#0f172a;--text-dim:#64748b;--border:#e2e8f0}
+body{background:var(--bg-body)!important;color:var(--text-main)!important}
+.card{background:var(--card-bg)!important;border-color:var(--border)!important}
+.btn{background:var(--primary)!important}
+
+
+/* ===== parent.html :: titan-v16-parent-css ===== */
+.v16-parent-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}.v16-parent-card{background:var(--card-bg,#fff);border:1px solid var(--border,#e2e8f0);border-radius:22px;padding:16px;margin:14px 0;box-shadow:0 10px 24px rgba(15,23,42,.07)}.v16-parent-card h3{color:var(--primary,#2563eb);display:flex;gap:8px;align-items:center}.v16-parent-pill{display:inline-flex;gap:6px;align-items:center;border-radius:999px;padding:7px 11px;background:rgba(37,99,235,.10);color:var(--primary,#2563eb);font-weight:900;margin:3px}.v16-parent-item{border:1px solid var(--border,#e2e8f0);background:var(--bg-body,#f4f7fb);border-radius:16px;padding:12px;margin:8px 0;line-height:1.8}
+
+</style>
+
+
+<style id="merged-uiux-css">
+/* Inlined from assets/css/uiux.css */
+/* ===== TITAN UI/UX POLISH PACK =====
+   Adds smoother transitions, better responsive behavior, modern cards, persisted dark mode, and dashboard chart layouts.
+*/
+:root{
+  --primary-gradient: linear-gradient(135deg, var(--primary,#2563eb), #7c3aed);
+  --uiux-surface: rgba(255,255,255,.78);
+  --uiux-glass: rgba(255,255,255,.68);
+  --uiux-overlay: rgba(15,23,42,.55);
+  --uiux-ring: rgba(37,99,235,.16);
+  --uiux-ease: cubic-bezier(.2,.8,.2,1);
+  --uiux-shadow: 0 18px 48px rgba(15,23,42,.10);
+  --uiux-shadow-hover: 0 22px 60px rgba(15,23,42,.16);
+}
+html[data-theme="dark"], body[data-theme="dark"], [data-theme="dark"]{
+  --uiux-surface: rgba(18,28,47,.78);
+  --uiux-glass: rgba(18,28,47,.66);
+  --uiux-overlay: rgba(2,6,23,.72);
+  --uiux-ring: rgba(96,165,250,.18);
+  --uiux-shadow: 0 18px 55px rgba(0,0,0,.38);
+  --uiux-shadow-hover: 0 26px 70px rgba(0,0,0,.46);
+}
+html{scroll-behavior:smooth;}
+body{
+  transition: background-color .28s var(--uiux-ease), color .28s var(--uiux-ease);
+  background-image:
+    radial-gradient(circle at 10% 10%, rgba(37,99,235,.08), transparent 30%),
+    radial-gradient(circle at 90% 15%, rgba(124,58,237,.08), transparent 28%) !important;
+  background-attachment: fixed;
+}
+*{transition-timing-function:var(--uiux-ease) !important;}
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation-duration:.01ms !important;animation-iteration-count:1 !important;scroll-behavior:auto !important;transition-duration:.01ms !important;}
+}
+.card,.panel,.stat-card,.lesson-card,.exam-paper,.login-card,.chat-container,#portfolio-content,.kpi,.feature,.v16-card,.v15-card,.v14-card,.v13-card,.v10-card,.v9-kpi{
+  position:relative;
+  box-shadow:var(--uiux-shadow) !important;
+  transform:translateY(0);
+  transition: transform .22s var(--uiux-ease), box-shadow .22s var(--uiux-ease), border-color .22s var(--uiux-ease), background-color .22s var(--uiux-ease) !important;
+}
+.card:hover,.panel:hover,.stat-card:hover,.lesson-card:hover,.feature:hover,.v16-card:hover,.v15-card:hover,.v14-card:hover,.v13-card:hover,.v10-card:hover,.v9-kpi:hover{
+  transform:translateY(-3px) !important;
+  box-shadow:var(--uiux-shadow-hover) !important;
+}
+.btn,.icon-btn,.student-menu-btn,.nav-link,.btn-outline,.v15-tab{
+  transition: transform .18s var(--uiux-ease), box-shadow .18s var(--uiux-ease), background-color .18s var(--uiux-ease), color .18s var(--uiux-ease), border-color .18s var(--uiux-ease) !important;
+}
+.btn:hover,.icon-btn:hover,.student-menu-btn:hover,.v15-tab:hover{transform:translateY(-2px) !important;}
+.nav-link:hover,.btn-outline:hover{transform:translateX(-4px) !important;}
+input,select,textarea{
+  transition: border-color .18s var(--uiux-ease), box-shadow .18s var(--uiux-ease), background-color .18s var(--uiux-ease) !important;
+}
+input:focus,select:focus,textarea:focus{
+  outline:none !important;
+  box-shadow:0 0 0 4px var(--uiux-ring) !important;
+}
+header,.sidebar,.login-box,.login-card,.card,.panel,.chat-container{
+  backdrop-filter: blur(14px);
+}
+header.no-print, header{
+  background:var(--uiux-glass) !important;
+}
+.sidebar{
+  background:var(--uiux-glass) !important;
+}
+.custom-toast,.v10-toast{
+  animation:uiuxToast .28s var(--uiux-ease) both !important;
+}
+@keyframes uiuxToast{from{opacity:0;transform:translateY(16px) scale(.98)}to{opacity:1;transform:translateY(0) scale(1)}}
+section,.app-section,.uiux-reveal{
+  animation:uiuxFadeUp .34s var(--uiux-ease) both;
+}
+@keyframes uiuxFadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+.uiux-table-wrap{width:100%;overflow-x:auto;border-radius:16px;}
+.uiux-table-wrap table{min-width:720px;margin-top:0;}
+.uiux-dashboard-grid{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(220px,1fr));
+  gap:18px;
+  margin-top:20px;
+}
+.uiux-chart-card{min-height:310px;overflow:hidden;}
+.uiux-chart-card canvas{width:100% !important;max-height:230px !important;}
+.uiux-dashboard-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+  flex-wrap:wrap;
+  margin-bottom:10px;
+}
+.uiux-badge{
+  display:inline-flex;
+  align-items:center;
+  gap:7px;
+  border:1px solid rgba(37,99,235,.22);
+  background:rgba(37,99,235,.09);
+  color:var(--primary,#2563eb);
+  border-radius:999px;
+  padding:6px 11px;
+  font-size:.82rem;
+  font-weight:900;
+}
+.uiux-theme-fab{
+  position:fixed;
+  left:18px;
+  bottom:18px;
+  z-index:99999;
+  width:52px;
+  height:52px;
+  border:0;
+  border-radius:18px;
+  background:var(--primary-gradient,linear-gradient(135deg,#2563eb,#7c3aed));
+  color:#fff;
+  box-shadow:0 18px 38px rgba(37,99,235,.25);
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:1.15rem;
+}
+.uiux-theme-fab:hover{transform:translateY(-3px) scale(1.02) !important;}
+.uiux-progress-card{display:grid;grid-template-columns:120px 1fr;gap:16px;align-items:center;}
+.uiux-ring-progress{--pct:0; width:112px;height:112px;border-radius:50%;background:conic-gradient(var(--primary,#2563eb) calc(var(--pct)*1%), rgba(148,163,184,.22) 0);display:grid;place-items:center;}
+.uiux-ring-progress span{width:78px;height:78px;border-radius:50%;background:var(--card-bg,var(--bg-card,#fff));display:grid;place-items:center;font-weight:900;font-size:1.35rem;color:var(--primary,#2563eb);}
+[data-theme="dark"] .uiux-ring-progress span, html[data-theme="dark"] .uiux-ring-progress span{background:var(--card-bg,var(--bg-card,#121c2f));}
+@media (max-width:1100px){
+  .uiux-dashboard-grid{grid-template-columns:1fr 1fr;}
+  .vc-shell{grid-template-columns:1fr !important;}
+}
+@media (max-width:900px){
+  body{background-attachment:scroll;}
+  header.no-print, header{position:sticky !important;top:0 !important;z-index:90 !important;border-radius:0 0 22px 22px !important;}
+  .main-content{padding:1rem !important;}
+  .stats-grid,[style*="grid-template-columns: repeat(auto-fit"],.v16-grid,.v15-grid,.v14-grid,.v13-grid,.v10-grid{gap:12px !important;}
+  .card,.panel,.stat-card{border-radius:18px !important;padding:1rem !important;}
+}
+@media (max-width:680px){
+  .uiux-dashboard-grid{grid-template-columns:1fr;}
+  .uiux-progress-card{grid-template-columns:1fr;text-align:center;}
+  .uiux-ring-progress{margin:auto;}
+  .btn{width:100%;justify-content:center;}
+  .header-actions{width:100%;justify-content:space-between;}
+  table{font-size:.86rem;}
+  td,th{padding:10px !important;}
+  .uiux-theme-fab{width:48px;height:48px;left:12px;bottom:12px;border-radius:16px;}
+}
+@media (max-width:420px){
+  h1,#page-title{font-size:1.25rem !important;}
+  h2{font-size:1.1rem !important;}
+  .stat-value{font-size:2.2rem !important;}
+}
+
+
+/* ===== FIX: stable financial growth chart ===== */
+#mainChart{
+  display:block !important;
+  width:100% !important;
+  height:280px !important;
+  min-height:280px !important;
+  max-height:280px !important;
+}
+#mainChart + .chartjs-size-monitor,
+.uiux-chart-card canvas{
+  min-height:220px !important;
+}
+#sec-dash > div:nth-of-type(2) > .card:first-child{
+  min-height:360px;
+  overflow:hidden;
+}
+@media(max-width:900px){
+  #sec-dash > div:nth-of-type(2){
+    grid-template-columns:1fr !important;
+  }
+  #mainChart{
+    height:240px !important;
+    min-height:240px !important;
+    max-height:240px !important;
+  }
+}
+
+
+/* ===== TITAN LIVE PRO PACK ===== */
+.v19-live-tools{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(190px,1fr));
+  gap:12px;
+  margin:14px 0 0;
+  padding:14px;
+  border:1px solid rgba(37,99,235,.18);
+  border-radius:18px;
+  background:rgba(37,99,235,.06);
+}
+.v19-live-field label{display:block;font-weight:900;color:var(--text-dim);font-size:.86rem;margin-bottom:4px}
+.v19-live-field select{margin:0!important;width:100%}
+.v19-live-check{display:flex;align-items:center;gap:9px;font-weight:900;border:1px solid var(--border);border-radius:14px;padding:10px 12px;background:var(--bg-card)}
+.v19-live-check input{width:auto!important;margin:0!important}
+.v19-rec-timer{display:flex;align-items:center;justify-content:center;gap:8px;border-radius:14px;padding:10px 12px;background:#020617;color:#fff;font-size:1.25rem;font-weight:900;letter-spacing:.5px;direction:ltr}
+.v19-rec-timer.recording{background:linear-gradient(135deg,#ef4444,#f97316);animation:v19Pulse 1.1s infinite}
+.v19-rec-timer.paused{background:linear-gradient(135deg,#f59e0b,#d97706);animation:none}
+.v19-rec-status{display:flex;align-items:center;justify-content:center;border-radius:14px;padding:10px 12px;border:1px solid rgba(37,99,235,.20);background:var(--bg-card);font-weight:900;color:var(--text-dim);line-height:1.5;text-align:center}
+@keyframes v19Pulse{0%,100%{box-shadow:0 0 0 0 rgba(239,68,68,.35)}50%{box-shadow:0 0 0 8px rgba(239,68,68,0)}}
+.v19-replay-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+.v19-replay-card{border:1px solid var(--border);border-radius:18px;background:var(--card-bg,var(--bg-card,#fff));padding:14px;box-shadow:var(--shadow-sm,0 8px 18px rgba(15,23,42,.08));overflow:hidden}
+.v19-replay-card h4{margin:0 0 8px;color:var(--primary);font-weight:900;line-height:1.5}
+.v19-replay-card video{width:100%;max-height:260px;background:#020617;border-radius:14px;margin:8px 0}
+.v19-replay-meta{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0}
+.v19-replay-pill{display:inline-flex;align-items:center;gap:5px;padding:6px 9px;border-radius:999px;background:rgba(37,99,235,.10);color:var(--primary);font-size:.82rem;font-weight:900}
+@media(max-width:700px){.v19-live-tools{grid-template-columns:1fr}.v19-rec-timer{font-size:1.05rem}.v19-replay-grid{grid-template-columns:1fr}}
+
+</style>
+
+
+<style id="merged-v20-css">
+/* Inlined from assets/css/v20.css */
+
+/* ===== TITAN V20 STABILITY + SMART LEARNING ===== */
+:root{--v20-blue:#2563eb;--v20-purple:#7c3aed;--v20-green:#10b981;--v20-red:#ef4444;--v20-orange:#f59e0b}
+.v20-hero{background:linear-gradient(135deg,rgba(37,99,235,.16),rgba(124,58,237,.14),rgba(16,185,129,.10));border:1px solid rgba(37,99,235,.24);border-radius:26px;padding:18px;margin:0 0 16px;line-height:1.9}
+.v20-hero h3{color:var(--primary,var(--v20-blue));margin:0 0 8px;font-weight:900}.v20-hero p{color:var(--text-dim,#64748b);margin:0}
+.v20-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px;margin:14px 0}.v20-grid-2{display:grid;grid-template-columns:repeat(auto-fit,minmax(310px,1fr));gap:14px;margin:14px 0}
+.v20-card{background:var(--bg-card,var(--card-bg,#fff));border:1px solid var(--border,#e2e8f0);border-radius:22px;padding:16px;box-shadow:0 10px 26px rgba(15,23,42,.07);overflow:hidden}.v20-card h4{color:var(--primary,var(--v20-blue));display:flex;align-items:center;gap:8px;margin:0 0 12px;font-weight:900}.v20-card p{line-height:1.85;color:var(--text-dim,#64748b)}
+.v20-kpi{background:linear-gradient(135deg,rgba(37,99,235,.10),rgba(124,58,237,.08));border:1px solid rgba(37,99,235,.20);border-radius:20px;padding:15px;text-align:center}.v20-kpi small{display:block;color:var(--text-dim,#64748b);font-weight:800}.v20-kpi strong{display:block;color:var(--primary,var(--v20-blue));font-size:2rem;margin-top:6px}.v20-kpi.ok strong{color:var(--v20-green)}.v20-kpi.warn strong{color:var(--v20-orange)}.v20-kpi.err strong{color:var(--v20-red)}
+.v20-tools{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:10px 0}.v20-tools input,.v20-tools select,.v20-tools textarea{width:auto;min-width:180px;max-width:100%;padding:12px;border:1px solid var(--border,#e2e8f0);border-radius:14px;background:var(--bg-body,#f8fafc);color:var(--text-main,#0f172a)}.v20-tools textarea{width:100%;min-height:90px}.v20-table-wrap{width:100%;overflow:auto;border:1px solid var(--border,#e2e8f0);border-radius:18px;background:var(--bg-card,var(--card-bg,#fff))}.v20-table{width:100%;border-collapse:collapse;min-width:760px}.v20-table th,.v20-table td{padding:11px 12px;border-bottom:1px solid var(--border,#e2e8f0);text-align:center;vertical-align:top}.v20-table th{background:rgba(37,99,235,.07);color:var(--primary,var(--v20-blue));font-weight:900}.v20-table tr:last-child td{border-bottom:0}.v20-mono{direction:ltr;text-align:left;font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;font-size:.82rem;white-space:nowrap;max-width:320px;overflow:hidden;text-overflow:ellipsis;display:inline-block}
+.v20-status{padding:11px 13px;border-radius:15px;font-weight:800;line-height:1.8;margin:10px 0;background:rgba(37,99,235,.09);border:1px solid rgba(37,99,235,.22);color:var(--text-main,#0f172a)}.v20-status.ok{background:rgba(16,185,129,.11);border-color:rgba(16,185,129,.24);color:#059669}.v20-status.warn{background:rgba(245,158,11,.12);border-color:rgba(245,158,11,.25);color:#b45309}.v20-status.err{background:rgba(239,68,68,.10);border-color:rgba(239,68,68,.22);color:#dc2626}
+.v20-btn{border:0;border-radius:14px;padding:11px 15px;font-weight:900;cursor:pointer;display:inline-flex;align-items:center;gap:8px;background:var(--primary,var(--v20-blue));color:#fff;text-decoration:none}.v20-btn:hover{filter:brightness(1.07);transform:translateY(-1px)}.v20-btn.green{background:var(--v20-green)}.v20-btn.orange{background:var(--v20-orange)}.v20-btn.red{background:var(--v20-red)}.v20-btn.ghost{background:transparent;color:var(--primary,var(--v20-blue));border:1px solid rgba(37,99,235,.22)}
+.v20-pill{display:inline-flex;align-items:center;gap:6px;border-radius:999px;padding:6px 10px;font-size:.82rem;font-weight:900;background:rgba(37,99,235,.10);color:var(--primary,var(--v20-blue));margin:2px}.v20-pill.ok{background:rgba(16,185,129,.12);color:#059669}.v20-pill.warn{background:rgba(245,158,11,.13);color:#b45309}.v20-pill.err{background:rgba(239,68,68,.12);color:#dc2626}
+.v20-cert{background:#fff;color:#0f172a;border:8px double #2563eb;border-radius:24px;padding:24px;text-align:center;box-shadow:0 18px 45px rgba(15,23,42,.13);margin:12px 0}.v20-cert h2{color:#2563eb;margin:10px 0;font-size:2rem}.v20-cert .v20-cert-name{font-size:1.8rem;font-weight:900;color:#111827;margin:12px 0}.v20-cert small{color:#64748b}.v20-cert img{width:110px;height:110px;margin-top:10px}.v20-notes-panel textarea{width:100%;min-height:160px;border:1px solid var(--border,#e2e8f0);border-radius:18px;padding:14px;background:var(--bg-body,#f8fafc);color:var(--text-main,#0f172a)}.v20-timeline{position:relative;margin-top:10px}.v20-timeline:before{content:'';position:absolute;right:14px;top:0;bottom:0;width:2px;background:rgba(37,99,235,.18)}.v20-timeline-item{position:relative;margin:0 0 12px;padding:12px 42px 12px 12px;background:var(--bg-card,var(--card-bg,#fff));border:1px solid var(--border,#e2e8f0);border-radius:18px;line-height:1.75}.v20-timeline-item:before{content:'';position:absolute;right:7px;top:18px;width:16px;height:16px;border-radius:99px;background:var(--primary,var(--v20-blue));box-shadow:0 0 0 4px rgba(37,99,235,.12)}.v20-timeline-item b{color:var(--primary,var(--v20-blue))}.v20-exam-bar{position:sticky;top:0;z-index:50;background:linear-gradient(135deg,#2563eb,#7c3aed);color:#fff;border-radius:18px;padding:12px 14px;margin-bottom:14px;display:flex;gap:12px;justify-content:space-between;align-items:center;box-shadow:0 14px 32px rgba(37,99,235,.22);font-weight:900}.v20-exam-bar .time{font-size:1.4rem;direction:ltr}.v20-empty{padding:18px;text-align:center;color:var(--text-dim,#64748b);border:1px dashed var(--border,#e2e8f0);border-radius:18px;background:var(--bg-body,#f8fafc)}
+@media(max-width:780px){.v20-grid,.v20-grid-2{grid-template-columns:1fr}.v20-tools{display:grid;grid-template-columns:1fr}.v20-tools input,.v20-tools select,.v20-tools textarea,.v20-btn{width:100%;justify-content:center}.v20-table{min-width:640px}.v20-cert{padding:16px}.v20-cert h2{font-size:1.45rem}.v20-cert .v20-cert-name{font-size:1.35rem}.v20-exam-bar{flex-direction:column;align-items:stretch;text-align:center}}
+
+</style>
+
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+
+
+
+<style id="titan-v21-growth-ui-css">
+/* ===== TITAN GROWTH + UI/UX UPGRADE ===== */
+:root{
+  --v21-primary:var(--primary,#2563eb);
+  --v21-secondary:#7c3aed;
+  --v21-accent:#06b6d4;
+  --v21-bg:var(--bg-body,#f4f7fb);
+  --v21-card:var(--bg-card,var(--card-bg,#ffffff));
+  --v21-text:var(--text-main,#0f172a);
+  --v21-muted:var(--text-dim,#64748b);
+  --v21-border:var(--border,rgba(15,23,42,.10));
+  --v21-shadow:0 20px 55px rgba(15,23,42,.10);
+  --v21-shadow-2:0 28px 75px rgba(37,99,235,.16);
+  --v21-radius:24px;
+  --v21-ease:cubic-bezier(.22,.75,.18,1);
+}
+[data-theme="dark"],html[data-theme="dark"],body[data-theme="dark"]{
+  --v21-card:var(--bg-card,var(--card-bg,#111c2f));
+  --v21-text:var(--text-main,#f8fafc);
+  --v21-muted:var(--text-dim,#94a3b8);
+  --v21-border:rgba(148,163,184,.18);
+  --v21-shadow:0 22px 60px rgba(0,0,0,.38);
+  --v21-shadow-2:0 28px 80px rgba(37,99,235,.22);
+}
+.v21-hero{
+  border:1px solid rgba(37,99,235,.22);
+  border-radius:30px;
+  padding:22px;
+  margin-bottom:18px;
+  color:var(--v21-text);
+  background:
+    radial-gradient(circle at top right,rgba(37,99,235,.20),transparent 35%),
+    radial-gradient(circle at bottom left,rgba(124,58,237,.16),transparent 38%),
+    linear-gradient(135deg,rgba(255,255,255,.72),rgba(255,255,255,.32));
+  box-shadow:var(--v21-shadow);
+  position:relative;
+  overflow:hidden;
+}
+[data-theme="dark"] .v21-hero,html[data-theme="dark"] .v21-hero{background:linear-gradient(135deg,rgba(37,99,235,.20),rgba(124,58,237,.12),rgba(15,23,42,.72));}
+.v21-hero:before{content:"";position:absolute;inset:-80px auto auto -80px;width:190px;height:190px;border-radius:50%;background:rgba(6,182,212,.16);filter:blur(8px)}
+.v21-hero h3{color:var(--v21-primary);font-size:1.55rem;margin:0 0 8px;display:flex;gap:10px;align-items:center}.v21-hero p{color:var(--v21-muted);font-weight:800;line-height:1.9;margin:0}
+.v21-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px;margin:14px 0}.v21-grid-2{display:grid;grid-template-columns:repeat(auto-fit,minmax(310px,1fr));gap:14px;margin:14px 0}
+.v21-card{background:var(--v21-card);border:1px solid var(--v21-border);border-radius:var(--v21-radius);padding:17px;box-shadow:var(--v21-shadow);transition:transform .2s var(--v21-ease),box-shadow .2s var(--v21-ease),border-color .2s var(--v21-ease);overflow:hidden}.v21-card:hover{transform:translateY(-3px);box-shadow:var(--v21-shadow-2);border-color:rgba(37,99,235,.28)}
+.v21-card h4{display:flex;align-items:center;gap:9px;color:var(--v21-primary);font-size:1.05rem;margin:0 0 11px}.v21-muted{color:var(--v21-muted);line-height:1.8;font-weight:700}.v21-kpi{background:var(--v21-card);border:1px solid var(--v21-border);border-radius:22px;padding:16px;box-shadow:var(--v21-shadow);position:relative;overflow:hidden}.v21-kpi:after{content:"";position:absolute;inset:auto -20px -35px auto;width:95px;height:95px;background:rgba(37,99,235,.12);border-radius:50%}.v21-kpi small{display:block;color:var(--v21-muted);font-weight:900}.v21-kpi strong{display:block;font-size:2rem;margin-top:6px;color:var(--v21-primary)}
+.v21-tools{display:flex;gap:9px;align-items:center;flex-wrap:wrap;margin:10px 0}.v21-tools input,.v21-tools select,.v21-tools textarea{min-width:160px;flex:1}.v21-btn{border:0;border-radius:15px;padding:11px 14px;font-weight:900;cursor:pointer;display:inline-flex;gap:8px;align-items:center;justify-content:center;background:linear-gradient(135deg,var(--v21-primary),var(--v21-secondary));color:#fff;box-shadow:0 12px 24px rgba(37,99,235,.18);transition:transform .18s var(--v21-ease),filter .18s var(--v21-ease)}.v21-btn:hover{transform:translateY(-2px);filter:brightness(1.04)}.v21-btn.ghost{background:rgba(37,99,235,.10);color:var(--v21-primary);box-shadow:none;border:1px solid rgba(37,99,235,.18)}.v21-btn.green{background:linear-gradient(135deg,#10b981,#059669)}.v21-btn.orange{background:linear-gradient(135deg,#f59e0b,#d97706)}.v21-btn.red{background:linear-gradient(135deg,#ef4444,#dc2626)}
+.v21-table-wrap{overflow:auto;border:1px solid var(--v21-border);border-radius:18px}.v21-table{width:100%;border-collapse:collapse;min-width:680px;background:transparent!important;box-shadow:none!important;margin:0!important}.v21-table th{background:rgba(37,99,235,.08)!important;color:var(--v21-primary)!important;font-weight:900}.v21-table td,.v21-table th{padding:12px;border-bottom:1px solid var(--v21-border);text-align:center}.v21-pill{display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border-radius:999px;background:rgba(37,99,235,.10);color:var(--v21-primary);font-weight:900;font-size:.82rem}.v21-pill.ok{background:rgba(16,185,129,.12);color:#059669}.v21-pill.warn{background:rgba(245,158,11,.12);color:#b45309}.v21-pill.bad{background:rgba(239,68,68,.12);color:#dc2626}
+.v21-chat{height:330px;overflow:auto;border:1px solid var(--v21-border);border-radius:18px;padding:12px;background:rgba(148,163,184,.07)}.v21-msg{margin:8px 0;padding:10px 12px;border-radius:16px;line-height:1.7;background:var(--v21-card);border:1px solid var(--v21-border)}.v21-msg.mine{background:linear-gradient(135deg,rgba(37,99,235,.94),rgba(124,58,237,.92));color:#fff;margin-right:16%;border-color:transparent}.v21-msg.other{margin-left:16%}.v21-msg small{display:block;opacity:.72;font-weight:800;margin-top:4px}.v21-empty{padding:18px;border:1px dashed var(--v21-border);border-radius:18px;text-align:center;color:var(--v21-muted);font-weight:900;line-height:1.8;background:rgba(148,163,184,.07)}
+.v21-command{position:fixed;inset:0;z-index:999999;display:none;align-items:flex-start;justify-content:center;background:rgba(15,23,42,.55);backdrop-filter:blur(8px);padding:8vh 16px}.v21-command.active{display:flex}.v21-command-box{width:min(720px,96vw);background:var(--v21-card);border:1px solid var(--v21-border);border-radius:26px;box-shadow:0 28px 90px rgba(0,0,0,.24);overflow:hidden}.v21-command-box input{border:0!important;border-bottom:1px solid var(--v21-border)!important;border-radius:0!important;margin:0!important;padding:17px 20px!important;font-size:1.05rem}.v21-command-results{max-height:420px;overflow:auto;padding:10px}.v21-command-item{display:flex;gap:12px;align-items:center;padding:13px;border-radius:16px;cursor:pointer;font-weight:900}.v21-command-item:hover{background:rgba(37,99,235,.09);color:var(--v21-primary)}
+.v21-announcement-modal{position:fixed;inset:0;z-index:999998;display:none;align-items:center;justify-content:center;background:rgba(15,23,42,.52);backdrop-filter:blur(8px);padding:16px}.v21-announcement-modal.active{display:flex}.v21-announcement-card{width:min(560px,94vw);background:var(--v21-card);border:1px solid var(--v21-border);border-radius:28px;padding:22px;box-shadow:0 30px 90px rgba(0,0,0,.28)}.v21-announcement-card h3{color:var(--v21-primary);margin-top:0}.v21-rating-stars{display:flex;gap:8px;flex-direction:row-reverse;justify-content:flex-end}.v21-rating-stars button{border:0;background:rgba(245,158,11,.12);color:#f59e0b;border-radius:12px;padding:8px 10px;font-size:1.1rem;cursor:pointer}.v21-rating-stars button.active{background:#f59e0b;color:#fff}.v21-file-card{display:flex;justify-content:space-between;gap:12px;align-items:center;padding:13px;border:1px solid var(--v21-border);border-radius:17px;background:rgba(148,163,184,.07);margin:8px 0}.v21-event{display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:center;padding:13px;border:1px solid var(--v21-border);border-radius:17px;background:rgba(148,163,184,.07);margin:8px 0}.v21-event-date{background:linear-gradient(135deg,var(--v21-primary),var(--v21-secondary));color:#fff;border-radius:15px;padding:10px;font-weight:900;text-align:center;min-width:70px}.v21-referral{padding:16px;border-radius:22px;background:linear-gradient(135deg,rgba(16,185,129,.13),rgba(37,99,235,.11));border:1px solid rgba(16,185,129,.22);line-height:1.8;font-weight:900}.v21-copy-code{direction:ltr;text-align:center;font-size:1.2rem;letter-spacing:1px;padding:12px;border-radius:16px;background:#020617;color:#fff;margin:10px 0}
+.v21-public-section{padding:72px 24px;background:#f8fafc;color:#0f172a}.v21-public-wrap{width:min(1180px,100%);margin:auto}.v21-public-title{text-align:center;margin-bottom:28px}.v21-public-title h2{font-size:clamp(1.8rem,4vw,3rem);margin:0;color:#0f172a}.v21-public-title p{color:#64748b;font-weight:800;line-height:1.9}.v21-pricing{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}.v21-price-card{background:#fff;border:1px solid #e2e8f0;border-radius:28px;padding:22px;box-shadow:0 20px 55px rgba(15,23,42,.08);position:relative;overflow:hidden}.v21-price-card.featured{border-color:#2563eb;transform:scale(1.02)}.v21-price-card h3{margin-top:0;color:#2563eb}.v21-price{font-size:2rem;font-weight:900}.v21-price-card ul{line-height:2.1;font-weight:800;color:#475569}.v21-signup-box{background:#fff;border:1px solid #e2e8f0;border-radius:28px;padding:22px;box-shadow:0 20px 55px rgba(15,23,42,.08)}.v21-signup-box input,.v21-signup-box select,.v21-signup-box textarea{background:#f8fafc;color:#0f172a;border:1px solid #e2e8f0;border-radius:16px;padding:13px;margin:6px 0;width:100%}.v21-signup-box button{width:100%;margin-top:8px}
+@media(max-width:820px){.v21-grid-2{grid-template-columns:1fr}.v21-tools{display:grid;grid-template-columns:1fr}.v21-tools input,.v21-tools select,.v21-tools textarea{min-width:0}.v21-msg.mine,.v21-msg.other{margin-left:0;margin-right:0}.v21-event{grid-template-columns:1fr}.v21-event-date{width:max-content}.v21-price-card.featured{transform:none}}
+</style>
+
+
+<style id="titan-smart-management-css">
+/* ===== Titan Smart Management + Automation UI ===== */
+:root{
+  --smart-primary:#2563eb;
+  --smart-purple:#7c3aed;
+  --smart-green:#10b981;
+  --smart-orange:#f59e0b;
+  --smart-red:#ef4444;
+  --smart-surface:rgba(255,255,255,.78);
+  --smart-border:rgba(15,23,42,.10);
+  --smart-shadow:0 18px 45px rgba(15,23,42,.10);
+}
+[data-theme="dark"], body[data-theme="dark"]{
+  --smart-surface:rgba(18,28,47,.82);
+  --smart-border:rgba(148,163,184,.18);
+  --smart-shadow:0 18px 45px rgba(0,0,0,.28);
+}
+.titan-smart-hero{
+  border:1px solid rgba(37,99,235,.22);
+  background:linear-gradient(135deg,rgba(37,99,235,.16),rgba(124,58,237,.12),rgba(16,185,129,.08));
+  border-radius:28px;
+  padding:20px;
+  margin-bottom:16px;
+  line-height:1.9;
+}
+.titan-smart-hero h3{margin:0 0 6px;color:var(--primary,var(--smart-primary));display:flex;align-items:center;gap:10px;font-weight:900}
+.titan-smart-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin:14px 0}
+.titan-smart-grid-2{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:14px;margin:14px 0}
+.titan-smart-card{
+  background:var(--bg-card,var(--smart-surface));
+  border:1px solid var(--border,var(--smart-border));
+  box-shadow:var(--smart-shadow);
+  border-radius:22px;
+  padding:16px;
+  overflow:hidden;
+}
+.titan-smart-card h4{margin:0 0 12px;color:var(--primary,var(--smart-primary));display:flex;align-items:center;gap:8px;font-weight:900}
+.titan-smart-kpi{background:var(--bg-card,#fff);border:1px solid var(--border,var(--smart-border));border-radius:22px;padding:16px;box-shadow:var(--smart-shadow);position:relative;overflow:hidden}
+.titan-smart-kpi:before{content:"";position:absolute;inset:auto 0 0 0;height:4px;background:linear-gradient(90deg,var(--smart-primary),var(--smart-purple))}
+.titan-smart-kpi small{display:block;color:var(--text-dim,#64748b);font-weight:900;margin-bottom:8px}
+.titan-smart-kpi strong{display:block;font-size:2.1rem;color:var(--text-main,#0f172a);line-height:1.1}
+.titan-smart-muted{color:var(--text-dim,#64748b);line-height:1.8;font-size:.92rem}
+.titan-smart-tools{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:10px 0}
+.titan-smart-btn{border:0;border-radius:14px;padding:11px 14px;background:linear-gradient(135deg,var(--smart-primary),var(--smart-purple));color:#fff;font-weight:900;cursor:pointer;display:inline-flex;align-items:center;gap:8px;text-decoration:none;justify-content:center;transition:.18s transform,.18s box-shadow}
+.titan-smart-btn:hover{transform:translateY(-1px);box-shadow:0 14px 30px rgba(37,99,235,.22)}
+.titan-smart-btn.ghost{background:transparent;color:var(--primary,var(--smart-primary));border:1px solid rgba(37,99,235,.28)}
+.titan-smart-btn.green{background:linear-gradient(135deg,#10b981,#059669)}
+.titan-smart-btn.orange{background:linear-gradient(135deg,#f59e0b,#f97316)}
+.titan-smart-btn.red{background:linear-gradient(135deg,#ef4444,#dc2626)}
+.titan-smart-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;align-items:end}
+.titan-smart-row input,.titan-smart-row select,.titan-smart-row textarea,.titan-smart-card input,.titan-smart-card select,.titan-smart-card textarea{
+  width:100%;border:1px solid var(--border,var(--smart-border));border-radius:14px;padding:11px 12px;background:var(--bg-body,#f8fafc);color:var(--text-main,#0f172a);outline:none
+}
+.titan-smart-card textarea{min-height:96px;resize:vertical}
+.titan-smart-pill{display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border-radius:999px;background:rgba(37,99,235,.10);color:var(--primary,var(--smart-primary));font-weight:900;font-size:.82rem;margin:2px}
+.titan-smart-pill.warn{background:rgba(245,158,11,.12);color:#b45309}.titan-smart-pill.danger{background:rgba(239,68,68,.12);color:#dc2626}.titan-smart-pill.ok{background:rgba(16,185,129,.12);color:#059669}
+.titan-smart-table-wrap{width:100%;overflow:auto;border:1px solid var(--border,var(--smart-border));border-radius:18px;background:var(--bg-card,#fff)}
+.titan-smart-table{width:100%;border-collapse:collapse;min-width:720px}.titan-smart-table th,.titan-smart-table td{padding:11px;border-bottom:1px solid var(--border,var(--smart-border));text-align:right;vertical-align:top}.titan-smart-table th{color:var(--primary,var(--smart-primary));font-weight:900;background:rgba(37,99,235,.07)}
+.titan-smart-empty{border:1px dashed var(--border,var(--smart-border));border-radius:18px;padding:18px;text-align:center;color:var(--text-dim,#64748b);line-height:1.8;background:var(--bg-body,#f8fafc)}
+.titan-smart-timeline{display:flex;flex-direction:column;gap:10px}.titan-smart-timeline-item{border:1px solid var(--border,var(--smart-border));border-radius:16px;padding:12px;background:var(--bg-body,#f8fafc);line-height:1.8}.titan-smart-timeline-item small{display:block;color:var(--text-dim,#64748b)}
+.titan-smart-profile-head{display:grid;grid-template-columns:80px 1fr;gap:14px;align-items:center;margin-bottom:14px}.titan-smart-avatar{width:78px;height:78px;border-radius:24px;background:linear-gradient(135deg,var(--smart-primary),var(--smart-purple));color:#fff;display:grid;place-items:center;font-size:2rem;font-weight:900;box-shadow:0 16px 35px rgba(37,99,235,.25)}
+.titan-smart-list{display:grid;gap:8px}.titan-smart-list .item{display:flex;justify-content:space-between;gap:12px;padding:10px;border:1px solid var(--border,var(--smart-border));border-radius:14px;background:var(--bg-body,#f8fafc)}
+.titan-network-status{position:fixed;left:16px;bottom:16px;z-index:999999;border-radius:16px;padding:12px 14px;font-weight:900;box-shadow:0 16px 35px rgba(15,23,42,.16);display:none;align-items:center;gap:8px;max-width:min(420px,92vw);line-height:1.7}.titan-network-status.show{display:flex}.titan-network-status.offline{background:#fee2e2;color:#991b1b;border:1px solid #fca5a5}.titan-network-status.online{background:#dcfce7;color:#166534;border:1px solid #86efac}
+.titan-student-assistant{border:1px solid rgba(37,99,235,.22);background:linear-gradient(135deg,rgba(37,99,235,.10),rgba(124,58,237,.08));border-radius:22px;padding:16px;margin:14px 0}.titan-student-assistant h3{color:var(--primary,var(--smart-primary));margin-bottom:8px}.titan-student-assistant .plan{display:grid;gap:8px;margin-top:10px}.titan-student-assistant .step{padding:10px;border-radius:14px;background:var(--card-bg,var(--bg-card,#fff));border:1px solid var(--border,var(--smart-border))}
+.titan-private-chat{display:grid;gap:10px}.titan-chat-messages{height:280px;overflow:auto;border:1px solid var(--border,var(--smart-border));border-radius:18px;padding:12px;background:var(--bg-body,#f8fafc);display:flex;flex-direction:column;gap:10px}.titan-chat-msg{max-width:80%;padding:10px 12px;border-radius:16px;background:var(--bg-card,#fff);border:1px solid var(--border,var(--smart-border));line-height:1.7}.titan-chat-msg.me{align-self:flex-end;background:linear-gradient(135deg,var(--smart-primary),var(--smart-purple));color:#fff}.titan-chat-msg small{display:block;opacity:.75;margin-top:4px}
+@media(max-width:900px){.titan-smart-grid-2{grid-template-columns:1fr}.titan-smart-row{grid-template-columns:1fr}.titan-smart-profile-head{grid-template-columns:1fr;text-align:center}.titan-smart-avatar{margin:auto}.titan-smart-card{padding:13px}.titan-smart-btn{width:100%}.titan-smart-kpi strong{font-size:1.7rem}.titan-smart-hero{padding:15px;border-radius:22px}.titan-chat-msg{max-width:92%}}
+</style>
+
+</head>
+<body>
+<div class="wrap">
+<h1><i class="fas fa-people-roof"></i> لوحة ولي الأمر</h1>
+<div class="card" id="login">
+<p>ادخل بكود الطالب ورقم الهاتف المسجل.</p>
+<input id="code" placeholder="كود الطالب"/>
+<input id="phone" placeholder="رقم الهاتف / كلمة المرور"/>
+<button class="btn" onclick="parentLogin()">دخول</button>
+</div>
+<div id="app" style="display:none">
+<div class="card"><h2 id="student-name">--</h2><p id="student-level"></p></div>
+<div class="grid">
+<div class="kpi"><small>متوسط التقدم</small><br/><b id="avg-progress">0%</b></div>
+<div class="kpi"><small>عدد الدروس المكتملة</small><br/><b id="done-lessons">0</b></div>
+<div class="kpi"><small>الفواتير/المديونية</small><br/><b id="debt">0</b></div>
+</div>
+<div class="card"><h3>التقدم</h3><table><thead><tr><th>الدرس</th><th>النسبة</th></tr></thead><tbody id="progress-table"></tbody></table></div>
+<div class="card"><h3>الدرجات</h3><table><thead><tr><th>الاختبار</th><th>الدرجة</th></tr></thead><tbody id="grades-table"></tbody></table></div>
+<div class="card"><h3>الحضور</h3><table><thead><tr><th>الحصة</th><th>التاريخ</th></tr></thead><tbody id="attendance-table"></tbody></table></div>
+</div>
+</div>
+
+
+<!-- ===== TITAN FEATURES PACK: parent ===== -->
+
+
+
+<script id="merged-parent-js">
+/* Inlined from assets/js/parent.js */
+// ===== parent.html :: inline-script-01 =====
+const firebaseConfig = {
+  apiKey: "AIzaSyDgMV79LTyiQerEOZvtuszH6ONaOAset5c",
+  authDomain: "programming-cc297.firebaseapp.com",
+  databaseURL: "https://programming-cc297-default-rtdb.firebaseio.com",
+  projectId: "programming-cc297",
+  storageBucket: "programming-cc297.firebasestorage.app",
+  messagingSenderId: "131761323515",
+  appId: "1:131761323515:web:9a0b1f3fcb7e49ec9b91c4"
+};
+
+firebase.initializeApp(firebaseConfig);
+
+// ===== TITAN V14 SaaS Tenant Patch =====
+window.TitanSaaS = window.TitanSaaS || {};
+(function(){
+  const params = new URLSearchParams(location.search);
+  const rawTenant = params.get('tenant') || localStorage.getItem('titanTenantId') || 'titan';
+  const tenantId = String(rawTenant).trim().toLowerCase().replace(/[^a-z0-9_-]/g,'') || 'titan';
+  localStorage.setItem('titanTenantId', tenantId);
+  window.TitanSaaS.tenantId = tenantId;
+  window.TitanSaaS.tenantPath = function(path){ return 'tenants/' + tenantId + (path ? '/' + path : ''); };
+  window.TitanSaaS.url = function(file){ return file + '?tenant=' + encodeURIComponent(tenantId); };
+  const TENANT_ROOTS = new Set([
+    'admins','students','content','online_exams','community','support','grades','invoices','expenses','attendance','homework','staff','schedule',
+    'registration_requests','assignments','submissions','live_classes','live_recordings','notifications','question_bank','student_reports',
+    'admin_profiles','audit_logs','active_sessions','student_activity','lesson_progress','live_attendance','student_notifications','notification_reads',
+    'mega_records','campaigns','automation_rules','payment_plans','coupons','learning_paths','risk_alerts','library_files','lesson_quizzes',
+    'parent_messages','qr_attendance','qr_attendance_sessions','badges','certificates','leaderboard','leaderboard_weekly','settings','academy_subscription'
+  ]);
+  function mapPath(path){
+    if(path === undefined || path === null || path === '') return 'tenants/' + tenantId;
+    path = String(path).replace(/^\/+/, '');
+    const first = path.split('/')[0];
+    if(path.startsWith('tenants/') || path.startsWith('super_admins/') || path.startsWith('user_tenants/') || path.startsWith('public_tenants/')) return path;
+    if(TENANT_ROOTS.has(first)) return 'tenants/' + tenantId + '/' + path;
+    return path;
+  }
+  const originalDatabase = firebase.database.bind(firebase);
+  function patchedDatabase(){
+    const d = originalDatabase.apply(firebase, arguments);
+    if(!d.__titanSaasPatched){
+      const originalRef = d.ref.bind(d);
+      d.ref = function(path){ return originalRef(mapPath(path)); };
+      d.__titanSaasPatched = true;
+    }
+    return d;
+  }
+  try {
+    Object.getOwnPropertyNames(originalDatabase).forEach(k => { try { patchedDatabase[k] = originalDatabase[k]; } catch(e){} });
+  } catch(e) {}
+  firebase.database = patchedDatabase;
+})();
+
+const auth=firebase.auth(), db=firebase.database();
+function esc(v){return String(v||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+async function parentLogin(){const c=code.value.trim(), p=phone.value.trim(); if(!c||!p)return alert('اكتب الكود والهاتف'); await auth.signInWithEmailAndPassword(c+'@students.titan-academy.app',p); loadParentData();}
+async function loadParentData(){const uid=auth.currentUser.uid; const [s,prog,less,grades,inv,att]=await Promise.all([db.ref('students/'+uid).once('value'),db.ref('lesson_progress/'+uid).once('value'),db.ref('content').once('value'),db.ref('grades').once('value'),db.ref('invoices').once('value'),db.ref('qr_attendance').once('value')]); const st=s.val()||{}; document.getElementById('login').style.display='none'; document.getElementById('app').style.display='block'; document.getElementById('student-name').textContent=st.name||'طالب'; document.getElementById('student-level').textContent='المستوى: '+(st.level||'-'); const lessons=less.val()||{}, pr=prog.val()||{}; const rows=Object.entries(pr); const avg=rows.length?Math.round(rows.reduce((a,[k,v])=>a+(v.percent||0),0)/rows.length):0; document.getElementById('avg-progress').textContent=avg+'%'; document.getElementById('done-lessons').textContent=rows.filter(([k,v])=>(v.percent||0)>=100).length; document.getElementById('progress-table').innerHTML=rows.map(([k,v])=>'<tr><td>'+esc((lessons[k]&&lessons[k].title)||k)+'</td><td>'+esc(v.percent||0)+'%</td></tr>').join(''); const gr=Object.values(grades.val()||{}).filter(g=>g.studentKey===uid); document.getElementById('grades-table').innerHTML=gr.map(g=>'<tr><td>'+esc(g.examName||g.name||'-')+'</td><td>'+esc(g.grade||g.score||'-')+'</td></tr>').join(''); const invoices=Object.values(inv.val()||{}).filter(x=>x.studentKey===uid); const debt=invoices.reduce((a,x)=>a+Number(x.remaining||x.debt||0),0); document.getElementById('debt').textContent=debt; const attRows=[]; Object.entries(att.val()||{}).forEach(([code,students])=>{if(students[uid])attRows.push({code,at:students[uid].joinedAt})}); document.getElementById('attendance-table').innerHTML=attRows.map(a=>'<tr><td>'+esc(a.code)+'</td><td>'+esc(a.at?new Date(a.at).toLocaleString('ar-EG'):'-')+'</td></tr>').join('');}
+
+
+// ===== parent.html :: titan-v15-parent-js =====
+(function(){
+  const db=()=>window.firebase&&firebase.database?firebase.database():null;
+  const esc=v=>String(v==null?'':v);
+  function apply(data){
+    data=data||{};
+    const t=data.theme||{}, b=data.branding||{};
+    const root=document.documentElement;
+    if(t.primary) root.style.setProperty('--primary',t.primary);
+    if(t.primary&&t.secondary) root.style.setProperty('--primary-gradient','linear-gradient(135deg,'+t.primary+','+t.secondary+')');
+    if(t.background) root.style.setProperty('--bg-body',t.background);
+    if(t.card) root.style.setProperty('--card-bg',t.card);
+    if(t.text) root.style.setProperty('--text-main',t.text);
+    if(t.muted) root.style.setProperty('--text-dim',t.muted);
+    if(t.border) root.style.setProperty('--border',t.border);
+    if(b.name) document.title=b.name+' - ولي الأمر';
+    const h=document.querySelector('h1'); if(h&&b.name) h.innerHTML='<i class="fas fa-people-roof"></i> لوحة ولي الأمر - '+esc(b.name);
+  }
+  document.addEventListener('DOMContentLoaded',()=>{
+    setTimeout(async()=>{
+      try{
+        const snap=await db().ref('settings/customization').once('value');
+        apply(snap.val()||{});
+        db().ref('settings/customization').on('value',s=>apply(s.val()||{}));
+      }catch(e){console.warn(e);}
+    },700);
+  });
+})();
+
+
+// ===== parent.html :: titan-v16-parent-js-extra =====
+(function(){
+  function esc(v){return String(v==null?'':v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+  function db(){return firebase.database()} function uid(){return firebase.auth().currentUser&&firebase.auth().currentUser.uid}
+  function install(){const app=document.getElementById('app'); if(app&&!document.getElementById('v16-parent-extra')) app.insertAdjacentHTML('beforeend',`<div id="v16-parent-extra"><div class="v16-parent-card"><h3><i class="fas fa-chart-line"></i> متابعة الطالب</h3><div class="v16-parent-grid" id="v16-parent-kpis"></div></div><div class="v16-parent-card"><h3><i class="fas fa-code"></i> تحديات البرمجة</h3><div id="v16-parent-challenges"></div></div><div class="v16-parent-card"><h3><i class="fas fa-briefcase"></i> مشاريع الطالب</h3><div id="v16-parent-projects"></div></div><div class="v16-parent-card"><h3><i class="fas fa-file-invoice"></i> الفواتير</h3><div id="v16-parent-invoices"></div></div></div>`);}
+  async function load(){install(); const id=uid(); if(!id)return; const [r,a,p,i]=await Promise.all([db().ref('student_rewards/'+id).once('value'),db().ref('challenge_attempts/'+id).once('value'),db().ref('portfolio_projects/'+id).once('value'),db().ref('invoices').once('value')]); const rewards=r.val()||{}, attempts=a.val()||{}, projects=p.val()||{}, invoices=Object.entries(i.val()||{}).map(([key,val])=>Object.assign({key},val||{})).filter(x=>x.studentKey===id); document.getElementById('v16-parent-kpis').innerHTML=`<div class="kpi"><small>XP</small><br><b>${esc(rewards.xp||0)}</b></div><div class="kpi"><small>سلسلة التعلم</small><br><b>${esc(rewards.streak||0)}</b></div><div class="kpi"><small>تحديات محلولة</small><br><b>${Object.values(attempts).filter(x=>x&&x.passed).length}</b></div><div class="kpi"><small>مشاريع</small><br><b>${Object.keys(projects).length}</b></div>`; document.getElementById('v16-parent-challenges').innerHTML=Object.values(attempts).map(x=>`<div class="v16-parent-item"><b>${esc(x.title)}</b> <span class="v16-parent-pill">${x.passed?'ناجح':'محاولة'}</span><span class="v16-parent-pill">${esc(x.score||0)}%</span></div>`).join('')||'لا توجد محاولات.'; document.getElementById('v16-parent-projects').innerHTML=Object.values(projects).map(x=>`<div class="v16-parent-item"><b>${esc(x.title)}</b><p>${esc(x.description||'')}</p><span class="v16-parent-pill">${esc(x.status||'submitted')}</span>${x.url?`<a class="v16-parent-pill" href="${esc(x.url)}" target="_blank">فتح المشروع</a>`:''}</div>`).join('')||'لا توجد مشاريع.'; document.getElementById('v16-parent-invoices').innerHTML=invoices.map(x=>`<div class="v16-parent-item"><b>${esc(x.amount)} ج</b> <span class="v16-parent-pill">${esc(x.status||'unpaid')}</span><p>${esc(x.note||'')}</p></div>`).join('')||'لا توجد فواتير.';}
+  const old=window.loadParentData; if(typeof old==='function'){window.loadParentData=async function(){const res=await old.apply(this,arguments); setTimeout(load,600); return res;}}
+})();
+
+</script>
+
+
+<script id="merged-uiux-js">
+/* Inlined from assets/js/uiux.js */
+// ===== TITAN UI/UX POLISH PACK =====
+(function(){
+  'use strict';
+  const THEME_KEY = 'titan_ui_theme';
+  const root = document.documentElement;
+  const body = () => document.body;
+  function currentTheme(){
+    const saved = localStorage.getItem(THEME_KEY);
+    if(saved === 'dark' || saved === 'light') return saved;
+    const existing = (body() && body().getAttribute('data-theme')) || root.getAttribute('data-theme');
+    if(existing === 'dark' || existing === 'light') return existing;
+    return (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';
+  }
+  function setTheme(theme){
+    const value = theme === 'dark' ? 'dark' : 'light';
+    root.setAttribute('data-theme', value);
+    if(body()) body().setAttribute('data-theme', value);
+    localStorage.setItem(THEME_KEY, value);
+    document.querySelectorAll('[onclick="toggleTheme()"] i, #theme-btn i, .uiux-theme-fab i').forEach(icon => {
+      icon.className = value === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+    });
+    window.dispatchEvent(new CustomEvent('titan:themechange', {detail:{theme:value}}));
+  }
+  window.toggleTheme = function(){ setTheme(currentTheme() === 'dark' ? 'light' : 'dark'); };
+  function addThemeFab(){
+    if(document.querySelector('.uiux-theme-fab')) return;
+    if(document.querySelector('[onclick="toggleTheme()"]')) return;
+    const btn = document.createElement('button');
+    btn.className = 'uiux-theme-fab';
+    btn.type = 'button';
+    btn.setAttribute('aria-label','تبديل الوضع الليلي');
+    btn.innerHTML = '<i class="fas fa-moon"></i>';
+    btn.addEventListener('click', window.toggleTheme);
+    document.body.appendChild(btn);
+  }
+  function enhanceTables(){
+    document.querySelectorAll('table').forEach(table => {
+      if(table.parentElement && table.parentElement.classList.contains('uiux-table-wrap')) return;
+      const wrap = document.createElement('div');
+      wrap.className = 'uiux-table-wrap';
+      table.parentNode.insertBefore(wrap, table);
+      wrap.appendChild(table);
+    });
+  }
+  function revealCards(){
+    const targets = document.querySelectorAll('.card,.panel,.stat-card,.lesson-card,.feature,.v16-card,.v15-card,.v14-card,.v13-card,.v10-card');
+    if(!('IntersectionObserver' in window)) return;
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('uiux-visible'); io.unobserve(e.target); } });
+    }, {threshold:.08});
+    targets.forEach(el => { el.classList.add('uiux-reveal'); io.observe(el); });
+  }
+  function setupButtonPress(){
+    document.addEventListener('pointerdown', e => {
+      const btn = e.target.closest('.btn,.icon-btn,.student-menu-btn,.nav-link,.btn-outline');
+      if(!btn) return;
+      btn.style.transform = 'scale(.985)';
+      setTimeout(()=>{ btn.style.transform = ''; }, 120);
+    }, {passive:true});
+  }
+  function num(v){ return Number(v || 0) || 0; }
+  function getAdminData(){
+    const students = Array.isArray(window.db_students) ? window.db_students : [];
+    const content = Array.isArray(window.db_content) ? window.db_content : [];
+    const invoices = Array.isArray(window.db_invoices) ? window.db_invoices : [];
+    const grades = Array.isArray(window.db_grades) ? window.db_grades : [];
+    const assignments = Array.isArray(window.db_assignments) ? window.db_assignments : [];
+    return {students, content, invoices, grades, assignments};
+  }
+  function chartTextColor(){
+    return currentTheme() === 'dark' ? '#e5e7eb' : '#334155';
+  }
+  let charts = {};
+  function canvasIsVisible(el){
+    if(!el) return false;
+    const app = document.getElementById('app');
+    if(app && getComputedStyle(app).display === 'none') return false;
+    const rect = el.getBoundingClientRect();
+    return rect.width > 0 && rect.height >= 0;
+  }
+  function destroyChart(id){
+    const el = document.getElementById(id);
+    if(charts[id]){ try{ charts[id].destroy(); }catch(e){} charts[id] = null; }
+    if(el && window.Chart && typeof Chart.getChart === 'function'){
+      const existing = Chart.getChart(el);
+      if(existing){ try{ existing.destroy(); }catch(e){} }
+    }
+    if(id === 'mainChart') window.mainChart = null;
+  }
+  function makeChart(id, config){
+    const el = document.getElementById(id);
+    if(!el || !window.Chart || !canvasIsVisible(el)) return null;
+    destroyChart(id);
+    try {
+      charts[id] = new Chart(el.getContext('2d'), config);
+      if(id === 'mainChart') window.mainChart = charts[id];
+      return charts[id];
+    } catch(err) {
+      console.warn('Titan UIUX chart render failed:', id, err);
+      return null;
+    }
+  }
+  function chartOptions(extra){
+    const base = {
+      responsive:true,
+      maintainAspectRatio:false,
+      resizeDelay:120,
+      plugins:{legend:{labels:{color:chartTextColor(), font:{family:'Cairo'}}}},
+      scales:{
+        x:{ticks:{color:chartTextColor(), font:{family:'Cairo'}}, grid:{color:'rgba(148,163,184,.16)'}},
+        y:{ticks:{color:chartTextColor(), font:{family:'Cairo'}}, grid:{color:'rgba(148,163,184,.16)'}, beginAtZero:true}
+      }
+    };
+    return Object.assign(base, extra || {});
+  }
+  function moneyValue(obj){
+    return num(obj.paid) || num(obj.paidAmount) || num(obj.received) || 0;
+  }
+  function remainingValue(obj){
+    if(obj.remaining !== undefined) return num(obj.remaining);
+    if(obj.debt !== undefined) return num(obj.debt);
+    const total = num(obj.amt || obj.amount || obj.total || obj.price);
+    const paid = moneyValue(obj);
+    return Math.max(0, total - paid);
+  }
+  function renderAdminCharts(){
+    const mainCanvas = document.getElementById('mainChart');
+    if(!window.Chart || !mainCanvas || !canvasIsVisible(mainCanvas)) return;
+    const d = getAdminData();
+    const paid = d.invoices.reduce((a,i)=>a+moneyValue(i),0);
+    const remaining = d.invoices.reduce((a,i)=>a+remainingValue(i),0);
+    const total = d.invoices.reduce((a,i)=>a+num(i.amt || i.amount || i.total || i.price),0) || (paid + remaining);
+    const levelCounts = {};
+    d.students.forEach(s => { const k = 'مستوى ' + (s.level || '-'); levelCounts[k] = (levelCounts[k] || 0) + 1; });
+    const contentLevels = {};
+    d.content.forEach(c => { const k = 'مستوى ' + (c.level || '-'); contentLevels[k] = (contentLevels[k] || 0) + 1; });
+    makeChart('mainChart', {
+      type:'line',
+      data:{
+        labels:['إجمالي الفواتير','المحصل','المتبقي'],
+        datasets:[{
+          label:'التحليل المالي',
+          data:[total, paid, remaining],
+          tension:.38,
+          fill:true,
+          borderWidth:3,
+          pointRadius:5,
+          pointHoverRadius:7
+        }]
+      },
+      options:chartOptions({plugins:{legend:{display:false}}})
+    });
+    makeChart('uiuxLevelChart', {
+      type:'doughnut',
+      data:{labels:Object.keys(levelCounts).length?Object.keys(levelCounts):['لا يوجد'], datasets:[{label:'الطلاب', data:Object.values(levelCounts).length?Object.values(levelCounts):[1]}]},
+      options:chartOptions({cutout:'62%', scales:{}, plugins:{legend:{position:'bottom',labels:{color:chartTextColor(),font:{family:'Cairo'}}}}})
+    });
+    makeChart('uiuxFinanceChart', {
+      type:'bar',
+      data:{labels:['محصل','متبقي'], datasets:[{label:'جنيه', data:[paid, remaining], borderRadius:12}]},
+      options:chartOptions({plugins:{legend:{display:false}}})
+    });
+    makeChart('uiuxContentChart', {
+      type:'bar',
+      data:{labels:Object.keys(contentLevels).length?Object.keys(contentLevels):['لا يوجد'], datasets:[{label:'الدروس', data:Object.values(contentLevels).length?Object.values(contentLevels):[0], borderRadius:12}]},
+      options:chartOptions({plugins:{legend:{display:false}}})
+    });
+    const badge = document.getElementById('uiuxChartBadge');
+    if(badge) badge.textContent = 'آخر تحديث: ' + new Date().toLocaleTimeString('ar-EG');
+  }
+  function enhanceParentProgress(){
+    const app = document.getElementById('app');
+    if(!app || document.getElementById('uiux-parent-progress')) return;
+    const grid = app.querySelector('.grid');
+    if(!grid) return;
+    const card = document.createElement('div');
+    card.className = 'card uiux-progress-card';
+    card.id = 'uiux-parent-progress';
+    card.innerHTML = '<div class="uiux-ring-progress" id="uiux-parent-ring" style="--pct:0"><span>0%</span></div><div><h3>مؤشر التقدم العام</h3><p style="color:var(--text-dim);line-height:1.8">يتحدث تلقائياً حسب متوسط تقدم الطالب في الدروس.</p></div>';
+    grid.parentNode.insertBefore(card, grid.nextSibling);
+  }
+  function updateParentProgress(){
+    const avg = document.getElementById('avg-progress');
+    const ring = document.getElementById('uiux-parent-ring');
+    if(!avg || !ring) return;
+    const pct = Math.max(0, Math.min(100, parseInt(String(avg.textContent).replace(/[^0-9]/g,''),10) || 0));
+    ring.style.setProperty('--pct', pct);
+    const span = ring.querySelector('span');
+    if(span) span.textContent = pct + '%';
+  }
+  function initStudentProgressCard(){
+    const stats = document.getElementById('stats-sec');
+    if(!stats || document.getElementById('uiux-student-progress')) return;
+    const title = stats.querySelector('h3');
+    const box = document.createElement('div');
+    box.id = 'uiux-student-progress';
+    box.className = 'panel uiux-progress-card';
+    box.style.marginBottom = '18px';
+    box.innerHTML = '<div class="uiux-ring-progress" id="uiux-student-ring" style="--pct:0"><span>0%</span></div><div><h3 style="color:var(--primary);margin-bottom:8px"><i class="fas fa-chart-pie"></i> مؤشر الأداء</h3><p style="color:var(--text-dim);line-height:1.8">متوسط الواجبات والأداء والسلوك، مع شكل بصري أسرع للموبايل.</p></div>';
+    if(title) title.insertAdjacentElement('afterend', box);
+  }
+  function updateStudentProgress(){
+    const ids = ['score-work','score-perf','score-beh'];
+    const vals = ids.map(id => parseInt(String((document.getElementById(id)||{}).textContent||'').replace(/[^0-9]/g,''),10)).filter(n=>!isNaN(n));
+    const pct = vals.length ? Math.round(vals.reduce((a,b)=>a+b,0)/vals.length) : 0;
+    const ring = document.getElementById('uiux-student-ring');
+    if(!ring) return;
+    ring.style.setProperty('--pct', Math.max(0,Math.min(100,pct)));
+    const span = ring.querySelector('span');
+    if(span) span.textContent = pct + '%';
+  }
+  function boot(){
+    setTheme(currentTheme());
+    addThemeFab();
+    enhanceTables();
+    revealCards();
+    setupButtonPress();
+    initStudentProgressCard();
+    enhanceParentProgress();
+    updateStudentProgress();
+    updateParentProgress();
+    const originalUpdateStats = window.updateStats;
+    if(typeof window.initChart === 'function'){
+      window.initChart = renderAdminCharts;
+    }
+    if(typeof originalUpdateStats === 'function' && !window.__titanUiuxStatsWrapped){
+      window.updateStats = function(){
+        const result = originalUpdateStats.apply(this, arguments);
+        setTimeout(renderAdminCharts, 80);
+        return result;
+      };
+      window.__titanUiuxStatsWrapped = true;
+    }
+    setTimeout(renderAdminCharts, 80);
+    let ticks = 0;
+    const t = setInterval(()=>{
+      ticks += 1;
+      enhanceTables();
+      renderAdminCharts();
+      updateStudentProgress();
+      enhanceParentProgress();
+      updateParentProgress();
+      if(ticks > 20) clearInterval(t);
+    }, 1500);
+  }
+  window.addEventListener('titan:themechange', ()=>setTimeout(renderAdminCharts, 80));
+  if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot); else boot();
+})();
+
+</script>
+
+
+<script id="merged-v20-js">
+/* Inlined from assets/js/v20.js */
+
+(function(){
+'use strict';
+if(window.TitanV20Loaded) return; window.TitanV20Loaded=true;
+var APP_VERSION='v20-stability-smart-learning';
+function $(id){return document.getElementById(id)}
+function q(sel,root){return (root||document).querySelector(sel)}
+function qa(sel,root){return Array.prototype.slice.call((root||document).querySelectorAll(sel))}
+function esc(v){return String(v==null?'':v).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
+function now(){return Date.now()} function iso(){return new Date().toISOString()} function ar(){try{return new Date().toLocaleString('ar-EG')}catch(e){return new Date().toLocaleString()}}
+function db(){try{return window.db || (window.firebase&&firebase.database&&firebase.database())}catch(e){return null}}
+function auth(){try{return window.auth || (window.firebase&&firebase.auth&&firebase.auth())}catch(e){return null}}
+function user(){try{return auth()&&auth().currentUser}catch(e){return null}}
+function pageType(){ if($('app') && q('button[onclick="showSec(\'dash\')"]')) return 'admin'; if($('main-platform')) return 'student'; if($('login') && $('app') && typeof window.parentLogin==='function') return 'parent'; return 'page'; }
+function push(path,data){var d=db(); if(!d) return Promise.resolve(null); return d.ref(path).push(data).catch(function(e){console.warn('V20 push failed',path,e);});}
+function set(path,data){var d=db(); if(!d) return Promise.resolve(null); return d.ref(path).set(data).catch(function(e){console.warn('V20 set failed',path,e);});}
+function update(path,data){var d=db(); if(!d) return Promise.resolve(null); return d.ref(path).update(data).catch(function(e){console.warn('V20 update failed',path,e);});}
+function once(path){var d=db(); return d?d.ref(path).once('value').then(function(s){return s.val()||null}):Promise.resolve(null)}
+function arr(obj){return Object.entries(obj||{}).map(function(e){var v=e[1]||{}; if(typeof v==='object') v.key=e[0]; return v;});}
+function download(name,obj){var blob=new Blob([JSON.stringify(obj,null,2)],{type:'application/json;charset=utf-8'}); var a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=name; document.body.appendChild(a); a.click(); setTimeout(function(){URL.revokeObjectURL(a.href); a.remove();},500);}
+function toast(msg,type){ if(typeof window.showToast==='function') window.showToast(msg,type||'success'); else if(window.alert) console.log(msg); }
+function safeUserAgent(){return (navigator.userAgent||'').slice(0,240)}
+function logError(kind,message,stack){var u=user(); return push('system_errors',{kind:kind||'error',message:String(message||'unknown').slice(0,500),stack:String(stack||'').slice(0,1500),page:pageType(),uid:u?u.uid:'',url:location.href,version:APP_VERSION,userAgent:safeUserAgent(),createdAt:now(),when:ar(),status:'open'});}
+function logTimeline(event,details,uidOverride){var u=user(), uid=uidOverride || (u&&u.uid); if(!uid) return Promise.resolve(); return push('student_timeline/'+uid,{event:event,details:details||'',page:pageType(),url:location.pathname,createdAt:now(),when:ar(),version:APP_VERSION});}
+window.addEventListener('error',function(e){logError('window.error',(e&&e.message)||'runtime error',(e&&e.error&&e.error.stack)||'');});
+window.addEventListener('unhandledrejection',function(e){var r=e&&e.reason; logError('promise.rejection',(r&&r.message)||String(r||'promise rejection'),(r&&r.stack)||'');});
+window.TitanV20={refreshAdmin:refreshAdmin,exportBackup:exportBackup,importBackup:importBackup,restoreBackup:restoreBackup,clearErrors:clearErrors,resolveError:resolveError,generateReminders:generateReminders,loadTimeline:loadTimeline,createCertificate:createCertificate,printCertificate:printCertificate,saveLessonNote:saveLessonNote,loadStudentNotes:loadStudentNotes,loadStudentTimeline:loadStudentTimeline,loadStudentCertificates:loadStudentCertificates,logTimeline:logTimeline};
+
+function bindHealth(){var el=$('v20-health-status'); if(!el||!db()) return; try{db().ref('.info/connected').on('value',function(s){var ok=!!s.val(); var u=user(); var sw=!!navigator.serviceWorker; var ls=false; try{localStorage.setItem('__v20','1'); localStorage.removeItem('__v20'); ls=true;}catch(e){} el.innerHTML='<div class="v20-grid"><div class="v20-kpi '+(ok?'ok':'err')+'"><small>Firebase</small><strong>'+(ok?'متصل':'منقطع')+'</strong></div><div class="v20-kpi '+(u?'ok':'warn')+'"><small>Auth</small><strong>'+(u?'نشط':'غير مؤكد')+'</strong></div><div class="v20-kpi '+(sw?'ok':'warn')+'"><small>Service Worker</small><strong>'+(sw?'موجود':'غير مفعل')+'</strong></div><div class="v20-kpi '+(ls?'ok':'err')+'"><small>Local Storage</small><strong>'+(ls?'OK':'Blocked')+'</strong></div></div>';});}catch(e){el.innerHTML='<div class="v20-status err">تعذر فحص النظام: '+esc(e.message||e)+'</div>';}}
+function adminHTML(){return '<section id="sec-v20-stability" style="display:none"><div class="v20-hero"><h3><i class="fas fa-heart-pulse"></i> مراقبة النظام والتعلم الذكي</h3><p>مركز واحد لمراقبة الاخطاء، صحة النظام، النسخ الاحتياطي، متابعة الطلاب، الشهادات، والتنبيهات الذكية.</p></div><div id="v20-health-status" class="v20-status">جاري فحص النظام...</div><div class="v20-grid"><div class="v20-kpi"><small>أخطاء مفتوحة</small><strong id="v20-kpi-errors">0</strong></div><div class="v20-kpi warn"><small>تنبيهات ذكية</small><strong id="v20-kpi-reminders">0</strong></div><div class="v20-kpi ok"><small>شهادات</small><strong id="v20-kpi-certs">0</strong></div><div class="v20-kpi"><small>نشاطات الطالب</small><strong id="v20-kpi-timeline">0</strong></div></div><div class="v20-grid-2"><div class="v20-card"><h4><i class="fas fa-bug"></i> مراقبة الأخطاء</h4><div class="v20-tools"><button class="v20-btn" onclick="TitanV20.refreshAdmin()"><i class="fas fa-rotate"></i> تحديث</button><button class="v20-btn red" onclick="TitanV20.clearErrors()"><i class="fas fa-trash"></i> مسح المحلول</button></div><div class="v20-table-wrap"><table class="v20-table"><thead><tr><th>الحالة</th><th>الصفحة</th><th>الرسالة</th><th>الوقت</th><th>إجراء</th></tr></thead><tbody id="v20-errors-list"></tbody></table></div></div><div class="v20-card"><h4><i class="fas fa-bell"></i> التنبيهات الذكية</h4><div class="v20-tools"><button class="v20-btn orange" onclick="TitanV20.generateReminders()"><i class="fas fa-magic"></i> توليد التنبيهات</button></div><div id="v20-reminders-list" class="v20-status">اضغط توليد التنبيهات لعرض الطلاب المحتاجين متابعة.</div></div></div><div class="v20-grid-2"><div class="v20-card"><h4><i class="fas fa-database"></i> النسخ الاحتياطي والاسترجاع</h4><div class="v20-tools"><button class="v20-btn green" onclick="TitanV20.exportBackup()"><i class="fas fa-download"></i> تصدير Backup</button><input type="file" id="v20-backup-file" accept="application/json,.json" onchange="TitanV20.importBackup(this.files[0])"><button class="v20-btn red" onclick="TitanV20.restoreBackup()"><i class="fas fa-upload"></i> استيراد النسخة</button></div><div id="v20-backup-status" class="v20-status warn">الاستيراد يستبدل المسارات المختارة بعد التأكيد.</div></div><div class="v20-card"><h4><i class="fas fa-clock-rotate-left"></i> سجل نشاط الطالب</h4><div class="v20-tools"><select id="v20-timeline-student"></select><button class="v20-btn" onclick="TitanV20.loadTimeline()"><i class="fas fa-eye"></i> عرض</button></div><div id="v20-admin-timeline" class="v20-timeline"><div class="v20-empty">اختر طالب لعرض نشاطه.</div></div></div></div><div class="v20-grid-2"><div class="v20-card"><h4><i class="fas fa-certificate"></i> الشهادات الاحترافية + QR</h4><div class="v20-tools"><select id="v20-cert-student"></select><input id="v20-cert-title" placeholder="عنوان الشهادة" value="شهادة إتمام مستوى"><input id="v20-cert-note" placeholder="ملاحظة الشهادة"><button class="v20-btn green" onclick="TitanV20.createCertificate()"><i class="fas fa-plus"></i> إنشاء شهادة</button></div><div id="v20-certs-admin" class="v20-status">الشهادات الجديدة ستظهر للطالب وولي الأمر.</div></div><div class="v20-card"><h4><i class="fas fa-chart-simple"></i> مراقبة الامتحانات</h4><div id="v20-exam-monitor" class="v20-status">جاري تحميل بيانات الامتحانات...</div></div></div></section>';}
+function initAdmin(){ if($('sec-v20-stability')) return; var nav=q('.sidebar nav'); if(nav){var btn=document.createElement('button'); btn.className='btn btn-outline'; btn.setAttribute('onclick',"showSec('v20-stability')"); btn.innerHTML='<i class="fas fa-heart-pulse"></i> مراقبة النظام'; nav.appendChild(btn);} var main=$('app')||q('main.main-content'); if(main) main.insertAdjacentHTML('beforeend',adminHTML()); bindHealth(); fillStudentSelects(); refreshAdmin(); setTimeout(generateReminders,1500);}
+function fillStudentSelects(){var opts=(window.db_students||[]).map(function(s){return '<option value="'+esc(s.fbKey||s.key||'')+'">'+esc(s.name||s.code||s.fbKey)+'</option>';}).join(''); ['v20-timeline-student','v20-cert-student'].forEach(function(id){var el=$(id); if(el) el.innerHTML=opts||'<option value="">لا يوجد طلاب</option>';});}
+function refreshAdmin(){ fillStudentSelects(); refreshErrors(); refreshCerts(); refreshExamMonitor(); refreshTimelineCount(); }
+function refreshErrors(){var d=db(); if(!d||!$('v20-errors-list')) return; d.ref('system_errors').limitToLast(80).once('value').then(function(s){var rows=arr(s.val()).reverse(); $('v20-kpi-errors').textContent=rows.filter(function(r){return (r.status||'open')==='open'}).length; $('v20-errors-list').innerHTML=rows.length?rows.map(function(e){return '<tr><td><span class="v20-pill '+((e.status||'open')==='resolved'?'ok':'err')+'">'+esc(e.status||'open')+'</span></td><td>'+esc(e.page||'-')+'</td><td><span class="v20-mono" title="'+esc(e.message||'')+'">'+esc(e.message||'-')+'</span><br><small>'+esc(e.kind||'')+'</small></td><td>'+esc(e.when||e.createdAt||'-')+'</td><td><button class="v20-btn green" onclick="TitanV20.resolveError(\''+esc(e.key)+'\')">حل</button></td></tr>';}).join(''):'<tr><td colspan="5"><div class="v20-empty">لا توجد أخطاء مسجلة.</div></td></tr>'; });}
+function resolveError(key){return update('system_errors/'+key,{status:'resolved',resolvedAt:now(),resolvedBy:(user()&&user().uid)||''}).then(refreshErrors)}
+function clearErrors(){if(!confirm('سيتم حذف الأخطاء التي حالتها resolved فقط. متابعة؟')) return; var d=db(); if(!d)return; d.ref('system_errors').once('value').then(function(s){var ops=[]; s.forEach(function(ch){if((ch.val()||{}).status==='resolved') ops.push(ch.ref.remove());}); return Promise.all(ops);}).then(refreshErrors)}
+async function exportBackup(){var roots=['students','content','invoices','grades','attendance','homework','assignments','submissions','online_exams','lesson_progress','lesson_notes','student_timeline','certificates','system_errors','settings','live_recordings','live_classes','mega_records','portfolio_projects','challenge_attempts']; var data={version:APP_VERSION,tenant:(window.TitanSaaS&&TitanSaaS.tenantId)||'titan',exportedAt:iso(),roots:{}}; for(var i=0;i<roots.length;i++){data.roots[roots[i]]=await once(roots[i]);} download('titan-v20-backup-'+(data.tenant)+'-'+new Date().toISOString().slice(0,10)+'.json',data); $('v20-backup-status')&&($('v20-backup-status').innerHTML='تم تصدير النسخة الاحتياطية.');}
+var pendingBackup=null;
+function importBackup(file){if(!file) return; var r=new FileReader(); r.onload=function(){try{pendingBackup=JSON.parse(r.result); var keys=Object.keys(pendingBackup.roots||{}); $('v20-backup-status').innerHTML='<b>جاهز للاستيراد:</b> '+keys.map(esc).join(', ')+'<br>اضغط استيراد النسخة للتأكيد.';}catch(e){pendingBackup=null; $('v20-backup-status').innerHTML='<span style="color:#dc2626">ملف غير صالح: '+esc(e.message)+'</span>';}}; r.readAsText(file);}
+async function restoreBackup(){if(!pendingBackup||!pendingBackup.roots) return alert('اختر ملف Backup أولاً'); if(!confirm('تحذير: سيتم استبدال البيانات في Firebase بالنسخة المختارة. متابعة؟')) return; var keys=Object.keys(pendingBackup.roots); for(var i=0;i<keys.length;i++){await set(keys[i], pendingBackup.roots[keys[i]]||null);} $('v20-backup-status').innerHTML='تم الاستيراد بنجاح. اعمل Reload.'; logTimeline('admin_restore_backup','تم استيراد نسخة احتياطية');}
+function generateReminders(){var students=window.db_students||[], invoices=window.db_invoices||[], nowMs=Date.now(); var reminders=[]; students.forEach(function(s){var uid=s.fbKey||s.key; var name=s.name||s.code||uid; var last=0; try{var act=(window.db_student_activity||{})[uid]; last=act&&Date.parse(act.lastSeen||act.createdAt||0)||0;}catch(e){} if(!last) reminders.push({type:'no_activity',studentKey:uid,name:name,phone:s.phone||'',level:s.level||'',message:'لا يوجد نشاط حديث مسجل للطالب.'}); else if(nowMs-last>3*24*60*60*1000) reminders.push({type:'inactive_3d',studentKey:uid,name:name,phone:s.phone||'',level:s.level||'',message:'الطالب لم يدخل منذ أكثر من 3 أيام.'}); var debt=invoices.filter(function(iv){return (iv.studentKey===uid)||(iv.name===s.name);}).reduce(function(a,iv){return a+Number(iv.remaining||iv.debt||0)},0); if(debt>0) reminders.push({type:'debt',studentKey:uid,name:name,phone:s.phone||'',level:s.level||'',message:'يوجد مبلغ متبقي: '+debt}); var sub=s.subscription||{}; if(sub.endDate){var end=Date.parse(sub.endDate); if(end&&!isNaN(end)&&end-nowMs<5*24*60*60*1000) reminders.push({type:'subscription',studentKey:uid,name:name,phone:s.phone||'',level:s.level||'',message:'الاشتراك قرب ينتهي أو منتهي.'}); }}); $('v20-kpi-reminders')&&($('v20-kpi-reminders').textContent=reminders.length); var box=$('v20-reminders-list'); if(box){box.innerHTML=reminders.length?'<div class="v20-table-wrap"><table class="v20-table"><thead><tr><th>الطالب</th><th>النوع</th><th>التنبيه</th><th>إجراء</th></tr></thead><tbody>'+reminders.map(function(r){var msg=encodeURIComponent('تنبيه من الأكاديمية: '+r.message+' - '+r.name); var wa=r.phone?'<a class="v20-btn green" target="_blank" href="https://wa.me/'+String(r.phone).replace(/\D/g,'')+'?text='+msg+'"><i class="fab fa-whatsapp"></i> واتساب</a>':''; return '<tr><td>'+esc(r.name)+'</td><td>'+esc(r.type)+'</td><td>'+esc(r.message)+'</td><td>'+wa+'</td></tr>';}).join('')+'</tbody></table></div>':'<div class="v20-empty">لا توجد تنبيهات حالياً.</div>'; } set('smart_reminders/latest',{items:reminders,createdAt:now(),when:ar()});}
+function loadTimeline(){var uid=$('v20-timeline-student')&&$('v20-timeline-student').value; if(!uid) return; once('student_timeline/'+uid).then(function(data){renderTimelineInto('v20-admin-timeline',arr(data).sort(function(a,b){return (b.createdAt||0)-(a.createdAt||0)}).slice(0,80));});}
+function renderTimelineInto(id,items){var el=$(id); if(!el) return; el.innerHTML=items&&items.length?items.map(function(it){return '<div class="v20-timeline-item"><b>'+esc(it.event||'-')+'</b><br>'+esc(it.details||it.page||'')+'<br><small>'+esc(it.when||it.createdAt||'')+'</small></div>';}).join(''):'<div class="v20-empty">لا توجد أحداث بعد.</div>';}
+function refreshTimelineCount(){var d=db(); if(!d||!$('v20-kpi-timeline')) return; d.ref('student_timeline').once('value').then(function(s){var c=0; s.forEach(function(u){u.forEach(function(){c++;});}); $('v20-kpi-timeline').textContent=c;});}
+async function createCertificate(){var uid=$('v20-cert-student')&&$('v20-cert-student').value; if(!uid) return alert('اختر طالب'); var st=(window.db_students||[]).find(function(x){return (x.fbKey||x.key)===uid})||{}; var id='cert_'+Date.now().toString(36)+'_'+Math.random().toString(36).slice(2,7); var title=($('v20-cert-title')&&$('v20-cert-title').value)||'شهادة إتمام'; var note=($('v20-cert-note')&&$('v20-cert-note').value)||''; var verify=location.origin+location.pathname+'?tenant='+encodeURIComponent((window.TitanSaaS&&TitanSaaS.tenantId)||'titan')+'&verifyCertificate='+encodeURIComponent(id); await set('certificates/'+uid+'/'+id,{id:id,studentKey:uid,studentName:st.name||'',level:st.level||'',title:title,note:note,verifyUrl:verify,createdAt:now(),when:ar(),issuedBy:(user()&&user().uid)||''}); $('v20-certs-admin').innerHTML='تم إنشاء شهادة للطالب '+esc(st.name||uid); refreshCerts(); logTimeline('certificate_issued',title,uid);}
+function refreshCerts(){var d=db(); if(!d||!$('v20-kpi-certs')) return; d.ref('certificates').once('value').then(function(s){var c=0; s.forEach(function(u){u.forEach(function(){c++;});}); $('v20-kpi-certs').textContent=c;});}
+function refreshExamMonitor(){var el=$('v20-exam-monitor'); if(!el) return; Promise.all([once('grades'),once('exam_autosaves')]).then(function(vals){var grades=arr(vals[0]||{}).filter(function(g){return String(g.name||'').includes('امتحان')||g.type==='exam'}); var autos=0; Object.values(vals[1]||{}).forEach(function(v){autos+=Object.keys(v||{}).length;}); el.innerHTML='<div class="v20-grid"><div class="v20-kpi"><small>نتائج امتحانات</small><strong>'+grades.length+'</strong></div><div class="v20-kpi warn"><small>حفظ تلقائي</small><strong>'+autos+'</strong></div></div>';});}
+
+function studentNavHTML(){return '<div class="nav-link" onclick="showSection(\'v20-notes-sec\', this)"><i class="fas fa-note-sticky"></i> <span>ملاحظاتي</span></div><div class="nav-link" onclick="showSection(\'v20-timeline-sec\', this)"><i class="fas fa-clock-rotate-left"></i> <span>Timeline</span></div><div class="nav-link" onclick="showSection(\'v20-certificates-sec\', this)"><i class="fas fa-certificate"></i> <span>شهاداتي</span></div>';}
+function studentSectionsHTML(){return '<section class="app-section" id="v20-notes-sec"><div class="panel v20-notes-panel"><h3><i class="fas fa-note-sticky"></i> ملاحظاتي على الدروس</h3><p class="mini-note">اكتب ملاحظاتك أو أسئلتك لكل درس، وتظل محفوظة في حسابك.</p><div class="v20-tools"><select id="v20-note-lesson"></select><button class="v20-btn" onclick="TitanV20.saveLessonNote()"><i class="fas fa-save"></i> حفظ</button><button class="v20-btn ghost" onclick="TitanV20.loadStudentNotes()"><i class="fas fa-rotate"></i> تحديث</button></div><textarea id="v20-note-text" placeholder="اكتب ملاحظاتك هنا..."></textarea><div id="v20-notes-list" class="v20-timeline"></div></div></section><section class="app-section" id="v20-timeline-sec"><div class="panel"><h3><i class="fas fa-clock-rotate-left"></i> سجل نشاطي</h3><div id="v20-student-timeline" class="v20-timeline"><div class="v20-empty">جاري تحميل السجل...</div></div></div></section><section class="app-section" id="v20-certificates-sec"><div class="panel"><h3><i class="fas fa-certificate"></i> شهاداتي</h3><div id="v20-student-certs"><div class="v20-empty">لا توجد شهادات بعد.</div></div></div></section>';}
+function initStudent(){ if($('v20-notes-sec')) return; var sidebar=q('#main-platform .sidebar'); var logout=sidebar&&sidebar.querySelector('button'); if(sidebar&&logout) logout.insertAdjacentHTML('beforebegin',studentNavHTML()); var main=q('#main-platform main.main-content'); if(main) main.insertAdjacentHTML('beforeend',studentSectionsHTML()); wrapStudentNavigation(); wrapExamPro(); bindStudentData(); setInterval(attachVideoProgress,2000); setTimeout(function(){logTimeline('login_or_resume','فتح المنصة');},2500);}
+function bindStudentData(){var a=auth(); if(!a) return; a.onAuthStateChanged(function(u){ if(!u)return; setTimeout(function(){loadStudentNotes(); loadStudentTimeline(); loadStudentCertificates(); fillLessonOptions();},1200);});}
+function fillLessonOptions(){var sel=$('v20-note-lesson'); if(!sel) return; var lessons=window.allLessons||window.db_content||[]; if(!Array.isArray(lessons)){lessons=arr(lessons)} sel.innerHTML=lessons.length?lessons.map(function(l){var k=l.fbKey||l.key||l.id||l.title; return '<option value="'+esc(k)+'">'+esc(l.title||k)+'</option>';}).join(''):'<option value="general">ملاحظات عامة</option>';}
+async function saveLessonNote(){var u=user(); if(!u) return alert('سجل الدخول أولاً'); var key=($('v20-note-lesson')&&$('v20-note-lesson').value)||'general'; var text=($('v20-note-text')&&$('v20-note-text').value||'').trim(); if(!text) return alert('اكتب الملاحظة أولاً'); await push('lesson_notes/'+u.uid+'/'+key,{lessonKey:key,text:text,createdAt:now(),when:ar()}); $('v20-note-text').value=''; loadStudentNotes(); logTimeline('lesson_note','حفظ ملاحظة على درس');}
+function loadStudentNotes(){var u=user(); if(!u||!$('v20-notes-list')) return; once('lesson_notes/'+u.uid).then(function(data){var items=[]; Object.entries(data||{}).forEach(function(e){Object.values(e[1]||{}).forEach(function(v){v.lessonKey=e[0];items.push(v);});}); items.sort(function(a,b){return (b.createdAt||0)-(a.createdAt||0)}); renderTimelineInto('v20-notes-list',items.map(function(n){return {event:'درس: '+(n.lessonKey||'عام'),details:n.text,when:n.when,createdAt:n.createdAt}}));});}
+function loadStudentTimeline(){var u=user(); if(!u||!$('v20-student-timeline')) return; once('student_timeline/'+u.uid).then(function(data){renderTimelineInto('v20-student-timeline',arr(data).sort(function(a,b){return (b.createdAt||0)-(a.createdAt||0)}).slice(0,100));});}
+function qr(url){return 'https://api.qrserver.com/v1/create-qr-code/?size=160x160&data='+encodeURIComponent(url||location.href)}
+function certCard(c){return '<div class="v20-cert" id="v20-cert-'+esc(c.id)+'"><small>'+esc(c.when||'')+'</small><h2>'+esc(c.title||'شهادة')+'</h2><div>تشهد الأكاديمية بأن الطالب/ة</div><div class="v20-cert-name">'+esc(c.studentName||'طالب')+'</div><div>'+esc(c.note||('قد أتم/ت المستوى '+(c.level||'')))+'</div><img alt="QR" src="'+qr(c.verifyUrl)+'"><br><small>رقم التحقق: '+esc(c.id||'')+'</small><div class="v20-tools" style="justify-content:center"><button class="v20-btn" onclick="TitanV20.printCertificate(\'v20-cert-'+esc(c.id)+'\')"><i class="fas fa-print"></i> طباعة</button><a class="v20-btn ghost" target="_blank" href="'+esc(c.verifyUrl||'#')+'"><i class="fas fa-qrcode"></i> تحقق</a></div></div>';}
+function loadStudentCertificates(){var u=user(); if(!u||!$('v20-student-certs')) return; once('certificates/'+u.uid).then(function(data){var list=arr(data).sort(function(a,b){return (b.createdAt||0)-(a.createdAt||0)}); $('v20-student-certs').innerHTML=list.length?list.map(certCard).join(''):'<div class="v20-empty">لا توجد شهادات بعد.</div>';});}
+function printCertificate(id){
+  var el=$(id);
+  if(!el) return;
+  var w=window.open('','_blank');
+  if(!w) return alert('المتصفح منع نافذة الطباعة');
+  var body = el.outerHTML || '';
+  var doc = [
+    '<!doctype html><html lang="ar" dir="rtl"><head><meta charset="utf-8">',
+    '<meta name="viewport" content="width=device-width,initial-scale=1">',
+    '<title>Certificate</title>',
+    '<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;800&display=swap" rel="stylesheet">',
+    '<style>',
+    'body{font-family:Cairo,Arial,sans-serif;background:#fff;color:#0f172a;margin:0;padding:24px;line-height:1.8;text-align:center}',
+    '.v20-cert,.certificate,.card{max-width:900px;margin:auto;border:2px solid #2563eb;border-radius:24px;padding:30px;box-shadow:0 12px 35px rgba(15,23,42,.10)}',
+    '.v20-cert-name{font-size:2rem;font-weight:900;color:#2563eb;margin:12px 0}',
+    'h1,h2,h3{color:#2563eb}',
+    'img{max-width:160px}',
+    'button,a{display:none!important}',
+    '@media print{body{padding:0}.v20-cert,.certificate,.card{box-shadow:none}}',
+    '</style>',
+    '</head><body>',
+    body,
+    '<script>setTimeout(function(){window.print();},500);<' + '/script>',
+    '</' + 'body></' + 'html>'
+  ].join('');
+  w.document.open();
+  w.document.write(doc);
+  w.document.close();
+}
+var examState={key:null,timer:null,remain:0,autosave:null};
+function wrapExamPro(){ if(window.openExam && !window.openExam.__v20){var oldOpen=window.openExam; window.openExam=function(examKey){var res=oldOpen.apply(this,arguments); examState.key=examKey; setTimeout(startExamPro,200); logTimeline('exam_open',examKey); return res;}; window.openExam.__v20=true;} if(window.closeExam && !window.closeExam.__v20){var oldClose=window.closeExam; window.closeExam=function(){stopExamPro(); return oldClose.apply(this,arguments);}; window.closeExam.__v20=true;} if(window.submitExam && !window.submitExam.__v20){var oldSubmit=window.submitExam; window.submitExam=async function(){await saveExamAutosave(true); var res=await oldSubmit.apply(this,arguments); logTimeline('exam_submit',examState.key||''); stopExamPro(); return res;}; window.submitExam.__v20=true;}}
+function startExamPro(){var area=$('exam-take-area'); if(!area||!examState.key) return; if(!$('v20-exam-bar')) area.insertAdjacentHTML('afterbegin','<div class="v20-exam-bar" id="v20-exam-bar"><span><i class="fas fa-shield"></i> Exam Pro: حفظ تلقائي + عداد وقت</span><span class="time" id="v20-exam-time">30:00</span></div>'); var exam=window.allExams&&window.allExams[examState.key]||{}; examState.remain=Number(exam.durationMinutes||exam.duration||30)*60; clearInterval(examState.timer); examState.timer=setInterval(function(){examState.remain--; var m=Math.floor(examState.remain/60),s=examState.remain%60; $('v20-exam-time')&&($('v20-exam-time').textContent=String(m).padStart(2,'0')+':'+String(s).padStart(2,'0')); if(examState.remain<=0){clearInterval(examState.timer); alert('انتهى وقت الامتحان، سيتم التسليم الآن.'); if(window.submitExam) window.submitExam();}},1000); clearInterval(examState.autosave); examState.autosave=setInterval(saveExamAutosave,5000); q('#exam-questions-area')&&q('#exam-questions-area').addEventListener('change',function(){saveExamAutosave(false);},{once:false});}
+function stopExamPro(){clearInterval(examState.timer); clearInterval(examState.autosave); examState.key=null; var b=$('v20-exam-bar'); if(b)b.remove();}
+function saveExamAutosave(finalSave){var u=user(); if(!u||!examState.key) return Promise.resolve(); var answers={}; qa('#exam-questions-area input[type="radio"]:checked').forEach(function(inp){answers[inp.name]=inp.value;}); return update('exam_autosaves/'+u.uid+'/'+examState.key,{answers:answers,final:!!finalSave,remainingSeconds:examState.remain,updatedAt:now(),when:ar()});}
+
+function initParent(){ var app=$('app'); if(!app || $('v20-parent-card')) return; var div=document.createElement('div'); div.id='v20-parent-card'; div.className='card'; div.innerHTML='<h3><i class="fas fa-clock-rotate-left"></i> متابعة ولي الأمر</h3><div id="v20-parent-timeline" class="v20-timeline"><div class="v20-empty">سيظهر نشاط الطالب بعد تسجيل الدخول.</div></div><div id="v20-parent-certs"></div>'; app.appendChild(div); var old=window.loadParentData; if(typeof old==='function'&&!old.__v20){window.loadParentData=async function(){var r=await old.apply(this,arguments); setTimeout(loadParentV20,700); return r;}; window.loadParentData.__v20=true;} setTimeout(loadParentV20,1500);}
+function loadParentV20(){var u=user(); if(!u) return; once('student_timeline/'+u.uid).then(function(data){renderTimelineInto('v20-parent-timeline',arr(data).sort(function(a,b){return (b.createdAt||0)-(a.createdAt||0)}).slice(0,20));}); once('certificates/'+u.uid).then(function(data){var list=arr(data).sort(function(a,b){return (b.createdAt||0)-(a.createdAt||0)}); var el=$('v20-parent-certs'); if(el) el.innerHTML=list.length?'<h3>الشهادات</h3>'+list.map(certCard).join(''):'<div class="v20-empty">لا توجد شهادات بعد.</div>';});}
+
+function ready(fn){if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',fn); else fn();}
+ready(function(){var t=pageType(); if(t==='admin') initAdmin(); if(t==='student') initStudent(); if(t==='parent') initParent(); setTimeout(function(){ if(pageType()==='admin') initAdmin(); if(pageType()==='student') initStudent(); if(pageType()==='parent') initParent(); },1200);});
+})();
+
+</script>
+
+
+<script id="titan-v21-parent-growth-js">
+(function(){
+'use strict';
+if(window.TitanV21Parent) return;
+function $(id){return document.getElementById(id)}
+function db(){try{return window.firebase&&firebase.database&&firebase.database()}catch(e){return null}}
+function auth(){try{return window.firebase&&firebase.auth&&firebase.auth()}catch(e){return null}}
+function user(){try{return auth()&&auth().currentUser}catch(e){return null}}
+function esc(v){return String(v==null?'':v).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
+function now(){return Date.now()} function ar(){try{return new Date().toLocaleString('ar-EG')}catch(e){return new Date().toISOString()}}
+async function once(path){const d=db(); if(!d) return null; const s=await d.ref(path).once('value'); return s.val()}
+async function push(path,data){const d=db(); if(!d) throw new Error('db not ready'); return d.ref(path).push(data)}
+async function set(path,data){const d=db(); if(!d) throw new Error('db not ready'); return d.ref(path).set(data)}
+function inject(){if($('v21-parent-box')) return; const app=$('app')||document.body; app.insertAdjacentHTML('beforeend','<div id="v21-parent-box"><div class="card"><h3><i class="fas fa-calendar-days"></i> التقويم والإعلانات</h3><div id="v21-parent-events" class="v21-muted">جاري التحميل...</div><div id="v21-parent-ann"></div></div><div class="card"><h3><i class="fas fa-message"></i> رسالة للإدارة</h3><div id="v21-parent-chat" class="v21-chat"></div><div class="v21-tools"><input id="v21-parent-msg" placeholder="اكتب رسالة للإدارة"><button class="v21-btn" onclick="TitanV21Parent.send()"><i class="fas fa-paper-plane"></i> إرسال</button></div></div></div>'); setTimeout(load,500)}
+async function load(){await Promise.all([loadEvents(),loadAnn(),loadChat()])}
+async function loadEvents(){const data=await once('growth_calendar')||{}; if($('v21-parent-events')) $('v21-parent-events').innerHTML=Object.values(data).sort((a,b)=>String(a.date||'').localeCompare(String(b.date||''))).slice(0,8).map(e=>'<div class="v21-event"><div class="v21-event-date">'+esc(e.date||'-')+'</div><div><b>'+esc(e.title)+'</b><div class="v21-muted">'+esc(e.type||'event')+'</div></div></div>').join('')||'<div class="v21-empty">لا توجد أحداث.</div>'}
+async function loadAnn(){const data=await once('growth_announcements')||{}; if($('v21-parent-ann')) $('v21-parent-ann').innerHTML=Object.values(data).filter(a=>a.active!==false).slice(-3).reverse().map(a=>'<div class="v21-file-card"><div><b>'+esc(a.title)+'</b><div class="v21-muted">'+esc(a.body||'')+'</div></div></div>').join('')}
+function chatId(){const u=user(); return u?'parent_'+u.uid:'parent_guest'}
+async function loadChat(){const id=chatId(); const c=await once('private_chats/'+id)||{}; const msgs=c.messages||{}; if($('v21-parent-chat')) {$('v21-parent-chat').innerHTML=Object.values(msgs).sort((a,b)=>(a.at||0)-(b.at||0)).map(m=>'<div class="v21-msg '+(m.fromRole==='parent'?'mine':'other')+'"><b>'+esc(m.fromRole==='parent'?'أنت':'الإدارة')+'</b><br>'+esc(m.text)+'<small>'+esc(m.when||'')+'</small></div>').join('')||'<div class="v21-empty">ابدأ محادثة مع الإدارة.</div>'; $('v21-parent-chat').scrollTop=$('v21-parent-chat').scrollHeight}}
+async function send(){const u=user(); if(!u) return alert('سجل الدخول أولاً'); const text=($('v21-parent-msg')&&$('v21-parent-msg').value||'').trim(); if(!text) return; const id=chatId(); await set('private_chats/'+id+'/participants/'+u.uid,true); await set('private_chats/'+id+'/studentName','ولي أمر'); await push('private_chats/'+id+'/messages',{text,from:u.uid,fromRole:'parent',at:now(),when:ar()}); await set('private_chats/'+id+'/lastMessage',text); await set('private_chats/'+id+'/updatedAt',now()); $('v21-parent-msg').value=''; loadChat()}
+window.TitanV21Parent={load,send};
+document.addEventListener('DOMContentLoaded',function(){setTimeout(inject,1200);setTimeout(inject,3000)});
+})();
+</script>
+
+
+<script id="titan-common-network-js">
+(function(){
+'use strict';
+if(window.TitanNetworkStatus) return;
+function show(state){var el=document.getElementById('titan-network-status'); if(!el){el=document.createElement('div'); el.id='titan-network-status'; el.className='titan-network-status'; document.body.appendChild(el)} el.className='titan-network-status show '+state; el.innerHTML=(state==='offline'?'⚠️ الاتصال غير مستقر. سيتم حفظ العمل الحالي قدر الإمكان.':'✅ عاد الاتصال بالإنترنت.'); if(state==='online') setTimeout(function(){el.classList.remove('show')},2600)}
+window.addEventListener('offline',function(){show('offline')}); window.addEventListener('online',function(){show('online')});
+window.TitanNetworkStatus={show:show};
+})();
+</script>
+
+
+<script id="titan-smart-parent-js">
+(function(){
+'use strict';
+if(window.TitanSmartParent) return;
+function $(id){return document.getElementById(id)}
+function db(){try{return window.db || (window.firebase&&firebase.database&&firebase.database())}catch(e){return null}}
+function auth(){try{return window.auth || (window.firebase&&firebase.auth&&firebase.auth())}catch(e){return null}}
+function user(){try{return auth()&&auth().currentUser}catch(e){return null}}
+function esc(v){return String(v==null?'':v).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
+function now(){return Date.now()} function ar(){try{return new Date().toLocaleString('ar-EG')}catch(e){return new Date().toISOString()}}
+async function once(path){var d=db(); if(!d) return null; var s=await d.ref(path).once('value'); return s.val()}
+async function set(path,data){var d=db(); if(!d) return; return d.ref(path).set(data)}
+async function push(path,data){var d=db(); if(!d) return; return d.ref(path).push(data)}
+function inject(){var app=$('app'); if(!app||$('smart-parent-chat')) return; app.insertAdjacentHTML('beforeend','<div id="smart-parent-chat" class="card"><h3><i class="fas fa-comments"></i> تواصل خاص مع الإدارة</h3><div id="smart-parent-chat-messages" class="titan-chat-messages"><div class="titan-smart-empty">لا توجد رسائل بعد.</div></div><textarea id="smart-parent-chat-text" placeholder="اكتب رسالة للإدارة..."></textarea><button class="titan-smart-btn" onclick="TitanSmartParent.sendChat()">إرسال</button></div>'); setTimeout(loadChat,700)}
+async function loadChat(){var u=user(); if(!u||!$('smart-parent-chat-messages')) return; var id='student_'+u.uid; var data=await once('private_chats/'+id+'/messages')||{}; var msgs=Object.values(data).sort(function(a,b){return (a.at||0)-(b.at||0)}); $('smart-parent-chat-messages').innerHTML=msgs.length?msgs.map(function(m){var me=m.from===u.uid; return '<div class="titan-chat-msg '+(me?'me':'')+'">'+esc(m.text||'')+'<small>'+esc(m.when||'')+'</small></div>'}).join(''):'<div class="titan-smart-empty">يمكنك إرسال رسالة للإدارة من هنا.</div>'; $('smart-parent-chat-messages').scrollTop=$('smart-parent-chat-messages').scrollHeight}
+async function sendChat(){var u=user(); if(!u) return alert('سجل الدخول أولاً'); var text=($('smart-parent-chat-text')&&$('smart-parent-chat-text').value||'').trim(); if(!text) return; var id='student_'+u.uid; await set('private_chats/'+id+'/participants/'+u.uid,true); await set('private_chats/'+id+'/updatedAt',now()); await set('private_chats/'+id+'/lastMessage',text); await push('private_chats/'+id+'/messages',{text:text,from:u.uid,fromRole:'parent',at:now(),when:ar()}); $('smart-parent-chat-text').value=''; loadChat()}
+window.TitanSmartParent={sendChat:sendChat,loadChat:loadChat}; document.addEventListener('DOMContentLoaded',function(){setTimeout(inject,1000);setTimeout(inject,2500)});
+})();
+</script>
+
+</body></html>

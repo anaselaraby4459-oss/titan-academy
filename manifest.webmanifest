@@ -1,7 +1,7 @@
 {
-  "name": "Titan V16 Academy",
-  "short_name": "Titan V16",
-  "start_url": "./index.html",
+  "name": "Titan Academy",
+  "short_name": "Titan",
+  "start_url": "./index.html?tenant=titan",
   "scope": "./",
   "display": "standalone",
   "background_color": "#f4f7fb",

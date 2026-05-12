@@ -1,0 +1,13 @@
+# Project Structure
+
+```
+index.html          الصفحة الرئيسية
+admin.html          لوحة الإدارة الكاملة + مركز الإدارة الذكي
+student.html        لوحة الطالب + خطة متابعة ودعم خاص
+parent.html         لوحة ولي الأمر + تواصل خاص
+manifest.webmanifest
+service-worker.js
+firebase-rules.json قواعد Firebase Realtime Database
+```
+
+تم الحفاظ على كل المميزات السابقة. الأسماء الداخلية التقنية قد تظل موجودة لحماية التوافق، لكنها ليست ظاهرة للمستخدم.

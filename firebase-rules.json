@@ -1,0 +1,331 @@
+{
+  "rules": {
+    ".read": false,
+    ".write": false,
+    "super_admins": {
+      "$uid": {
+        ".read": "auth != null && (auth.uid === $uid || root.child('super_admins').child(auth.uid).val() === true)",
+        ".write": "auth != null && root.child('super_admins').child(auth.uid).val() === true"
+      }
+    },
+    "user_tenants": {
+      "$uid": {
+        ".read": "auth != null && (auth.uid === $uid || root.child('super_admins').child(auth.uid).val() === true)",
+        "$tenantId": {
+          ".write": "auth != null && (root.child('super_admins').child(auth.uid).val() === true || root.child('tenants').child($tenantId).child('admins').child(auth.uid).val() === true)"
+        }
+      }
+    },
+    "public_tenants": {
+      ".read": true,
+      ".write": "auth != null && root.child('super_admins').child(auth.uid).val() === true"
+    },
+    "tenants": {
+      "$tenantId": {
+        ".read": "auth != null && (root.child('super_admins').child(auth.uid).val() === true || root.child('tenants').child($tenantId).child('admins').child(auth.uid).val() === true || root.child('tenants').child($tenantId).child('students').child(auth.uid).exists())",
+        ".write": "auth != null && (root.child('super_admins').child(auth.uid).val() === true || root.child('tenants').child($tenantId).child('admins').child(auth.uid).val() === true)",
+        "admins": {
+          "$uid": {
+            ".read": "auth != null && (root.child('super_admins').child(auth.uid).val() === true || root.child('tenants').child($tenantId).child('admins').child(auth.uid).val() === true)",
+            ".write": "auth != null && (root.child('super_admins').child(auth.uid).val() === true || root.child('tenants').child($tenantId).child('admins').child(auth.uid).val() === true)"
+          }
+        },
+        "settings": {
+          ".read": "auth != null || root.child('public_tenants').child($tenantId).exists()",
+          ".write": "auth != null && (root.child('super_admins').child(auth.uid).val() === true || root.child('tenants').child($tenantId).child('admins').child(auth.uid).val() === true)",
+          "customization": {
+            ".read": "auth != null || root.child('public_tenants').child($tenantId).exists()",
+            ".write": "auth != null && (root.child('super_admins').child(auth.uid).val() === true || root.child('tenants').child($tenantId).child('admins').child(auth.uid).val() === true)"
+          }
+        },
+        "students": {
+          ".indexOn": [
+            "code",
+            "level"
+          ],
+          ".read": "auth != null && (root.child('super_admins').child(auth.uid).val() === true || root.child('tenants').child($tenantId).child('admins').child(auth.uid).val() === true)",
+          "$studentId": {
+            ".read": "auth != null && (auth.uid === $studentId || root.child('super_admins').child(auth.uid).val() === true || root.child('tenants').child($tenantId).child('admins').child(auth.uid).val() === true)",
+            ".write": "auth != null && (root.child('super_admins').child(auth.uid).val() === true || root.child('tenants').child($tenantId).child('admins').child(auth.uid).val() === true)"
+          }
+        },
+        "content": {
+          ".indexOn": [
+            "level",
+            "category",
+            "createdAt"
+          ],
+          ".read": "auth != null && root.child('tenants').child($tenantId).child('students').child(auth.uid).exists() || auth != null && root.child('tenants').child($tenantId).child('admins').child(auth.uid).val() === true || auth != null && root.child('super_admins').child(auth.uid).val() === true",
+          ".write": "auth != null && (root.child('super_admins').child(auth.uid).val() === true || root.child('tenants').child($tenantId).child('admins').child(auth.uid).val() === true)"
+        },
+        "lesson_progress": {
+          "$uid": {
+            ".read": "auth != null && (auth.uid === $uid || root.child('tenants').child($tenantId).child('admins').child(auth.uid).val() === true || root.child('super_admins').child(auth.uid).val() === true)",
+            ".write": "auth != null && (auth.uid === $uid || root.child('tenants').child($tenantId).child('admins').child(auth.uid).val() === true || root.child('super_admins').child(auth.uid).val() === true)"
+          }
+        },
+        "lesson_quizzes": {
+          ".indexOn": [
+            "lessonKey",
+            "level",
+            "createdAt"
+          ],
+          ".read": "auth != null",
+          ".write": "auth != null && (root.child('super_admins').child(auth.uid).val() === true || root.child('tenants').child($tenantId).child('admins').child(auth.uid).val() === true)"
+        },
+        "leaderboard": {
+          ".read": "auth != null",
+          "$uid": {
+            ".write": "auth != null && (auth.uid === $uid || root.child('tenants').child($tenantId).child('admins').child(auth.uid).val() === true)"
+          }
+        },
+        "leaderboard_weekly": {
+          ".read": "auth != null",
+          ".write": "auth != null && (root.child('super_admins').child(auth.uid).val() === true || root.child('tenants').child($tenantId).child('admins').child(auth.uid).val() === true)"
+        },
+        "qr_attendance": {
+          "$code": {
+            "$uid": {
+              ".read": "auth != null && (auth.uid === $uid || root.child('tenants').child($tenantId).child('admins').child(auth.uid).val() === true)",
+              ".write": "auth != null && (auth.uid === $uid || root.child('tenants').child($tenantId).child('admins').child(auth.uid).val() === true)"
+            }
+          }
+        },
+        "qr_attendance_sessions": {
+          ".read": "auth != null",
+          ".write": "auth != null"
+        },
+        "active_sessions": {
+          "$uid": {
+            ".read": "auth != null && (auth.uid === $uid || root.child('tenants').child($tenantId).child('admins').child(auth.uid).val() === true)",
+            ".write": "auth != null && (auth.uid === $uid || root.child('tenants').child($tenantId).child('admins').child(auth.uid).val() === true)"
+          }
+        },
+        "mega_records": {
+          ".indexOn": [
+            "type",
+            "studentKey",
+            "createdAt",
+            "status"
+          ],
+          ".read": "auth != null && (root.child('tenants').child($tenantId).child('admins').child(auth.uid).val() === true || root.child('super_admins').child(auth.uid).val() === true)",
+          ".write": "auth != null"
+        },
+        "payment_plans": {
+          ".read": "auth != null && (root.child('super_admins').child(auth.uid).val() === true || root.child('tenants').child($tenantId).child('admins').child(auth.uid).val() === true || root.child('tenants').child($tenantId).child('students').child(auth.uid).exists())",
+          ".write": "auth != null && (root.child('super_admins').child(auth.uid).val() === true || root.child('tenants').child($tenantId).child('admins').child(auth.uid).val() === true)"
+        },
+        "coupons": {
+          ".read": "auth != null && (root.child('super_admins').child(auth.uid).val() === true || root.child('tenants').child($tenantId).child('admins').child(auth.uid).val() === true)",
+          ".write": "auth != null && (root.child('super_admins').child(auth.uid).val() === true || root.child('tenants').child($tenantId).child('admins').child(auth.uid).val() === true)"
+        },
+        "learning_paths": {
+          ".indexOn": [
+            "level",
+            "order",
+            "createdAt"
+          ],
+          ".read": "auth != null && (root.child('super_admins').child(auth.uid).val() === true || root.child('tenants').child($tenantId).child('admins').child(auth.uid).val() === true || root.child('tenants').child($tenantId).child('students').child(auth.uid).exists())",
+          ".write": "auth != null && (root.child('super_admins').child(auth.uid).val() === true || root.child('tenants').child($tenantId).child('admins').child(auth.uid).val() === true)"
+        },
+        "coding_challenges": {
+          ".indexOn": [
+            "level",
+            "createdAt"
+          ],
+          ".read": "auth != null && (root.child('super_admins').child(auth.uid).val() === true || root.child('tenants').child($tenantId).child('admins').child(auth.uid).val() === true || root.child('tenants').child($tenantId).child('students').child(auth.uid).exists())",
+          ".write": "auth != null && (root.child('super_admins').child(auth.uid).val() === true || root.child('tenants').child($tenantId).child('admins').child(auth.uid).val() === true)"
+        },
+        "assistant_faq": {
+          ".indexOn": [
+            "lessonKey",
+            "createdAt"
+          ],
+          ".read": "auth != null && (root.child('super_admins').child(auth.uid).val() === true || root.child('tenants').child($tenantId).child('admins').child(auth.uid).val() === true || root.child('tenants').child($tenantId).child('students').child(auth.uid).exists())",
+          ".write": "auth != null && (root.child('super_admins').child(auth.uid).val() === true || root.child('tenants').child($tenantId).child('admins').child(auth.uid).val() === true)"
+        },
+        "message_templates": {
+          ".read": "auth != null && (root.child('super_admins').child(auth.uid).val() === true || root.child('tenants').child($tenantId).child('admins').child(auth.uid).val() === true)",
+          ".write": "auth != null && (root.child('super_admins').child(auth.uid).val() === true || root.child('tenants').child($tenantId).child('admins').child(auth.uid).val() === true)"
+        },
+        "student_rewards": {
+          "$uid": {
+            ".read": "auth != null && (auth.uid === $uid || root.child('super_admins').child(auth.uid).val() === true || root.child('tenants').child($tenantId).child('admins').child(auth.uid).val() === true)",
+            ".write": "auth != null && (auth.uid === $uid || root.child('super_admins').child(auth.uid).val() === true || root.child('tenants').child($tenantId).child('admins').child(auth.uid).val() === true)"
+          }
+        },
+        "challenge_attempts": {
+          "$uid": {
+            ".read": "auth != null && (auth.uid === $uid || root.child('super_admins').child(auth.uid).val() === true || root.child('tenants').child($tenantId).child('admins').child(auth.uid).val() === true)",
+            ".write": "auth != null && (auth.uid === $uid || root.child('super_admins').child(auth.uid).val() === true || root.child('tenants').child($tenantId).child('admins').child(auth.uid).val() === true)"
+          }
+        },
+        "portfolio_projects": {
+          "$uid": {
+            ".read": "auth != null && (auth.uid === $uid || root.child('super_admins').child(auth.uid).val() === true || root.child('tenants').child($tenantId).child('admins').child(auth.uid).val() === true)",
+            ".write": "auth != null && (auth.uid === $uid || root.child('super_admins').child(auth.uid).val() === true || root.child('tenants').child($tenantId).child('admins').child(auth.uid).val() === true)"
+          }
+        },
+        "invoices": {
+          ".indexOn": [
+            "studentKey",
+            "status",
+            "createdAt"
+          ],
+          "$invoiceId": {
+            ".read": "auth != null && (data.child('studentKey').val() === auth.uid || root.child('super_admins').child(auth.uid).val() === true || root.child('tenants').child($tenantId).child('admins').child(auth.uid).val() === true)",
+            ".write": "auth != null && (root.child('super_admins').child(auth.uid).val() === true || root.child('tenants').child($tenantId).child('admins').child(auth.uid).val() === true)"
+          }
+        },
+        "system_errors": {
+          ".indexOn": [
+            "createdAt",
+            "status",
+            "page"
+          ],
+          ".read": "auth != null && (root.child('super_admins').child(auth.uid).val() === true || root.child('tenants').child($tenantId).child('admins').child(auth.uid).val() === true)",
+          "$errorId": {
+            ".write": "auth != null"
+          }
+        },
+        "smart_reminders": {
+          ".read": "auth != null && (root.child('super_admins').child(auth.uid).val() === true || root.child('tenants').child($tenantId).child('admins').child(auth.uid).val() === true)",
+          ".write": "auth != null && (root.child('super_admins').child(auth.uid).val() === true || root.child('tenants').child($tenantId).child('admins').child(auth.uid).val() === true)"
+        },
+        "v20_backups": {
+          ".read": "auth != null && (root.child('super_admins').child(auth.uid).val() === true || root.child('tenants').child($tenantId).child('admins').child(auth.uid).val() === true)",
+          ".write": "auth != null && (root.child('super_admins').child(auth.uid).val() === true || root.child('tenants').child($tenantId).child('admins').child(auth.uid).val() === true)"
+        },
+        "student_timeline": {
+          "$uid": {
+            ".indexOn": [
+              "createdAt",
+              "event"
+            ],
+            ".read": "auth != null && (auth.uid === $uid || root.child('super_admins').child(auth.uid).val() === true || root.child('tenants').child($tenantId).child('admins').child(auth.uid).val() === true)",
+            ".write": "auth != null && (auth.uid === $uid || root.child('super_admins').child(auth.uid).val() === true || root.child('tenants').child($tenantId).child('admins').child(auth.uid).val() === true)"
+          }
+        },
+        "lesson_notes": {
+          "$uid": {
+            ".indexOn": [
+              "createdAt",
+              "lessonKey"
+            ],
+            ".read": "auth != null && (auth.uid === $uid || root.child('super_admins').child(auth.uid).val() === true || root.child('tenants').child($tenantId).child('admins').child(auth.uid).val() === true)",
+            ".write": "auth != null && (auth.uid === $uid || root.child('super_admins').child(auth.uid).val() === true || root.child('tenants').child($tenantId).child('admins').child(auth.uid).val() === true)"
+          }
+        },
+        "video_progress": {
+          "$uid": {
+            ".read": "auth != null && (auth.uid === $uid || root.child('super_admins').child(auth.uid).val() === true || root.child('tenants').child($tenantId).child('admins').child(auth.uid).val() === true)",
+            ".write": "auth != null && (auth.uid === $uid || root.child('super_admins').child(auth.uid).val() === true || root.child('tenants').child($tenantId).child('admins').child(auth.uid).val() === true)"
+          }
+        },
+        "exam_autosaves": {
+          "$uid": {
+            ".read": "auth != null && (auth.uid === $uid || root.child('super_admins').child(auth.uid).val() === true || root.child('tenants').child($tenantId).child('admins').child(auth.uid).val() === true)",
+            ".write": "auth != null && (auth.uid === $uid || root.child('super_admins').child(auth.uid).val() === true || root.child('tenants').child($tenantId).child('admins').child(auth.uid).val() === true)"
+          }
+        },
+        "certificates": {
+          "$uid": {
+            ".indexOn": [
+              "createdAt",
+              "id"
+            ],
+            ".read": "auth != null && (auth.uid === $uid || root.child('super_admins').child(auth.uid).val() === true || root.child('tenants').child($tenantId).child('admins').child(auth.uid).val() === true)",
+            ".write": "auth != null && (root.child('super_admins').child(auth.uid).val() === true || root.child('tenants').child($tenantId).child('admins').child(auth.uid).val() === true)"
+          }
+        },
+        "$other": {
+          ".read": "auth != null",
+          ".write": "auth != null && (root.child('super_admins').child(auth.uid).val() === true || root.child('tenants').child($tenantId).child('admins').child(auth.uid).val() === true)"
+        },
+        "registration_requests": {
+          ".indexOn": [
+            "status",
+            "level",
+            "createdAt"
+          ],
+          ".read": "auth != null && (root.child('super_admins').child(auth.uid).val() === true || root.child('tenants').child($tenantId).child('admins').child(auth.uid).val() === true)",
+          "$requestId": {
+            ".write": "(!data.exists() && newData.child('status').val() === 'pending') || (auth != null && (root.child('super_admins').child(auth.uid).val() === true || root.child('tenants').child($tenantId).child('admins').child(auth.uid).val() === true))",
+            ".validate": "newData.hasChildren(['name','code','phone','level','status','createdAt'])"
+          }
+        },
+        "subscription_plans": {
+          ".read": "auth != null",
+          ".write": "auth != null && (root.child('super_admins').child(auth.uid).val() === true || root.child('tenants').child($tenantId).child('admins').child(auth.uid).val() === true)"
+        },
+        "roles": {
+          ".read": "auth != null && (root.child('super_admins').child(auth.uid).val() === true || root.child('tenants').child($tenantId).child('admins').child(auth.uid).val() === true)",
+          ".write": "auth != null && (root.child('super_admins').child(auth.uid).val() === true || root.child('tenants').child($tenantId).child('admins').child(auth.uid).val() === true)"
+        },
+        "audit_logs": {
+          ".indexOn": [
+            "createdAt",
+            "type",
+            "actor"
+          ],
+          ".read": "auth != null && (root.child('super_admins').child(auth.uid).val() === true || root.child('tenants').child($tenantId).child('admins').child(auth.uid).val() === true)",
+          ".write": "auth != null"
+        },
+        "growth_classes": {
+          ".read": "auth != null",
+          ".write": "auth != null && (root.child('super_admins').child(auth.uid).val() === true || root.child('tenants').child($tenantId).child('admins').child(auth.uid).val() === true)"
+        },
+        "growth_calendar": {
+          ".read": "auth != null",
+          ".write": "auth != null && (root.child('super_admins').child(auth.uid).val() === true || root.child('tenants').child($tenantId).child('admins').child(auth.uid).val() === true)"
+        },
+        "growth_library": {
+          ".read": "auth != null",
+          ".write": "auth != null && (root.child('super_admins').child(auth.uid).val() === true || root.child('tenants').child($tenantId).child('admins').child(auth.uid).val() === true)"
+        },
+        "growth_announcements": {
+          ".read": "auth != null",
+          ".write": "auth != null && (root.child('super_admins').child(auth.uid).val() === true || root.child('tenants').child($tenantId).child('admins').child(auth.uid).val() === true)"
+        },
+        "growth_lesson_ratings": {
+          ".read": "auth != null && (root.child('super_admins').child(auth.uid).val() === true || root.child('tenants').child($tenantId).child('admins').child(auth.uid).val() === true)",
+          "$ratingId": {
+            ".write": "auth != null && (root.child('tenants').child($tenantId).child('students').child(auth.uid).exists() || root.child('tenants').child($tenantId).child('admins').child(auth.uid).val() === true || root.child('super_admins').child(auth.uid).val() === true)"
+          }
+        },
+        "growth_referrals": {
+          ".read": "auth != null",
+          "$uid": {
+            ".write": "auth != null && (auth.uid === $uid || root.child('tenants').child($tenantId).child('admins').child(auth.uid).val() === true || root.child('super_admins').child(auth.uid).val() === true)"
+          }
+        },
+        "private_chats": {
+          "$chatId": {
+            ".read": "auth != null && (root.child('super_admins').child(auth.uid).val() === true || root.child('tenants').child($tenantId).child('admins').child(auth.uid).val() === true || data.child('participants').child(auth.uid).val() === true)",
+            ".write": "auth != null && (root.child('super_admins').child(auth.uid).val() === true || root.child('tenants').child($tenantId).child('admins').child(auth.uid).val() === true || data.child('participants').child(auth.uid).val() === true || newData.child('participants').child(auth.uid).val() === true)"
+          }
+        },
+        "admin_student_notes": {
+          "$uid": {
+            ".read": "auth != null && (auth.uid === $uid || root.child('super_admins').child(auth.uid).val() === true || root.child('tenants').child($tenantId).child('admins').child(auth.uid).val() === true)",
+            ".write": "auth != null && (root.child('super_admins').child(auth.uid).val() === true || root.child('tenants').child($tenantId).child('admins').child(auth.uid).val() === true)"
+          }
+        },
+        "admin_tasks": {
+          ".read": "auth != null && (root.child('super_admins').child(auth.uid).val() === true || root.child('tenants').child($tenantId).child('admins').child(auth.uid).val() === true)",
+          ".write": "auth != null && (root.child('super_admins').child(auth.uid).val() === true || root.child('tenants').child($tenantId).child('admins').child(auth.uid).val() === true)"
+        },
+        "session_warnings": {
+          "$uid": {
+            ".read": "auth != null && (auth.uid === $uid || root.child('super_admins').child(auth.uid).val() === true || root.child('tenants').child($tenantId).child('admins').child(auth.uid).val() === true)",
+            ".write": "auth != null && (auth.uid === $uid || root.child('super_admins').child(auth.uid).val() === true || root.child('tenants').child($tenantId).child('admins').child(auth.uid).val() === true)"
+          }
+        },
+        "system_health": {
+          ".read": "auth != null && (root.child('super_admins').child(auth.uid).val() === true || root.child('tenants').child($tenantId).child('admins').child(auth.uid).val() === true)",
+          ".write": "auth != null"
+        }
+      }
+    }
+  }
+}
